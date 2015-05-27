@@ -616,7 +616,7 @@
             .when('/editcharge/:id', {
                 templateUrl: 'views/products/editcharge.html'
             })
-            .when('/productivesheet/:officeId/:officeName/:meetingDate/:staffId', {
+            .when('/productivesheet/:officeId/:officeName/:meetingDate/:staffId/:transactionDate/', {
                 templateUrl: 'views/collection/productivecollectionsheet.html'
             })
             .when('/entercollectionsheet', {

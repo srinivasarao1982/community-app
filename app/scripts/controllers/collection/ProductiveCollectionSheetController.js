@@ -285,7 +285,12 @@
                 scope.formData.calendarId = scope.calendarId;
                 scope.formData.dateFormat = scope.df;
                 scope.formData.locale = scope.optlang.code;
-                scope.formData.transactionDate = dateFilter(routeParams.meetingDate, scope.df);
+                if(routeParams.transactionDate!=null){
+                   scope.formData.transactionDate = dateFilter(routeParams.transactionDate, scope.df);
+                }
+                else{
+                    scope.formData.transactionDate = dateFilter(routeParams.meetingDate, scope.df);
+                }
                 scope.formData.clientsAttendance = scope.clientsAttendance;
                 scope.formData.bulkDisbursementTransactions = [];
                 scope.formData.bulkRepaymentTransactions = scope.bulkRepaymentTransactions;

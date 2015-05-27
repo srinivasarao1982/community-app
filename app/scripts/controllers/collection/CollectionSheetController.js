@@ -30,7 +30,15 @@
                     }
                 }
                 scope.meetingDate = dateFilter(scope.date.transactionDate, scope.df);
-                location.path('/productivesheet/' + scope.officeId + '/' + scope.officeName + '/' + scope.meetingDate + '/' + scope.loanOfficerId);
+                if(scope.date.newtransactionDate!='') {
+                scope.transactiondate1 = dateFilter(scope.date.newtransactionDate, scope.df);
+                }
+                else{
+                    scope.transactiondate1 = dateFilter(scope.date.transactionDate, scope.df);
+
+                }
+
+                location.path('/productivesheet/' + scope.officeId + '/' + scope.officeName + '/' + scope.meetingDate + '/' + scope.loanOfficerId + '/'+scope.transactiondate1);
             };
 
             scope.officeSelected = function (officeId) {
