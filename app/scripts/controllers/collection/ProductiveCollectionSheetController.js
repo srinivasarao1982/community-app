@@ -167,9 +167,6 @@
 
             scope.total = function (data) {
 
-
-
-
                 scope.groupArray = scope.collectionsheetdata.groups;
 
                 /* sumGroupDueCollection computes total savings gue per group */
@@ -282,6 +279,9 @@
             };
 
             scope.submit = function () {
+
+               scope.total(scope.collectionsheetdata);
+
                 scope.formData.calendarId = scope.calendarId;
                 scope.formData.dateFormat = scope.df;
                 scope.formData.locale = scope.optlang.code;
