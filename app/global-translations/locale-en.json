@@ -3505,6 +3505,11 @@
     "label.heading.iscashpayment":"Is Cash Payment?",
     "label.button.paymenttype":"Add Payment Type",
     "label.input.iscashpayment":"Is Cash Payment?",
-    "label.anchor.editpaymenttype":"Edit Payment Type"
+    "label.anchor.editpaymenttype":"Edit Payment Type",
+
+    "#- Nirantara customization  ": "------------",
+
+    "label.menu.select":"Select"
+
 
 }

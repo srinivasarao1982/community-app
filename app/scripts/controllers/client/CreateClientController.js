@@ -12,6 +12,7 @@
             scope.showSavingOptions = false;
             scope.opensavingsproduct = false;
             scope.forceOffice = null;
+            scope.clientObject = {};
 
             var requestParams = {staffInSelectedOfficeOnly:true};
             if (routeParams.groupId) {
@@ -20,7 +21,18 @@
             if (routeParams.officeId) {
                 requestParams.officeId = routeParams.officeId;
             }
-            resourceFactory.clientTemplateResource.get(requestParams, function (data) {
+            resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
+
+                // clientObject = clientData; 
+                data = clientData.clientBasicDetails;
+                scope.salutations = clientData.salutation;
+                scope.martialStatusOptions = clientData.maritalStatus;
+                scope.ProfessionOptions = clientData.profession;
+                scope.eductionalQualificationOptions = clientData.educationQualification;
+                scope.annualIncomeOptions = clientData.annualIncome;
+                scope.landHoldings = clientData.landHolding;
+                scope.houseTypes = clientData.houseType;
+                scope.panForms = clientData.yesOrNo;                
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
                 scope.formData.officeId = scope.offices[0].id;
@@ -28,6 +40,17 @@
                 scope.genderOptions = data.genderOptions;
                 scope.clienttypeOptions = data.clientTypeOptions;
                 scope.clientClassificationOptions = data.clientClassificationOptions;
+                scope.districtOptins = clientData.district;
+                scope.stateOptions = clientData.state;
+                scope.identityProofOptions = clientData.identityProof;
+                scope.addressProofOptions = clientData.addressProof;
+    
+
+
+
+
+
+
                 if (data.savingProductOptions.length > 0) {
                     scope.showSavingOptions = true;
                 }
