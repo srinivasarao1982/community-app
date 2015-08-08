@@ -37,12 +37,25 @@
                     {{'label.input.centertotal' |
                         translate}}
                 </span>
+
+                <span> Total By Loan Product : &nbsp;&nbsp;&nbsp;</span>
                 <span style="height:30px" ng-repeat="loanproduct in collectionsheetdata.loanProducts">
                       <span ng-repeat="total in grandTotal" ng-show="loanproduct.id == total.productId">
+                        <span> {{total.productName}}</span>
                         <input type="text" class="input-sm" number-format ng-model="total.transactionAmount"
                                disabled="disabled">
                       </span>
                 </span>
+
+                <span>&nbsp;&nbsp;&nbsp; Total By Savings Product : &nbsp;&nbsp;&nbsp;</span>
+                <span style="height:30px" ng-repeat="savingsProduct in savingsProductArray">
+                    <span>{{savingsProduct.productName}}</span>
+                    <input type="text" class="input-sm" number-format ng-model="savingsProduct.depositAmount"
+                               disabled="disabled">
+                </span>
+                
+
+
 
             </div>
             <div ng-show="details">
@@ -53,6 +66,9 @@
                         <th scope="colgroup" ng-repeat="loanproduct in collectionsheetdata.loanProducts">
                             {{loanproduct.name}}/{{'label.heading.charges' | translate}}
                         </th>
+                        <th scope="colgroup" ng-repeat="savingproduct in collectionsheetdata.savingsProducts">
+                            {{savingproduct.name}}
+                        </th>
                         <th>{{'label.heading.attendance' | translate}}</th>
                     </tr>
                     </thead>
@@ -62,6 +78,7 @@
                             <b>{{group.groupName}}</b>
                         </td>
                         <td scope="colgroup" colspan="{{collectionsheetdata.loanProducts.length}}">&nbsp;</td>
+                        <td scope="colgroup" colspan="{{collectionsheetdata.savingsProducts.length}}">&nbsp;</td>
                         <td colspan="1" scope="colgroup">&nbsp;</td>
                     </tr>
                     <tr ng-repeat="client in group.clients">
@@ -71,6 +88,16 @@
     	                    <input id="total" type="text" class="input-smaller" ng-model="loan.totalDue"
                                    number-format ng-change="bulkRepaymentTransactionAmountChange()">
     	                  </span>
+                        </td>
+                        <td ng-repeat="savingsproduct in collectionsheetdata.savingsProducts">
+                                    <span ng-repeat="savings in client.savings"
+                                          ng-show="savingsproduct.id === savings.productId">
+                                        <div class="col-md-7">
+                                            <input id="dueAmount" number-format type="text" class="input-sm form-control" number-format
+                                                   ng-model="savings.dueAmount"
+                                                   ng-change="sumGroupDueCollection()">
+                                        </div>
+                                    </span>
                         </td>
                         <td>
                             <select id="clientsAttendance[{{$index}}][attendanceType]" ng-model="client.attendanceType.id"
@@ -92,6 +119,13 @@
                                        disabled="disabled">
     	                      </span>
     	                    </span>
+                        </td>
+                        <td ng-repeat="savingsproduct in collectionsheetdata.savingsProducts">
+                                      <span ng-repeat="grouptotal in savingsGroupsTotal"
+                                            ng-show="grouptotal.groupId === group.groupId && savingsproduct.id === grouptotal.productId">
+                                          <input type="text" class="input-sm form-control"
+                                                 number-format ng-model="grouptotal.dueAmount" disabled="disabled">
+                                      </span>
                         </td>
                         <td></td>
                     </tr>

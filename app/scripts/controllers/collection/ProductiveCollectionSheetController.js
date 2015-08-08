@@ -102,24 +102,95 @@
                 }
                 return obj;
             }
+            
+
+            /**
+             * Sum of loan dues and Savings dues group by group and product
+             */
+            scope.sumGroupDueCollection = function () {
+                scope.savingsGroupsTotal = [];
+                scope.savingsProductArray = [];            
+                
+                for (var i = 0; i < scope.collectionsheetdata.savingsProducts.length; i++) {
+                    savingsProductTemp = {
+                        productId: scope.collectionsheetdata.savingsProducts[i].id,
+                        productName: scope.collectionsheetdata.savingsProducts[i].name,
+                        depositAmount: 0
+                    }
+                    scope.savingsProductArray.push(savingsProductTemp);
+                }
+
+                _.each(scope.groupArray, function (group) {
+                        _.each(group.clients, function (client) {
+                            _.each(client.savings, function (saving) {
+                                scope.sumGroupSavingsDueCollection(group, saving);
+                            });
+                        });
+                    }
+                );
+            };
+
+            /**
+             * Sum of savings dues group by group id and savings product id
+             * @param group
+             * @param saving
+             */
+            scope.sumGroupSavingsDueCollection = function (group, saving) {
+                var existing = _.findWhere(scope.savingsGroupsTotal, {groupId: group.groupId, productId: saving.productId});
+                var dueAmount = saving.dueAmount;
+                if (isNaN(dueAmount)) {
+                    dueAmount = parseInt(0);
+                }
+                if (existing === 'undefined' || !(_.isObject(existing))) {
+                    var gp = {
+                        groupId: group.groupId,
+                        productId: saving.productId,
+                        dueAmount: dueAmount,
+                        currencyCode: saving.currency.code,
+                        currencySymbol: saving.currency.displaySymbol
+                    };
+
+                    scope.savingsGroupsTotal.push(gp);
+                } else {
+                    existing.dueAmount = Math.ceil((Number(existing.dueAmount) + Number(dueAmount)) * 100) / 100;
+                }
+
+                var savingsProductTotalDeposit = _.findWhere(scope.savingsProductArray, {productId: saving.productId});
+                
+                if ( !(savingsProductTotalDeposit === 'undefined') || (_.isObject(savingsProductTotalDeposit))) {
+                    savingsProductTotalDeposit.depositAmount =  Math.ceil((Number(savingsProductTotalDeposit.depositAmount) + Number(dueAmount)) * 100) / 100;
+                }
+
+
+            };
+
 
             scope.total = function (data) {
+
+                scope.groupArray = scope.collectionsheetdata.groups;
+
+                /* sumGroupDueCollection computes total savings gue per group */
+                scope.sumGroupDueCollection();
+
                 scope.bulkRepaymentTransactions = [];
+                scope.bulkSavingsDueTransactions = [];
                 scope.bulkDisbursementTransactions = [];
                 scope.groupTotal = [];
                 scope.loanProductArray = [];
+
                 scope.loanDueTotalCollections = [];
 
                 for (var i = 0; i < data.loanProducts.length; i++) {
                     loanProductTemp = {
                         productId: data.loanProducts[i].id,
+                        productName: data.loanProducts[i].name,
                         transactionAmount: 0,
                         disbursementAmount: 0
                     }
                     scope.loanProductArray.push(loanProductTemp);
                 }
 
-                scope.groupArray = scope.collectionsheetdata.groups;
+
                 var gl = scope.groupArray.length;
                 for (var i = 0; i < gl; i++) {
                     var loanProductArrayDup = deepCopy(scope.loanProductArray);
@@ -171,7 +242,27 @@
                         }
                     }
                 }
+
+                _.each(scope.groupArray, function (group) {
+                        _.each(group.clients, function (client) {
+                            _.each(client.savings, function (saving) {
+                                var dueAmount = saving.dueAmount;
+                                if (isNaN(dueAmount)) {
+                                    dueAmount = parseInt(0);
+                                }
+                                var savingsDepositTransaction = {
+                                    savingsId:saving.savingsId,
+                                    transactionAmount:dueAmount
+                                };
+                                scope.bulkSavingsDueTransactions.push(savingsDepositTransaction);
+                            });
+                        });
+                    });
+
+
                 scope.grandTotal = loanProductArrayTotal;
+
+                // xxx
             }
 
             scope.viewFullScreen = function () {
@@ -188,6 +279,9 @@
             };
 
             scope.submit = function () {
+
+               scope.total(scope.collectionsheetdata);
+
                 scope.formData.calendarId = scope.calendarId;
                 scope.formData.dateFormat = scope.df;
                 scope.formData.locale = scope.optlang.code;
@@ -195,6 +289,8 @@
                 scope.formData.clientsAttendance = scope.clientsAttendance;
                 scope.formData.bulkDisbursementTransactions = [];
                 scope.formData.bulkRepaymentTransactions = scope.bulkRepaymentTransactions;
+                scope.formData.bulkSavingsDueTransactions = scope.bulkSavingsDueTransactions;
+
                 resourceFactory.centerResource.save({'centerId': scope.centerId, command: 'saveCollectionSheet'}, scope.formData, function (data) {
                     for (var i = 0; i < centerIdArray.length; i++) {
                         if (scope.centerId === centerIdArray[i].id && centerIdArray.length >= 1) {
