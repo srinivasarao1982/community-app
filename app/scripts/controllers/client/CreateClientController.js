@@ -133,17 +133,24 @@
 
                 /*Temp Code*/
                 this.formData.naddress[0].addressType = this.formData.clientExt.panForm;
-
-                this.formData.clientExt.profession = this.formData.clientExt.maritalStatus;
-                this.formData.clientExt.educationalQualification = this.formData.clientExt.educationalQualification;
-
-
-
-
-                delete this.formData.salutationId;
                 /********/
 
+
+                if(this.formData.naddress){
+                    for(var i = 0; i < this.formData.naddress.length; i++){
+                        this.formData.naddress[i].locale = scope.optlang.code;
+                        this.formData.naddress[i].dateFormat = scope.df;
+                    }
+                }
+                if(this.formData.familyDetails){
+                    for(var i = 0; i < this.formData.familyDetails.length; i++){
+                        this.formData.familyDetails[i].locale = scope.optlang.code;
+                        this.formData.familyDetails[i].dateFormat = scope.df;
+                    }
+                }
+
                 console.log(JSON.stringify(this.formData));
+
                 resourceFactory.clientResource.save(this.formData, function (data) {
                     location.path('/viewclient/' + data.clientId);
                 });
