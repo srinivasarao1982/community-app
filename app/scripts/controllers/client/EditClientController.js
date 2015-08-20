@@ -9,14 +9,34 @@
             scope.showSavingOptions = 'false';
             scope.opensavingsproduct = 'false';
             resourceFactory.clientResource.get({clientId: routeParams.id, template:'true', staffInSelectedOfficeOnly:true}, function (data) {
+                //console.log(JSON.stringify(data));
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
                 scope.savingproducts = data.savingProductOptions;
                 scope.genderOptions = data.genderOptions;
                 scope.clienttypeOptions = data.clientTypeOptions;
                 scope.clientClassificationOptions = data.clientClassificationOptions;
-                scope.officeId = data.officeId;
+
+                /*Nirantara Changes*/
+
+                var clientData = data.clientDetailedData;
+                //console.log('clientData : ',JSON.stringify(clientData));
+
+                scope.salutations = clientData.salutation;
+                scope.martialStatusOptions = clientData.maritalStatus;
+                scope.ProfessionOptions = clientData.profession;
+                scope.eductionalQualificationOptions = clientData.educationQualification;
+                scope.annualIncomeOptions = clientData.annualIncome;
+                scope.landHoldings = clientData.landHolding;
+                scope.houseTypes = clientData.houseType;
+                scope.panForms = clientData.yesOrNo;
+                scope.districtOptins = clientData.district;
+                scope.stateOptions = clientData.state;
+                scope.identityProofOptions = clientData.identityProof;
+                scope.addressProofOptions = clientData.addressProof;
+                /*****/
                 scope.formData = {
+                    officeId: data.officeId,
                     firstname: data.firstname,
                     lastname: data.lastname,
                     middlename: data.middlename,
@@ -49,7 +69,7 @@
 
                 if (data.dateOfBirth) {
                     var dobDate = dateFilter(data.dateOfBirth, scope.df);
-                    scope.date.dateOfBirth = new Date(dobDate);
+                    scope.formData.dateOfBirth = new Date(dobDate);
                 }
 
                 var actDate = dateFilter(data.activationDate, scope.df);
@@ -78,7 +98,7 @@
                     }
                 }
                 if(scope.date.dateOfBirth){
-                    this.formData.dateOfBirth = dateFilter(scope.date.dateOfBirth,  scope.df);
+                    this.formData.dateOfBirth = dateFilter(scope.formData.dateOfBirth,  scope.df);
                 }
 
                 if(scope.date.submittedOnDate){
