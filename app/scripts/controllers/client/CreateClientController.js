@@ -96,6 +96,13 @@
             	scope.cancel = "#/clients"
             }
 
+            scope.addressabove = false;
+            scope.addressaboveSetting = function(){
+                if(!scope.addressabove){
+                    scope.formData.naddress[1] = scope.formData.naddress[0];
+                }
+            };
+
             scope.submit = function () {
                 var reqDate = dateFilter(scope.first.date, scope.df);
 
@@ -132,7 +139,8 @@
                 }
 
                 /*Temp Code*/
-                this.formData.naddress[0].addressType = this.formData.clientExt.panForm;
+                this.formData.naddress[0].addressType = this.formData.naddress[0].district;
+                this.formData.naddress[1].addressType = this.formData.naddress[1].state;
                 /********/
 
 
