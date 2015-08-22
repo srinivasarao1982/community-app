@@ -441,9 +441,10 @@
 			</div>
 
 			<hr/>
-			<legend><span class="required">*</span> Address as per KYC document - Same as above
-				<input type="checkbox" id="addressabove" ng-model="addressabove" ng-true-value="true"
-					   ng-false-value="false" ng-click="addressaboveSetting()" /></legend>
+			<legend>
+				<span class="required">*</span> Address as per KYC document - Same as above
+				<input type="checkbox" ng-model="addressabove" ng-change="addressaboveSetting()" ng-checked="addressabove" />
+			</legend>
 
 			<ng-form name="createclientformkycaddress">
 				<fieldset>
@@ -453,12 +454,12 @@
 							</div>
 							<div class="col-md-4"><input placeholder="HOUSE NUMBER" type="text" id="houseNumber1"
 														 name="houseNumber" ng-model="formData.naddress[1].houseNo"
-														 class="form-control" /></div>
+														 class="form-control" ng-disabled="addressabove"/></div>
 							<label class="control-label col-md-2" for="streetNumber">Street Number </label>
 
 							<div class="col-md-4"><input placeholder="STREET NUMBER" type="text" id="streetNumber1"
 														 name="streetNumber" ng-model="formData.naddress[1].streetNo"
-														 class="form-control" /></div>
+														 class="form-control" ng-disabled="addressabove"/></div>
 						</div>
 					</div>
 
@@ -468,7 +469,7 @@
 							<div class="col-md-10">
 								<input placeholder=""
 									   type="text" id="areaLocality1" name="areaLocality"
-									   ng-model="formData.naddress[1].areaLocality" class="form-control" />
+									   ng-model="formData.naddress[1].areaLocality" class="form-control" ng-disabled="addressabove" />
 							</div>
 						</div>
 					</div>
@@ -477,11 +478,11 @@
 						<div class="row">
 							<div class="col-md-2"><label class="control-label" for="landmark"> Landmark </label></div>
 							<div class="col-md-4"><input placeholder="" type="text" id="landmark1" name="landmark"
-														 ng-model="formData.naddress[1].landmark" class="form-control"/></div>
+														 ng-model="formData.naddress[1].landmark" class="form-control" ng-disabled="addressabove"/></div>
 							<label class="control-label col-md-2" for="villageTown">Village/Town </label>
 
 							<div class="col-md-4"><input placeholder="" type="text" id="villageTown1" name="villageTown"
-														 ng-model="formData.naddress[1].villageTown" class="form-control"/></div>
+														 ng-model="formData.naddress[1].villageTown" class="form-control" ng-disabled="addressabove"/></div>
 						</div>
 					</div>
 
@@ -496,7 +497,7 @@
 									   name="taluka1"
 									   ng-model="formData.naddress[1].taluka" class="form-control"
 									   required
-									   late-Validate/>
+									   late-Validate ng-disabled="addressabove"/>
 								<form-validate valattributeform="createclientformkycaddress" valattribute="taluka1"/>
 							</div>
 							<label class="control-label col-md-2" for="districtId"><span
@@ -504,7 +505,7 @@
 							<div class="col-md-4">
 								<select name="districtId1" ng-model="formData.naddress[1].district" class="form-control"
 										ng-options="district.id as district.name for district in districtOptins"
-										value="{{district.id}}" required late-validate="">
+										value="{{district.id}}" required late-validate ng-disabled="addressabove">
 									<option value="">{{'label.menu.select' | translate}}</option>
 								</select>
 								<form-validate valattributeform="createclientformkycaddress" valattribute="districtId1"/>
@@ -517,7 +518,8 @@
 							<div class="col-md-2"><label class="control-label"><span class="required">*</span>State</label></div>
 							<div class="col-md-4">
 								<select  name="stateId1" ng-model="formData.naddress[1].state" class="form-control"
-										 ng-options="state.id as state.name for state in stateOptions" value="{{state.id}}" required late-validate="">
+										 ng-options="state.id as state.name for state in stateOptions"
+										 value="{{state.id}}" required late-validate ng-disabled="addressabove">
 									<option value="">{{'label.menu.select' | translate}}</option>
 								</select>
 								<form-validate valattributeform="createclientformkycaddress" valattribute="stateId1"/>
@@ -528,7 +530,7 @@
 							<div class="col-md-4">
 								<input placeholder="" type="text" id="pincode1" name="pincode1"
 									   ng-model="formData.naddress[1].pinCode" class="form-control" required late-Validate
-									   number-format="" maxlength="6"/>
+									   number-format="" maxlength="6" ng-disabled="addressabove"/>
 								<form-validate valattributeform="createclientformkycaddress" valattribute="pincode1"/>
 							</div>
 						</div>
@@ -540,14 +542,15 @@
 								number </label></div>
 							<div class="col-md-4"><input placeholder="" type="text" id="landlineNumber1"
 														 name="landlineNumber" ng-model="formData.naddress[1].landlineNo"
-														 class="form-control" number-format="" maxlength="20"/></div>
+														 class="form-control" number-format="" maxlength="20" ng-disabled="addressabove"/></div>
 							<label class="control-label col-md-2" for="mobileNumber">Mobile number </label>
 
 							<div class="col-md-4">
 								<input placeholder="Mobile Number"
 									   type="text" id="mobileNumber1"
 									   name="mobileNumber1" ng-model="formData.naddress[1].mobileNo"
-									   class="form-control" required late-Validate number-format="" maxlength="11"/>
+									   class="form-control" required late-Validate number-format="" maxlength="10"
+									   ng-disabled="addressabove"/>
 								<form-validate valattributeform="createclientformkycaddress"
 											   valattribute="mobileNumber1"/>
 							</div>

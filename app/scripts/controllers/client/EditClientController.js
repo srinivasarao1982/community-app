@@ -8,8 +8,8 @@
             scope.clientId = routeParams.id;
             scope.showSavingOptions = 'false';
             scope.opensavingsproduct = 'false';
+            scope.addressabove = false;
             resourceFactory.clientResource.get({clientId: routeParams.id, template:'true', staffInSelectedOfficeOnly:true}, function (data) {
-                //console.log(JSON.stringify(data));
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
                 scope.savingproducts = data.savingProductOptions;
@@ -18,7 +18,6 @@
                 scope.clientClassificationOptions = data.clientClassificationOptions;
 
                 /*Nirantara Changes*/
-
                 var clientData = data.clientDetailedData;
                 //console.log('clientData : ',JSON.stringify(clientData));
 
@@ -85,8 +84,41 @@
                     scope.date.submittedOnDate = new Date(submittedOnDate);
                 }
 
+                scope.formData.clientExt = clientData.clientDataExt;
+                scope.formData.naddress = clientData.addressExtData || [];
+                if(scope.formData.naddress[1]){
+                    var addresObj0 = scope.formData.naddress[0];
+                    var addresObj1 = scope.formData.naddress[1];
+                    if(JSON.stringify(addresObj0) == JSON.stringify(addresObj1)){
+                        scope.addressabove = true;
+                    }
+                }
+                scope.formData.familyDetails = clientData.familyDetailsExtData || [];
+
+                for(var i in scope.formData.familyDetails){
+                    if (scope.formData.familyDetails[i].dateOfBirth) {
+                        var dateOfBirth = dateFilter(scope.formData.familyDetails[i].dateOfBirth, scope.df);
+                        scope.formData.familyDetails[i].dateOfBirth = new Date(dateOfBirth);
+                    }
+                }
+
             });
+
+            scope.addressaboveSetting = function(){
+                if(scope.addressabove){
+                    var idObj2 = "";
+                    if(scope.formData.naddress[1] && scope.formData.naddress[1].id){
+                        idObj2 = scope.formData.naddress[1].id;
+                    }
+                    scope.formData.naddress[1] = jQuery.extend(true, {},  scope.formData.naddress[0]);
+                    if(!isNaN(idObj2)){
+                        scope.formData.naddress[1].id = idObj2;
+                    }
+                }
+            };
+
             scope.submit = function () {
+                scope.addressaboveSetting();
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
                 if (scope.opensavingsproduct == 'false') {
@@ -97,13 +129,41 @@
                         this.formData.activationDate = dateFilter(scope.date.activationDate, scope.df);
                     }
                 }
-                if(scope.date.dateOfBirth){
-                    this.formData.dateOfBirth = dateFilter(scope.formData.dateOfBirth,  scope.df);
+
+                if (scope.formData.dateOfBirth) {
+                    this.formData.dateOfBirth = dateFilter(scope.formData.dateOfBirth, scope.df);
                 }
 
                 if(scope.date.submittedOnDate){
                     this.formData.submittedOnDate = dateFilter(scope.date.submittedOnDate,  scope.df);
                 }
+
+                for(var i in this.formData.familyDetails){
+                    if (this.formData.familyDetails[i].dateOfBirth) {
+                        this.formData.familyDetails[i].dateOfBirth = dateFilter(scope.formData.familyDetails[i].dateOfBirth, scope.df);
+                    }
+                }
+
+                /*Temp Code*/
+                this.formData.naddress[0].addressType = this.formData.naddress[0].district;
+                this.formData.naddress[1].addressType = this.formData.naddress[1].state;
+                /********/
+
+
+                if(this.formData.naddress){
+                    for(var i = 0; i < this.formData.naddress.length; i++){
+                        this.formData.naddress[i].locale = scope.optlang.code;
+                        this.formData.naddress[i].dateFormat = scope.df;
+                    }
+                }
+                if(this.formData.familyDetails){
+                    for(var i = 0; i < this.formData.familyDetails.length; i++){
+                        this.formData.familyDetails[i].locale = scope.optlang.code;
+                        this.formData.familyDetails[i].dateFormat = scope.df;
+                    }
+                }
+
+                console.log(JSON.stringify(this.formData));
 
                 resourceFactory.clientResource.update({'clientId': routeParams.id}, this.formData, function (data) {
                     location.path('/viewclient/' + routeParams.id);
