@@ -98,12 +98,34 @@
 
             scope.addressabove = false;
             scope.addressaboveSetting = function(){
-                if(!scope.addressabove){
-                    scope.formData.naddress[1] = scope.formData.naddress[0];
+                if(scope.addressabove){
+                    var idObj2 = "";
+                    if(scope.formData.naddress[1] && scope.formData.naddress[1].id){
+                        idObj2 = scope.formData.naddress[1].id;
+                    }
+                    scope.formData.naddress[1] = jQuery.extend(true, {},  scope.formData.naddress[0]);
+                    if(!isNaN(idObj2)){
+                        scope.formData.naddress[1].id = idObj2;
+                    }
+                    /* var naddressObj{
+                     houseNo: scope.formData.naddress[0].houseNo,
+                     streetNo: scope.formData.naddress[0].streetNo,
+                     areaLocality: scope.formData.naddress[0].areaLocality,
+                     landmark: scope.formData.naddress[0].landmark,
+                     villageTown: scope.formData.naddress[0].villageTown,
+                     taluka: scope.formData.naddress[0].taluka,
+                     pinCode: scope.formData.naddress[0].pinCode,
+                     landlineNo: scope.formData.naddress[0].landlineNo,
+                     mobileNo: scope.formData.naddress[0].mobileNo,
+                     district: scope.formData.naddress[0].district,
+                     state: scope.formData.naddress[0].state
+                     };
+                     scope.formData.naddress[1] = naddressObj;*/
                 }
             };
 
             scope.submit = function () {
+                scope.addressaboveSetting();
                 var reqDate = dateFilter(scope.first.date, scope.df);
 
                 this.formData.locale = scope.optlang.code;
