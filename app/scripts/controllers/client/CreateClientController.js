@@ -51,6 +51,7 @@
                 scope.stateOptions = clientData.state;
                 scope.identityProofOptions = clientData.identityProof;
                 scope.addressProofOptions = clientData.addressProof; 
+                scope.cfaOccupations = clientData.cfaOccupation; 
 
 
                 if (data.savingProductOptions.length > 0) {
