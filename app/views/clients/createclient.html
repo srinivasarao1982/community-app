@@ -574,6 +574,50 @@
             </div>
             
 
+            <hr/>
+            <legend>
+                Financial Details
+            </legend>
+
+            <div class="row"> 1. Source of income from the household (Family income) </div>    
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3"><strong>Occupation</strong></div>
+                    <div class="col-md-3"><strong>Annual revenue</strong></div>
+                    <div class="col-md-3"><strong>Annual expense</strong></div>
+                    <div class="col-md-3"><strong>Annual Surplus</strong></div>
+                </div>
+
+                 <div class="row"  ng-repeat="cfaOccupation in cfaOccupations">
+                    <div class="col-md-3">{{cfaOccupation.name}}</div>
+                    <div class="col-md-3"><input placeholder="revenue" type="text" id="revenue" name="revenue" ng-model="formData.revenue"     class="form-control" maxlength="5"  /></div>
+                    <div class="col-md-3"><input placeholder="expense" type="text" id="expense" name="expense" ng-model="formData.expense"     class="form-control" maxlength="5"  /></div>
+                    <div class="col-md-3"><input placeholder="expense" type="text" id="expense" name="expense" class="form-control" maxlength="5"  /></div>
+                </div>
+            </div>
+            
+            <div class="row"> 2. Present source of Loan (Bank/MFIS/Relatives) </div>    
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">Source</div>
+                    <div class="col-md-2">Purpose</div>
+                    <div class="col-md-2">Amount borrowed</div>
+                    <div class="col-md-2">Tenure (in months)</div>
+                    <div class="col-md-2">Amount o/s</div>
+                    <div class="col-md-2">Status</div>
+                </div>
+            </div>    
+
+
+
+
+
+
+            <hr/>
+            <legend>
+                Nomination
+            </legend>
 
 
             <hr/>
