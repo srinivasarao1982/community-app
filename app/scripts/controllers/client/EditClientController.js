@@ -10,6 +10,15 @@
             scope.opensavingsproduct = 'false';
             scope.addressabove = false;
 
+            scope.addFamilyDetails = function (){
+                var family = {};
+                scope.formData.familyDetails.push(family);
+            };
+
+            scope.deleteFamilyDetails = function (index) {
+                scope.formData.familyDetails.splice(index, 1);
+            };
+
             resourceFactory.clientResource.get({clientId: routeParams.id, template:'true', staffInSelectedOfficeOnly:true}, function (data) {
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
