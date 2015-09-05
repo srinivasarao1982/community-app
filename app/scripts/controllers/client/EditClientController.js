@@ -9,6 +9,7 @@
             scope.showSavingOptions = 'false';
             scope.opensavingsproduct = 'false';
             scope.addressabove = false;
+
             resourceFactory.clientResource.get({clientId: routeParams.id, template:'true', staffInSelectedOfficeOnly:true}, function (data) {
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
@@ -33,6 +34,8 @@
                 scope.stateOptions = clientData.state;
                 scope.identityProofOptions = clientData.identityProof;
                 scope.addressProofOptions = clientData.addressProof;
+                scope.cfaOccupations = clientData.cfaOccupation;
+                console.log("cfaOccupations : ",JSON.stringify(scope.cfaOccupations));
                 /*****/
                 scope.formData = {
                     officeId: data.officeId,
@@ -84,6 +87,11 @@
                     scope.date.submittedOnDate = new Date(submittedOnDate);
                 }
 
+                scope.formData.clientExt = {};
+                scope.formData.naddress = [{},{}];
+                scope.formData.clientIdentifierData = [{},{}];
+                scope.formData.familyDetails = [{}];
+
                 scope.formData.clientExt = clientData.clientDataExt;
                 scope.formData.naddress = clientData.addressExtData || [];
                 if(scope.formData.naddress[1]){
@@ -102,6 +110,10 @@
                     }
                 }
 
+                scope.formData.clientIdentifierData = clientData.clientIdentifierData || [];
+
+                console.log("clientIdentifierData : ",JSON.stringify(scope.formData.clientIdentifierData));
+
             });
 
             scope.addressaboveSetting = function(){
@@ -117,7 +129,7 @@
                 }
             };
 
-            scope.submit = function () {
+            scope.submitAndAccept = function () {
                 scope.addressaboveSetting();
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
