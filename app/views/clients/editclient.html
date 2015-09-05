@@ -85,6 +85,28 @@
 
 			<div class="form-group">
 				<div class="row">
+					<div class="col-md-2"><label class="control-label" for="firstname"><span
+							class="required">*</span>Fother/Spouse Name</label></div>
+					<div class="col-md-4">
+						<input placeholder="FIRST NAME" type="text" id="clientExtfirstname"
+							   name="clientExtfirstname" ng-model="formData.clientExt.spfirstname" class="form-control"
+							   required late-Validate/>
+						<form-validate valattributeform="createclientform" valattribute="clientExtfirstname"/>
+					</div>
+					<div class="col-md-3">
+						<input placeholder="MIDDLE NAME" type="text" id="clientExtmiddlename"
+							   ng-model="formData.clientExt.spmiddlename" class="form-control"/>
+					</div>
+					<div class="col-md-3">
+						<input placeholder="SURNAME" type="text" id="clientExtlastname" name="clientExtlastname"
+							   ng-model="formData.clientExt.splastname" class="form-control" required late-validate=""/>
+						<form-validate valattributeform="createclientform" valattribute="clientExtlastname"/>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
 					<div class="col-md-2"><label class="control-label"><span class="required">*</span>
 						Gender</label></div>
 					<div class="col-md-2">
