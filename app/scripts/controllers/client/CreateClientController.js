@@ -187,7 +187,12 @@
                     }
                 }
 
-                console.log(JSON.stringify(this.formData));
+                if(scope.cfaOccupations){
+                    this.formData.cfaOccupations = scope.cfaOccupations;
+                    for(var i = 0; i < this.formData.cfaOccupations.length; i++){
+                        this.formData.cfaOccupations[i].locale = scope.optlang.code;
+                    }
+                }
 
                 resourceFactory.clientResource.save(this.formData, function (data) {
                     location.path('/viewclient/' + data.clientId);

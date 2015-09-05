@@ -645,19 +645,22 @@
 
             <div class="row"> 1. Source of income from the household (Family income) </div>    
 
-            <div class="form-group">
-                <div class="row">
+            <div class="row">
+                <div class="form-group">
                     <div class="col-md-3"><strong>Occupation</strong></div>
                     <div class="col-md-3"><strong>Annual revenue</strong></div>
                     <div class="col-md-3"><strong>Annual expense</strong></div>
                     <div class="col-md-3"><strong>Annual Surplus</strong></div>
                 </div>
 
-                 <div class="row"  ng-repeat="cfaOccupation in cfaOccupations">
+                 <div class="form-group"  ng-repeat="cfaOccupation in cfaOccupations track by $index">
                     <div class="col-md-3">{{cfaOccupation.name}}</div>
-                    <div class="col-md-3"><input placeholder="revenue" type="text" id="revenue" name="revenue" ng-model="formData.revenue"     class="form-control" maxlength="5"  /></div>
-                    <div class="col-md-3"><input placeholder="expense" type="text" id="expense" name="expense" ng-model="formData.expense"     class="form-control" maxlength="5"  /></div>
-                    <div class="col-md-3"><input placeholder="expense" type="text" id="expense" name="expense" class="form-control" maxlength="5"  /></div>
+                    <div class="col-md-3"><input placeholder="revenue" type="text" id="revenue" name="revenue" ng-model="cfaOccupation.revenue" class="form-control"
+                                                  maxlength="5"  />
+                        <span class="error" ng-show="revenue.$error.pattern">Must be numeric</span>
+                    </div>
+                    <div class="col-md-3"><input placeholder="expense" type="text" id="expense" name="expense" ng-model="cfaOccupation.expense" class="form-control" maxlength="5"  /></div>
+                    <div class="col-md-3"><input placeholder="expense" type="text" id="expense" name="expense" ng-model="cfaOccupation.surplus" class="form-control" maxlength="5"  /></div>
                 </div>
             </div>
             
