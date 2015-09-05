@@ -9,17 +9,15 @@
             scope.first.submitondate = new Date ();
             scope.formData = {};
             scope.formData.clientExt = {};
-            scope.formData.naddress = [{
-
-            }];
+            scope.formData.naddress = [{},{}];
+            scope.formData.clientIdentifierData = [{},{}];
             scope.restrictDate = new Date();
             scope.showSavingOptions = false;
             scope.opensavingsproduct = false;
             scope.forceOffice = null;
             scope.clientObject = {};
-            scope.formData.familyDetails = [{
-                firstname : ''
-            }];
+
+            scope.formData.familyDetails = [{}];
 
             var requestParams = {staffInSelectedOfficeOnly:true};
             if (routeParams.groupId) {
@@ -30,7 +28,7 @@
             }
             resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
 
-                // clientObject = clientData; 
+                // clientObject = clientData;
                 data = clientData.clientBasicDetails;
                 scope.salutations = clientData.salutation;
                 scope.martialStatusOptions = clientData.maritalStatus;
@@ -39,7 +37,7 @@
                 scope.annualIncomeOptions = clientData.annualIncome;
                 scope.landHoldings = clientData.landHolding;
                 scope.houseTypes = clientData.houseType;
-                scope.panForms = clientData.yesOrNo;                
+                scope.panForms = clientData.yesOrNo;
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
                 scope.formData.officeId = scope.offices[0].id;
@@ -50,8 +48,8 @@
                 scope.districtOptins = clientData.district;
                 scope.stateOptions = clientData.state;
                 scope.identityProofOptions = clientData.identityProof;
-                scope.addressProofOptions = clientData.addressProof; 
-                scope.cfaOccupations = clientData.cfaOccupation; 
+                scope.addressProofOptions = clientData.addressProof;
+                scope.cfaOccupations = clientData.cfaOccupation;
 
 
                 if (data.savingProductOptions.length > 0) {
@@ -125,7 +123,16 @@
                 }
             };
 
-            scope.submit = function () {
+            scope.addFamilyDetails = function (){
+                var family = {};
+                scope.formData.familyDetails.push(family);
+            };
+
+            scope.deleteFamilyDetails = function (index) {
+                scope.formData.familyDetails.splice(index, 1);
+            };
+
+            scope.submitAndAccept = function () {
                 scope.addressaboveSetting();
                 var reqDate = dateFilter(scope.first.date, scope.df);
 
