@@ -27,7 +27,6 @@
                 requestParams.officeId = routeParams.officeId;
             }
             resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
-
                 // clientObject = clientData;
                 data = clientData.clientBasicDetails;
                 scope.salutations = clientData.salutation;
@@ -50,6 +49,7 @@
                 scope.identityProofOptions = clientData.identityProof;
                 scope.addressProofOptions = clientData.addressProof;
                 scope.cfaOccupations = clientData.cfaOccupation;
+                scope.addressTypes = clientData.addressTypes;
 
 
                 if (data.savingProductOptions.length > 0) {
@@ -168,11 +168,8 @@
                     }
                 }
 
-                /*Temp Code*/
-                this.formData.naddress[0].addressType = this.formData.naddress[0].district;
-                this.formData.naddress[1].addressType = this.formData.naddress[1].state;
-                /********/
-
+                this.formData.naddress[0].addressType = scope.addressTypes[0].id;
+                this.formData.naddress[1].addressType = scope.addressTypes[1].id;
 
                 if(this.formData.naddress){
                     for(var i = 0; i < this.formData.naddress.length; i++){
