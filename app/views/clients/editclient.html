@@ -656,12 +656,15 @@
 
 				<div class="form-group"  ng-repeat="cfaOccupation in cfaOccupations track by $index">
 					<div class="col-md-3">{{cfaOccupation.name}}</div>
-					<div class="col-md-3"><input placeholder="revenue" type="text" id="revenue" name="revenue" ng-model="cfaOccupation.revenue" class="form-control"
-												 maxlength="5"  />
-						<span class="error" ng-show="revenue.$error.pattern">Must be numeric</span>
+					<div class="col-md-3">
+						<input placeholder="revenue" type="text" id="revenue" name="revenue" ng-model="cfaOccupation.revenue" class="form-control" maxlength="5"/>
 					</div>
-					<div class="col-md-3"><input placeholder="expense" type="text" id="expense" name="expense" ng-model="cfaOccupation.expense" class="form-control" maxlength="5"  /></div>
-					<div class="col-md-3"><input placeholder="expense" type="text" id="expense" name="expense" ng-model="cfaOccupation.surplus" class="form-control" maxlength="5"  /></div>
+					<div class="col-md-3">
+						<input placeholder="expense" type="text" id="expense" name="expense" ng-model="cfaOccupation.expense" class="form-control" maxlength="5"/>
+					</div>
+					<div class="col-md-3">
+						<input placeholder="surplus" type="text" id="surplus" name="surplus" ng-model="cfaOccupation.surplus" class="form-control" maxlength="5"/>
+					</div>
 				</div>
 			</div>
 

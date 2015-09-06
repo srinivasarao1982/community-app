@@ -44,7 +44,6 @@
                 scope.identityProofOptions = clientData.identityProof;
                 scope.addressProofOptions = clientData.addressProof;
                 scope.cfaOccupations = clientData.cfaOccupation;
-                console.log("cfaOccupations : ",JSON.stringify(scope.cfaOccupations));
                 /*****/
                 scope.formData = {
                     officeId: data.officeId,
@@ -121,8 +120,17 @@
 
                 scope.formData.clientIdentifierData = clientData.clientIdentifierData || [];
 
-                console.log("clientIdentifierData : ",JSON.stringify(scope.formData.clientIdentifierData));
-
+                if(clientData.occupationDetailsData){
+                    for(var count in clientData.occupationDetailsData){
+                        for(var occCount in scope.cfaOccupations){
+                            if(scope.cfaOccupations[occCount].id == clientData.occupationDetailsData[count].occupationTypeId){
+                                scope.cfaOccupations[occCount].revenue = clientData.occupationDetailsData[count].annualRevenue;
+                                scope.cfaOccupations[occCount].expense = clientData.occupationDetailsData[count].annualExpense;
+                                scope.cfaOccupations[occCount].surplus = clientData.occupationDetailsData[count].annualSurplus;
+                            }
+                        }
+                    }
+                }
             });
 
             scope.addressaboveSetting = function(){
@@ -184,7 +192,12 @@
                     }
                 }
 
-                console.log(JSON.stringify(this.formData));
+                if(scope.cfaOccupations){
+                    this.formData.cfaOccupations = scope.cfaOccupations;
+                    for(var i = 0; i < this.formData.cfaOccupations.length; i++){
+                        this.formData.cfaOccupations[i].locale = scope.optlang.code;
+                    }
+                }
 
                 resourceFactory.clientResource.update({'clientId': routeParams.id}, this.formData, function (data) {
                     location.path('/viewclient/' + routeParams.id);
