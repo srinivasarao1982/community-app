@@ -648,25 +648,76 @@
                 </div>
 
                  <div class="form-group"  ng-repeat="cfaOccupation in cfaOccupations track by $index">
-                    <div class="col-md-3">{{cfaOccupation.name}}</div>
-                    <div class="col-md-3"><input placeholder="revenue" type="text" id="revenue" name="revenue" ng-model="cfaOccupation.revenue" class="form-control"
-                                                  maxlength="5"  />
-                        <span class="error" ng-show="revenue.$error.pattern">Must be numeric</span>
-                    </div>
-                    <div class="col-md-3"><input placeholder="expense" type="text" id="expense" name="expense" ng-model="cfaOccupation.expense" class="form-control" maxlength="5"  /></div>
-                    <div class="col-md-3"><input placeholder="surplus" type="text" id="surplus" name="surplus" ng-model="cfaOccupation.surplus" class="form-control" maxlength="5"  /></div>
+                     <ng-form name="formoccupationdetails" novalidate="" rc-submit="submit()">
+                        <div class="col-md-3">{{cfaOccupation.name}}</div>
+                        <div class="col-md-3">
+                            <input placeholder="revenue" type="text" id="revenue" name="revenue" ng-model="cfaOccupation.revenue" class="form-control"
+                                   ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate />
+                            <span ng-show="formoccupationdetails.revenue.$error.pattern">{{label.mustbenumeric | translate}}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <input placeholder="expense" type="text" id="expense" name="expense" ng-model="cfaOccupation.expense" class="form-control"
+                                   ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate  />
+                            <span ng-show="formoccupationdetails.expense.$error.pattern">{{label.mustbenumeric | translate}}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <input placeholder="surplus" type="text" id="surplus" name="surplus" ng-model="cfaOccupation.surplus" class="form-control"
+                                   ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate  />
+                            <span ng-show="formoccupationdetails.surplus.$error.pattern">{{label.mustbenumeric | translate}}</span>
+                        </div>
+                     </ng-form>
                 </div>
             </div>
             
-            <div class="row"> 2. Present source of Loan (Bank/MFIS/Relatives) </div>    
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-2">Source</div>
-                    <div class="col-md-2">Purpose</div>
-                    <div class="col-md-2">Amount borrowed</div>
-                    <div class="col-md-2">Tenure (in months)</div>
-                    <div class="col-md-2">Amount o/s</div>
-                    <div class="col-md-2">Status</div>
+            <div class="row"> 2. Present source of Loan (Bank/MFIS/Relatives) </div>
+            <div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-2">Source</div>
+                        <div class="col-md-2">Purpose</div>
+                        <div class="col-md-2">Amount borrowed</div>
+                        <div class="col-md-2">Tenure (in months)</div>
+                        <div class="col-md-2">Amount o/s</div>
+                        <div class="col-md-2">Status</div>
+                    </div>
+                    <div class="form-group"  ng-repeat="sourceOfLoan in sourceOfLoans track by $index">
+                        <ng-form name="formoccupationdetails" novalidate="" rc-submit="submit()">
+                            <div class="col-md-2">
+                                <select id="presentLoanSourceTypeId" name="presentLoanSourceTypeId" ng-model="sourceOfLoan.presentLoanSourceTypeId"
+                                        class="form-control"
+                                        ng-options="presentLoanSourceType.id as presentLoanSourceType.name for presentLoanSourceType in presentLoanSourceTypes"
+                                        value="{{presentLoanSourceType.id}}" required
+                                        late-validate="">
+                                    <option value=""> {{'label.menu.select' | translate}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <select id="presentLoanPurposeTypeId" name="presentLoanPurposeTypeId" ng-model="sourceOfLoan.presentLoanPurposeTypeId"
+                                        class="form-control"
+                                        ng-options="presentLoanPurposeType.id as presentLoanPurposeType.name for presentLoanPurposeType in presentLoanPurposeTypes"
+                                        value="{{presentLoanPurposeType.id}}" required
+                                        late-validate="">
+                                    <option value=""> {{'label.menu.select' | translate}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <input placeholder="Amount borrowed" type="text" id="amountborrowed" name="amountborrowed" ng-model="sourceOfLoan.amountborrowed" class="form-control"
+                                       ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate  />
+                            </div>
+                            <div class="col-md-2">
+                                <input placeholder="Tenure" type="text" id="tenure" name="tenure" ng-model="sourceOfLoan.tenure" class="form-control"
+                                       ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate  />
+                            </div>
+                            <div class="col-md-2">
+                                <input placeholder="Amount o/s" type="text" id="amountoutstanding" name="amountoutstanding" ng-model="sourceOfLoan.amountoutstanding" class="form-control"
+                                       ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate  />
+                            </div>
+                            <div class="col-md-2">
+                                <input placeholder="Status" type="text" id="status" name="status" ng-model="sourceOfLoan.status" class="form-control"
+                                       ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate  />
+                            </div>
+                        </ng-form>
+                    </div>
                 </div>
             </div>
 
