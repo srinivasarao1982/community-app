@@ -103,14 +103,23 @@
 
                 scope.formData.clientExt = clientData.clientDataExt;
                 scope.formData.naddress = clientData.addressExtData || [];
-                if(scope.formData.naddress[1]){
+                if(scope.formData.naddress == '' || scope.formData.naddress == null || !scope.formData.naddress){
+                    scope.formData.naddress = [{},{}];
+                }else if(scope.formData.naddress[1]){
                     var addresObj0 = scope.formData.naddress[0];
                     var addresObj1 = scope.formData.naddress[1];
                     if(JSON.stringify(addresObj0) == JSON.stringify(addresObj1)){
                         scope.addressabove = true;
                     }
+                }else{
+                    scope.formData.naddress.push({});
                 }
                 scope.formData.familyDetails = clientData.familyDetailsExtData || [];
+                if(scope.formData.familyDetails == '' || scope.formData.familyDetails == null || !scope.formData.familyDetails){
+                    scope.formData.familyDetails = [{}];
+                }else if(scope.formData.familyDetails.length == 0){
+                    scope.formData.familyDetails = [{}];
+                }
 
                 for(var i in scope.formData.familyDetails){
                     if (scope.formData.familyDetails[i].dateOfBirth) {
@@ -120,6 +129,13 @@
                 }
 
                 scope.formData.clientIdentifierData = clientData.clientIdentifierData || [];
+                if(scope.formData.clientIdentifierData == '' || scope.formData.clientIdentifierData == null || !scope.formData.clientIdentifierData){
+                    scope.formData.clientIdentifierData = [{},{}];
+                }else if(scope.formData.clientIdentifierData.lenght == 0){
+                    scope.formData.clientIdentifierData = [{},{}];
+                }else if(scope.formData.clientIdentifierData.lenght == 1){
+                    scope.formData.clientIdentifierData.push({});
+                }
 
                 if(clientData.occupationDetailsData){
                     for(var count in clientData.occupationDetailsData){
