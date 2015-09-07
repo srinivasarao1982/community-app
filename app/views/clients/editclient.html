@@ -559,41 +559,35 @@
 			<div class="row">
 
 				<div class="form-group">
-					<div class="col-md-2">First Name</div>
-					<div class="col-md-2">Last Name</div>
+					<div class="col-md-2">Name</div>
 					<div class="col-md-2">Relationship</div>
-					<div class="col-md-1">Sex</div>
+					<div class="col-md-2">Sex</div>
 					<div class="col-md-1">Age</div>
 					<div class="col-md-2">Occupation</div>
 					<div class="col-md-2">Educational Status</div>
+					<div class="col-md-1">&nbsp;</div>
 				</div>
 
 				<div class="form-group" ng-repeat="family in formData.familyDetails track by $index">
 					<ng-form name="formfamilydetails" novalidate="" rc-submit="submit()">
 						<div class="col-md-2">
-							<input placeholder="FIRST NAME" type="text" id="spfirstname"
+							<input placeholder="NAME" type="text" id="spfirstname"
 								   name="spfirstname" ng-model="family.firstname"
 								   class="form-control" required late-Validate/>
 							<form-validate valattributeform="formfamilydetails" valattribute="spfirstname"/>
 						</div>
 
 						<div class="col-md-2">
-							<input placeholder="SURNAME"
-								   type="text" id="splastname" name="splastname"
-								   ng-model="family.lastname" class="form-control"/>
-						</div>
-
-						<div class="col-md-2">
 							<select id="relationship" name="relationship" ng-model="family.relationship"
 									class="form-control"
-									ng-options="Profession.id as Profession.name for Profession in ProfessionOptions"
-									value="{{Profession.id}}" required late-validate="">
+									ng-options="familyrelation.id as familyrelation.name for familyrelation in familyrelationShipOptions"
+									value="{{familyrelation.id}}" required late-validate="">
 								<option value=""> {{'label.menu.select' | translate}}</option>
 							</select>
 							<form-validate valattributeform="formfamilydetails" valattribute="relationship"/>
 						</div>
 
-						<div class="col-md-1">
+						<div class="col-md-2">
 							<select id="gender" name="gender" ng-model="family.gender" class="form-control"
 									ng-options="gender.id as gender.name for gender in genderOptions"
 									value="{{gender.id}}" required late-Validate>
@@ -619,7 +613,7 @@
 							<form-validate valattributeform="formfamilydetails" valattribute="ProfessionId"/>
 						</div>
 
-						<div class="col-md-1">
+						<div class="col-md-2">
 							<select id="eductionalQualificationId" name="eductionalQualificationId" ng-model="family.educationalStatus"
 									class="form-control"
 									ng-options="eductionalQualification.id as eductionalQualification.name for eductionalQualification in eductionalQualificationOptions"
@@ -680,15 +674,208 @@
 				</div>
 			</div>
 
-
-
-
-
-
 			<hr/>
 			<legend>
 				Nomination
 			</legend>
+			<div class="row">For Ratna Bachat</div>
+			<br>
+			<div class="row">
+
+				<div class="form-group">
+					<div class="col-md-2">Title</div>
+					<div class="col-md-2">Name of the Nominee</div>
+					<div class="col-md-2">Gender</div>
+					<div class="col-md-2">Age</div>
+					<div class="col-md-2">Relationship with Borrower</div>
+					<div class="col-md-2">Nominee DOB</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-2">
+						<select id="nomineetitle" name="nomineetitle" ng-model="formData.nomineeDetails[0].salutation" class="form-control"
+								ng-options="salutation.id as salutation.name for salutation in salutations"
+								value="{{salutation.id}}" required late-Validate>
+							<option value=""> {{'label.menu.select' | translate}}</option>
+						</select>
+						<form-validate valattributeform="createclientform" valattribute="nomineetitle"/>
+					</div>
+
+					<div class="col-md-2">
+						<input placeholder="NOMINEE NAME" type="text" id="nomineename"
+							   name="nomineename" ng-model="formData.nomineeDetails[0].name"
+							   class="form-control" required late-Validate/>
+						<form-validate valattributeform="createclientform" valattribute="nomineename"/>
+					</div>
+
+					<div class="col-md-2">
+						<select id="nomineegender" name="nomineegender" ng-model="formData.nomineeDetails[0].gender" class="form-control"
+								ng-options="gender.id as gender.name for gender in genderOptions"
+								value="{{gender.id}}" required late-Validate>
+							<option value=""> {{'label.menu.gender' | translate}}</option>
+						</select>
+						<form-validate valattributeform="createclientform" valattribute="nomineegender"/>
+					</div>
+
+					<div class="col-md-2">
+						<input placeholder="Age" type="text" id="nomineespAge" name="nomineespAge" ng-model="formData.nomineeDetails[0].age"
+							   class="form-control" maxlength="2" number-format="" required
+							   late-validate=""/>
+						<form-validate valattributeform="createclientform" valattribute="nomineespAge"/>
+					</div>
+
+					<div class="col-md-2">
+						<select id="nomineerelationship" name="nomineerelationship" ng-model="formData.nomineeDetails[0].relationship"
+								class="form-control"
+								ng-options="familyrelation.id as familyrelation.name for familyrelation in familyrelationShipOptions"
+								value="{{familyrelation.id}}" required late-validate="">
+							<option value=""> {{'label.menu.select' | translate}}</option>
+						</select>
+						<form-validate valattributeform="createclientform" valattribute="nomineerelationship"/>
+					</div>
+
+					<div class="col-md-2">
+						<input id="nomineedateofbirth" type="text" name="nomineedateofbirth" datepicker-pop="dd MMMM yyyy"
+							   ng-model="formData.nomineeDetails[0].dateOfBirth" is-open="opened1" class="form-control"
+							   required
+							   late-Validate/>
+						<form-validate valattributeform="createclientform" valattribute="nomineedateofbirth"/>
+					</div>
+
+
+				</div>
+				<div class="form-group">
+
+					<div class="col-md-3">Guardian's name if Nominee is Minor</div>
+					<div class="col-md-2">
+						<input placeholder="Guardian's name if Nominee is Minor" type="text" id="guardianName"
+							   name="guardianName" ng-model="formData.nomineeDetails[0].guardianName"
+							   class="form-control" />
+					</div>
+
+
+					<div class="col-md-3"><label class="control-label"><span
+							class="required">*</span>Nominee / Guardian Address</label></div>
+					<div class="col-md-4">
+						<input placeholder="Nominee / Guardian Address" type="text" id="nomineeaddress0"
+							   name="nomineeaddress0" ng-model="formData.nomineeDetails[0].address"
+							   class="form-control"
+							   required late-Validate/>
+						<form-validate valattributeform="createclientform" valattribute="nomineeaddress0"/>
+					</div>
+				</div>
+			</div>
+
+			<hr/>
+			<div class="row">For Insurance</div>
+			<br>
+			<div class="row">
+
+				<div class="form-group">
+					<div class="col-md-2">Title</div>
+					<div class="col-md-2">Name of the Nominee</div>
+					<div class="col-md-2">Gender</div>
+					<div class="col-md-2">Age</div>
+					<div class="col-md-2">Relationship with Borrower</div>
+					<div class="col-md-2">Nominee DOB</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-2">
+						<select id="nomineetitle1" name="nomineetitle1" ng-model="formData.nomineeDetails[1].salutation"
+								class="form-control"
+								ng-options="salutation.id as salutation.name for salutation in salutations"
+								value="{{salutation.id}}" required late-Validate>
+							<option value=""> {{'label.menu.select' | translate}}</option>
+						</select>
+						<form-validate valattributeform="createclientform" valattribute="nomineetitle1"/>
+					</div>
+
+					<div class="col-md-2">
+						<input placeholder="NOMINEE NAME" type="text" id="nomineename1"
+							   name="nomineename1" ng-model="formData.nomineeDetails[1].name"
+							   class="form-control" required late-Validate/>
+						<form-validate valattributeform="createclientform" valattribute="nomineename1"/>
+					</div>
+
+					<div class="col-md-2">
+						<select id="nomineegender1" name="nomineegender1" ng-model="formData.nomineeDetails[1].gender"
+								class="form-control"
+								ng-options="gender.id as gender.name for gender in genderOptions"
+								value="{{gender.id}}" required late-Validate>
+							<option value=""> {{'label.menu.gender' | translate}}</option>
+						</select>
+						<form-validate valattributeform="createclientform" valattribute="nomineegender1"/>
+					</div>
+
+					<div class="col-md-2">
+						<input placeholder="Age" type="text" id="nomineespAge1" name="nomineespAge1"
+							   ng-model="formData.nomineeDetails[1].age"
+							   class="form-control" maxlength="2" number-format="" required
+							   late-validate=""/>
+						<form-validate valattributeform="createclientform" valattribute="nomineespAge1"/>
+					</div>
+
+					<div class="col-md-2">
+						<select id="nomineerelationship1" name="nomineerelationship1"
+								ng-model="formData.nomineeDetails[1].relationship"
+								class="form-control"
+								ng-options="familyrelation.id as familyrelation.name for familyrelation in familyrelationShipOptions"
+								value="{{familyrelation.id}}" required late-validate="">
+							<option value=""> {{'label.menu.select' | translate}}</option>
+						</select>
+						<form-validate valattributeform="createclientform" valattribute="nomineerelationship1"/>
+					</div>
+
+					<div class="col-md-2">
+						<input id="nomineedateofbirth1" type="text" name="nomineedateofbirth1"
+							   datepicker-pop="dd MMMM yyyy"
+							   ng-model="formData.nomineeDetails[1].dateOfBirth" is-open="opened1" class="form-control"
+							   required
+							   late-Validate/>
+						<form-validate valattributeform="createclientform" valattribute="nomineedateofbirth1"/>
+					</div>
+				</div>
+
+				<div class="form-group">
+
+					<div class="col-md-3">Guardian's name if Nominee is Minor</div>
+					<div class="col-md-2">
+						<input placeholder="Guardian's name if Nominee is Minor" type="text" id="guardianName1"
+							   name="guardianName1" ng-model="formData.nomineeDetails[1].guardianName"
+							   class="form-control" />
+					</div>
+
+
+					<div class="col-md-3"><label class="control-label"><span
+							class="required">*</span>Nominee / Guardian Address</label></div>
+					<div class="col-md-4">
+						<input placeholder="Nominee / Guardian Address" type="text" id="nomineeaddress1"
+							   name="nomineeaddress1" ng-model="formData.nomineeDetails[1].address"
+							   class="form-control"
+							   required late-Validate/>
+						<form-validate valattributeform="createclientform" valattribute="nomineeaddress1"/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-3"><label class="control-label"><span
+							class="required"></span>Guardian Date of Birth</label></div>
+					<div class="col-md-3">
+						<input id="guardianDateOfBirth1" type="text" name="guardianDateOfBirth1"
+							   datepicker-pop="dd MMMM yyyy"
+							   ng-model="formData.nomineeDetails[1].guardianDateOfBirth" is-open="opened1" class="form-control"/>
+					</div>
+					<div class="col-md-3"><label class="control-label" for="firstname"><span
+							class="required"></span>Guardian Relationship</label></div>
+					<div class="col-md-3">
+						<input placeholder="Guardian Relationship" type="text" id="guardianRelationship1"
+							   name="guardianRelationship1"
+							   ng-model="formData.nomineeDetails[1].guardianRelationship"
+							   class="form-control"/>
+					</div>
+				</div>
+			</div>
 
 
 			<hr/>
