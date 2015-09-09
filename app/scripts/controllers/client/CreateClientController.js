@@ -19,6 +19,7 @@
             scope.clientObject = {};
 
             scope.formData.familyDetails = [{}];
+            scope.sourceOfLoans = [{},{}];
 
             var requestParams = {staffInSelectedOfficeOnly:true};
             if (routeParams.groupId) {
@@ -28,6 +29,8 @@
                 requestParams.officeId = routeParams.officeId;
             }
             resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
+                console.log('clientData.presentLoanSourceTypes-',clientData.presentLoanSourceTypes);
+                console.log('clientData.presentLoanPurposeTypes-',clientData.presentLoanPurposeTypes);
                 // clientObject = clientData;
                 data = clientData.clientBasicDetails;
                 scope.salutations = clientData.salutation;
@@ -52,6 +55,8 @@
                 scope.cfaOccupations = clientData.cfaOccupation;
                 scope.addressTypes = clientData.addressTypes;
                 scope.familyrelationShipOptions = clientData.familyrelationShip;
+                scope.presentLoanSourceTypes = clientData.presentLoanSourceTypes
+                scope.presentLoanPurposeTypes = clientData.presentLoanPurposeTypes;
 
 
                 if (data.savingProductOptions.length > 0) {
