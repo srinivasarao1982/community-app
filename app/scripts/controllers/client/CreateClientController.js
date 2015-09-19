@@ -1,6 +1,7 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
         CreateClientController: function (scope, resourceFactory, location, http, dateFilter, API_VERSION, $upload, $rootScope, routeParams) {
+            scope.isDatafilled = false;
             scope.offices = [];
             scope.staffs = [];
             scope.savingproducts = [];
@@ -57,7 +58,7 @@
                 scope.familyrelationShipOptions = clientData.familyrelationShip;
                 scope.presentLoanSourceTypes = clientData.presentLoanSourceTypes
                 scope.presentLoanPurposeTypes = clientData.presentLoanPurposeTypes;
-
+                scope.autofillHolder = "";
 
                 if (data.savingProductOptions.length > 0) {
                     scope.showSavingOptions = true;
@@ -78,6 +79,280 @@
                 }
             });
 
+            
+            scope.autoFill = function (){
+
+                if(scope.autofillHolder.length > 25){
+                    if(window.DOMParser){
+                            parser = new DOMParser();
+                    }
+                    else{
+                        alert("Browser not supported!");
+                        return null;
+                    }
+
+                    xmlDoc = parser.parseFromString(scope.autofillHolder, 'text/xml');
+                    var barCodedData = xmlDoc.getElementsByTagName("PrintLetterBarcodeData");
+                    if(barCodedData != undefined && barCodedData != null  && barCodedData != "" ){
+                        var barCodedDataObject = barCodedData[0];
+
+                        scope.formData.clientExt.aadhaarNo = barCodedDataObject.getAttribute("uid");
+                    // Name derived
+                        var fullName = barCodedDataObject.getAttribute("name").toUpperCase();
+                        var names = fullName.split(" "); 
+                        var isFirstNameDerived = false;
+                        var isMidNameDerived = false;
+                        var isLastNameDerived = false;
+                        var fistName = "";
+                        var midName = "";
+                        var lastName = "";
+
+                    // Need to improve the name splitting logic for all scenarios
+
+                        if(names.length == 2)
+                        {
+                            isMidNameDerived = true;
+                        }
+
+
+                        for (var i = 0; i < names.length; i++) {
+                            
+                            if(!isFirstNameDerived)
+                            {
+                                fistName =  names[i];
+                                isFirstNameDerived=true;
+                            }else if(!isMidNameDerived)
+                            {
+                                midName =  names[i];
+                                isMidNameDerived =  true;
+                            }else{
+                                lastName = lastName + names[i];
+                            }
+                                
+                        }
+                        scope.formData.firstname = fistName;
+                        scope.formData.middlename = midName;
+                        scope.formData.lastname = lastName;
+
+                    // Spouse or fother name derived
+
+                        var co = barCodedDataObject.getAttribute("co").toUpperCase();
+                        var cos =  co.split(" ");                            
+                        var iscoFirstNameDerived = false;
+                        var iscoMidNameDerived = false;
+                        var iscoLastNameDerived = false;
+                        var cofistName = "";
+                        var comidName = "";
+                        var colastName = "";
+                        var startCos = 0;
+
+
+                        if (co.indexOf("/") > -1 ) {
+                            startCos = 1;
+                        };
+
+
+                        if(cos.length == 3)
+                        {
+                            iscoMidNameDerived = true;
+                        } else if(cos.length == 1){
+                            startCos = 0;   
+                        }
+
+                    // Need to improve the name splitting logic for all scenarios
+                        for (var i = startCos; i < cos.length; i++) {
+                                if(!iscoFirstNameDerived)
+                                    {
+
+                                        if( (cos[i].toLowerCase().indexOf("late") > -1 && cos[i].length <= 6 ) || cos[i].length <= 2 ) {
+                                            cofistName =  cofistName + " " +  cos[i];    
+                                        } else{
+                                            cofistName = cofistName + " " + cos[i];    
+                                            iscoFirstNameDerived=true;    
+                                        }
+                                        
+                                        
+                                }else if(!iscoMidNameDerived)
+                                    {
+                                        comidName =  cos[i];
+                                        iscoMidNameDerived =  true;
+                                }else{
+                                        colastName = colastName + cos[i];
+                                }
+
+                        }
+
+                        scope.formData.clientExt.spfirstname = cofistName;
+                        scope.formData.clientExt.spmiddlename = comidName;
+                        scope.formData.clientExt.splastname = colastName;
+
+
+                    // date of birth derived
+                         var dob =  barCodedDataObject.getAttribute("dob");
+
+                         if(dob != undefined && dob != null  && dob != "" ){
+                                var dates = dob.split("/");
+                                scope.formData.dateOfBirth = new Date(dates[2],dates[1]-1,dates[0]);
+                         }else{
+                            var yob =  barCodedDataObject.getAttribute("yob");                            
+                            scope.formData.dateOfBirth = new Date(yob,6,1);
+                         }
+
+
+                    // Gender
+                    
+                         var gender =  barCodedDataObject.getAttribute("gender");
+                         var genderSearchString = "female";
+                         if(gender.toLowerCase() == "m"){
+                            genderSearchString = "male";
+                         }
+                        
+
+                        var genderObj =  _.find(scope.genderOptions, function(item) {return item.name.toLowerCase() == genderSearchString;});   
+
+                        console.log("genderObj: " + genderObj);
+
+                        scope.formData.genderId = genderObj.id;
+
+                     // Salutation
+                        
+                        var salSearchString = "mrs";
+                        var marStatSearchString = "married";
+
+
+                        if(cos.length == 1){
+                            salSearchString = "mrs"
+                            marStatSearchString = "married";                            
+                        }else if(cos[0].toLowerCase().indexOf("d/o") > -1){
+                           salSearchString = "ms";
+                           marStatSearchString = "single"; 
+                        }else if (cos[0].toLowerCase().indexOf("late") > -1 && cos[0].length <= 6  ){
+                            salSearchString = "mrs"
+                            marStatSearchString = "widow"; 
+                        }else if(cos[1].toLowerCase().indexOf("late") > -1 && cos[1].length <= 6  ){
+                            salSearchString = "mrs"
+                            marStatSearchString = "widow"; 
+                        }
+                        
+                        var salObj =  _.find(scope.salutations, function(item) {return item.name.toLowerCase() == salSearchString;});   
+                        if(salObj != undefined && salObj != null && salObj != ""){
+                            scope.formData.clientExt.salutation = salObj.id;
+                        }    
+
+                    // Marital status
+                    
+                        var marStatObj =  _.find(scope.martialStatusOptions, function(item) {return item.name.toLowerCase() == marStatSearchString;});   
+
+                        if(marStatObj != undefined && marStatObj != null && marStatObj != ""){
+                            scope.formData.clientExt.maritalStatus = marStatObj.id;    
+                        }
+
+                    // Address details
+
+                        var houseNo =  barCodedDataObject.getAttribute("house");
+                        var street =  barCodedDataObject.getAttribute("street");
+                        var loc =  barCodedDataObject.getAttribute("loc");
+                        var vtc =  barCodedDataObject.getAttribute("vtc");
+                        var po =  barCodedDataObject.getAttribute("po");
+                        var dist =  barCodedDataObject.getAttribute("dist");
+                        var subdist =  barCodedDataObject.getAttribute("subdist");
+                        var state =  barCodedDataObject.getAttribute("state");
+                        var pc =  barCodedDataObject.getAttribute("pc");
+
+                        if(houseNo != undefined && houseNo != null){
+                            scope.formData.naddress[0].houseNo = houseNo.toUpperCase();;
+                            scope.formData.naddress[1].houseNo = houseNo.toUpperCase();;        
+                        }
+
+                        if(street != undefined && street != null){
+                            scope.formData.naddress[0].streetNo = street.toUpperCase();;
+                            scope.formData.naddress[1].streetNo = street.toUpperCase();;      
+                        }
+                        
+                        if(loc != undefined && loc != null){
+                            scope.formData.naddress[0].areaLocality = loc.toUpperCase();;
+                            scope.formData.naddress[1].areaLocality = loc.toUpperCase();;
+                        }
+
+                        if(po != undefined && po != null){
+                             scope.formData.naddress[0].landmark = po.toUpperCase();;
+                             scope.formData.naddress[1].landmark = po.toUpperCase();;  
+                        }    
+
+                        if(vtc != undefined && vtc != null){
+                            scope.formData.naddress[0].villageTown = vtc.toUpperCase();;
+                            scope.formData.naddress[1].villageTown = vtc.toUpperCase();;      
+                        }
+                        
+                        if(pc != undefined && pc != null){
+                            scope.formData.naddress[0].pinCode = pc.toUpperCase();;
+                            scope.formData.naddress[1].pinCode = pc.toUpperCase();;
+                        }
+                        
+                        if(subdist != undefined && subdist != null){
+                            scope.formData.naddress[0].taluka = subdist.toUpperCase();;
+                            scope.formData.naddress[0].taluka = subdist.toUpperCase();;
+                        }
+
+
+                        if( dist != undefined && dist != null ){
+                            var distObj =  _.find(scope.districtOptins, function(item) {return item.name.toLowerCase() == dist.toLowerCase();});   
+                            
+                            if(distObj != undefined && distObj != null ) {
+                                scope.formData.naddress[0].district = distObj.id;
+                                scope.formData.naddress[1].district = distObj.id;
+                            }
+
+                        }
+
+                        
+                        if( state != undefined && state != null ){
+                            var stateObj =  _.find(scope.stateOptions, function(item) {return item.name.toLowerCase() == state.toLowerCase();});   
+                            if( stateObj != undefined && stateObj != null ){
+                                scope.formData.naddress[0].state = stateObj.id;
+                                scope.formData.naddress[1].state = stateObj.id;
+                            }
+
+                        }
+
+
+
+                        // Identity and address proof
+                        
+
+                        var idenityObj =  _.find(scope.identityProofOptions, function(item) {return item.name.toLowerCase() == "aadhaar";});   
+                            
+                        if( idenityObj != undefined && idenityObj != null ){
+                            scope.formData.clientIdentifierData[0].documentTypeId = idenityObj.id;
+                        }
+                        scope.formData.clientIdentifierData[0].documentKey = barCodedDataObject.getAttribute("uid");
+
+
+                        
+                        var addressObj =  _.find(scope.addressProofOptions, function(item) {return item.name.toLowerCase() == "aadhaar";});   
+                            
+                        if( addressObj != undefined && addressObj != null ){
+                            scope.formData.clientIdentifierData[1].documentTypeId = addressObj.id;  
+                        }
+                        scope.formData.clientIdentifierData[1].documentKey = barCodedDataObject.getAttribute("uid");
+
+
+                        scope.addressabove = true;
+                        scope.isDatafilled = true;                           
+                        scope.autofillHolder = "";
+
+                    }
+                    else{
+                        alert("Invalid read! Please read again.");    
+                    }    
+
+                }
+                else{
+                    alert("Invalid read! Please read again.");    
+                }
+
+            };
+            
             scope.changeOffice = function (officeId) {
                 resourceFactory.clientTemplateResource.get({staffInSelectedOfficeOnly:true, officeId: officeId
                 }, function (data) {
