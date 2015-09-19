@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        ViewClientController: function (scope, routeParams, route, location, resourceFactory, http, $modal, API_VERSION, $rootScope, $upload) {
+        ViewClientController: function (scope, routeParams, route, location, resourceFactory, http, $modal, API_VERSION, $rootScope, $upload, dateFilter) {
             scope.client = [];
             scope.identitydocuments = [];
             scope.buttons = [];
@@ -26,8 +26,44 @@
             resourceFactory.clientResource.get({clientId: routeParams.id}, function (data) {
                 scope.client = data;
                 scope.clientData = data.clientDetailedData;
-                scope.communicationAddress = data.clientDetailedData.addressExtData[0];
-                scope.kycAddress = data.clientDetailedData.addressExtData[1];
+                console.log(JSON.stringify(scope.clientData));
+                scope.formData.coClientData = [{}];
+                scope.coClientData = "";
+                if(scope.clientData.coapplicantDetailsData.coapplicantData.length > 0){
+                    scope.formData.coClientData = scope.clientData.coapplicantDetailsData.coapplicantData;
+                    for(var i in scope.formData.coClientData) {
+                        if (scope.formData.coClientData[i].dateOfBirth) {
+                            var dateOfBirth = dateFilter(scope.formData.coClientData[i].dateOfBirth, scope.df);
+                            scope.formData.coClientData[i].dateOfBirth = new Date(dateOfBirth);
+                        }
+                    }
+                    var coDisplayName = "";
+                    if(scope.formData.coClientData[0].firstName){
+                        coDisplayName = scope.formData.coClientData[0].firstName;
+                    }
+                    if(scope.formData.coClientData[0].middleName){
+                        coDisplayName += " "+scope.formData.coClientData[0].middleName;
+                    }
+                    if(scope.formData.coClientData[0].lastName){
+                        coDisplayName += " "+scope.formData.coClientData[0].lastName;
+                    }
+                    scope.formData.coClientData[0].coDisplayName = coDisplayName;
+                }
+                if(scope.formData.coClientData[0]){
+                    scope.coClientDataDisplay = scope.formData.coClientData[0];
+                }
+                console.log(JSON.stringify(scope.coClientDataDisplay));
+
+                for(var i in data.clientDetailedData.addressExtData){
+                    if(data.clientDetailedData.addressExtData[i].addressTypeLable == 'Comuniation Address'){
+                        scope.communicationAddress = data.clientDetailedData.addressExtData[i];
+                    }else if(data.clientDetailedData.addressExtData[i].addressTypeLable == 'KYC address'){
+                        scope.kycAddress = data.clientDetailedData.addressExtData[i];
+                    }else if(data.clientDetailedData.addressExtData[i].addressTypeLable == 'Spouse Address'){
+                        scope.correspondenceAddress = data.clientDetailedData.addressExtData[i];
+                    }
+                }
+
                 scope.isClosedClient = scope.client.status.value == 'Closed';
                 scope.staffData.staffId = data.staffId;
                 if (data.imagePresent) {
@@ -670,7 +706,7 @@
         }
     });
 
-    mifosX.ng.application.controller('ViewClientController', ['$scope', '$routeParams', '$route', '$location', 'ResourceFactory', '$http', '$modal', 'API_VERSION', '$rootScope', '$upload', mifosX.controllers.ViewClientController]).run(function ($log) {
+    mifosX.ng.application.controller('ViewClientController', ['$scope', '$routeParams', '$route', '$location', 'ResourceFactory', '$http', '$modal', 'API_VERSION', '$rootScope', '$upload', 'dateFilter', mifosX.controllers.ViewClientController]).run(function ($log) {
         $log.info("ViewClientController initialized");
     });
 }(mifosX.controllers || {}));

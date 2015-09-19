@@ -198,7 +198,7 @@
 				</div>
 
 				<div class="row">
-					<div class="col-md-9 col-sm-9" >
+					<div class="col-md-9 col-sm-9">
 						<legend>Applicant Details</legend>
 						<div class="row">
 							<div class="col-md-2 col-sm-2" >
@@ -257,7 +257,7 @@
 
 								<div class="row">
 									<div class="col-md-4 col-sm-4">
-										<strong   class="pull-right">DoB:</strong>
+										<strong   class="pull-right">Date of Birth:</strong>
 									</div>	
 									<div class="col-md-8 col-sm-8">
 										{{client.dateOfBirth | DateFormat}}
@@ -372,7 +372,7 @@
 
 						<hr/>	<!--End of Personal info-->
 
-						<legend>Communication Address</legend>
+						<legend>Applicant Communication Address</legend>
 						<div class="col-md-6 col-sm-6" >
 
 						<div class="row">
@@ -477,14 +477,12 @@
 										
 								</div>
 						</div>
-
-
-				<hr/>
+					<hr/>
 				</div>
 
-				<legend>Loan Details</legend>
-					<div class="col-md-3  col-sm-3" >
 
+					<div class="col-md-3  col-sm-3" >
+						<legend>Loan Details</legend>
 					<div class="row">
 						
 									<div class="col-md-6 col-sm-6 " >
@@ -587,14 +585,180 @@
 										
 								</div>
 
-
-
-
-
 					 </div>
 				</div>
 			</div>
+
+			<hr/>
+			<div class="col-md-12 col-sm-12">
+				<div class="row">
+					<hr/>
+					<div class="col-md-9 col-sm-9">
+						<legend>Co Applicant Details ({{coClientDataDisplay.relationshipLabel}})</legend>
+						<div class="row">
+
+							<div class="col-md-6 col-sm-6">
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>Co Applicant Name:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{coClientDataDisplay.coDisplayName}}
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>Date of Birth:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{coClientDataDisplay.dateOfBirth | DateFormat}}
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>Age:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{coClientDataDisplay.age}}
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>Mother's Maiden Name:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{coClientDataDisplay.mothersMaidenName}}
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>Email Id:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{coClientDataDisplay.emailId}}
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<hr/>	<!--End of CO Personal info-->
+						<div class="row">
+
+							<legend>Co Applicant Correspondence Address</legend>
+							<div class="col-md-6 col-sm-6" >
+
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>House No:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{correspondenceAddress.houseNo}}
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>Area/locality:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{correspondenceAddress.areaLocality}}
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>Land Mark:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{correspondenceAddress.landmark}}
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>Taluka:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{correspondenceAddress.taluka}}
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>State:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{correspondenceAddress.stateLable}}
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>Pincode:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{correspondenceAddress.pinCode}}
+									</div>
+
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>Street No:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{correspondenceAddress.streetNo}}
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>Village/Town:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{correspondenceAddress.villageTown}}
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>District:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{correspondenceAddress.districtLable}}
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>Land Line No:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{correspondenceAddress.landlineNo}}
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-sm-6" >
+										<strong>Mobile No:</strong>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										{{correspondenceAddress.mobileNo}}
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</tab>
+
 		<tab heading="{{'label.heading.identities' | translate}}" select="getClientIdentityDocuments()"
 		     has-permission='READ_CLIENTIDENTIFIER'>
 		    <div class="pull-right btn-group">

@@ -86,7 +86,7 @@
 			<div class="form-group">
 				<div class="row">
 					<div class="col-md-2"><label class="control-label" for="firstname"><span
-							class="required">*</span>Fother/Spouse Name</label></div>
+							class="required">*</span>Father/Spouse Name</label></div>
 					<div class="col-md-4">
 						<input placeholder="FIRST NAME" type="text" id="clientExtfirstname"
 							   name="clientExtfirstname" ng-model="formData.clientExt.spfirstname" class="form-control"
@@ -276,12 +276,12 @@
 					</div>
 					<div class="col-md-4"><input placeholder="HOUSE NUMBER" type="text" id="houseNumber"
 												 name="houseNumber" ng-model="formData.naddress[0].houseNo"
-												 class="form-control" /></div>
+												 class="form-control" maxlength="20"/></div>
 					<label class="control-label col-md-2" for="streetNumber">Street Number </label>
 
 					<div class="col-md-4"><input placeholder="STREET NUMBER" type="text" id="streetNumber"
 												 name="streetNumber" ng-model="formData.naddress[0].streetNo"
-												 class="form-control" /></div>
+												 class="form-control" maxlength="20"/></div>
 				</div>
 			</div>
 
@@ -390,12 +390,12 @@
 							</div>
 							<div class="col-md-4"><input placeholder="HOUSE NUMBER" type="text" id="houseNumber1"
 														 name="houseNumber" ng-model="formData.naddress[1].houseNo"
-														 class="form-control" ng-disabled="addressabove"/></div>
+														 class="form-control" ng-disabled="addressabove" maxlength="20"/></div>
 							<label class="control-label col-md-2" for="streetNumber">Street Number </label>
 
 							<div class="col-md-4"><input placeholder="STREET NUMBER" type="text" id="streetNumber1"
 														 name="streetNumber" ng-model="formData.naddress[1].streetNo"
-														 class="form-control" ng-disabled="addressabove"/></div>
+														 class="form-control" ng-disabled="addressabove" maxlength="20"/></div>
 						</div>
 					</div>
 
@@ -877,6 +877,205 @@
 				</div>
 			</div>
 
+
+			<hr/>
+			<legend>Co Applicant Details</legend>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-2"><label class="control-label"><span
+							class="required">*</span>Details of Father/Spouse</label>
+					</div>
+					<div class="col-md-2">
+						<select id="relationshipCo" name="relationshipCo" ng-model="formData.coClientData[0].relationship" class="form-control"
+								ng-options="spouse.id as spouse.name for spouse in spouseRelationShip"
+								value="{{spouse.id}}" required late-Validate>
+							<option value=""> {{'label.menu.select' | translate}}</option>
+						</select>
+					</div>
+					<div class="col-sm-2">
+						<form-validate valattributeform="createcoclientform" valattribute="relationshipCo"/>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-2"><label class="control-label" for="firstname"><span
+							class="required">*</span>Co Applicant Name</label></div>
+					<div class="col-md-4">
+						<input placeholder="FIRST NAME" type="text" id="firstNameCo"
+							   name="firstNameCo" ng-model="formData.coClientData[0].firstName" class="form-control"
+							   required late-Validate/>
+						<form-validate valattributeform="createcoclientform" valattribute="firstNameCo"/>
+					</div>
+					<div class="col-md-3">
+						<input placeholder="MIDDLE NAME" type="text" id="middleNameCo"
+							   ng-model="formData.coClientData[0].middleName" class="form-control"/>
+					</div>
+					<div class="col-md-3">
+						<input placeholder="SURNAME" type="text" id="lastNameCo" name="lastNameCo"
+							   ng-model="formData.coClientData[0].lastName" class="form-control" required late-validate=""/>
+						<form-validate valattributeform="createcoclientform" valattribute="lastNameCo"/>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-2"><label class="control-label"><span
+							class="required">*</span>Date of Birth</label></div>
+					<div class="col-md-3">
+						<input id="dateofbirthCo" type="text" name="dateofbirthCo" datepicker-pop="dd MMMM yyyy"
+							   ng-model="formData.coClientData[0].dateOfBirth" is-open="opened1" class="form-control"
+							   required
+							   late-Validate/>
+						<form-validate valattributeform="createcoclientform" valattribute="dateofbirthCo"/>
+					</div>
+
+					<div class="col-md-1"><label class="control-label"><span
+							class="required">*</span>Age</label></div>
+					<div class="col-md-3">
+						<input placeholder="Age" type="text" id="spAgeCo" name="spAgeCo" ng-model="formData.coClientData[0].age"
+							   class="form-control" maxlength="2" number-format="" required
+							   late-validate=""/>
+						<form-validate valattributeform="createcoclientform" valattribute="spAgeCo"/>
+					</div>
+				</div>
+			</div>
+
+			<hr/>
+			<legend>Correspondence Address</legend>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-2"><label class="control-label" for="houseNumber">House Number</label>
+					</div>
+					<div class="col-md-4"><input placeholder="HOUSE NUMBER" type="text" id="houseNumberCo"
+												 name="houseNumberCo" ng-model="formData.naddress[2].houseNo"
+												 class="form-control" maxlength="20"/></div>
+					<label class="control-label col-md-2" for="streetNumber">Street Number </label>
+
+					<div class="col-md-4"><input placeholder="STREET NUMBER" type="text" id="streetNumberCo"
+												 name="streetNumberCo" ng-model="formData.naddress[2].streetNo"
+												 class="form-control" maxlength="20"/></div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-2"><label class="control-label" for="areaLocality"> Area Locality </label></div>
+					<div class="col-md-10">
+						<input placeholder=""
+							   type="text" id="areaLocalityCo" name="areaLocalityCo"
+							   ng-model="formData.naddress[2].areaLocality" class="form-control" />
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-2"><label class="control-label" for="landmark"> Landmark </label></div>
+					<div class="col-md-4"><input placeholder="" type="text" id="landmarkCo" name="landmarkCo"
+												 ng-model="formData.naddress[2].landmark" class="form-control"/></div>
+					<label class="control-label col-md-2" for="villageTown">Village/Town </label>
+
+					<div class="col-md-4"><input placeholder="" type="text" id="villageTownCo" name="villageTownCo"
+												 ng-model="formData.naddress[2].villageTown" class="form-control"/></div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-2"><label class="control-label" for="taluka"><span
+							class="required">*</span>Taluka</label></div>
+					<div class="col-md-4">
+						<input placeholder="Taluka"
+							   type="text"
+							   id="talukaco"
+							   name="talukaco"
+							   ng-model="formData.naddress[2].taluka" class="form-control"
+							   required
+							   late-Validate/>
+						<form-validate valattributeform="createcoclientform" valattribute="talukaco"/>
+					</div>
+					<label class="control-label col-md-2"><span
+							class="required">*</span>District </label>
+					<div class="col-md-4">
+						<select name="districtIdco" ng-model="formData.naddress[2].district" class="form-control"
+								ng-options="district.id as district.name for district in districtOptins"
+								value="{{district.id}}" required late-validate="">
+							<option value="">{{'label.menu.select' | translate}}</option>
+						</select>
+						<form-validate valattributeform="createcoclientform" valattribute="districtIdco"/>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-2"><label class="control-label"><span class="required">*</span>State</label></div>
+					<div class="col-md-4">
+						<select name="stateIdco" ng-model="formData.naddress[2].state" class="form-control"
+								 ng-options="state.id as state.name for state in stateOptions" value="{{state.id}}" required late-validate="">
+							<option value="">{{'label.menu.select' | translate}}</option>
+						</select>
+						<form-validate valattributeform="createcoclientform" valattribute="stateIdco"/>
+					</div>
+
+					<label class="control-label col-md-2" for="pincode"><span
+							class="required">*</span>PIN Code </label>
+					<div class="col-md-4">
+						<input placeholder="" type="text" id="pincodeCo" name="pincodeCo"
+							   ng-model="formData.naddress[2].pinCode" class="form-control" required late-Validate
+							   maxlength="6"/>
+						<form-validate valattributeform="createcoclientform" valattribute="pincodeCo"/>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-2"><label class="control-label" for="landlineNumber">Landline
+						number </label></div>
+					<div class="col-md-4"><input placeholder="" type="text" id="landlineNumberCo"
+												 name="landlineNumberCo" ng-model="formData.naddress[2].landlineNo"
+												 class="form-control"  maxlength="20"/></div>
+
+					<label class="control-label col-md-2" for="mobileNumber"><span class="required">*</span>Mobile number </label>
+
+					<div class="col-md-4">
+						<input placeholder="Mobile Number"
+							   type="text" id="mobileNumberCo"
+							   name="mobileNumberCo" ng-model="formData.naddress[2].mobileNo"
+							   class="form-control" required late-Validate  maxlength="11"/>
+						<form-validate valattributeform="createcoclientform" valattribute="mobileNumberCo"/>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-2"><label class="control-label"><span
+							class="required">*</span>Mother's Maiden Name</label></div>
+					<div class="col-md-4">
+						<input placeholder="Mother's Maiden Name" type="text" id="mothersMaidenName"
+							   name="mothersMaidenName" ng-model="formData.coClientData[0].mothersMaidenName" class="form-control"
+							   required late-Validate/>
+						<form-validate valattributeform="createcoclientform" valattribute="mothersMaidenName"/>
+					</div>
+
+					<label class="control-label col-md-2" for="emailId"><span class="required"></span>Email ID</label>
+					<div class="col-md-4">
+						<input placeholder="Email Id" type="email" id="emailId"
+							   name="emailId" ng-model="formData.coClientData[0].emailId" class="form-control"/>
+                        <span style="color:red" ng-show="createcoclientform.emailId.$dirty && createcoclientform.emailId.$invalid">
+                            <span ng-show="createcoclientform.emailId.$error.email">Invalid email address.</span>
+                        </span>
+					</div>
+
+				</div>
+			</div>
 
 			<hr/>
 

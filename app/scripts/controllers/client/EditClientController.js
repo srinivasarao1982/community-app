@@ -46,6 +46,7 @@
                 scope.cfaOccupations = clientData.cfaOccupation;
                 scope.addressTypes = clientData.addressTypes;
                 scope.familyrelationShipOptions = clientData.familyrelationShip;
+                scope.spouseRelationShip = clientData.coapplicantDetailsData.spouseRelationShip;
                 /*****/
                 scope.formData = {
                     officeId: data.officeId,
@@ -60,6 +61,8 @@
                     savingsProductId: data.savingsProductId,
                     genderId: data.gender.id
                 };
+
+                scope.formData.coClientData = [{}];
 
                 if(data.gender){
                     scope.formData.genderId = data.gender.id;
@@ -101,7 +104,7 @@
                 scope.formData.naddress = [{},{}];
                 scope.formData.clientIdentifierData = [{},{}];
                 scope.formData.familyDetails = [{}];
-                scope.formData.nomineeDetails = [{},{}];
+                scope.formData.nomineeDetails = [{},{},{}];
 
                 scope.formData.clientExt = clientData.clientDataExt;
                 scope.formData.naddress = clientData.addressExtData || [];
@@ -170,7 +173,15 @@
                         scope.formData.nomineeDetails[i].guardianDateOfBirth = new Date(guardianDateOfBirth);
                     }
                 }
-
+                if(clientData.coapplicantDetailsData.coapplicantData){
+                    scope.formData.coClientData = clientData.coapplicantDetailsData.coapplicantData;
+                    for(var i in scope.formData.coClientData) {
+                        if (scope.formData.coClientData[i].dateOfBirth) {
+                            var dateOfBirth = dateFilter(scope.formData.coClientData[i].dateOfBirth, scope.df);
+                            scope.formData.coClientData[i].dateOfBirth = new Date(dateOfBirth);
+                        }
+                    }
+                }
             });
 
             scope.addressaboveSetting = function(){
@@ -213,9 +224,6 @@
                     }
                 }
 
-                /*this.formData.naddress[0].addressType = scope.addressTypes[0].id;
-                this.formData.naddress[1].addressType = scope.addressTypes[1].id;*/
-
                 if(this.formData.naddress){
                     for(var i = 0; i < this.formData.naddress.length; i++){
                         this.formData.naddress[i].locale = scope.optlang.code;
@@ -249,6 +257,28 @@
                     }
                     if (this.formData.nomineeDetails[i].guardianDateOfBirth) {
                         this.formData.nomineeDetails[i].guardianDateOfBirth = dateFilter(scope.formData.nomineeDetails[i].guardianDateOfBirth, scope.df);
+                    }
+                }
+
+                if(this.formData.coClientData){
+                    for(var i = 0; i < this.formData.coClientData.length; i++){
+                        if(this.formData.coClientData[i].relationship){
+                            this.formData.coClientData[i].clientId = scope.formData.clientId;
+                            if (scope.formData.coClientData[i].dateOfBirth) {
+                                this.formData.coClientData[i].dateOfBirth = dateFilter(scope.formData.coClientData[i].dateOfBirth, scope.df);
+                            }
+                            this.formData.coClientData[i].locale = scope.optlang.code;
+                            this.formData.coClientData[i].dateFormat = scope.df;
+                        }
+                    }
+                }
+
+                if(this.formData.naddress.length == 3) {
+                    for (var i in scope.addressTypes) {
+                        if (scope.addressTypes[i].name == 'Spouse Address') {
+                            this.formData.naddress[2].addressType = scope.addressTypes[i].id;
+                            break;
+                        }
                     }
                 }
 

@@ -79,6 +79,9 @@
             .when('/createclient', {
                 templateUrl: 'views/clients/createclient.html'
             })
+            .when('/createcoclient/:id', {
+                templateUrl: 'views/clients/createcoclient.html'
+            })
             .when('/editclient/:id', {
                 templateUrl: 'views/clients/editclient.html'
             })
