@@ -30,9 +30,7 @@
                 requestParams.officeId = routeParams.officeId;
             }
             resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
-                console.log('clientData.presentLoanSourceTypes-',clientData.presentLoanSourceTypes);
-                console.log('clientData.presentLoanPurposeTypes-',clientData.presentLoanPurposeTypes);
-                // clientObject = clientData;
+                //console.log(JSON.stringify(clientData));
                 data = clientData.clientBasicDetails;
                 scope.salutations = clientData.salutation;
                 scope.martialStatusOptions = clientData.maritalStatus;
@@ -388,20 +386,6 @@
                     if(!isNaN(idObj2)){
                         scope.formData.naddress[1].id = idObj2;
                     }
-                    /* var naddressObj{
-                     houseNo: scope.formData.naddress[0].houseNo,
-                     streetNo: scope.formData.naddress[0].streetNo,
-                     areaLocality: scope.formData.naddress[0].areaLocality,
-                     landmark: scope.formData.naddress[0].landmark,
-                     villageTown: scope.formData.naddress[0].villageTown,
-                     taluka: scope.formData.naddress[0].taluka,
-                     pinCode: scope.formData.naddress[0].pinCode,
-                     landlineNo: scope.formData.naddress[0].landlineNo,
-                     mobileNo: scope.formData.naddress[0].mobileNo,
-                     district: scope.formData.naddress[0].district,
-                     state: scope.formData.naddress[0].state
-                     };
-                     scope.formData.naddress[1] = naddressObj;*/
                 }
             };
 
@@ -490,7 +474,7 @@
                 }
 
                 resourceFactory.clientResource.save(this.formData, function (data) {
-                    location.path('/viewclient/' + data.clientId);
+                    location.path('/createcoclient/' + data.clientId);
                 });
             };
         }

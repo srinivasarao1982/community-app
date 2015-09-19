@@ -40,6 +40,9 @@
                         getAllOfficesInAlphabeticalOrder: {method: 'GET', params: {orderBy: 'name', sortOrder: 'ASC'}, isArray: true},
                         update: { method: 'PUT'}
                     }),
+                    coClientResource: defineResource(apiVer + "/coapplicant/:coapplicantId", {coapplicantId: '@coapplicantId'}, {
+                        update: { method: 'PUT'}
+                    }),
                     clientResource: defineResource(apiVer + "/clients/:clientId/:anotherresource", {clientId: '@clientId', anotherresource: '@anotherresource'}, {
                         getAllClients: {method: 'GET', params: {limit: 1000}},
                         getClientClosureReasons: {method: 'GET', params: {}},
@@ -59,6 +62,9 @@
                         getAllNotes: {method: 'GET', params: {}, isArray: true}
                     }),
                     clientTemplateResource: defineResource(apiVer + "/clients/template", {}, {
+                        get: {method: 'GET', params: {}}
+                    }),
+                    coClientTemplateResource: defineResource(apiVer + "/coapplicant/template", {}, {
                         get: {method: 'GET', params: {}}
                     }),
                     clientIdenfierTemplateResource: defineResource(apiVer + "/clients/:clientId/identifiers/template", {clientId: '@clientId'}, {
