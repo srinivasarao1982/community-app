@@ -1,6 +1,73 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
         CreateClientController: function (scope, resourceFactory, location, http, dateFilter, API_VERSION, $upload, $rootScope, routeParams) {
+
+            /*********************************/
+            scope.isOfficeIdRequired = true; // Capture Office
+            scope.isStaffIdRequired = true; // Capture Staff
+            scope.isSalutationRequired = true; // Title
+            scope.isFirstnameRequired = true; // Applicant First Name
+            scope.isMiddlenameRequired = false; // Applicant Middle Name
+            scope.isLastnameRequired = false; // Applicant Last Name
+
+            scope.isSPFirstnameRequired = true; // Applicant Father/Spouse First Name
+            scope.isSPMiddlenameRequired = false; // Applicant Father/Spouse Middle Name
+            scope.isSPLastnameRequired = false; // Applicant Father/Spouse Last Name
+
+            scope.isGenderRequired = true; // Applicant Gender
+            scope.isMaritalStatusRequired = true; //Applicant Marital Status
+            scope.isDateOfBirthApplicantRequired = true; //Applicant DateOfBirth
+            scope.isEducationalQualificationClientRequired = false; //Applicant Educational Qualification
+            scope.isProfessionClientRequired = false; //Applicant Profession
+            scope.isAnnualIncomeRequired = false; //Applicant Annual Income
+            scope.isLandHoldingRequired = false; //Applicant Land Holding
+            scope.isHouseTypeRequired = false; //Applicant House Type
+            scope.isAadhaarNoRequired = true; //Applicant aadhaarNo
+            scope.isPanNoRequired = false; //Applicant Pan No
+            scope.isPanFormRequired = false; //Applicant Pan Form
+            scope.isNregaNoRequired = false; //Applicant NREGA Number
+            scope.isNregaNoRequired = false; //Applicant NREGA Number
+            scope.isClientTypeRequired = false; //Applicant Belonging to
+            scope.isClientReligionRequired = false; //Applicant Belonging to
+
+
+            scope.isHouseNumberRequired = false;
+            scope.isStreetNumberRequired = false;
+            scope.isAreaLocalityRequired = false;
+            scope.isLandMarkRequired = false;
+            scope.isVillageTownRequired = false;
+            scope.isTalukaRequired = true;
+            scope.isDistrictRequired = true;
+            scope.isStateRequired = true;
+            scope.isPinCodeRequired = true;
+            scope.isLandlineNumberRequired = true;
+            scope.isMobileNumberRequired = true;
+
+            scope.isIdentityProofRequired = false;
+            scope.isIdentityProofNumberRequired = false;
+            scope.isAddressProofRequired = false;
+            scope.isAddressProofNumberRequired = false;
+
+            scope.isFamilyFirstNameRequired = false;
+            scope.isFamilyRelationshipRequired = false;
+            scope.isFamilyGenderRequired = false;
+            scope.isFamilyAgeRequired = false;
+            scope.isFamilyOccupationRequired = false;
+            scope.isFamilyEducationalStatusRequired = false;
+
+
+            scope.isNomineeTitleRequired = false;
+            scope.isNomineeNameRequired = false;
+            scope.isNomineeGenderRequired = false;
+            scope.isNomineeAgeRequired = false;
+            scope.isNomineeRelationshipBorrowerRequired = false;
+            scope.isNomineeDOBRequired = false;
+            scope.isNomineeGuardianAddressRequired = false;
+
+
+
+            /********************************/
+
             scope.isDatafilled = false;
             scope.offices = [];
             scope.staffs = [];
@@ -472,6 +539,8 @@
                         this.formData.nomineeDetails[i].guardianDateOfBirth = dateFilter(scope.formData.nomineeDetails[i].guardianDateOfBirth, scope.df);
                     }
                 }
+
+                console.log(JSON.stringify(this.formData));
 
                 resourceFactory.clientResource.save(this.formData, function (data) {
                     location.path('/createcoclient/' + data.clientId);

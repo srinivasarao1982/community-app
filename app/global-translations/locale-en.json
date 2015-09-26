@@ -220,6 +220,8 @@
     "label.relDate": "Mifos X Release Date: ",
     "label.relVersion": "Release Version: ",
 
+    "label.error.required": "Required Field",
+
     "#Enumeration & Error Messages": "..",
     "label.error": "Error",
     "error.login.failed": "Please try again, your credentials are not valid.",

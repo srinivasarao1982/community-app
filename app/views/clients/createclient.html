@@ -1,4 +1,5 @@
 <div class="col-md-12" ng-controller="CreateClientController">
+
     <ul class="breadcrumb">
         <li ng-if="!groupid"><a href="#/clients">{{'label.anchor.clients' | translate}}</a></li>
         <li ng-if="groupid"><a href="#/groups">{{'label.anchor.groups' | translate}}</a></li>
@@ -7,6 +8,7 @@
     </ul>
 
     <legend>{{'label.heading.createclient' | translate}}</legend>
+
     <div class="row">
         <div class="col-md-2">&nbsp;&nbsp;<a class="btn btn-primary" style="float:right;"
                                   ng-click="autoFill()">Auto Fill</a></div>
@@ -14,37 +16,38 @@
             <input placeholder="Auto fill" type="text" id="adhaarAutofill" name="nregaNo" ng-model="autofillHolder" class="form-control"/>
         </div>
         
-    </div>    
+    </div>
 
-
-    <form name="createclientform" novalidate="" class="form-horizontal well"
-          rc-submit="submitAndAccept()">
+    <form name="createclientform" novalidate="" class="form-horizontal well" rc-submit="submitAndAccept()">
         <api-validate></api-validate>
         <fieldset>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label"><span ng-show="forceOffice == null" class="required">*</span>
+                    <div class="col-md-2"><label class="control-label"><span ng-show="isOfficeIdRequired && forceOffice == null" class="required">*</span>
                         {{'label.input.office' | translate}}</label></div>
                     <div class="col-md-2">
-                        <div ng-show="forceOffice == null">
+                        <div ng-if="forceOffice == null">
                             <select id="officeId" name="officeId" ng-model="formData.officeId" class="form-control"
                                     ng-options="office.id as office.name for office in offices" value="{{office.id}}"
-                                    ng-change="changeOffice(formData.officeId)"></select>
-                            <form-validate valattributeform="createclientform" valattribute="officeId"/>
+                                    ng-change="changeOffice(formData.officeId)" ng-required="isOfficeIdRequired">
+                                <option value=""> {{'label.menu.select' | translate}}</option>
+                            </select>
+                            <span class="error" ng-show="submitted && createclientform.officeId.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
                         <div ng-show="forceOffice != null">
                             <p class="form-control-static">{{forceOffice.name}}</p>
                         </div>
                     </div>
 
-                    <label class="control-label col-md-2"><span class="required">*</span>{{'label.input.staff' | translate}}</label>
+                    <label class="control-label col-md-2"><span class="required" ng-show="isStaffIdRequired">*</span>{{'label.input.staff' |
+                        translate}}</label>
                     <div class="col-md-2">
                         <select id="staffId" name="staffId" ng-model="formData.staffId" class="form-control"
                                 ng-options="staff.id as staff.displayName for staff in staffs" value="{{staff.id}}"
-                                required late-validate="">
+                                ng-required="isStaffIdRequired">
                             <option value="">--{{'label.menu.selectloanofficer' | translate}}--</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="staffId"/>
+                        <span class="error" ng-show="submitted && createclientform.staffId.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
                     <label class="control-label col-md-2"></label>
@@ -54,40 +57,39 @@
 
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
-                    <div class="col-md-2"><label for="salutation" class="control-label">&nbsp;&nbsp;Title<span
-                            class="required">*</span></label>
+                    <div class="col-md-2"><label class="control-label">&nbsp;&nbsp;Title<span
+                            class="required" ng-show="isSalutationRequired">*</span></label>
                     </div>
                     <div class="col-md-2">
                         <select id="title" name="title" ng-model="formData.clientExt.salutation" class="form-control"
                                 ng-options="salutation.id as salutation.name for salutation in salutations"
-                                value="{{salutation.id}}" required late-Validate>
+                                value="{{salutation.id}}" ng-required="isSalutationRequired">
                             <option value=""> {{'label.menu.select' | translate}}</option>
                         </select>
+                        <span class="error" ng-show="submitted && createclientform.title.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
-                    <div class="col-sm-2">
-                        <form-validate valattributeform="createclientform" valattribute="title"/>
-                    </div>
+                    <div class="col-sm-2"></div>
                 </div>
             </div>
 
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
                     <div class="col-md-2"><label class="control-label" for="firstname"><span
-                            class="required">*</span> Applicant Name</label></div>
+                            class="required" ng-show="isFirstnameRequired">*</span>Applicant Name</label></div>
                     <div class="col-md-4">
-                        <input placeholder="FIRST NAME" type="text" id="firstname"
-                                                 name="firstname" ng-model="formData.firstname" class="form-control"
-                                                 required late-Validate/>
-                        <form-validate valattributeform="createclientform" valattribute="firstname"/>
+                        <input placeholder="FIRST NAME" type="text" id="firstname" name="firstname"
+                               ng-model="formData.firstname" class="form-control" ng-required="isFirstnameRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.firstname.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                     <div class="col-md-3">
-                        <input placeholder="MIDDLE NAME" type="text" id="middlename"
-                                                 ng-model="formData.middlename" class="form-control"/>
+                        <input placeholder="MIDDLE NAME" type="text" id="middlename" name="middlename"
+                               ng-model="formData.middlename" class="form-control" ng-required="isMiddlenameRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.middlename.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                     <div class="col-md-3">
                         <input placeholder="SURNAME" type="text" id="lastname" name="lastname"
-                                                 ng-model="formData.lastname" class="form-control" required late-validate=""/>
-                        <form-validate valattributeform="createclientform" valattribute="lastname"/>
+                               ng-model="formData.lastname" class="form-control" ng-required="isLastnameRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.lastname.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                 </div>
             </div>
@@ -95,85 +97,84 @@
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
                     <div class="col-md-2"><label class="control-label" for="firstname"><span
-                            class="required">*</span>Father/Spouse Name</label></div>
+                            class="required" ng-show="isSPFirstnameRequired">*</span>Father/Spouse Name</label></div>
                     <div class="col-md-4">
                         <input placeholder="FIRST NAME" type="text" id="clientExtfirstname"
                                name="clientExtfirstname" ng-model="formData.clientExt.spfirstname" class="form-control"
-                               required late-Validate/>
-                        <form-validate valattributeform="createclientform" valattribute="clientExtfirstname"/>
+                               ng-required="isSPFirstnameRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.clientExtfirstname.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                     <div class="col-md-3">
-                        <input placeholder="MIDDLE NAME" type="text" id="clientExtmiddlename"
-                               ng-model="formData.clientExt.spmiddlename" class="form-control"/>
+                        <input placeholder="MIDDLE NAME" type="text" id="clientExtmiddlename" name="clientExtmiddlename"
+                               ng-model="formData.clientExt.spmiddlename" class="form-control" ng-required="isSPMiddlenameRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.clientExtmiddlename.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                     <div class="col-md-3">
                         <input placeholder="SURNAME" type="text" id="clientExtlastname" name="clientExtlastname"
-                               ng-model="formData.clientExt.splastname" class="form-control" required late-validate=""/>
-                        <form-validate valattributeform="createclientform" valattribute="clientExtlastname"/>
+                               ng-model="formData.clientExt.splastname" class="form-control"
+                               ng-required="isSPLastnameRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.clientExtlastname.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                 </div>
             </div>
 
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label"><span class="required">*</span>
+                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isGenderRequired">*</span>
                         Gender</label></div>
                     <div class="col-md-2">
                         <select id="genderId" name="genderId" ng-model="formData.genderId" class="form-control"
                                 ng-options="gender.id as gender.name for gender in genderOptions"
-                                value="{{gender.id}}" required
-                                late-Validate>
+                                value="{{gender.id}}" ng-required="isGenderRequired">
                             <option value=""> {{'label.menu.gender' | translate}}</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="genderId"/>
+                        <span class="error" ng-show="submitted && createclientform.genderId.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
-                    <label class="control-label col-md-2"><span class="required">*</span> Marital Status</label>
+                    <label class="control-label col-md-2"><span class="required" ng-show="isMaritalStatusRequired">*</span> Marital Status</label>
                     <div class="col-md-2">
                         <select id="martialStatusId" name="martialStatusId" ng-model="formData.clientExt.maritalStatus" class="form-control"
                                 ng-options="martialStatus.id as martialStatus.name for martialStatus in martialStatusOptions"
-                                value="{{martialStatus.id}}" required
-                                late-Validate>
+                                value="{{martialStatus.id}}" ng-required="isMaritalStatusRequired">
                             <option value=""> {{'label.menu.select' | translate}}</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="martialStatusId"/>
+                        <span class="error" ng-show="submitted && createclientform.martialStatusId.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
-                    <label class="control-label col-md-2"><span class="required">*</span> Date Of Birth</label>
+                    <label class="control-label col-md-2"><span class="required" ng-show="isDateOfBirthApplicantRequired">*</span> Date Of Birth</label>
 
                     <div class="col-md-2">
                         <input id="dateofbirth" type="text" name="dateofbirth" datepicker-pop="dd MMMM yyyy"
                                ng-model="formData.dateOfBirth" is-open="opened1" class="form-control"
-                               required
-                               late-Validate/>
-                        <form-validate valattributeform="createclientform" valattribute="dateofbirth"/>
+                               ng-required="isDateOfBirthApplicantRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.dateofbirth.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-2"><label><span class="required">*</span>Eductional Qualification</label></div>
+                    <div class="col-md-2"><label><span class="required" ng-show="isEducationalQualificationClientRequired">*</span>Eductional Qualification</label></div>
                     <div class="col-md-2">
                         <select id="educationalQualificationClient" name="educationalQualificationClient"
                                 ng-model="formData.clientExt.educationalQualification"
                                 class="form-control"
                                 ng-options="eductionalQualification.id as eductionalQualification.name for eductionalQualification in eductionalQualificationOptions"
-                                value="{{eductionalQualification.id}}" required late-validate="">
+                                value="{{eductionalQualification.id}}" ng-required="isEducationalQualificationClientRequired">
                             <option value=""> {{'label.menu.select' | translate}}</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="educationalQualificationClient"/>
+                        <span class="error" ng-show="submitted && createclientform.educationalQualificationClient.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
-                    <label class="control-label col-md-2"><span class="required">*</span>Profession</label>
+                    <label class="control-label col-md-2"><span class="required" ng-show="isProfessionClientRequired">*</span>Profession</label>
                     <div class="col-md-2">
                         <select id="professionClient" name="professionClient"
                                 ng-model="formData.clientExt.profession" class="form-control"
                                 ng-options="Profession.id as Profession.name for Profession in ProfessionOptions"
-                                value="{{Profession.id}}" required late-validate="">
+                                value="{{Profession.id}}" ng-required="isProfessionClientRequired">
                             <option value=""> {{'label.menu.select' | translate}}</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="professionClient"/>
+                        <span class="error" ng-show="submitted && createclientform.professionClient.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
                     <label class="control-label col-md-2">&nbsp;</label>
@@ -182,97 +183,103 @@
                 </div>
             </div>
 
-
             <div class="form-group">
                 <div class="row">
-                    <label class="col-md-2">Annual Income</label>
+                    <label class="col-md-2"><span class="required" ng-show="isAnnualIncomeRequired">*</span>Annual Income</label>
                     <div class="col-md-2">
                         <select id="annualIncomeId" name="annualIncomeId" ng-model="formData.clientExt.annualIncome" class="form-control"
                                 ng-options="annualIncome.id as annualIncome.name for annualIncome in annualIncomeOptions"
-                                value="{{annualIncome.id}}" required late-validate="">
+                                value="{{annualIncome.id}}" ng-required="isAnnualIncomeRequired">
                             <option value="">--{{'label.menu.select' | translate}}--</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="annualIncomeId"/>
+                        <span class="error" ng-show="submitted && createclientform.annualIncomeId.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
-                    <div class="col-md-2"><label class="control-label">&nbsp;&nbsp;Land Holding</label></div>
+                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isLandHoldingRequired">*</span>Land Holding</label></div>
                     <div class="col-md-2">
                         <select id="landHoldingId" name="landHoldingId" ng-model="formData.clientExt.landholding"
                                 class="form-control"
                                 ng-options="landHolding.id as landHolding.name for landHolding in landHoldings"
-                                value="{{landHolding.id}}" required late-validate="">
+                                value="{{landHolding.id}}" ng-required="isLandHoldingRequired">
                             <option value="">--{{'label.menu.select' | translate}}--</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="landHoldingId"/>
+                        <span class="error" ng-show="submitted && createclientform.landHoldingId.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
-                    <label class="control-label col-md-2">House Type</label>
 
+                    <label class="control-label col-md-2"><span class="required" ng-show="isHouseTypeRequired">*</span>House Type</label>
                     <div class="col-md-2">
                         <select id="houseTypeId" name="houseTypeId" ng-model="formData.clientExt.houseType" class="form-control"
                                 ng-options="houseType.id as houseType.name for houseType in houseTypes"
-                                value="{{houseType.id}}" required late-validate="">
+                                value="{{houseType.id}}" ng-required="isHouseTypeRequired">
                             <option value="">{{'label.menu.select' | translate}}</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="houseTypeId"/>
+                        <span class="error" ng-show="submitted && createclientform.houseTypeId.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                 </div>
             </div>
+
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label">&nbsp;&nbsp;Adhaar</label></div>
+
+                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isAadhaarNoRequired">*</span>Adhaar</label></div>
                     <div class="col-md-2">
-                        <input placeholder="A D H A A R" type="text" id="aadhaar_no" name="aadhaar_no" ng-model="formData.clientExt.aadhaarNo"
-                               class="form-control" maxlength="100"/>
+                        <input placeholder="A D H A A R N U M B E R" type="text" id="aadhaar_no" name="aadhaar_no"
+                               ng-model="formData.clientExt.aadhaarNo"
+                               class="form-control" maxlength="100" ng-required="isAadhaarNoRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.aadhaar_no.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
-                    <label class="control-label col-md-2">&nbsp;&nbsp;PAN</label>
+                    <label class="control-label col-md-2"><span class="required" ng-show="isPanNoRequired">*</span>PAN</label>
                     <div class="col-md-2">
                         <input placeholder="PAN NUMBER" type="text" id="pan_no" name="pan_no" ng-model="formData.clientExt.panNo"
-                               class="form-control" maxlength="100"/>
+                               class="form-control" maxlength="100" ng-required="isPanNoRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.pan_no.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
-                    <label class="control-label col-md-2"><span
-                            class="required">*</span>Form 60/61</label>
 
+                    <label class="control-label col-md-2"><span class="required" ng-show="isPanFormRequired">*</span>Form 60/61</label>
                     <div class="col-md-2">
                         <select id="panFormId" name="panFormId" ng-model="formData.clientExt.panForm" class="form-control"
                                 ng-options="panForm.id as panForm.name for panForm in panForms"
-                                value="{{panForm.id}}" required late-validate="">
+                                value="{{panForm.id}}" ng-required="isPanFormRequired">
                             <option value=""> {{'label.menu.select' | translate}}</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="panFormId"/>
+                        <span class="error" ng-show="submitted && createclientform.panFormId.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label">&nbsp;&nbsp;NREGA Number</label></div>
+                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isNregaNoRequired">*</span>NREGA Number</label></div>
                     <div class="col-md-10">
-                        <input placeholder="N R E G A" type="text" id="adhaar" name="nregaNo" ng-model="formData.clientExt.nregaNo"
-                               class="form-control"/>
+                        <input placeholder="N R E G A" type="text" id="nregaNo" name="nregaNo" ng-model="formData.clientExt.nregaNo"
+                               class="form-control" ng-required="isNregaNoRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.nregaNo.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label">&nbsp;&nbsp;Belonging to</label></div>
+                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isClientTypeRequired">*</span>Belonging to</label></div>
                     <div class="col-md-2">
-                        <select id="clienttypeId" ng-model="formData.clientTypeId" class="form-control"
+                        <select id="clienttypeId" name="clienttypeId" ng-model="formData.clientTypeId" class="form-control"
                                 ng-options="clienttype.id as clienttype.name for clienttype in clienttypeOptions"
-                                value="{{clienttype.id}}">
+                                value="{{clienttype.id}}" ng-required="isClientTypeRequired">
                             <option value="">{{'label.menu.select' | translate}}</option>
                         </select>
+                        <span class="error" ng-show="submitted && createclientform.clienttypeId.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
-                    <label class="control-label col-md-2">Religion</label>
 
+                    <label class="control-label col-md-2"><span class="required" ng-show="isClientReligionRequired">*</span>Religion</label>
                     <div class="col-md-2">
-                        <select id="clientClassificationId" ng-model="formData.clientClassificationId"
+                        <select id="clientClassificationId" name="clientClassificationId" ng-model="formData.clientClassificationId"
                                 class="form-control"
                                 ng-options="clientClassification.id as clientClassification.name for clientClassification in clientClassificationOptions"
-                                value="{{clientClassification.id}}">
+                                value="{{clientClassification.id}}" ng-required="isClientReligionRequired">
                             <option value="">{{'label.menu.select' | translate}}</option>
                         </select>
+                        <span class="error" ng-show="submitted && createclientform.clientClassificationId.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                 </div>
             </div>
@@ -281,107 +288,129 @@
             <div class="row">
                 <legend>Communication Address</legend>
             </div>
+
+            <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isHouseNumberRequired">*</span>House Number</label></div>
+                    <div class="col-md-4">
+                        <input placeholder="HOUSE NUMBER" type="text" id="houseNumber"
+                                                 name="houseNumber0" ng-model="formData.naddress[0].houseNo"
+                                                 class="form-control" maxlength="20" ng-required="isHouseNumberRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.houseNumber0.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+
+                    <label class="control-label col-md-2"><span class="required" ng-show="isStreetNumberRequired">*</span>Street Number </label>
+                    <div class="col-md-4">
+                        <input placeholder="STREET NUMBER" type="text" id="streetNumber"
+                                                 name="streetNumber0" ng-model="formData.naddress[0].streetNo"
+                                                 class="form-control" maxlength="20" ng-required="isStreetNumberRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.streetNumber0.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label" for="houseNumber">House Number</label>
-                    </div>
-                    <div class="col-md-4"><input placeholder="HOUSE NUMBER" type="text" id="houseNumber"
-                                                 name="houseNumber" ng-model="formData.naddress[0].houseNo"
-                                                 class="form-control" maxlength="20" /></div>
-                    <label class="control-label col-md-2" for="streetNumber">Street Number </label>
-
-                    <div class="col-md-4"><input placeholder="STREET NUMBER" type="text" id="streetNumber"
-                                                 name="streetNumber" ng-model="formData.naddress[0].streetNo"
-                                                 class="form-control" maxlength="20"/></div>
-                </div>
-
-                <div class="form-group" ng-class="{'datafilled':isDatafilled}">
-                    <div class="row">
-                        <div class="col-md-2"><label class="control-label" for="areaLocality"> Area Locality </label></div>
-                        <div class="col-md-10">
-                            <input placeholder=""
-                                   type="text" id="areaLocality" name="areaLocality"
-                                   ng-model="formData.naddress[0].areaLocality" class="form-control" />
-                        </div>
+                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isAreaLocalityRequired">*</span>Area Locality </label></div>
+                    <div class="col-md-10">
+                        <input placeholder=""
+                               type="text" id="areaLocality" name="areaLocality0"
+                               ng-model="formData.naddress[0].areaLocality" class="form-control" ng-required="isAreaLocalityRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.areaLocality0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group" ng-class="{'datafilled':isDatafilled}">
-                    <div class="row">
-                        <div class="col-md-2"><label class="control-label" for="landmark"> Landmark </label></div>
-                        <div class="col-md-4"><input placeholder="" type="text" id="landmark" name="landmark"
-                                                     ng-model="formData.naddress[0].landmark" class="form-control"/></div>
-                        <label class="control-label col-md-2" for="villageTown">Village/Town </label>
+            <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isLandMarkRequired">*</span>Landmark </label></div>
+                    <div class="col-md-4">
+                        <input placeholder="Landmark" type="text" id="landmark" name="landmark0"
+                                                 ng-model="formData.naddress[0].landmark" class="form-control" ng-required="isLandMarkRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.landmark0.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
 
-                        <div class="col-md-4"><input placeholder="" type="text" id="villageTown" name="villageTown"
-                                                     ng-model="formData.naddress[0].villageTown" class="form-control"/></div>
+                    <label class="control-label col-md-2"><span class="required" ng-show="isVillageTownRequired">*</span>Village/Town </label>
+                    <div class="col-md-4">
+                        <input placeholder="Village/Town" type="text" id="villageTown" name="villageTown0"
+                               ng-model="formData.naddress[0].villageTown" class="form-control" ng-required="isVillageTownRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.villageTown0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group" ng-class="{'datafilled':isDatafilled}">
-                    <div class="row">
-                        <div class="col-md-2"><label class="control-label" for="taluka"><span
-                                class="required">*</span>Taluka</label></div>
-                        <div class="col-md-4">
-                            <input placeholder="Taluka"
-                                   type="text"
-                                   id="taluka"
-                                   name="taluka"
-                                   ng-model="formData.naddress[0].taluka" class="form-control"
-                                   required
-                                   late-Validate/>
-                            <form-validate valattributeform="createclientform" valattribute="taluka"/>
-                        </div>
-                        <label class="control-label col-md-2" for="districtId"><span
-                                class="required">*</span>District </label>
-                        <div class="col-md-4">
-                            <select name="districtId" ng-model="formData.naddress[0].district" class="form-control"
-                                    ng-options="district.id as district.name for district in districtOptins"
-                                    value="{{district.id}}" required late-validate="">
-                                <option value="">{{'label.menu.select' | translate}}</option>
-                            </select>
-                            <form-validate valattributeform="createclientform" valattribute="districtId"/>
-                        </div>
+            <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label"><span
+                            class="required" ng-show="isTalukaRequired">*</span>Taluka</label></div>
+                    <div class="col-md-4">
+                        <input placeholder="Taluka"
+                               type="text"
+                               id="taluka"
+                               name="taluka0"
+                               ng-model="formData.naddress[0].taluka" class="form-control"
+                               ng-required="isTalukaRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.taluka0.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+
+                    <label class="control-label col-md-2"><span class="required" ng-show="isDistrictRequired">*</span>
+                        District</label>
+                    <div class="col-md-4">
+                        <select name="districtId0" ng-model="formData.naddress[0].district" class="form-control"
+                                ng-options="district.id as district.name for district in districtOptins"
+                                value="{{district.id}}" ng-required="isDistrictRequired">
+                            <option value="">{{'label.menu.select' | translate}}</option>
+                        </select>
+                        <span class="error" ng-show="submitted && createclientform.districtId0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group" ng-class="{'datafilled':isDatafilled}">
-                    <div class="row">
-                        <div class="col-md-2"><label class="control-label"><span class="required">*</span>State</label></div>
-                        <div class="col-md-4">
-                            <select  name="stateId" ng-model="formData.naddress[0].state" class="form-control"
-                                    ng-options="state.id as state.name for state in stateOptions" value="{{state.id}}" required late-validate="">
-                                <option value="">{{'label.menu.select' | translate}}</option>
-                            </select>
-                            <form-validate valattributeform="createclientform" valattribute="stateId"/>
-                        </div>
+            <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isStateRequired">*</span>State</label></div>
+                    <div class="col-md-4">
+                        <select name="stateId0" ng-model="formData.naddress[0].state" class="form-control"
+                                ng-options="state.id as state.name for state in stateOptions" value="{{state.id}}" ng-required="isStateRequired">
+                            <option value="">{{'label.menu.select' | translate}}</option>
+                        </select>
+                        <span class="error" ng-show="submitted && createclientform.stateId0.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
 
-                        <label class="control-label col-md-2" for="pincode"><span
-                                class="required">*</span>PIN Code </label>
-                        <div class="col-md-4">
-                            <input placeholder="" type="text" id="pincode" name="pincode"
-                                   ng-model="formData.naddress[0].pinCode" class="form-control" required late-Validate
-                                    maxlength="6"/>
-                            <form-validate valattributeform="createclientform" valattribute="pincode"/>
-                        </div>
+                    <label class="control-label col-md-2" for="pincode"><span
+                            class="required" ng-show="isPinCodeRequired">*</span>PIN Code </label>
+                    <div class="col-md-4">
+                        <input placeholder="" type="text" id="pincode" name="pincode0"
+                               ng-model="formData.naddress[0].pinCode" class="form-control" ng-required="isPinCodeRequired"
+                                maxlength="6" ng-pattern="/^\d+$/"/>
+                        <span class="error" ng-show="submitted && createclientform.pincode0.$error.required">{{'label.error.required'|translate}}</span>
+                        <span class="required" ng-show="createclientform.pincode0.$error.pattern">Only Numbers</span>
                     </div>
                 </div>
+            </div>
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label" for="landlineNumber">Landline
-                        number </label></div>
-                    <div class="col-md-4"><input placeholder="" type="text" id="landlineNumber"
-                                                 name="landlineNumber" ng-model="formData.naddress[0].landlineNo"
-                                                 class="form-control"  maxlength="20"/></div>
-                    <label class="control-label col-md-2" for="mobileNumber"><span class="required">*</span>Mobile number </label>
+                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isLandlineNumberRequired">*
+                    </span>Landline number</label></div>
+                    <div class="col-md-4">
+                        <input placeholder="LANDLINE NUMBER" type="text" id="landlineNumber"
+                                                 name="landlineNumber0" ng-model="formData.naddress[0].landlineNo"
+                                                 class="form-control" maxlength="20"
+                               ng-required="isLandlineNumberRequired" ng-pattern="/^\d+$/"/>
+                        <span class="error" ng-show="submitted && createclientform.landlineNumber0.$error.required">{{'label.error.required'|translate}}</span>
+                        <span class="required" ng-show="createclientform.landlineNumber0.$error.pattern">Only Numbers</span>
+                    </div>
 
+                    <label class="control-label col-md-2"><span class="required" ng-show="isMobileNumberRequired">*</span>Mobile number </label>
                     <div class="col-md-4">
                         <input placeholder="Mobile Number"
-                               type="text" id="mobileNumber"
-                               name="mobileNumber" ng-model="formData.naddress[0].mobileNo"
-                               class="form-control" required late-Validate  maxlength="11"/>
-                        <form-validate valattributeform="createclientform" valattribute="mobileNumber"/>
+                               type="text" id="mobileNumber" name="mobileNumber0"
+                               ng-model="formData.naddress[0].mobileNo"
+                               class="form-control" ng-required="isMobileNumberRequired" maxlength="10"/>
+                        <span class="error" ng-show="submitted && createclientform.mobileNumber0.$error.required">{{'label.error.required'|translate}}</span>
+                        <span class="required" ng-show="createclientform.mobileNumber0.$error.pattern">Only Numbers</span>
                     </div>
                 </div>
             </div>
@@ -393,172 +422,132 @@
                     <input type="checkbox" ng-model="addressabove" ng-change="addressaboveSetting()" />
                 </legend>
             </div>
-            <ng-form name="createclientformkycaddress" novalidate="" rc-submit="submit()">
 
-                <fieldset>
-                    <div class="form-group" ng-class="{'datafilled':isDatafilled}">
-                        <div class="row">
-                            <div class="col-md-2"><label class="control-label" for="houseNumber">House Number</label>
-                            </div>
-                            <div class="col-md-4"><input placeholder="HOUSE NUMBER" type="text" id="houseNumber1"
-                                                         name="houseNumber" ng-model="formData.naddress[1].houseNo"
-                                                         class="form-control" ng-disabled="addressabove" maxlength="20"/></div>
-                            <label class="control-label col-md-2" for="streetNumber">Street Number </label>
+            <div ng-hide="addressabove">
+                <div class="form-group" ng-class="{'datafilled':isDatafilled}">
 
-                            <div class="col-md-4"><input placeholder="STREET NUMBER" type="text" id="streetNumber1"
-                                                         name="streetNumber" ng-model="formData.naddress[1].streetNo"
-                                                         class="form-control" ng-disabled="addressabove" maxlength="20"/></div>
+                    <div class="row">
+                        <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isHouseNumberRequired">*</span>House Number</label></div>
+                        <div class="col-md-4">
+                            <input placeholder="HOUSE NUMBER" type="text" id="houseNumber1"
+                                   name="houseNumber1" ng-model="formData.naddress[1].houseNo"
+                                   class="form-control" maxlength="20" ng-required="isHouseNumberRequired"/>
+                            <span class="error" ng-show="submitted && createclientform.houseNumber1.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
 
-                    </div>
-
-                    <div class="form-group" ng-class="{'datafilled':isDatafilled}">
-                        <div class="row">
-                            <div class="col-md-2"><label class="control-label" for="areaLocality"> Area Locality </label></div>
-                            <div class="col-md-10">
-                                <input placeholder=""
-                                       type="text" id="areaLocality1" name="areaLocality"
-                                       ng-model="formData.naddress[1].areaLocality" class="form-control" ng-disabled="addressabove" />
-                            </div>
+                        <label class="control-label col-md-2"><span class="required" ng-show="isStreetNumberRequired">*</span>Street Number </label>
+                        <div class="col-md-4">
+                            <input placeholder="STREET NUMBER" type="text" id="streetNumber1"
+                                   name="streetNumber1" ng-model="formData.naddress[1].streetNo"
+                                   class="form-control" maxlength="20" ng-required="isStreetNumberRequired"/>
+                            <span class="error" ng-show="submitted && createclientform.streetNumber1.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
-                    </div>
-
-                    <div class="form-group" ng-class="{'datafilled':isDatafilled}">
-                        <div class="row">
-                            <div class="col-md-2"><label class="control-label" for="landmark"> Landmark </label></div>
-                            <div class="col-md-4"><input placeholder="" type="text" id="landmark1" name="landmark"
-                                                         ng-model="formData.naddress[1].landmark" class="form-control" ng-disabled="addressabove"/></div>
-                            <label class="control-label col-md-2" for="villageTown">Village/Town </label>
-
-                            <div class="col-md-4"><input placeholder="" type="text" id="villageTown1" name="villageTown"
-                                                         ng-model="formData.naddress[1].villageTown" class="form-control" ng-disabled="addressabove"/></div>
-                        </div>
-                    </div>
-
-                    <div class="form-group" ng-class="{'datafilled':isDatafilled}">
-                        <div class="row">
-                            <div class="col-md-2"><label class="control-label" for="taluka"><span
-                                    class="required">*</span>Taluka</label></div>
-                            <div class="col-md-4">
-                                <input placeholder="Taluka"
-                                       type="text"
-                                       id="taluka1"
-                                       name="taluka1"
-                                       ng-model="formData.naddress[1].taluka" class="form-control"
-                                       required
-                                       late-Validate ng-disabled="addressabove"/>
-                                <form-validate valattributeform="createclientformkycaddress" valattribute="taluka1"/>
-                            </div>
-                            <label class="control-label col-md-2" for="districtId"><span
-                                    class="required">*</span>District </label>
-                            <div class="col-md-4">
-                                <select name="districtId1" ng-model="formData.naddress[1].district" class="form-control"
-                                        ng-options="district.id as district.name for district in districtOptins"
-                                        value="{{district.id}}" required late-validate ng-disabled="addressabove">
-                                    <option value="">{{'label.menu.select' | translate}}</option>
-                                </select>
-                                <form-validate valattributeform="createclientformkycaddress" valattribute="districtId1"/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group" ng-class="{'datafilled':isDatafilled}">
-                        <div class="row">
-                            <div class="col-md-2"><label class="control-label"><span class="required">*</span>State</label></div>
-                            <div class="col-md-4">
-                                <select  name="stateId1" ng-model="formData.naddress[1].state" class="form-control"
-                                         ng-options="state.id as state.name for state in stateOptions"
-                                         value="{{state.id}}" required late-validate ng-disabled="addressabove">
-                                    <option value="">{{'label.menu.select' | translate}}</option>
-                                </select>
-                                <form-validate valattributeform="createclientformkycaddress" valattribute="stateId1"/>
-                            </div>
-
-                            <label class="control-label col-md-2" for="pincode"><span
-                                    class="required">*</span>PIN Code </label>
-                            <div class="col-md-4">
-                                <input placeholder="" type="text" id="pincode1" name="pincode1"
-                                       ng-model="formData.naddress[1].pinCode" class="form-control" required late-Validate
-                                        maxlength="6" ng-disabled="addressabove"/>
-                                <form-validate valattributeform="createclientformkycaddress" valattribute="pincode1"/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-2"><label class="control-label" for="landlineNumber">Landline
-                                number </label></div>
-                            <div class="col-md-4"><input placeholder="" type="text" id="landlineNumber1"
-                                                         name="landlineNumber" ng-model="formData.naddress[1].landlineNo"
-                                                         class="form-control" ng-disabled="addressabove"/></div>
-                            <label class="control-label col-md-2" for="mobileNumber"><span class="required">*</span>Mobile number </label>
-
-                            <div class="col-md-4">
-                                <input placeholder="Mobile Number"
-                                       type="text" id="mobileNumber1"
-                                       name="mobileNumber1" ng-model="formData.naddress[1].mobileNo"
-                                       class="form-control" required late-Validate
-                                       ng-disabled="addressabove"/>
-                                <form-validate valattributeform="createclientformkycaddress"
-                                               valattribute="mobileNumber1"/>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-            </ng-form>
-
-            <hr/>
-            <div class="row">
-            <legend>
-                <span class="required">*</span> Details Of Identity and Address proof (One ID & One Address Proof)
-            </legend>
-            </div>
-
-            <div class="form-group" <div ng-class="{'datafilled':isDatafilled}">
-                <div class="row">
-                    <div class="col-md-2"><label class="control-label" for="landlineNumber">Identity Proof </label></div>
-                    <div class="col-md-4">
-                        <select name="identityProofTypeId0"
-                                ng-model="formData.clientIdentifierData[0].documentTypeId"
-                                class="form-control"
-                                ng-options="identityProof.id as identityProof.name for identityProof in identityProofOptions"
-                                value="{{identityProof.id}}" required late-validate="">
-                            <option value="">{{'label.menu.select' | translate}}</option>
-                        </select>
-                        <form-validate valattributeform="createclientform" valattribute="identityProofTypeId0"/>
-                    </div>
-                    <label class="control-label col-md-2" for="identityProof">ID proof number </label>
-
-                    <div class="col-md-4">
-                        <input placeholder="ID proof number"
-                               type="text" name="identityProofNumber0" ng-model="formData.clientIdentifierData[0].documentKey"
-                               class="form-control" required late-Validate />
-                        <form-validate valattributeform="createclientform" valattribute="identityProofNumber0"/>
                     </div>
                 </div>
-            </div>
-            <div class="form-group" <div ng-class="{'datafilled':isDatafilled}">
-                <div class="row">
-                    <div class="col-md-2"><label class="control-label" for="landlineNumber">Address Proof </label></div>
-                    <div class="col-md-4">
-                        <select name="identityProofTypeId1"
-                                ng-model="formData.clientIdentifierData[1].documentTypeId"
-                                class="form-control"
-                                ng-options="addressProof.id as addressProof.name for addressProof in addressProofOptions"
-                                value="{{addressProof.id}}" required late-Validate>
-                            <option value="">{{'label.menu.select' | translate}}</option>
-                        </select>
-                        <form-validate valattributeform="createclientform" valattribute="identityProofTypeId1"/>
-                    </div>
-                    <label class="control-label col-md-2" for="addressProof">Address proof number </label>
 
-                    <div class="col-md-4">
-                        <input placeholder="Address Proof Number"
-                               type="text" name="identityProofNumber1"
-                               ng-model="formData.clientIdentifierData[1].documentKey"
-                               class="form-control" required late-Validate />
-                        <form-validate valattributeform="createclientform" valattribute="identityProofNumber1"/>
+                <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                    <div class="row">
+                        <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isAreaLocalityRequired">*</span>Area Locality </label></div>
+                        <div class="col-md-10">
+                            <input placeholder=""
+                                   type="text" id="areaLocality1" name="areaLocality1"
+                                   ng-model="formData.naddress[1].areaLocality" class="form-control"
+                                   ng-required="isAreaLocalityRequired"/>
+                            <span class="error" ng-show="submitted && createclientform.areaLocality1.$error.required">{{'label.error.required'|translate}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                    <div class="row">
+                        <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isLandMarkRequired">*</span>Landmark </label></div>
+                        <div class="col-md-4">
+                            <input placeholder="Landmark" type="text" id="landmark1" name="landmark1"
+                                   ng-model="formData.naddress[1].landmark" class="form-control"
+                                   ng-required="isLandMarkRequired"/>
+                            <span class="error" ng-show="submitted && createclientform.landmark1.$error.required">{{'label.error.required'|translate}}</span>
+                        </div>
+
+                        <label class="control-label col-md-2"><span class="required" ng-show="isVillageTownRequired">*</span>Village/Town </label>
+                        <div class="col-md-4">
+                            <input placeholder="Village/Town" type="text" id="villageTown1" name="villageTown1"
+                                   ng-model="formData.naddress[1].villageTown" class="form-control"
+                                   ng-required="isVillageTownRequired"/>
+                            <span class="error" ng-show="submitted && createclientform.villageTown1.$error.required">{{'label.error.required'|translate}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                    <div class="row">
+                        <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isTalukaRequired">*</span>Taluka</label></div>
+                        <div class="col-md-4">
+                            <input placeholder="Taluka"
+                                   type="text"
+                                   id="taluka1"
+                                   name="taluka1"
+                                   ng-model="formData.naddress[1].taluka" class="form-control"
+                                   ng-required="isTalukaRequired"/>
+                            <span class="error" ng-show="submitted && createclientform.taluka1.$error.required">{{'label.error.required'|translate}}</span>
+                        </div>
+
+                        <label class="control-label col-md-2"><span class="required" ng-show="isDistrictRequired">*</span>District</label>
+                        <div class="col-md-4">
+                            <select name="districtId1" ng-model="formData.naddress[1].district" class="form-control"
+                                    ng-options="district.id as district.name for district in districtOptins"
+                                    value="{{district.id}}" ng-required="isDistrictRequired">
+                                <option value="">{{'label.menu.select' | translate}}</option>
+                            </select>
+                            <span class="error" ng-show="submitted && createclientform.districtId1.$error.required">{{'label.error.required'|translate}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                    <div class="row">
+                        <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isStateRequired">*</span>State</label></div>
+                        <div class="col-md-4">
+                            <select name="stateId1" ng-model="formData.naddress[1].state" class="form-control"
+                                    ng-options="state.id as state.name for state in stateOptions" value="{{state.id}}" ng-required="isStateRequired">
+                                <option value="">{{'label.menu.select' | translate}}</option>
+                            </select>
+                            <span class="error" ng-show="submitted && createclientform.stateId1.$error.required">{{'label.error.required'|translate}}</span>
+                        </div>
+
+                        <label class="control-label col-md-2" for="pincode"><span class="required" ng-show="isPinCodeRequired">*</span>PIN Code </label>
+                        <div class="col-md-4">
+                            <input placeholder="" type="text" id="pincode1" name="pincode1"
+                                   ng-model="formData.naddress[1].pinCode" class="form-control"
+                                   ng-required="isPinCodeRequired"
+                                   maxlength="6" ng-pattern="/^\d+$/"/>
+                            <span class="error" ng-show="submitted && createclientform.pincode1.$error.required">{{'label.error.required'|translate}}</span>
+                            <span class="required" ng-show="createclientform.pincode1.$error.pattern">Only Numbers</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                    <div class="row">
+                        <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isLandlineNumberRequired">*
+                    </span>Landline number</label></div>
+                        <div class="col-md-4">
+                            <input placeholder="LANDLINE NUMBER" type="text" id="landlineNumber1"
+                                   name="landlineNumber1" ng-model="formData.naddress[1].landlineNo"
+                                   class="form-control" maxlength="20"
+                                   ng-required="isLandlineNumberRequired" ng-pattern="/^\d+$/"/>
+                            <span class="error" ng-show="submitted && createclientform.landlineNumber1.$error.required">{{'label.error.required'|translate}}</span>
+                            <span class="required" ng-show="createclientform.landlineNumber1.$error.pattern">Only Numbers</span>
+                        </div>
+
+                        <label class="control-label col-md-2"><span class="required" ng-show="isMobileNumberRequired">*</span>Mobile number </label>
+                        <div class="col-md-4">
+                            <input placeholder="Mobile Number"
+                                   type="text" id="mobileNumber1" name="mobileNumber1"
+                                   ng-model="formData.naddress[1].mobileNo"
+                                   class="form-control" ng-required="isMobileNumberRequired" maxlength="10"/>
+                            <span class="error" ng-show="submitted && createclientform.mobileNumber1.$error.required">{{'label.error.required'|translate}}</span>
+                            <span class="required" ng-show="createclientform.mobileNumber1.$error.pattern">Only Numbers</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -566,7 +555,65 @@
             <hr/>
             <div class="row">
                 <legend>
-                    Family Details <a class="btn btn-primary" style="float:right;"
+                    <span class="required">*</span> Details Of Identity and Address proof (One ID & One Address Proof)
+                </legend>
+            </div>
+
+            <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isIdentityProofRequired">*
+                    </span>Identity Proof </label></div>
+                    <div class="col-md-4">
+                        <select name="identityProofTypeId0"
+                                ng-model="formData.clientIdentifierData[0].documentTypeId"
+                                class="form-control"
+                                ng-options="identityProof.id as identityProof.name for identityProof in identityProofOptions"
+                                value="{{identityProof.id}}" ng-required="isIdentityProofRequired">
+                            <option value="">{{'label.menu.select' | translate}}</option>
+                        </select>
+                        <span class="error" ng-show="submitted && createclientform.identityProofTypeId0.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+
+                    <label class="control-label col-md-2"><span class="required" ng-show="isIdentityProofNumberRequired">*
+                    </span>ID proof number </label>
+                    <div class="col-md-4">
+                        <input placeholder="ID proof number"
+                               type="text" name="identityProofNumber0" ng-model="formData.clientIdentifierData[0].documentKey"
+                               class="form-control" ng-required="isIdentityProofNumberRequired" />
+                        <span class="error" ng-show="submitted && createclientform.identityProofNumber0.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isAddressProofRequired">*
+                    </span>Address Proof </label></div>
+                    <div class="col-md-4">
+                        <select name="identityProofTypeId1"
+                                ng-model="formData.clientIdentifierData[1].documentTypeId"
+                                class="form-control"
+                                ng-options="addressProof.id as addressProof.name for addressProof in addressProofOptions"
+                                value="{{addressProof.id}}" ng-required="isAddressProofRequired">
+                            <option value="">{{'label.menu.select' | translate}}</option>
+                        </select>
+                        <span class="error" ng-show="submitted && createclientform.identityProofTypeId1.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+
+                    <label class="control-label col-md-2"><span class="required" ng-show="isAddressProofNumberRequired">*</span>Address proof number </label>
+                    <div class="col-md-4">
+                        <input placeholder="Address Proof Number"
+                               type="text" name="identityProofNumber1"
+                               ng-model="formData.clientIdentifierData[1].documentKey"
+                               class="form-control" ng-required="isAddressProofNumberRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.identityProofNumber1.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr/>
+            <div class="row">
+                <legend>Family Details <a class="btn btn-primary" style="float:right;"
                                       ng-click="addFamilyDetails()"
                                       ng-hide="formData.familyDetails.length >= 4">{{'label.button.add' |
                     translate }}</a>
@@ -576,70 +623,79 @@
             <div class="row">
 
                 <div class="form-group">
-                    <div class="col-md-2">Name</div>
-                    <div class="col-md-2">Relationship</div>
-                    <div class="col-md-2">Sex</div>
-                    <div class="col-md-1">Age</div>
-                    <div class="col-md-2">Occupation</div>
-                    <div class="col-md-2">Educational Status</div>
+                    <div class="col-md-2"><span class="required" ng-show="isFamilyFirstNameRequired">*</span>Name</div>
+                    <div class="col-md-2"><span class="required" ng-show="isFamilyRelationshipRequired">*</span>Relationship</div>
+                    <div class="col-md-2"><span class="required" ng-show="isFamilyGenderRequired">*</span>Gender</div>
+                    <div class="col-md-1"><span class="required" ng-show="isFamilyAgeRequired">*</span>Age</div>
+                    <div class="col-md-2"><span class="required" ng-show="isFamilyOccupationRequired">*</span>Occupation</div>
+                    <div class="col-md-2"><span class="required" ng-show="isFamilyEducationalStatusRequired">*</span>Educational Status</div>
                     <div class="col-md-1">&nbsp;</div>
                 </div>
 
                 <div class="form-group" ng-repeat="family in formData.familyDetails track by $index">
-                    <ng-form name="formfamilydetails" novalidate="" rc-submit="submit()">
+                    <ng-form name="formfamilydetailsspfirstname" novalidate="" rc-submit="submit()">
                         <div class="col-md-2">
                             <input placeholder="NAME" type="text" id="spfirstname"
                                    name="spfirstname" ng-model="family.firstname"
-                                   class="form-control" required late-Validate/>
-                            <form-validate valattributeform="formfamilydetails" valattribute="spfirstname"/>
+                                   class="form-control" ng-required="isFamilyFirstNameRequired"/>
+                            <span class="error" ng-show="submitted && formfamilydetailsspfirstname.spfirstname.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
+                    </ng-form>
 
+                    <ng-form name="formfamilydetailsrelationship" novalidate="" rc-submit="submit()">
                         <div class="col-md-2">
                             <select id="relationship" name="relationship" ng-model="family.relationship"
                                     class="form-control"
                                     ng-options="familyrelation.id as familyrelation.name for familyrelation in familyrelationShipOptions"
-                                    value="{{familyrelation.id}}" required late-validate="">
+                                    value="{{familyrelation.id}}" ng-required="isFamilyRelationshipRequired">
                                 <option value=""> {{'label.menu.select' | translate}}</option>
                             </select>
-                            <form-validate valattributeform="formfamilydetails" valattribute="relationship"/>
+                            <span class="error" ng-show="submitted && formfamilydetailsrelationship.relationship.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
+                    </ng-form>
 
+                    <ng-form name="formfamilydetailsgender" novalidate="" rc-submit="submit()">
                         <div class="col-md-2">
                             <select id="gender" name="gender" ng-model="family.gender" class="form-control"
                                     ng-options="gender.id as gender.name for gender in genderOptions"
-                                    value="{{gender.id}}" required late-Validate>
+                                    value="{{gender.id}}" ng-required="isFamilyGenderRequired">
                                 <option value=""> {{'label.menu.gender' | translate}}</option>
                             </select>
-                            <form-validate valattributeform="formfamilydetails" valattribute="gender"/>
+                            <span class="error" ng-show="submitted && formfamilydetailsgender.gender.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
+                    </ng-form>
 
+                    <ng-form name="formfamilydetailsspAge" novalidate="" rc-submit="submit()">
                         <div class="col-md-1">
                             <input placeholder="Age" type="text" id="spAge" name="spAge" ng-model="family.age"
-                                   class="form-control" maxlength="2" number-format="" required
-                                   late-validate=""/>
-                            <form-validate valattributeform="formfamilydetails" valattribute="spAge"/>
+                                   class="form-control" maxlength="2" number-format="" ng-required="isFamilyAgeRequired" />
+                            <span class="error" ng-show="submitted && formfamilydetailsspAge.spAge.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
+                    </ng-form>
 
+                    <ng-form name="formfamilydetailsProfessionId" novalidate="" rc-submit="submit()">
                         <div class="col-md-2">
                             <select id="ProfessionId" name="ProfessionId" ng-model="family.occupation"
                                     class="form-control"
                                     ng-options="Profession.id as Profession.name for Profession in ProfessionOptions"
-                                    value="{{Profession.id}}" required late-validate="">
+                                    value="{{Profession.id}}" ng-required="isFamilyOccupationRequired">
                                 <option value=""> {{'label.menu.select' | translate}}</option>
                             </select>
-                            <form-validate valattributeform="formfamilydetails" valattribute="ProfessionId"/>
+                            <span class="error" ng-show="submitted && formfamilydetailsProfessionId.ProfessionId.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
+                    </ng-form>
 
+                    <ng-form name="formfamilydetailseductionalQualificationId" novalidate="" rc-submit="submit()">
                         <div class="col-md-2">
                             <select id="eductionalQualificationId" name="eductionalQualificationId" ng-model="family.educationalStatus"
                                     class="form-control"
                                     ng-options="eductionalQualification.id as eductionalQualification.name for eductionalQualification in eductionalQualificationOptions"
-                                    value="{{eductionalQualification.id}}" required
-                                    late-validate="">
+                                    value="{{eductionalQualification.id}}" ng-required="isFamilyEducationalStatusRequired">
                                 <option value=""> {{'label.menu.select' | translate}}</option>
                             </select>
-                            <form-validate valattributeform="formfamilydetails" valattribute="eductionalQualificationId"/>
+                            <span class="error" ng-show="submitted && formfamilydetailseductionalQualificationId.eductionalQualificationId.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
+                    </ng-form>
 
                         <div class="col-md-1">
                             <span><a ng-click="deleteFamilyDetails($index)"><i
@@ -668,28 +724,35 @@
                 </div>
 
                  <div class="form-group"  ng-repeat="cfaOccupation in cfaOccupations track by $index">
-                     <ng-form name="formoccupationdetails" novalidate="" rc-submit="submit()">
+                     <ng-form name="formoccupationdetailsrevenue" novalidate="" rc-submit="submit()">
                         <div class="col-md-3">{{cfaOccupation.name}}</div>
                         <div class="col-md-3">
                             <input placeholder="revenue" type="text" id="revenue" name="revenue" ng-model="cfaOccupation.revenue" class="form-control"
-                                   ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate />
-                            <span ng-show="formoccupationdetails.revenue.$error.pattern">{{label.mustbenumeric | translate}}</span>
+                                   ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" />
+                            <span ng-show="formoccupationdetailsrevenue.revenue.$error.pattern">{{label.mustbenumeric | translate}}</span>
                         </div>
+                     </ng-form>
+
+                     <ng-form name="formoccupationdetailsexpense" novalidate="" rc-submit="submit()">
                         <div class="col-md-3">
                             <input placeholder="expense" type="text" id="expense" name="expense" ng-model="cfaOccupation.expense" class="form-control"
-                                   ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate  />
-                            <span ng-show="formoccupationdetails.expense.$error.pattern">{{label.mustbenumeric | translate}}</span>
+                                   ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20"  />
+                            <span ng-show="formoccupationdetailsexpense.expense.$error.pattern">{{label.mustbenumeric | translate}}</span>
                         </div>
+                     </ng-form>
+
+                     <ng-form name="formoccupationdetailssurplus" novalidate="" rc-submit="submit()">
                         <div class="col-md-3">
                             <input placeholder="surplus" type="text" id="surplus" name="surplus" ng-model="cfaOccupation.surplus" class="form-control"
-                                   ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate  />
-                            <span ng-show="formoccupationdetails.surplus.$error.pattern">{{label.mustbenumeric | translate}}</span>
+                                   ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" />
+                            <span ng-show="formoccupationdetailssurplus.surplus.$error.pattern">{{label.mustbenumeric | translate}}</span>
                         </div>
                      </ng-form>
                 </div>
             </div>
             
             <div class="row"> 2. Present source of Loan (Bank/MFIS/Relatives) </div>
+
             <div>
                 <div class="form-group">
                     <div class="row">
@@ -700,41 +763,54 @@
                         <div class="col-md-2">Amount o/s</div>
                         <div class="col-md-2">Status</div>
                     </div>
-                    <div class="form-group"  ng-repeat="sourceOfLoan in sourceOfLoans track by $index">
-                        <ng-form name="formoccupationdetails" novalidate="" rc-submit="submit()">
+                    <div class="form-group" ng-repeat="sourceOfLoan in sourceOfLoans track by $index">
+                        <ng-form name="formsourceofloandetailspresentLoanSourceTypeId" novalidate="" rc-submit="submit()">
                             <div class="col-md-2">
                                 <select id="presentLoanSourceTypeId" name="presentLoanSourceTypeId" ng-model="sourceOfLoan.presentLoanSourceTypeId"
                                         class="form-control"
                                         ng-options="presentLoanSourceType.id as presentLoanSourceType.name for presentLoanSourceType in presentLoanSourceTypes"
-                                        value="{{presentLoanSourceType.id}}" required
-                                        late-validate="">
+                                        value="{{presentLoanSourceType.id}}">
                                     <option value=""> {{'label.menu.select' | translate}}</option>
                                 </select>
                             </div>
+                        </ng-form>
+
+                        <ng-form name="formsourceofloandetailspresentLoanPurposeTypeId" novalidate="" rc-submit="submit()">
                             <div class="col-md-2">
                                 <select id="presentLoanPurposeTypeId" name="presentLoanPurposeTypeId" ng-model="sourceOfLoan.presentLoanPurposeTypeId"
                                         class="form-control"
                                         ng-options="presentLoanPurposeType.id as presentLoanPurposeType.name for presentLoanPurposeType in presentLoanPurposeTypes"
-                                        value="{{presentLoanPurposeType.id}}" required
-                                        late-validate="">
+                                        value="{{presentLoanPurposeType.id}}">
                                     <option value=""> {{'label.menu.select' | translate}}</option>
                                 </select>
                             </div>
+                        </ng-form>
+
+                        <ng-form name="formsourceofloandetailsamountborrowed" novalidate="" rc-submit="submit()">
                             <div class="col-md-2">
                                 <input placeholder="Amount borrowed" type="text" id="amountborrowed" name="amountborrowed" ng-model="sourceOfLoan.amountborrowed" class="form-control"
-                                       ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate  />
+                                       ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" />
                             </div>
+                        </ng-form>
+
+                        <ng-form name="formsourceofloandetailstenure" novalidate="" rc-submit="submit()">
                             <div class="col-md-2">
                                 <input placeholder="Tenure" type="text" id="tenure" name="tenure" ng-model="sourceOfLoan.tenure" class="form-control"
-                                       ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate  />
+                                       ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" />
                             </div>
+                        </ng-form>
+
+                        <ng-form name="formsourceofloandetailsamountoutstanding" novalidate="" rc-submit="submit()">
                             <div class="col-md-2">
                                 <input placeholder="Amount o/s" type="text" id="amountoutstanding" name="amountoutstanding" ng-model="sourceOfLoan.amountoutstanding" class="form-control"
-                                       ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate  />
+                                       ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" />
                             </div>
+                        </ng-form>
+
+                        <ng-form name="formsourceofloandetailsstatus" novalidate="" rc-submit="submit()">
                             <div class="col-md-2">
                                 <input placeholder="Status" type="text" id="status" name="status" ng-model="sourceOfLoan.status" class="form-control"
-                                       ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" required late-Validate  />
+                                       ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" />
                             </div>
                         </ng-form>
                     </div>
@@ -742,80 +818,77 @@
             </div>
 
             <hr/>
-            <div class="row">
-                <legend>
-                    Nomination
-                </legend>
-            </div>
+            <div class="row"><legend>Nomination</legend></div>
             <div class="row">For Ratna Bachat</div>
             <br>
             <div class="row">
 
                 <div class="form-group">
-                    <div class="col-md-2">Title</div>
-                    <div class="col-md-2">Name of the Nominee</div>
-                    <div class="col-md-2">Gender</div>
-                    <div class="col-md-2">Age</div>
-                    <div class="col-md-2">Relationship with Borrower</div>
-                    <div class="col-md-2">Nominee DOB</div>
+                    <div class="col-md-2"><span class="required" ng-show="isNomineeTitleRequired">*</span>Title</div>
+                    <div class="col-md-2"><span class="required" ng-show="isNomineeNameRequired">*</span>Name of the Nominee</div>
+                    <div class="col-md-2"><span class="required" ng-show="isNomineeGenderRequired">*</span>Gender</div>
+                    <div class="col-md-2"><span class="required" ng-show="isNomineeAgeRequired">*</span>Age</div>
+                    <div class="col-md-2"><span class="required" ng-show="isNomineeRelationshipBorrowerRequired">*</span>Relationship with Borrower</div>
+                    <div class="col-md-2"><span class="required" ng-show="isNomineeDOBRequired">*</span>Nominee DOB</div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-md-2">
-                        <select id="nomineetitle" name="nomineetitle" ng-model="formData.nomineeDetails[0].salutation" class="form-control"
+                        <select id="nomineetitle0" name="nomineetitle0"
+                                ng-model="formData.nomineeDetails[0].salutation" class="form-control"
                                 ng-options="salutation.id as salutation.name for salutation in salutations"
-                                value="{{salutation.id}}" required late-Validate>
+                                value="{{salutation.id}}" ng-required="isNomineeTitleRequired">
                             <option value=""> {{'label.menu.select' | translate}}</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="nomineetitle"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineetitle0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
                     <div class="col-md-2">
-                        <input placeholder="NOMINEE NAME" type="text" id="nomineename"
-                               name="nomineename" ng-model="formData.nomineeDetails[0].name"
-                               class="form-control" required late-Validate/>
-                        <form-validate valattributeform="createclientform" valattribute="nomineename"/>
+                        <input placeholder="NOMINEE NAME" type="text" id="nomineename0"
+                               name="nomineename0" ng-model="formData.nomineeDetails[0].name"
+                               class="form-control" ng-required="isNomineeNameRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineename0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
                     <div class="col-md-2">
-                        <select id="nomineegender" name="nomineegender" ng-model="formData.nomineeDetails[0].gender" class="form-control"
+                        <select id="nomineegender0" name="nomineegender0" ng-model="formData.nomineeDetails[0].gender" class="form-control"
                                 ng-options="gender.id as gender.name for gender in genderOptions"
-                                value="{{gender.id}}" required late-Validate>
+                                value="{{gender.id}}" ng-required="isNomineeGenderRequired">
                             <option value=""> {{'label.menu.gender' | translate}}</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="nomineegender"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineegender0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
                     <div class="col-md-2">
-                        <input placeholder="Age" type="text" id="nomineespAge" name="nomineespAge" ng-model="formData.nomineeDetails[0].age"
+                        <input placeholder="Age" type="text" id="nomineespAge0" name="nomineespAge0" ng-model="formData.nomineeDetails[0].age"
                                class="form-control" maxlength="2" number-format="" required
-                               late-validate=""/>
-                        <form-validate valattributeform="createclientform" valattribute="nomineespAge"/>
+                               ng-required="isNomineeAgeRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineespAge0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
                     <div class="col-md-2">
-                        <select id="nomineerelationship" name="nomineerelationship" ng-model="formData.nomineeDetails[0].relationship"
+                        <select id="nomineerelationship0" name="nomineerelationship0"
+                                ng-model="formData.nomineeDetails[0].relationship"
                                 class="form-control"
                                 ng-options="familyrelation.id as familyrelation.name for familyrelation in familyrelationShipOptions"
-                                value="{{familyrelation.id}}" required late-validate="">
+                                value="{{familyrelation.id}}" ng-required="isNomineeRelationshipBorrowerRequired">
                             <option value=""> {{'label.menu.select' | translate}}</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="nomineerelationship"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineerelationship0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
                     <div class="col-md-2">
-                        <input id="nomineedateofbirth" type="text" name="nomineedateofbirth" datepicker-pop="dd MMMM yyyy"
+                        <input id="nomineedateofbirth0" type="text" name="nomineedateofbirth0"
+                               datepicker-pop="dd MMMM yyyy"
                                ng-model="formData.nomineeDetails[0].dateOfBirth" is-open="opened1" class="form-control"
-                               required
-                               late-Validate/>
-                        <form-validate valattributeform="createclientform" valattribute="nomineedateofbirth"/>
+                               ng-required="isNomineeDOBRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineedateofbirth0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
-
 
                 </div>
                 <div class="form-group">
 
-                    <div class="col-md-3">Guardian's name if Nominee is Minor</div>
+                    <div class="col-md-3"><span class="required" ng-show="isNomineeDOBRequired">*</span>Guardian's name if Nominee is Minor</div>
                     <div class="col-md-2">
                         <input placeholder="Guardian's name if Nominee is Minor" type="text" id="guardianName"
                                name="guardianName" ng-model="formData.nomineeDetails[0].guardianName"
@@ -824,13 +897,13 @@
 
 
                     <div class="col-md-3"><label class="control-label"><span
-                            class="required">*</span>Nominee / Guardian Address</label></div>
+                            class="required" ng-show="isNomineeGuardianAddressRequired">*</span>Nominee / Guardian Address</label></div>
                     <div class="col-md-4">
                         <input placeholder="Nominee / Guardian Address" type="text" id="nomineeaddress0"
                                name="nomineeaddress0" ng-model="formData.nomineeDetails[0].address"
                                class="form-control"
-                               required late-Validate/>
-                        <form-validate valattributeform="createclientform" valattribute="nomineeaddress0"/>
+                               ng-required="isNomineeGuardianAddressRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineeaddress0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                 </div>
             </div>
@@ -841,12 +914,12 @@
             <div class="row">
 
                 <div class="form-group">
-                    <div class="col-md-2">Title</div>
-                    <div class="col-md-2">Name of the Nominee</div>
-                    <div class="col-md-2">Gender</div>
-                    <div class="col-md-2">Age</div>
-                    <div class="col-md-2">Relationship with Borrower</div>
-                    <div class="col-md-2">Nominee DOB</div>
+                    <div class="col-md-2"><span class="required" ng-show="isNomineeTitleRequired">*</span>Title</div>
+                    <div class="col-md-2"><span class="required" ng-show="isNomineeNameRequired">*</span>Name of the Nominee</div>
+                    <div class="col-md-2"><span class="required" ng-show="isNomineeGenderRequired">*</span>Gender</div>
+                    <div class="col-md-2"><span class="required" ng-show="isNomineeAgeRequired">*</span>Age</div>
+                    <div class="col-md-2"><span class="required" ng-show="isNomineeRelationshipBorrowerRequired">*</span>Relationship with Borrower</div>
+                    <div class="col-md-2"><span class="required" ng-show="isNomineeDOBRequired">*</span>Nominee DOB</div>
                 </div>
 
                 <div class="form-group">
@@ -854,35 +927,34 @@
                         <select id="nomineetitle1" name="nomineetitle1" ng-model="formData.nomineeDetails[1].salutation"
                                 class="form-control"
                                 ng-options="salutation.id as salutation.name for salutation in salutations"
-                                value="{{salutation.id}}" required late-Validate>
+                                value="{{salutation.id}}" ng-required="isNomineeTitleRequired">
                             <option value=""> {{'label.menu.select' | translate}}</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="nomineetitle1"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineetitle1.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
                     <div class="col-md-2">
                         <input placeholder="NOMINEE NAME" type="text" id="nomineename1"
                                name="nomineename1" ng-model="formData.nomineeDetails[1].name"
-                               class="form-control" required late-Validate/>
-                        <form-validate valattributeform="createclientform" valattribute="nomineename1"/>
+                               class="form-control" ng-required="isNomineeNameRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineename1.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
                     <div class="col-md-2">
                         <select id="nomineegender1" name="nomineegender1" ng-model="formData.nomineeDetails[1].gender"
                                 class="form-control"
                                 ng-options="gender.id as gender.name for gender in genderOptions"
-                                value="{{gender.id}}" required late-Validate>
+                                value="{{gender.id}}" ng-required="isNomineeGenderRequired">
                             <option value=""> {{'label.menu.gender' | translate}}</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="nomineegender1"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineegender1.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
                     <div class="col-md-2">
                         <input placeholder="Age" type="text" id="nomineespAge1" name="nomineespAge1"
                                ng-model="formData.nomineeDetails[1].age"
-                               class="form-control" maxlength="2" number-format="" required
-                               late-validate=""/>
-                        <form-validate valattributeform="createclientform" valattribute="nomineespAge1"/>
+                               class="form-control" maxlength="2" number-format="" ng-required="isNomineeAgeRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineespAge1.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
                     <div class="col-md-2">
@@ -890,19 +962,18 @@
                                 ng-model="formData.nomineeDetails[1].relationship"
                                 class="form-control"
                                 ng-options="familyrelation.id as familyrelation.name for familyrelation in familyrelationShipOptions"
-                                value="{{familyrelation.id}}" required late-validate="">
+                                value="{{familyrelation.id}}" ng-required="isNomineeRelationshipBorrowerRequired">
                             <option value=""> {{'label.menu.select' | translate}}</option>
                         </select>
-                        <form-validate valattributeform="createclientform" valattribute="nomineerelationship1"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineerelationship1.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
                     <div class="col-md-2">
                         <input id="nomineedateofbirth1" type="text" name="nomineedateofbirth1"
                                datepicker-pop="dd MMMM yyyy"
                                ng-model="formData.nomineeDetails[1].dateOfBirth" is-open="opened1" class="form-control"
-                               required
-                               late-Validate/>
-                        <form-validate valattributeform="createclientform" valattribute="nomineedateofbirth1"/>
+                               ng-required="isNomineeDOBRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineedateofbirth1.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                 </div>
 
@@ -917,13 +988,13 @@
 
 
                     <div class="col-md-3"><label class="control-label"><span
-                            class="required">*</span>Nominee / Guardian Address</label></div>
+                            class="required" ng-show="isNomineeGuardianAddressRequired">*</span>Nominee / Guardian Address</label></div>
                     <div class="col-md-4">
                         <input placeholder="Nominee / Guardian Address" type="text" id="nomineeaddress1"
                                name="nomineeaddress1" ng-model="formData.nomineeDetails[1].address"
                                class="form-control"
-                               required late-Validate/>
-                        <form-validate valattributeform="createclientform" valattribute="nomineeaddress1"/>
+                               ng-required="isNomineeGuardianAddressRequired"/>
+                        <span class="error" ng-show="submitted && createclientform.nomineeaddress1.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                 </div>
 
@@ -950,7 +1021,7 @@
             <hr/>
             <div class="col-md-offset-10">
                 <a id="cancel" ng-href="{{cancel}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
-                <button id="save" type="submit" class="btn btn-primary" ng-hide="blockUI"
+                <button id="save" type="submit" class="btn btn-primary" ng-hide="blockUI" ng-click="submitted=true"
                         has-permission='CREATE_CLIENT'>{{'label.button.save' | translate}}
                 </button>
                 <button class="btn btn-info" ng-show="blockUI"><strong>{{'label.button.processing' |
