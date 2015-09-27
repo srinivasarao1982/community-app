@@ -142,6 +142,88 @@
                         scope.formData.staffId = data.staffId;
                     }
                 }
+
+
+
+                // Sensible default values
+
+                // Educational qualification
+                    
+                        var educationObj =  _.find(scope.eductionalQualificationOptions, function(item) {return item.name.toLowerCase().indexOf("10th") > -1 ;});   
+
+                        if(educationObj != undefined && educationObj != null && educationObj != ""){
+                            scope.formData.clientExt.educationalQualification = educationObj.id;    
+                        }
+
+
+                // Professional
+                    
+                        var profObj =  _.find(scope.ProfessionOptions, function(item) {return item.name.toLowerCase().indexOf("farmer") > -1 ;});   
+
+                        if(profObj != undefined && profObj != null && profObj != ""){
+                            scope.formData.clientExt.profession = profObj.id;    
+                        }
+
+
+                // Professional
+                    
+                        var annualIncomeObj =  _.find(scope.annualIncomeOptions, function(item) {return item.name.toLowerCase().indexOf("60,001-1,20,000") > -1 ;});   
+
+                        if(annualIncomeObj != undefined && annualIncomeObj != null && annualIncomeObj != ""){
+                            scope.formData.clientExt.annualIncome = annualIncomeObj.id;    
+                        }
+
+
+                // Professional
+                    
+                        var landHoldingObj =  _.find(scope.landHoldings, function(item) {return item.name.toLowerCase().indexOf("landless") > -1 ;});   
+
+                        if(landHoldingObj != undefined && landHoldingObj != null && landHoldingObj != ""){
+                            scope.formData.clientExt.landholding = landHoldingObj.id;    
+                        }
+
+                
+                // House ownership type
+                    
+                        var houseObj =  _.find(scope.houseTypes, function(item) {return item.name.toLowerCase().indexOf("own") > -1 ;});   
+
+                        if(houseObj != undefined && houseObj != null && houseObj != ""){
+                            scope.formData.clientExt.houseType = houseObj.id;    
+                        }           
+
+                
+                
+                // PAN form type
+                    
+                        var panFormObj =  _.find(scope.panForms, function(item) {return item.name.toLowerCase().indexOf("no") > -1 ;});   
+
+                        if(panFormObj != undefined && panFormObj != null && panFormObj != ""){
+                            scope.formData.clientExt.panForm = panFormObj.id;    
+                        }           
+
+                
+
+
+                            
+                            
+
+
+                            
+                            
+                        
+                        
+                        
+
+
+
+
+
+
+
+
+
+
+
             });
 
             
