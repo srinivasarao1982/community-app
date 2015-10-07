@@ -24,6 +24,7 @@
             };
             scope.haveFile = [];
             resourceFactory.clientResource.get({clientId: routeParams.id}, function (data) {
+                console.log(JSON.stringify(data));
                 scope.client = data;
                 scope.clientData = data.clientDetailedData;
                 console.log(JSON.stringify(scope.clientData));
@@ -157,6 +158,7 @@
                 scope.buttonsArray.singlebuttons = scope.buttons;
                 resourceFactory.runReportsResource.get({reportSource: 'ClientSummary', genericResultSet: 'false', R_clientId: routeParams.id}, function (data) {
                     scope.client.ClientSummary = data[0];
+                    console.log('dddddd ----> : ',JSON.stringify(data));
                 });
             });
             scope.deleteClient = function () {
