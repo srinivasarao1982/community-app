@@ -380,7 +380,7 @@
 										<strong>House No:</strong>
 									</div>
 									<div class="col-md-6 col-sm-6">
-										{{communicationAddress.houseNo}}
+										{{communicatizonAddress.houseNo}}
 									</div>
 										
 								</div>
@@ -483,16 +483,13 @@
 
 					<div class="col-md-3  col-sm-3" >
 						<legend>Loan Details</legend>
-					<div class="row">
-						
-									<div class="col-md-6 col-sm-6 " >
+							<div class="row">
+								<div class="col-md-6 col-sm-6 " >
 									<strong>Activation date:</strong>
-									</div>
-									<div class="col-md-6 col-sm-6">
-												{{client.timeline.activatedOnDate | DateFormat}}
-									</div>
-										
-										
+								</div>
+								<div class="col-md-6 col-sm-6">
+									{{client.timeline.activatedOnDate | DateFormat}}
+								</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6 col-sm-6" >
@@ -504,86 +501,28 @@
 										
 										
 								</div>
+
 								<div class="row">
 									<div class="col-md-6 col-sm-6" >
-									<strong>Client Type:</strong>
+										<strong>Account Number</strong>
 									</div>
 									<div class="col-md-6 col-sm-6">
-												{{client.clientType.name}}
+										<strong>Loan amount</strong>
 									</div>
-										
-										
 								</div>
-								<div class="row">
-									<div class="col-md-6 col-sm-6" >
-									<strong>Client Classification:</strong>
-									</div>
-									<div class="col-md-6 col-sm-6">
-												{{client.clientClassification.name}}
-									</div>
-										
-										
-								</div>
-								<div class="row">
-									<div class="col-md-6 col-sm-6" >
-									<strong>Closed Date:</strong>
-									</div>
-									<div class="col-md-6 col-sm-6">
-												{{client.timeline.closedOnDate | DateFormat}}
-									</div>
-										
-										
-								</div>
-								<div class="row">
-									<div class="col-md-6 col-sm-6" >
-									<strong># of Loan Cycle:</strong>
-									</div>
-									<div class="col-md-6 col-sm-6">
-												{{client.ClientSummary.loanCycle}}
-									</div>
-										
-										
-								</div>
-								<div class="row">
-									<div class="col-md-6 col-sm-6" >
-									<strong>Last loan amount:</strong>
-									</div>
-									<div class="col-md-6 col-sm-6">
-												{{client.ClientSummary.lastLoanAmount|number}}
-									</div>
-										
-										
-								</div>
-								<div class="row">
-									<div class="col-md-6 col-sm-6" >
-									<strong># of active loans:</strong>
-									</div>
-									<div class="col-md-6 col-sm-6">
-												{{client.ClientSummary.activeLoans}}
-									</div>
-										
-										
-								</div>
-								<div class="row">
-									<div class="col-md-6 col-sm-6" >
-									<strong>Total savings:</strong>
-									</div>
-									<div class="col-md-6 col-sm-6">
-												{{client.ClientSummary.totalSavings|number}}
-									</div>
-										
-										
-								</div>
-								<div class="row">
-									<div class="col-md-6 col-sm-6" >
-									<strong># of active savings:</strong>
-									</div>
-									<div class="col-md-6 col-sm-6">
-												{{client.ClientSummary.activeSavings}}
-									</div>
-										
-										
-								</div>
+
+								<div class="row" >
+	       							<div ng-repeat="loan in clientAccounts.loanAccounts">
+	       								
+		       								<div class="col-md-6 col-sm-6" ><a tooltip="{{loan.productName}}"  data-ng-click="routeToLoan(loan.id)">{{loan.accountNo}} </a> 
+
+
+		       								</div>
+		       								<div class="col-md-6 col-sm-6"><center>{{loan.originalLoan}}</center></div>
+
+	       							</div>
+       							</div> 
+
 
 					 </div>
 				</div>
