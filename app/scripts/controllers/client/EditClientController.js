@@ -1,6 +1,73 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
         EditClientController: function (scope, routeParams, resourceFactory, location, http, dateFilter, API_VERSION, $upload, $rootScope) {
+
+            /*********************************/
+            scope.isOfficeIdRequired = true; // Capture Office
+            scope.isStaffIdRequired = true; // Capture Staff
+            scope.isSalutationRequired = true; // Title
+            scope.isFirstnameRequired = true; // Applicant First Name
+            scope.isMiddlenameRequired = false; // Applicant Middle Name
+            scope.isLastnameRequired = false; // Applicant Last Name
+
+            scope.isSPFirstnameRequired = true; // Applicant Father/Spouse First Name
+            scope.isSPMiddlenameRequired = false; // Applicant Father/Spouse Middle Name
+            scope.isSPLastnameRequired = false; // Applicant Father/Spouse Last Name
+
+            scope.isGenderRequired = true; // Applicant Gender
+            scope.isMaritalStatusRequired = true; //Applicant Marital Status
+            scope.isDateOfBirthApplicantRequired = true; //Applicant DateOfBirth
+            scope.isEducationalQualificationClientRequired = false; //Applicant Educational Qualification
+            scope.isProfessionClientRequired = false; //Applicant Profession
+            scope.isAnnualIncomeRequired = false; //Applicant Annual Income
+            scope.isLandHoldingRequired = false; //Applicant Land Holding
+            scope.isHouseTypeRequired = false; //Applicant House Type
+            scope.isAadhaarNoRequired = true; //Applicant aadhaarNo
+            scope.isPanNoRequired = false; //Applicant Pan No
+            scope.isPanFormRequired = false; //Applicant Pan Form
+            scope.isNregaNoRequired = false; //Applicant NREGA Number
+            scope.isNregaNoRequired = false; //Applicant NREGA Number
+            scope.isClientTypeRequired = false; //Applicant Belonging to
+            scope.isClientReligionRequired = false; //Applicant Belonging to
+
+
+            scope.isHouseNumberRequired = false;
+            scope.isStreetNumberRequired = false;
+            scope.isAreaLocalityRequired = false;
+            scope.isLandMarkRequired = false;
+            scope.isVillageTownRequired = false;
+            scope.isTalukaRequired = false;
+            scope.isDistrictRequired = true;
+            scope.isStateRequired = true;
+            scope.isPinCodeRequired = true;
+            scope.isLandlineNumberRequired = true;
+            scope.isMobileNumberRequired = true;
+
+            scope.isIdentityProofRequired = false;
+            scope.isIdentityProofNumberRequired = false;
+            scope.isAddressProofRequired = false;
+            scope.isAddressProofNumberRequired = false;
+
+            scope.isFamilyFirstNameRequired = false;
+            scope.isFamilyRelationshipRequired = false;
+            scope.isFamilyGenderRequired = false;
+            scope.isFamilyAgeRequired = false;
+            scope.isFamilyOccupationRequired = false;
+            scope.isFamilyEducationalStatusRequired = false;
+
+
+            scope.isNomineeTitleRequired = false;
+            scope.isNomineeNameRequired = false;
+            scope.isNomineeGenderRequired = false;
+            scope.isNomineeAgeRequired = false;
+            scope.isNomineeRelationshipBorrowerRequired = false;
+            scope.isNomineeDOBRequired = false;
+            scope.isNomineeGuardianAddressRequired = false;
+
+
+
+            /********************************/
+
             scope.offices = [];
             scope.date = {};
             scope.restrictDate = new Date();
@@ -275,7 +342,7 @@
 
                 if(this.formData.naddress.length == 3) {
                     for (var i in scope.addressTypes) {
-                        if (scope.addressTypes[i].name == 'Spouse Address') {
+                        if (scope.addressTypes[i].name == 'Spouse Address' && formData.naddress[2].district) {
                             this.formData.naddress[2].addressType = scope.addressTypes[i].id;
                             break;
                         }

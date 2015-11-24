@@ -36,7 +36,7 @@
             scope.isAreaLocalityRequired = false;
             scope.isLandMarkRequired = false;
             scope.isVillageTownRequired = false;
-            scope.isTalukaRequired = true;
+            scope.isTalukaRequired = false;
             scope.isDistrictRequired = true;
             scope.isStateRequired = true;
             scope.isPinCodeRequired = true;
@@ -88,6 +88,10 @@
 
             scope.formData.familyDetails = [{}];
             scope.sourceOfLoans = [{},{}];
+
+            scope.dobStartFrom = new Date("1980-01-01");
+
+            scope.formData.dateOfBirth = scope.dobStartFrom;
 
             var requestParams = {staffInSelectedOfficeOnly:true};
             if (routeParams.groupId) {

@@ -118,9 +118,9 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'system/EditCodeController',
             'system/ViewCodeController',
             'system/AddCodeController',
-		'system/HookController',
-		'system/ViewHookController',
-		'system/CreateHookController',
+		    'system/HookController',
+		    'system/ViewHookController',
+		    'system/CreateHookController',
             'system/EditHookController',
             'system/ViewDataTableController',
             'system/DataTableController',
@@ -269,7 +269,8 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'ChosenComboboxDirective',
             'NumberFormatDirective',
             'SuccessfulResponsesDirective',
-            'TabsPersistenceDirective'
+            'TabsPersistenceDirective',
+            'AgeLimitDirective'
         ]
     };
 

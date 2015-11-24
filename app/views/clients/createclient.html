@@ -146,8 +146,10 @@
                     <div class="col-md-2">
                         <input id="dateofbirth" type="text" name="dateofbirth" datepicker-pop="dd MMMM yyyy"
                                ng-model="formData.dateOfBirth" is-open="opened1" class="form-control"
-                               ng-required="isDateOfBirthApplicantRequired"/>
+                               ng-required="isDateOfBirthApplicantRequired" age-limit minAge="18" maxAge="75"/>
                         <span class="error" ng-show="submitted && createclientform.dateofbirth.$error.required">{{'label.error.required'|translate}}</span>
+                        <span class="text-red error" ng-if="createclientform.dateofbirth.$error.ageLimit">The age
+                            must be between 18 and 75 years</span>
                     </div>
                 </div>
             </div>
