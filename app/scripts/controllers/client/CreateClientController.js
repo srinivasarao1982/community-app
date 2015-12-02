@@ -118,6 +118,7 @@
                 scope.genderOptions = data.genderOptions;
                 scope.clienttypeOptions = data.clientTypeOptions;
                 scope.clientClassificationOptions = data.clientClassificationOptions;
+                scope.formData.clientClassificationId=scope.clientClassificationOptions[0].id;
                 scope.districtOptins = clientData.district;
                 scope.stateOptions = clientData.state;
                 scope.identityProofOptions = clientData.identityProof;
@@ -128,6 +129,7 @@
                 scope.presentLoanSourceTypes = clientData.presentLoanSourceTypes
                 scope.presentLoanPurposeTypes = clientData.presentLoanPurposeTypes;
                 scope.autofillHolder = "";
+                scope.spouseRelationShips = clientData.spouseRelationShip;
 
                 if (data.savingProductOptions.length > 0) {
                     scope.showSavingOptions = true;
@@ -205,30 +207,13 @@
                             scope.formData.clientExt.panForm = panFormObj.id;    
                         }           
 
-                
+                //RelationShip type
+                var relationShipObj = _.find(scope.spouseRelationShips,function(item) {return item.name.toLowerCase().indexOf("no") > -1 ;});
 
-
-                            
-                            
-
-
-                            
-                            
-                        
-                        
-                        
-
-
-
-
-
-
-
-
-
-
-
-            });
+                if(relationShipObj != undefined && relationShipObj != null && relationShipObj != ""){
+                    scope.formData.clientExt.spouseRelationShip = relationShipObj.id;
+                }
+               });
 
             
             scope.autoFill = function (){
@@ -541,7 +526,19 @@
                     }
                 }
             };
-
+            scope.nomineeaddressabove= false;
+            scope.nomineeaddressSetting= function(){
+                if(scope.nomineeaddressabove){
+                    var idObj2 = "";
+                    if(scope.formData.nomineeDetails[1] && scope.formData.nomineeDetails[1].id){
+                        idObj2 = scope.formData.nomineeDetails[1].id;
+                    }
+                    scope.formData.nomineeDetails[1] = jQuery.extend(true, {},  scope.formData.nomineeDetails[0]);
+                    if(!isNaN(idObj2)){
+                        scope.formData.nomineeDetails[1].id = idObj2;
+                    }
+                }
+            };
             scope.addFamilyDetails = function (){
                 var family = {};
                 scope.formData.familyDetails.push(family);

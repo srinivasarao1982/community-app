@@ -113,7 +113,9 @@
                 scope.cfaOccupations = clientData.cfaOccupation;
                 scope.addressTypes = clientData.addressTypes;
                 scope.familyrelationShipOptions = clientData.familyrelationShip;
-                scope.spouseRelationShip = clientData.coapplicantDetailsData.spouseRelationShip;
+                scope.spouseRelationShips =clientData.spouseRelationShip;
+                   // clientData.coapplicantDetailsData.spouseRelationShip;
+               // scope.spouseRelationShip=data.spouseRelationShip;
                 /*****/
                 scope.formData = {
                     officeId: data.officeId,
@@ -126,7 +128,7 @@
                     externalId: data.externalId,
                     mobileNo: data.mobileNo,
                     savingsProductId: data.savingsProductId,
-                    genderId: data.gender.id
+                    genderId: data.gender.id,
                 };
 
                 scope.formData.coClientData = [{}];
@@ -263,7 +265,19 @@
                     }
                 }
             };
-
+            scope.nomineeaddressabove= false;
+            scope.nomineeaddressSetting= function(){
+                if(scope.nomineeaddressabove){
+                    var idObj2 = "";
+                    if(scope.formData.nomineeDetails[1] && scope.formData.nomineeDetails[1].id){
+                        idObj2 = scope.formData.nomineeDetails[1].id;
+                    }
+                    scope.formData.nomineeDetails[1] = jQuery.extend(true, {},  scope.formData.nomineeDetails[0]);
+                    if(!isNaN(idObj2)){
+                        scope.formData.nomineeDetails[1].id = idObj2;
+                    }
+                }
+            };
             scope.submitAndAccept = function () {
                 scope.addressaboveSetting();
                 this.formData.locale = scope.optlang.code;
@@ -342,7 +356,7 @@
 
                 if(this.formData.naddress.length == 3) {
                     for (var i in scope.addressTypes) {
-                        if (scope.addressTypes[i].name == 'Spouse Address' && formData.naddress[2].district) {
+                        if (scope.addressTypes[i].name == 'Spouse Address' && this.formData.naddress[2].district) {
                             this.formData.naddress[2].addressType = scope.addressTypes[i].id;
                             break;
                         }
