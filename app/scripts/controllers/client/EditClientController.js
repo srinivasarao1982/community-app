@@ -210,12 +210,31 @@
                 }
 
                 if(clientData.occupationDetailsData){
+                    scope.totalRevenue=0;
+                    scope.totalExpense=0;
+                    scope.totalSurplus=0;
                     for(var count in clientData.occupationDetailsData){
                         for(var occCount in scope.cfaOccupations){
                             if(scope.cfaOccupations[occCount].id == clientData.occupationDetailsData[count].occupationTypeId){
                                 scope.cfaOccupations[occCount].revenue = clientData.occupationDetailsData[count].annualRevenue;
                                 scope.cfaOccupations[occCount].expense = clientData.occupationDetailsData[count].annualExpense;
                                 scope.cfaOccupations[occCount].surplus = clientData.occupationDetailsData[count].annualSurplus;
+                                if(scope.cfaOccupations[occCount].revenue!=null &&scope.cfaOccupations[occCount].revenue!="" && scope.cfaOccupations[occCount].expense!=null && scope.cfaOccupations[occCount].expense!="")
+                                {
+                                    if(parseInt(scope.cfaOccupations[occCount].expense)>parseInt(scope.cfaOccupations[occCount].revenue))
+                                    {
+                                        scope.cfaOccupations[occCount].surplus= (scope.cfaOccupations[occCount].revenue-scope.cfaOccupations[occCount].expense);
+                                        scope.totalRevenue = parseInt(scope.totalRevenue) + parseInt(scope.cfaOccupations[occCount].revenue);
+                                        scope.totalExpense = parseInt(scope.totalExpense) + parseInt(scope.cfaOccupations[occCount].expense);
+                                        scope.totalSurplus = scope.totalSurplus  + scope.cfaOccupations[occCount].surplus;
+                                    }
+                                    else {
+                                        scope.cfaOccupations[occCount].surplus = (scope.cfaOccupations[occCount].revenue - scope.cfaOccupations[occCount].expense);
+                                        scope.totalRevenue = parseInt(scope.totalRevenue) + parseInt(scope.cfaOccupations[occCount].revenue);
+                                        scope.totalExpense = parseInt(scope.totalExpense) + parseInt(scope.cfaOccupations[occCount].expense);
+                                        scope.totalSurplus = scope.totalSurplus + scope.cfaOccupations[occCount].surplus;
+                                    }
+                                }
                             }
                         }
                     }
@@ -263,7 +282,31 @@
                     }
                 }
             };
-
+            scope.keyPress = function(){
+                scope.totalRevenue=0;
+                scope.totalExpense=0;
+                scope.totalSurplus=0;
+                var f=0;
+                for (var l in scope.cfaOccupations)
+                {
+                    if(scope.cfaOccupations[l].revenue!=null &&scope.cfaOccupations[l].revenue!="" && scope.cfaOccupations[l].expense!=null && scope.cfaOccupations[l].expense!="")
+                    {
+                        if(parseInt(scope.cfaOccupations[l].expense)>parseInt(scope.cfaOccupations[l].revenue))
+                        {
+                            scope.cfaOccupations[l].surplus= (scope.cfaOccupations[l].revenue-scope.cfaOccupations[l].expense);
+                            scope.totalRevenue = parseInt(scope.totalRevenue) + parseInt(scope.cfaOccupations[l].revenue);
+                            scope.totalExpense = parseInt(scope.totalExpense) + parseInt(scope.cfaOccupations[l].expense);
+                            scope.totalSurplus = scope.totalSurplus  + scope.cfaOccupations[l].surplus;
+                        }
+                        else {
+                            scope.cfaOccupations[l].surplus = (scope.cfaOccupations[l].revenue - scope.cfaOccupations[l].expense);
+                            scope.totalRevenue = parseInt(scope.totalRevenue) + parseInt(scope.cfaOccupations[l].revenue);
+                            scope.totalExpense = parseInt(scope.totalExpense) + parseInt(scope.cfaOccupations[l].expense);
+                            scope.totalSurplus = scope.totalSurplus + scope.cfaOccupations[l].surplus;
+                        }
+                    }
+                }
+            }
             scope.submitAndAccept = function () {
                 scope.addressaboveSetting();
                 this.formData.locale = scope.optlang.code;
@@ -342,7 +385,7 @@
 
                 if(this.formData.naddress.length == 3) {
                     for (var i in scope.addressTypes) {
-                        if (scope.addressTypes[i].name == 'Spouse Address' && formData.naddress[2].district) {
+                        if (scope.addressTypes[i].name == 'Spouse Address' && this.formData.naddress[2].district) {
                             this.formData.naddress[2].addressType = scope.addressTypes[i].id;
                             break;
                         }

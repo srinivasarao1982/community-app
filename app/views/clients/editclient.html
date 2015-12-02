@@ -717,7 +717,7 @@
 						<ng-form name="formoccupationdetailsrevenue" novalidate="" rc-submit="submit()">
 							<div class="col-md-3">{{cfaOccupation.name}}</div>
 							<div class="col-md-3">
-								<input placeholder="revenue" type="text" id="revenue" name="revenue" ng-model="cfaOccupation.revenue" class="form-control"
+								<input placeholder="revenue" type="text" id="revenue" name="revenue" ng-model="cfaOccupation.revenue" class="form-control" ng-change="keyPress()"
 									   ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" />
 								<span ng-show="formoccupationdetailsrevenue.revenue.$error.pattern">{{label.mustbenumeric | translate}}</span>
 							</div>
@@ -725,7 +725,7 @@
 
 						<ng-form name="formoccupationdetailsexpense" novalidate="" rc-submit="submit()">
 							<div class="col-md-3">
-								<input placeholder="expense" type="text" id="expense" name="expense" ng-model="cfaOccupation.expense" class="form-control"
+								<input placeholder="expense" type="text" id="expense" name="expense" ng-model="cfaOccupation.expense" class="form-control" ng-change="keyPress()"
 									   ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20"  />
 								<span ng-show="formoccupationdetailsexpense.expense.$error.pattern">{{label.mustbenumeric | translate}}</span>
 							</div>
@@ -733,11 +733,29 @@
 
 						<ng-form name="formoccupationdetailssurplus" novalidate="" rc-submit="submit()">
 							<div class="col-md-3">
-								<input placeholder="surplus" type="text" id="surplus" name="surplus" ng-model="cfaOccupation.surplus" class="form-control"
-									   ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" />
+								<input placeholder="surplus" type="text" id="surplus" name="surplus" ng-model="cfaOccupation.surplus" class="form-control" ng-disabled="true"
+									    maxlength="20" />
 								<span ng-show="formoccupationdetailssurplus.surplus.$error.pattern">{{label.mustbenumeric | translate}}</span>
 							</div>
 						</ng-form>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group">
+						<div class="col-md-3"><strong>Total</strong></div>
+						<div class="col-md-3">
+							<input placeholder="total revenue" type="text" id="totalrevenue" name="totalrevenue" ng-model="totalRevenue" class="form-control" ng-disabled="true"
+								   maxlength="20" />
+						</div>
+						<div class="col-md-3">
+							<input placeholder="total expense" type="text" id="totalexpense" name="totalexpense" ng-model="totalExpense" class="form-control" ng-disabled="true"
+								   maxlength="20" />
+						</div>
+						<div class="col-md-3">
+							<input placeholder="total surplus" type="text" id="totalsurplus" name="totalsurplus" ng-model="totalSurplus" class="form-control" ng-disabled="true"
+								   maxlength="20" />
+						</div>
 					</div>
 				</div>
 
@@ -1210,7 +1228,7 @@
 			<hr/>
 			<div class="col-md-offset-10">
 				<a id="cancel" ng-href="{{cancel}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
-				<button id="save" type="submit" class="btn btn-primary" ng-hide="blockUI"
+				<button id="save" type="submit" class="btn btn-primary" ng-hide="blockUI" ng-click="submitAndAccept()"
 						has-permission='CREATE_CLIENT'>{{'label.button.save' | translate}}
 				</button>
 				<button class="btn btn-info" ng-show="blockUI"><strong>{{'label.button.processing' |
