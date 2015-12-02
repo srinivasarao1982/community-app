@@ -120,6 +120,8 @@
                 scope.clientClassificationOptions = data.clientClassificationOptions;
                 scope.districtOptins = clientData.district;
                 scope.stateOptions = clientData.state;
+                scope.formData.naddress[0].state=scope.stateOptions[0].id;
+                scope.formData.naddress[1].state=scope.stateOptions[0].id;
                 scope.identityProofOptions = clientData.identityProof;
                 scope.addressProofOptions = clientData.addressProof;
                 scope.cfaOccupations = clientData.cfaOccupation;
@@ -132,6 +134,7 @@
                 if (data.savingProductOptions.length > 0) {
                     scope.showSavingOptions = true;
                 }
+
                 if(routeParams.officeId) {
                     scope.formData.officeId = routeParams.officeId;
                     for(var i in data.officeOptions) {
