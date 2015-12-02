@@ -81,6 +81,23 @@
 						</div>
 					</div>
 				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"><label class="control-label"><span
+								class="required">*</span>Details of Father/Spouse</label>
+						</div>
+						<div class="col-md-2">
+							<select id="relationship1" name="relationship" ng-model="formData.clientExt.spouseRelationShip" class="form-control"
+									ng-options="spouse.id as spouse.name for spouse in spouseRelationShips"
+									value="{{spouse.id}}" required late-Validate>
+								<option value=""> {{'label.menu.select' | translate}}</option>
+							</select>
+						</div>
+						<div class="col-sm-2">
+							<form-validate valattributeform="createclientform" valattribute="relationship"/>
+						</div>
+					</div>
+				</div>
 
 				<div class="form-group" ng-class="{'datafilled':isDatafilled}">
 					<div class="row">
@@ -917,9 +934,10 @@
 				</div>
 
 				<hr/>
-				<div class="row">For Insurance</div>
+				<div class="row"><legend>For Insurance- Same as above  <input type="checkbox" ng-model="nomineeaddressabove" ng-change="nomineeaddressSetting()" /></legend>
+				</div>
 				<br>
-				<div class="row">
+				<div class="row"  ng-hide="nomineeaddressabove">
 
 					<div class="form-group">
 						<div class="col-md-2"><span class="required" ng-show="isNomineeTitleRequired">*</span>Title</div>
@@ -1005,7 +1023,8 @@
 							<span class="error" ng-show="submitted && createclientform.nomineeaddress1.$error.required">{{'label.error.required'|translate}}</span>
 						</div>
 					</div>
-
+				</div>
+				<div class="row">
 					<div class="form-group">
 						<div class="col-md-3"><label class="control-label"><span
 								class="required"></span>Guardian Date of Birth</label></div>
