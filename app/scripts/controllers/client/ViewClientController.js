@@ -38,6 +38,19 @@
                             scope.formData.coClientData[i].dateOfBirth = new Date(dateOfBirth);
                         }
                     }
+
+                    var coFatherDisplayName = "";
+                    if(scope.formData.coClientData[0].fatherFirstName){
+                        coFatherDisplayName = scope.formData.coClientData[0].fatherFirstName;
+                    }
+                    if(scope.formData.coClientData[0].fatherMiddleName){
+                        coFatherDisplayName += " "+scope.formData.coClientData[0].fatherMiddleName;
+                    }
+                    if(scope.formData.coClientData[0].fatherLastName){
+                        coFatherDisplayName += " "+scope.formData.coClientData[0].fatherLastName;
+                    }
+                    scope.formData.coClientData[0].coFatherDisplayName = coFatherDisplayName;
+
                     var coDisplayName = "";
                     if(scope.formData.coClientData[0].firstName){
                         coDisplayName = scope.formData.coClientData[0].firstName;
@@ -53,6 +66,12 @@
                 if(scope.formData.coClientData[0]){
                     scope.coClientDataDisplay = scope.formData.coClientData[0];
                 }
+
+
+            if(scope.formData.coClientData[0]){
+                scope.coClientDataDisplay = scope.formData.coClientData[0];
+            }
+
                 console.log(JSON.stringify(scope.coClientDataDisplay));
 
                 for(var i in data.clientDetailedData.addressExtData){

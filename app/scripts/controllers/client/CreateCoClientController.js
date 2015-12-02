@@ -13,7 +13,9 @@
                 scope.spouseRelationShip = coClientData.spouseRelationShip;
                 scope.districtOptins = coClientData.district;
                 scope.stateOptions = coClientData.state;
+                scope.formData.naddress[0].state=scope.stateOptions[0].id;
                 scope.addressTypes = coClientData.addressTypes;
+
             });
 
             scope.issave = false;

@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        CreateClientController: function (scope, resourceFactory, location, http, dateFilter, API_VERSION, $upload, $rootScope, routeParams) {
+        CreateClientController: function (scope, resourceFactory, location, http, dateFilter, API_VERSION, $upload, $rootScope, routeParams,$parse) {
 
             /*********************************/
             scope.isOfficeIdRequired = true; // Capture Office
@@ -36,7 +36,7 @@
             scope.isAreaLocalityRequired = false;
             scope.isLandMarkRequired = false;
             scope.isVillageTownRequired = false;
-            scope.isTalukaRequired = true;
+            scope.isTalukaRequired = false;
             scope.isDistrictRequired = true;
             scope.isStateRequired = true;
             scope.isPinCodeRequired = true;
@@ -89,6 +89,10 @@
             scope.formData.familyDetails = [{}];
             scope.sourceOfLoans = [{},{}];
 
+            scope.dobStartFrom = new Date("1980-01-01");
+
+            scope.formData.dateOfBirth = scope.dobStartFrom;
+
             var requestParams = {staffInSelectedOfficeOnly:true};
             if (routeParams.groupId) {
                 requestParams.groupId = routeParams.groupId;
@@ -116,6 +120,8 @@
                 scope.clientClassificationOptions = data.clientClassificationOptions;
                 scope.districtOptins = clientData.district;
                 scope.stateOptions = clientData.state;
+                scope.formData.naddress[0].state=scope.stateOptions[0].id;
+                scope.formData.naddress[1].state=scope.stateOptions[0].id;
                 scope.identityProofOptions = clientData.identityProof;
                 scope.addressProofOptions = clientData.addressProof;
                 scope.cfaOccupations = clientData.cfaOccupation;
@@ -128,6 +134,7 @@
                 if (data.savingProductOptions.length > 0) {
                     scope.showSavingOptions = true;
                 }
+
                 if(routeParams.officeId) {
                     scope.formData.officeId = routeParams.officeId;
                     for(var i in data.officeOptions) {
@@ -199,33 +206,35 @@
 
                         if(panFormObj != undefined && panFormObj != null && panFormObj != ""){
                             scope.formData.clientExt.panForm = panFormObj.id;    
-                        }           
-
-                
-
-
-                            
-                            
-
-
-                            
-                            
-                        
-                        
-                        
-
-
-
-
-
-
-
-
-
-
+                        }
 
             });
 
+            scope.keyPress = function(){
+                scope.totalRevenue=0;
+                scope.totalExpense=0;
+                scope.totalSurplus=0;
+                var f=0;
+                for (var l in scope.cfaOccupations)
+                {
+                    if(scope.cfaOccupations[l].revenue!=null &&scope.cfaOccupations[l].revenue!="" && scope.cfaOccupations[l].expense!=null && scope.cfaOccupations[l].expense!="")
+                    {
+                        if(parseInt(scope.cfaOccupations[l].expense)>parseInt(scope.cfaOccupations[l].revenue))
+                        {
+                            scope.cfaOccupations[l].surplus= (scope.cfaOccupations[l].revenue-scope.cfaOccupations[l].expense);
+                            scope.totalRevenue = parseInt(scope.totalRevenue) + parseInt(scope.cfaOccupations[l].revenue);
+                            scope.totalExpense = parseInt(scope.totalExpense) + parseInt(scope.cfaOccupations[l].expense);
+                            scope.totalSurplus = scope.totalSurplus  + scope.cfaOccupations[l].surplus;
+                        }
+                        else {
+                            scope.cfaOccupations[l].surplus = (scope.cfaOccupations[l].revenue - scope.cfaOccupations[l].expense);
+                            scope.totalRevenue = parseInt(scope.totalRevenue) + parseInt(scope.cfaOccupations[l].revenue);
+                            scope.totalExpense = parseInt(scope.totalExpense) + parseInt(scope.cfaOccupations[l].expense);
+                            scope.totalSurplus = scope.totalSurplus + scope.cfaOccupations[l].surplus;
+                        }
+                    }
+                }
+            }
             
             scope.autoFill = function (){
 
@@ -630,7 +639,7 @@
             };
         }
     });
-    mifosX.ng.application.controller('CreateClientController', ['$scope', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', '$upload', '$rootScope', '$routeParams', mifosX.controllers.CreateClientController]).run(function ($log) {
+    mifosX.ng.application.controller('CreateClientController', ['$scope', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', '$upload', '$rootScope', '$routeParams','$parse', mifosX.controllers.CreateClientController]).run(function ($log) {
         $log.info("CreateClientController initialized");
     });
 }(mifosX.controllers || {}));

@@ -146,8 +146,10 @@
                     <div class="col-md-2">
                         <input id="dateofbirth" type="text" name="dateofbirth" datepicker-pop="dd MMMM yyyy"
                                ng-model="formData.dateOfBirth" is-open="opened1" class="form-control"
-                               ng-required="isDateOfBirthApplicantRequired"/>
+                               ng-required="isDateOfBirthApplicantRequired" age-limit minAge="18" maxAge="75"/>
                         <span class="error" ng-show="submitted && createclientform.dateofbirth.$error.required">{{'label.error.required'|translate}}</span>
+                        <span class="text-red error" ng-if="createclientform.dateofbirth.$error.ageLimit">The age
+                            must be between 18 and 75 years</span>
                     </div>
                 </div>
             </div>
@@ -727,7 +729,7 @@
                      <ng-form name="formoccupationdetailsrevenue" novalidate="" rc-submit="submit()">
                         <div class="col-md-3">{{cfaOccupation.name}}</div>
                         <div class="col-md-3">
-                            <input placeholder="revenue" type="text" id="revenue" name="revenue" ng-model="cfaOccupation.revenue" class="form-control"
+                            <input placeholder="revenue" type="text" id="revenue" name="revenue" ng-model="cfaOccupation.revenue" class="form-control" ng-change="keyPress()"
                                    ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" />
                             <span ng-show="formoccupationdetailsrevenue.revenue.$error.pattern">{{label.mustbenumeric | translate}}</span>
                         </div>
@@ -735,7 +737,7 @@
 
                      <ng-form name="formoccupationdetailsexpense" novalidate="" rc-submit="submit()">
                         <div class="col-md-3">
-                            <input placeholder="expense" type="text" id="expense" name="expense" ng-model="cfaOccupation.expense" class="form-control"
+                            <input placeholder="expense" type="text" id="expense" name="expense" ng-model="cfaOccupation.expense" class="form-control" ng-change="keyPress()"
                                    ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20"  />
                             <span ng-show="formoccupationdetailsexpense.expense.$error.pattern">{{label.mustbenumeric | translate}}</span>
                         </div>
@@ -743,13 +745,30 @@
 
                      <ng-form name="formoccupationdetailssurplus" novalidate="" rc-submit="submit()">
                         <div class="col-md-3">
-                            <input placeholder="surplus" type="text" id="surplus" name="surplus" ng-model="cfaOccupation.surplus" class="form-control"
-                                   ng-pattern="/(^\d*\.?\d*$)|(^\d*\.\d*$)/" maxlength="20" />
+                            <input placeholder="surplus" type="text" id="surplus" name="surplus" ng-model="cfaOccupation.surplus" class="form-control" ng-disabled="true"
+                                    maxlength="20" />
                             <span ng-show="formoccupationdetailssurplus.surplus.$error.pattern">{{label.mustbenumeric | translate}}</span>
                         </div>
                      </ng-form>
                 </div>
             </div>
+            <div class="row">
+             <div class="form-group">
+             <div class="col-md-3"><strong>Total</strong></div>
+                 <div class="col-md-3">
+                     <input placeholder="total revenue" type="text" id="totalrevenue" name="totalrevenue" ng-model="totalRevenue" class="form-control" ng-disabled="true"
+                             maxlength="20" />
+                 </div>
+                 <div class="col-md-3">
+                     <input placeholder="total expense" type="text" id="totalexpense" name="totalexpense" ng-model="totalExpense" class="form-control" ng-disabled="true"
+                             maxlength="20" />
+                 </div>
+                 <div class="col-md-3">
+                     <input placeholder="total surplus" type="text" id="totalsurplus" name="totalsurplus" ng-model="totalSurplus" class="form-control" ng-disabled="true"
+                             maxlength="20" />
+                 </div>
+             </div>
+             </div>
             
             <div class="row"> 2. Present source of Loan (Bank/MFIS/Relatives) </div>
 
