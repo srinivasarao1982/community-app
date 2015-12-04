@@ -10,8 +10,9 @@
     <legend>{{'label.heading.createclient' | translate}}</legend>
 
     <div class="row">
-        <div class="col-md-2">&nbsp;&nbsp;<a class="btn btn-primary" style="float:right;"
-                                  ng-click="autoFill()">Auto Fill</a></div>
+        <div class="col-md-2"><button id="autofill" type="button" class="btn btn-primary" style="float:right;" ng-autofocus="selected" ng-click="autoFill()"
+                >Auto Fill
+        </button></div>
         <div class="col-md-10">
             <input placeholder="Auto fill" type="text" id="adhaarAutofill" name="nregaNo" ng-model="autofillHolder" class="form-control"/>
         </div>
@@ -68,7 +69,15 @@
                         </select>
                         <span class="error" ng-show="submitted && createclientform.title.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
-                    <div class="col-sm-2"></div>
+                    <div class="col-sm-3"></div>
+                    <label class="control-label col-md-2"><span class="required">*</span> External Id2</label>
+
+                    <div class="col-md-3">
+                        <input placeholder="EXTERNAL ID2" type="text" id="externalId2" name="externalId2"
+                               ng-model="formData.clientExt.externalId2" class="form-control" ng-required=""/>
+                        <span class="error" ng-show="submitted && createclientform.martialStatusId.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+
                 </div>
             </div>
 
@@ -896,7 +905,7 @@
 
                     <div class="col-md-2">
                         <input placeholder="Age" type="text" id="nomineespAge0" name="nomineespAge0" ng-model="formData.nomineeDetails[0].age"
-                               class="form-control" maxlength="2" number-format="" required
+                               class="form-control" maxlength="2" number-format="" required ng-disabled="true"
                                ng-required="isNomineeAgeRequired"/>
                         <span class="error" ng-show="submitted && createclientform.nomineespAge0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
@@ -915,7 +924,7 @@
                     <div class="col-md-2">
                         <input id="nomineedateofbirth0" type="text" name="nomineedateofbirth0"
                                datepicker-pop="dd MMMM yyyy"
-                               ng-model="formData.nomineeDetails[0].dateOfBirth" is-open="opened1" class="form-control"
+                               ng-model="formData.nomineeDetails[0].dateOfBirth" is-open="opened1" class="form-control" ng-change="AgeCalculate(0)" max="restrictDate"
                                ng-required="isNomineeDOBRequired"/>
                         <span class="error" ng-show="submitted && createclientform.nomineedateofbirth0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
@@ -989,7 +998,7 @@
                     <div class="col-md-2">
                         <input placeholder="Age" type="text" id="nomineespAge1" name="nomineespAge1"
                                ng-model="formData.nomineeDetails[1].age"
-                               class="form-control" maxlength="2" number-format="" ng-required="isNomineeAgeRequired"/>
+                               class="form-control" maxlength="2" number-format="" ng-disabled="true" ng-required="isNomineeAgeRequired"/>
                         <span class="error" ng-show="submitted && createclientform.nomineespAge1.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
@@ -1007,7 +1016,7 @@
                     <div class="col-md-2">
                         <input id="nomineedateofbirth1" type="text" name="nomineedateofbirth1"
                                datepicker-pop="dd MMMM yyyy"
-                               ng-model="formData.nomineeDetails[1].dateOfBirth" is-open="opened1" class="form-control"
+                               ng-model="formData.nomineeDetails[1].dateOfBirth" is-open="opened1" class="form-control" max="restrictDate" ng-change="AgeCalculate(1)"
                                ng-required="isNomineeDOBRequired"/>
                         <span class="error" ng-show="submitted && createclientform.nomineedateofbirth1.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
@@ -1058,7 +1067,7 @@
             <hr/>
             <div class="col-md-offset-10">
                 <a id="cancel" ng-href="{{cancel}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
-                <button id="save" type="submit" class="btn btn-primary" ng-hide="blockUI" ng-click="submitted=true"
+                <button id="save" type="submit" class="btn btn-primary" ng-hide="blockUI" ng-click="submitAndAccept()"
                         has-permission='CREATE_CLIENT'>{{'label.button.save' | translate}}
                 </button>
                 <button class="btn btn-info" ng-show="blockUI"><strong>{{'label.button.processing' |

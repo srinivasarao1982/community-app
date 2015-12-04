@@ -21,6 +21,7 @@
                         <select id="relationship" name="relationship" ng-model="formData.coClientData[0].relationship" class="form-control"
                                 ng-options="spouse.id as spouse.name for spouse in spouseRelationShip"
                                 value="{{spouse.id}}" required late-Validate>
+                                value="{{spouse.id}}" required late-Validate>
                             <option value=""> {{'label.menu.select' | translate}}</option>
                         </select>
                     </div>
@@ -80,17 +81,16 @@
                     <div class="col-md-2"><label class="control-label"><span
                             class="required">*</span>Date of Birth</label></div>
                     <div class="col-md-3">
-                        <input id="dateofbirth" type="text" name="dateofbirth" datepicker-pop="dd MMMM yyyy"
+                        <input id="dateofbirth" type="text" name="dateofbirth" datepicker-pop="dd MMMM yyyy"  max="restrictDate"
                                ng-model="formData.coClientData[0].dateOfBirth" is-open="opened1" class="form-control"
-                               required
-                               late-Validate/>
-                        <form-validate valattributeform="createcoclientform" valattribute="dateofbirth"/>
+                               required late-validate=""/>
+                        <form-validate valattributeform="createcoclientform" valattribute="dateofbirth" />
                     </div>
 
                     <div class="col-md-1"><label class="control-label"><span
                             class="required">*</span>Age</label></div>
                     <div class="col-md-3">
-                        <input placeholder="Age" type="text" id="spAge" name="spAge" ng-model="formData.coClientData[0].age"
+                        <input placeholder="Age" type="text" id="spAge" name="spAge" ng-model="formData.coClientData[0].age" ng-disabled="true"
                                class="form-control" maxlength="2" number-format="" required
                                late-validate=""/>
                         <form-validate valattributeform="createcoclientform" valattribute="spAge"/>
