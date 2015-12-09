@@ -18,6 +18,7 @@
             scope.savingsGroupsTotal = [];
 			scope.date.transactionDate = new Date();
             var centerOrGroupResource = '';
+            scope.date.newtransactionDate = '';
             resourceFactory.officeResource.getAllOffices(function (data) {
                 scope.offices = data;
             });
@@ -405,11 +406,13 @@
                 scope.formData.dateFormat = scope.df;
                 scope.formData.locale = scope.optlang.code;
 
-                if (scope.date.transactionDate) {
-                    scope.formData.transactionDate = dateFilter(scope.date.transactionDate, scope.df);
+                if (scope.date.newtransactionDate) {
+                    scope.formData.transactionDate = dateFilter(scope.date.newtransactionDate, scope.df);
+                }
+            else{
+                scope.formData.transactionDate = dateFilter(scope.date.transactionDate, scope.df);
                 }
                 scope.formData.actualDisbursementDate = this.formData.transactionDate;
-                
                 _.each(scope.savingsgroups, function (group) {
                     _.each(group.clients, function (client) {
                         var clientAttendanceDetails = {
