@@ -10,6 +10,8 @@
             scope.openLoan = true;
             scope.openSaving = true;
             scope.updateDefaultSavings = false;
+            scope.loanviewactiveclose=true;
+            scope.active=true;
             scope.routeToLoan = function (id) {
                 location.path('/viewloanaccount/' + id);
             };
@@ -22,6 +24,14 @@
                     location.path('/viewrecurringdepositaccount/' + id);
                 }
             };
+            scope.activecloseLoan = function(){
+                if(!this.loanviewactiveclose){
+                    scope.active=false;
+                }
+                else{
+                    scope.active=true;
+                }
+            }
             scope.haveFile = [];
             resourceFactory.clientResource.get({clientId: routeParams.id}, function (data) {
                 console.log(JSON.stringify(data));

@@ -198,7 +198,7 @@
 				</div>
 
 				<div class="row">
-					<div class="col-md-9 col-sm-9">
+					<div class="col-md-8 col-sm-8">
 						<legend>Applicant Details</legend>
 						<div class="row">
 							<div class="col-md-2 col-sm-2" >
@@ -219,7 +219,7 @@
 						            </button>
 						        </div>
 							</div>
-							<div class="col-md-10 col-sm-10" >
+							<div class="col-md-9 col-sm-9" >
 								<br/>
 								<div class="row">
 									<div class="col-md-4 col-sm-4">
@@ -239,18 +239,18 @@
 								</div>
 								<div class="row">
 									<div class="col-md-4 col-sm-4 ">
-										<strong  class="pull-right">Father/Spouse name:</strong>
-									</div>	
-									<div class="col-md-8 col-sm-8">
-										xxxx
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-4 col-sm-4 ">
 										<strong  class="pull-right">Father/Spouse Relation:</strong>
 									</div>
 									<div class="col-md-4 col-sm-8">
 										{{clientData.clientDataExt.spouseRelationShipLabel}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 col-sm-4 ">
+										<strong  class="pull-right">Father/Spouse name:</strong>
+									</div>	
+									<div class="col-md-8 col-sm-8">
+										xxxx
 									</div>
 								</div>
 								<div class="row">
@@ -497,7 +497,7 @@
 				</div>
 
 
-					<div class="col-md-3  col-sm-3" >
+					<div class="col-md-4  col-sm-4" >
 						<legend>Loan Details</legend>
 							<div class="row">
 								<div class="col-md-6 col-sm-6 " >
@@ -514,32 +514,56 @@
 									<div class="col-md-6 col-sm-6">
 												{{ 'label.unassigned' | translate }}
 									</div>
-										
-										
 								</div>
-
+						       <div class="row">
+							   <div class="col-md-6 col-sm-6" >
+								<strong>Active/Close Loan</strong>
+							    </div>
+							    <div class="col-md-6 col-sm-6">
+									<input id="loanview" ng-change="activecloseLoan()" ng-model="loanviewactiveclose"
+										 ng-selected="true"   type="checkbox" />
+								</div>
+						       </div>
 								<div class="row">
-									<div class="col-md-6 col-sm-6" >
-										<strong>Account Number</strong>
+									<div class="col-md-4 col-sm-4" >
+										<strong>Account #</strong>
 									</div>
-									<div class="col-md-6 col-sm-6">
+									<div class="col-md-4 col-sm-4">
 										<strong>Loan amount</strong>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<strong>Loan Balance</strong>
 									</div>
 								</div>
 
 								<div class="row" >
-	       							<div ng-repeat="loan in clientAccounts.loanAccounts">
-	       								
-		       								<div class="col-md-6 col-sm-6" ><a tooltip="{{loan.productName}}"  data-ng-click="routeToLoan(loan.id)">{{loan.accountNo}} </a> 
-
-
+	       							<div ng-show="active==true">
+									<div ng-repeat="loan in clientAccounts.loanAccounts" ng-if="loan.status.closed==false">
+		       								<div class="col-md-4 col-sm-4" >
+												<i ng-hide="loan.inArrears" tooltip-placement="right" tooltip="{{loan.status.value}}"
+												   class="icon-stop {{loan.status.code | StatusLookup}}"></i>
+												<i ng-show="loan.inArrears" tooltip-placement="right" tooltip="{{loan.status.value}}"
+												   class="icon-stop {{loan.status.code | StatusLookup}}overdue"></i>
+												<a tooltip="{{loan.productName}}"  data-ng-click="routeToLoan(loan.id)">{{loan.accountNo}} </a>
 		       								</div>
-		       								<div class="col-md-6 col-sm-6"><center>{{loan.originalLoan}}</center></div>
-
-	       							</div>
-       							</div> 
-
-
+		       								<div class="col-md-4 col-sm-4"><center>{{loan.originalLoan}}</center></div>
+										<div class="col-md-4 col-sm-4"><center>{{loan.loanBalance}}</center></div>
+										<br>
+									</div>
+									</div>
+									<div ng-show="active==false">
+									<div ng-repeat="loan in clientAccounts.loanAccounts" ng-if="loan.status.closed==true">
+										<div class="col-md-4 col-sm-4">
+											<i tooltip-placement="right" tooltip="{{loan.status.value}}"
+											   class="icon-stop {{loan.status.code | StatusLookup}}"></i>
+												<a tooltip="{{loan.productName}}"  data-ng-click="routeToLoan(loan.id)">{{loan.accountNo}}</a>
+										</div>
+										<div class="col-md-4 col-sm-4" ng-if="loan.originalLoan!=null"> {{loan.originalLoan}}</div>
+										<div class="col-md-4 col-sm-4" ng-if="loan.loanBalance!=null" >{{loan.loanBalance}}</div>
+									   <br>
+									</div>
+									</div>
+       							</div>
 					 </div>
 				</div>
 			</div>
@@ -548,7 +572,7 @@
 			<div class="col-md-12 col-sm-12">
 				<div class="row">
 					<hr/>
-					<div class="col-md-9 col-sm-9">
+					<div class="col-md-8 col-sm-8">
 						<legend>Co Applicant Details ({{coClientDataDisplay.relationshipLabel}})</legend>
 						<div class="row">
 
