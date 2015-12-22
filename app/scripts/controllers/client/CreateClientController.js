@@ -85,9 +85,10 @@
             scope.opensavingsproduct = false;
             scope.forceOffice = null;
             scope.clientObject = {};
-
+            scope.selected=false;
             scope.formData.familyDetails = [{}];
             scope.sourceOfLoans = [{},{}];
+            scope.restrictDate = new Date();
 
             scope.dobStartFrom = new Date("1980-01-01");
 
@@ -99,6 +100,45 @@
             }
             if (routeParams.officeId) {
                 requestParams.officeId = routeParams.officeId;
+            }
+
+            scope.$watch('formData.nomineeDetails[0].dateOfBirth',function(){
+                scope.AgeCalculate(0);
+            });
+            scope.$watch('formData.nomineeDetails[1].dateOfBirth',function(){
+                scope.AgeCalculate(1);
+            });
+            scope.$watch('autofillHolder',function(){
+
+                if(scope.autofillHolder!=''&&scope.autofillHolder!=null) {
+                    scope.selected = true;
+                }
+            });
+            scope.AgeCalculate = function(a){
+
+                scope.birthDate=[];
+                scope.todayDates=[];
+                if(a==0) {
+                    scope.date = dateFilter(this.formData.nomineeDetails[0].dateOfBirth, 'dd-MM-yyyy');
+                }
+                else{
+                    scope.date = dateFilter(this.formData.nomineeDetails[1].dateOfBirth, 'dd-MM-yyyy');
+                }
+                var today= dateFilter(new Date(),'dd-MM-yyyy');
+                scope.birthDate=scope.date.split('-');
+                scope.todayDates=today.split('-');
+                var age = scope.todayDates[2]-scope.birthDate[2];
+                var m = scope.todayDates[1] - scope.birthDate[1];
+                if (m < 0 || (m === 0 && scope.todayDates[0] < scope.birthDate[0])) {
+                    age--;
+                }
+                if(a==0) {
+                    this.formData.nomineeDetails[0].age = age;
+                }
+                else{
+                    this.formData.nomineeDetails[1].age = age;
+
+                }
             }
             resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
                 //console.log(JSON.stringify(clientData));
@@ -299,111 +339,120 @@
                         scope.formData.middlename = midName;
                         scope.formData.lastname = lastName;
 
-                    // Spouse or fother name derived
+                        // date of birth derived
+                        var dob =  barCodedDataObject.getAttribute("dob");
 
-                        var co = barCodedDataObject.getAttribute("co").toUpperCase();
-                        var cos =  co.split(" ");                            
-                        var iscoFirstNameDerived = false;
-                        var iscoMidNameDerived = false;
-                        var iscoLastNameDerived = false;
-                        var cofistName = "";
-                        var comidName = "";
-                        var colastName = "";
-                        var startCos = 0;
-
-
-                        if (co.indexOf("/") > -1 ) {
-                            startCos = 1;
-                        };
-
-
-                        if(cos.length == 3)
-                        {
-                            iscoMidNameDerived = true;
-                        } else if(cos.length == 1){
-                            startCos = 0;   
-                        }
-
-                    // Need to improve the name splitting logic for all scenarios
-                        for (var i = startCos; i < cos.length; i++) {
-                                if(!iscoFirstNameDerived)
-                                    {
-
-                                        if( (cos[i].toLowerCase().indexOf("late") > -1 && cos[i].length <= 6 ) || cos[i].length <= 2 ) {
-                                            cofistName =  cofistName + " " +  cos[i];    
-                                        } else{
-                                            cofistName = cofistName + " " + cos[i];    
-                                            iscoFirstNameDerived=true;    
-                                        }
-                                        
-                                        
-                                }else if(!iscoMidNameDerived)
-                                    {
-                                        comidName =  cos[i];
-                                        iscoMidNameDerived =  true;
-                                }else{
-                                        colastName = colastName + cos[i];
-                                }
-
-                        }
-
-                        scope.formData.clientExt.spfirstname = cofistName;
-                        scope.formData.clientExt.spmiddlename = comidName;
-                        scope.formData.clientExt.splastname = colastName;
-
-
-                    // date of birth derived
-                         var dob =  barCodedDataObject.getAttribute("dob");
-
-                         if(dob != undefined && dob != null  && dob != "" ){
-                                var dates = dob.split("/");
-                                scope.formData.dateOfBirth = new Date(dates[2],dates[1]-1,dates[0]);
-                         }else{
-                            var yob =  barCodedDataObject.getAttribute("yob");                            
+                        if(dob != undefined && dob != null  && dob != "" ){
+                            var dates = dob.split("/");
+                            if(dates.length<2){
+                                var dates = dob.split("-");
+                                scope.formData.dateOfBirth = new Date(dates[0],dates[1]-1,dates[2]);
+                            }
+                            else {
+                                scope.formData.dateOfBirth = new Date(dates[2], dates[1] - 1, dates[0]);
+                            }
+                        }else{
+                            var yob =  barCodedDataObject.getAttribute("yob");
                             scope.formData.dateOfBirth = new Date(yob,6,1);
-                         }
+                        }
 
 
-                    // Gender
-                    
-                         var gender =  barCodedDataObject.getAttribute("gender");
-                         var genderSearchString = "female";
-                         if(gender.toLowerCase() == "m"){
+                        // Gender
+
+                        var gender =  barCodedDataObject.getAttribute("gender");
+                        var genderSearchString = "female";
+                        if(gender.toLowerCase() == "m"){
                             genderSearchString = "male";
-                         }
-                        
+                        }
 
-                        var genderObj =  _.find(scope.genderOptions, function(item) {return item.name.toLowerCase() == genderSearchString;});   
+
+                        var genderObj =  _.find(scope.genderOptions, function(item) {return item.name.toLowerCase() == genderSearchString;});
 
                         console.log("genderObj: " + genderObj);
 
                         scope.formData.genderId = genderObj.id;
 
-                     // Salutation
-                        
-                        var salSearchString = "mrs";
-                        var marStatSearchString = "married";
+
+                        // Spouse or fother name derived
+
+                        var co = barCodedDataObject.getAttribute("co");
+                        if(co!=null) {
+                            co = co.toUpperCase();
+                            var cos = co.split(" ");
+                            var iscoFirstNameDerived = false;
+                            var iscoMidNameDerived = false;
+                            var iscoLastNameDerived = false;
+                            var cofistName = "";
+                            var comidName = "";
+                            var colastName = "";
+                            var startCos = 0;
 
 
-                        if(cos.length == 1){
-                            salSearchString = "mrs"
-                            marStatSearchString = "married";                            
-                        }else if(cos[0].toLowerCase().indexOf("d/o") > -1){
-                           salSearchString = "ms";
-                           marStatSearchString = "single"; 
-                        }else if (cos[0].toLowerCase().indexOf("late") > -1 && cos[0].length <= 6  ){
-                            salSearchString = "mrs"
-                            marStatSearchString = "widow"; 
-                        }else if(cos[1].toLowerCase().indexOf("late") > -1 && cos[1].length <= 6  ){
-                            salSearchString = "mrs"
-                            marStatSearchString = "widow"; 
+                            if (co.indexOf("/") > -1) {
+                                startCos = 1;
+                            }
+                            ;
+
+
+                            if (cos.length == 3) {
+                                iscoMidNameDerived = true;
+                            } else if (cos.length == 1) {
+                                startCos = 0;
+                            }
+
+                            // Need to improve the name splitting logic for all scenarios
+                            for (var i = startCos; i < cos.length; i++) {
+                                if (!iscoFirstNameDerived) {
+
+                                    if ((cos[i].toLowerCase().indexOf("late") > -1 && cos[i].length <= 6 ) || cos[i].length <= 2) {
+                                        cofistName = cofistName + " " + cos[i];
+                                    } else {
+                                        cofistName = cofistName + " " + cos[i];
+                                        iscoFirstNameDerived = true;
+                                    }
+
+
+                                } else if (!iscoMidNameDerived) {
+                                    comidName = cos[i];
+                                    iscoMidNameDerived = true;
+                                } else {
+                                    colastName = colastName + cos[i];
+                                }
+
+                            }
+
+                            scope.formData.clientExt.spfirstname = cofistName;
+                            scope.formData.clientExt.spmiddlename = comidName;
+                            scope.formData.clientExt.splastname = colastName;
+
+
+                            // Salutation
+
+                            var salSearchString = "mrs";
+                            var marStatSearchString = "married";
+
+
+                            if (cos.length == 1) {
+                                salSearchString = "mrs"
+                                marStatSearchString = "married";
+                            } else if (cos[0].toLowerCase().indexOf("d/o") > -1) {
+                                salSearchString = "ms";
+                                marStatSearchString = "single";
+                            } else if (cos[0].toLowerCase().indexOf("late") > -1 && cos[0].length <= 6) {
+                                salSearchString = "mrs"
+                                marStatSearchString = "widow";
+                            } else if (cos[1].toLowerCase().indexOf("late") > -1 && cos[1].length <= 6) {
+                                salSearchString = "mrs"
+                                marStatSearchString = "widow";
+                            }
+
+                            var salObj = _.find(scope.salutations, function (item) {
+                                return item.name.toLowerCase() == salSearchString;
+                            });
+                            if (salObj != undefined && salObj != null && salObj != "") {
+                                scope.formData.clientExt.salutation = salObj.id;
+                            }
                         }
-                        
-                        var salObj =  _.find(scope.salutations, function(item) {return item.name.toLowerCase() == salSearchString;});   
-                        if(salObj != undefined && salObj != null && salObj != ""){
-                            scope.formData.clientExt.salutation = salObj.id;
-                        }    
-
                     // Marital status
                     
                         var marStatObj =  _.find(scope.martialStatusOptions, function(item) {return item.name.toLowerCase() == marStatSearchString;});   

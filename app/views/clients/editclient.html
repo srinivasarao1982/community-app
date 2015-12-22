@@ -886,7 +886,7 @@
 
 						<div class="col-md-2">
 							<input placeholder="Age" type="text" id="nomineespAge0" name="nomineespAge0" ng-model="formData.nomineeDetails[0].age"
-								   class="form-control" maxlength="2" number-format="" required
+								   class="form-control" maxlength="2" number-format="" required ng-disabled="true"
 								   ng-required="isNomineeAgeRequired"/>
 							<span class="error" ng-show="submitted && createclientform.nomineespAge0.$error.required">{{'label.error.required'|translate}}</span>
 						</div>
@@ -904,8 +904,8 @@
 
 						<div class="col-md-2">
 							<input id="nomineedateofbirth0" type="text" name="nomineedateofbirth0"
-								   datepicker-pop="dd MMMM yyyy"
-								   ng-model="formData.nomineeDetails[0].dateOfBirth" is-open="opened1" class="form-control"
+								   datepicker-pop="dd MMMM yyyy" max="restrictDate"
+								   ng-model="formData.nomineeDetails[0].dateOfBirth" is-open="opened1" class="form-control" ng-change="AgeCalculate(0)"
 								   ng-required="isNomineeDOBRequired"/>
 							<span class="error" ng-show="submitted && createclientform.nomineedateofbirth0.$error.required">{{'label.error.required'|translate}}</span>
 						</div>
@@ -978,7 +978,7 @@
 
 						<div class="col-md-2">
 							<input placeholder="Age" type="text" id="nomineespAge1" name="nomineespAge1"
-								   ng-model="formData.nomineeDetails[1].age"
+								   ng-model="formData.nomineeDetails[1].age" ng-disabled="true"
 								   class="form-control" maxlength="2" number-format="" ng-required="isNomineeAgeRequired"/>
 							<span class="error" ng-show="submitted && createclientform.nomineespAge1.$error.required">{{'label.error.required'|translate}}</span>
 						</div>
@@ -996,8 +996,8 @@
 
 						<div class="col-md-2">
 							<input id="nomineedateofbirth1" type="text" name="nomineedateofbirth1"
-								   datepicker-pop="dd MMMM yyyy"
-								   ng-model="formData.nomineeDetails[1].dateOfBirth" is-open="opened1" class="form-control"
+								   datepicker-pop="dd MMMM yyyy" max="restrictDate"
+								   ng-model="formData.nomineeDetails[1].dateOfBirth" is-open="opened1" class="form-control" ng-change="AgeCalculate(1)"
 								   ng-required="isNomineeDOBRequired"/>
 							<span class="error" ng-show="submitted && createclientform.nomineedateofbirth1.$error.required">{{'label.error.required'|translate}}</span>
 						</div>

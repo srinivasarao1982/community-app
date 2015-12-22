@@ -8,7 +8,8 @@
             scope.formData.coClientData = [{}];
 
             scope.formData.naddress = [{}];
-
+            scope.restrictDate=new Date();
+            scope.formData.coClientData[0].age='';
             resourceFactory.coClientTemplateResource.get({}, function (coClientData) {
                 scope.spouseRelationShip = coClientData.spouseRelationShip;
                 scope.districtOptins = coClientData.district;
@@ -17,7 +18,24 @@
                 scope.addressTypes = coClientData.addressTypes;
 
             });
+            scope.$watch('formData.coClientData[0].dateOfBirth',function(){
+                scope.AgeCalculate();
+            });
+            scope.AgeCalculate = function(){
 
+                scope.birthDate=[];
+                scope.todayDates=[];
+                scope.date=dateFilter(this.formData.coClientData[0].dateOfBirth, 'dd-MM-yyyy');
+                var today= dateFilter(new Date(),'dd-MM-yyyy');
+                scope.birthDate=scope.date.split('-');
+                scope.todayDates=today.split('-');
+                var age = scope.todayDates[2]-scope.birthDate[2];
+                var m = scope.todayDates[1] - scope.birthDate[1];
+                if (m < 0 || (m === 0 && scope.todayDates[0] < scope.birthDate[0])) {
+                    age--;
+                }
+                scope.formData.coClientData[0].age=age;
+            }
             scope.issave = false;
             scope.submitAndAccept = function () {
                 scope.issave = true;
