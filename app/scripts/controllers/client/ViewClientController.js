@@ -12,6 +12,7 @@
             scope.updateDefaultSavings = false;
             scope.loanviewactiveclose=true;
             scope.active=true;
+            scope.correspondenceAddress1=[];
             scope.routeToLoan = function (id) {
                 location.path('/viewloanaccount/' + id);
             };
@@ -77,11 +78,6 @@
                     scope.coClientDataDisplay = scope.formData.coClientData[0];
                 }
 
-
-            if(scope.formData.coClientData[0]){
-                scope.coClientDataDisplay = scope.formData.coClientData[0];
-            }
-
                 console.log(JSON.stringify(scope.coClientDataDisplay));
 
                 for(var i in data.clientDetailedData.addressExtData){
@@ -90,7 +86,11 @@
                     }else if(data.clientDetailedData.addressExtData[i].addressTypeLable == 'KYC address'){
                         scope.kycAddress = data.clientDetailedData.addressExtData[i];
                     }else if(data.clientDetailedData.addressExtData[i].addressTypeLable == 'Spouse Address'){
-                        scope.correspondenceAddress = data.clientDetailedData.addressExtData[i];
+                        scope.correspondenceAddress1[i] = data.clientDetailedData.addressExtData[i];
+                        if(scope.correspondenceAddress1.length==3)
+                        {
+                            scope.correspondenceAddress=scope.correspondenceAddress1[2]
+                        }
                     }
                 }
 

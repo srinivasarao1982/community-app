@@ -152,8 +152,8 @@
                 scope.addressTypes = clientData.addressTypes;
                 scope.familyrelationShipOptions = clientData.familyrelationShip;
                 scope.spouseRelationShips =clientData.spouseRelationShip;
-                   // clientData.coapplicantDetailsData.spouseRelationShip;
-               // scope.spouseRelationShip=data.spouseRelationShip;
+                scope.spouseRelationShip=clientData.coapplicantDetailsData.spouseRelationShip;
+                //scope.sourceOfLoans = clientData.presentLoanSourceTypes;
                 /*****/
                 scope.formData = {
                     officeId: data.officeId,
