@@ -123,6 +123,7 @@
 
                 }
             }
+
             resourceFactory.clientResource.get({clientId: routeParams.id, template:'true', staffInSelectedOfficeOnly:true}, function (data) {
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
@@ -165,7 +166,7 @@
                     externalId: data.externalId,
                     mobileNo: data.mobileNo,
                     savingsProductId: data.savingsProductId,
-                    genderId: data.gender.id,
+                    genderId: data.gender.id
                 };
 
                 scope.formData.coClientData = [{}];
@@ -321,7 +322,28 @@
                     }
                 }
             };
+            scope.showNotification = function () {
+                scope.annualRevenueId =scope.formData.clientExt.annualIncome;
+                for(var i in scope.annualIncomeOptions){
+                    if(scope.annualIncomeOptions[i].id==scope.formData.clientExt.annualIncome){
+                        scope.revenue=scope.annualIncomeOptions[i].name;
+                        break;
+                    }
+                }
+                scope.annualIncomeData=scope.revenue.split("-");
+                var lowerlimit =scope.annualIncomeData[0].replace(/,/g, '');
+                var upperlimit =scope.annualIncomeData[1].replace(/,/g, '');
+                if(parseInt(scope.totalRevenue)<parseInt(lowerlimit)) {
+                    scope.cashflowmishmatch == true;
+                    return true;
+                }
+                else if(parseInt(scope.totalRevenue)>parseInt(upperlimit)) {
 
+                    scope.cashflowmishmatch==true
+                    return true;
+                }
+                //  }
+            };
             scope.keyPress = function(){
                 scope.totalRevenue=0;
                 scope.totalExpense=0;
@@ -364,6 +386,8 @@
             
             scope.submitAndAccept = function () {
                 scope.addressaboveSetting();
+                scope.result = scope.showNotification();
+                if (scope.result != true) {
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
                 if (scope.opensavingsproduct == 'false') {
@@ -450,8 +474,15 @@
                 resourceFactory.clientResource.update({'clientId': routeParams.id}, this.formData, function (data) {
                     location.path('/viewclient/' + routeParams.id);
                 });
-            };
+            }
+            else{
+                 scope.cashflowmishmatch=true;
+                }
+
+            }
+
         }
+
     });
     mifosX.ng.application.controller('EditClientController', ['$scope', '$routeParams', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', '$upload', '$rootScope', mifosX.controllers.EditClientController]).run(function ($log) {
         $log.info("EditClientController initialized");

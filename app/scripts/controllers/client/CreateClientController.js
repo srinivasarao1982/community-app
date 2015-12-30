@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        CreateClientController: function (scope, resourceFactory, location, http, dateFilter, API_VERSION, $upload, $rootScope, routeParams,$parse) {
+        CreateClientController: function (scope, resourceFactory, location, http, dateFilter, API_VERSION, $upload, $rootScope, routeParams,$parse,$q,$modal,$scope) {
 
             /*********************************/
             scope.isOfficeIdRequired = true; // Capture Office
@@ -89,6 +89,7 @@
             scope.formData.familyDetails = [{}];
             scope.sourceOfLoans = [{},{}];
             scope.restrictDate = new Date();
+            scope.cashflowmishmatch=false;
 
             scope.dobStartFrom = new Date("1980-01-01");
 
@@ -140,10 +141,33 @@
 
                 }
             }
+            scope.showNotification = function () {
+                scope.annualRevenueId =scope.formData.clientExt.annualIncome;
+                for(var i in scope.annualIncomeOptions){
+                    if(scope.annualIncomeOptions[i].id==scope.formData.clientExt.annualIncome){
+                        scope.revenue=scope.annualIncomeOptions[i].name;
+                        break;
+                    }
+                }
+                scope.annualIncomeData=scope.revenue.split("-");
+                var lowerlimit =scope.annualIncomeData[0].replace(/,/g, '');
+                var upperlimit =scope.annualIncomeData[1].replace(/,/g, '');
+                 if(parseInt(scope.totalRevenue)<parseInt(lowerlimit)) {
+                     scope.cashflowmishmatch == true;
+                     return true;
+                 }
+                    else if(parseInt(scope.totalRevenue)>parseInt(upperlimit)) {
+                     scope.cashflowmishmatch==true
+                     return true;
+                      }
+                //  }
+            };
+
             resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
                 //console.log(JSON.stringify(clientData));
                 data = clientData.clientBasicDetails;
                 scope.salutations = clientData.salutation;
+               scope.formData.clientExt.salutation=scope.salutations[0].id;
                 scope.martialStatusOptions = clientData.maritalStatus;
                 scope.ProfessionOptions = clientData.profession;
                 scope.eductionalQualificationOptions = clientData.educationQualification;
@@ -156,6 +180,7 @@
                 scope.formData.officeId = scope.offices[0].id;
                 scope.savingproducts = data.savingProductOptions;
                 scope.genderOptions = data.genderOptions;
+                scope.formData.genderId =scope.genderOptions[0].id
                 scope.clienttypeOptions = data.clientTypeOptions;
                 scope.clientClassificationOptions = data.clientClassificationOptions;
                 scope.formData.clientClassificationId=scope.clientClassificationOptions[0].id;
@@ -172,6 +197,7 @@
                 scope.presentLoanPurposeTypes = clientData.presentLoanPurposeTypes;
                 scope.autofillHolder = "";
                 scope.spouseRelationShips = clientData.spouseRelationShip;
+               scope.formData.clientExt.spouseRelationShip=scope.spouseRelationShips[0].id;
 
                 if (data.savingProductOptions.length > 0) {
                     scope.showSavingOptions = true;
@@ -628,88 +654,96 @@
 
             scope.submitAndAccept = function () {
                 scope.addressaboveSetting();
-                var reqDate = dateFilter(scope.first.date, scope.df);
+                scope.result = scope.showNotification();
+                if (scope.result != true) {
+                    var reqDate = dateFilter(scope.first.date, scope.df);
 
-                this.formData.locale = scope.optlang.code;
-                this.formData.active = this.formData.active || false;
-                this.formData.dateFormat = scope.df;
-                this.formData.activationDate = reqDate;
+                    this.formData.locale = scope.optlang.code;
+                    this.formData.active = this.formData.active || false;
+                    this.formData.dateFormat = scope.df;
+                    this.formData.activationDate = reqDate;
 
-                if (routeParams.groupId) {
-                    this.formData.groupId = routeParams.groupId;
-                }
-
-                if (routeParams.officeId) {
-                    this.formData.officeId = routeParams.officeId;
-                }
-
-                if (scope.first.submitondate) {
-                    reqDate = dateFilter(scope.first.submitondate, scope.df);
-                    this.formData.submittedOnDate = reqDate;
-                }
-
-                if (scope.formData.dateOfBirth) {
-                    this.formData.dateOfBirth = dateFilter(scope.formData.dateOfBirth, scope.df);
-                }
-
-                if (!scope.opensavingsproduct) {
-                    this.formData.savingsProductId = null;
-                }
-
-                for(var i in this.formData.familyDetails){
-                    if (this.formData.familyDetails[i].dateOfBirth) {
-                        this.formData.familyDetails[i].dateOfBirth = dateFilter(scope.formData.familyDetails[i].dateOfBirth, scope.df);
+                    if (routeParams.groupId) {
+                        this.formData.groupId = routeParams.groupId;
                     }
-                }
 
-                this.formData.naddress[0].addressType = scope.addressTypes[0].id;
-                this.formData.naddress[1].addressType = scope.addressTypes[1].id;
-
-                if(this.formData.naddress){
-                    for(var i = 0; i < this.formData.naddress.length; i++){
-                        this.formData.naddress[i].locale = scope.optlang.code;
-                        this.formData.naddress[i].dateFormat = scope.df;
+                    if (routeParams.officeId) {
+                        this.formData.officeId = routeParams.officeId;
                     }
-                }
-                if(this.formData.familyDetails){
-                    for(var i = 0; i < this.formData.familyDetails.length; i++){
-                        this.formData.familyDetails[i].locale = scope.optlang.code;
-                        this.formData.familyDetails[i].dateFormat = scope.df;
-                    }
-                }
 
-                if(scope.cfaOccupations){
-                    this.formData.cfaOccupations = scope.cfaOccupations;
-                    for(var i = 0; i < this.formData.cfaOccupations.length; i++){
-                        this.formData.cfaOccupations[i].locale = scope.optlang.code;
+                    if (scope.first.submitondate) {
+                        reqDate = dateFilter(scope.first.submitondate, scope.df);
+                        this.formData.submittedOnDate = reqDate;
                     }
+
+                    if (scope.formData.dateOfBirth) {
+                        this.formData.dateOfBirth = dateFilter(scope.formData.dateOfBirth, scope.df);
+                    }
+
+                    if (!scope.opensavingsproduct) {
+                        this.formData.savingsProductId = null;
+                    }
+
+                    for (var i in this.formData.familyDetails) {
+                        if (this.formData.familyDetails[i].dateOfBirth) {
+                            this.formData.familyDetails[i].dateOfBirth = dateFilter(scope.formData.familyDetails[i].dateOfBirth, scope.df);
+                        }
+                    }
+
+                    this.formData.naddress[0].addressType = scope.addressTypes[0].id;
+                    this.formData.naddress[1].addressType = scope.addressTypes[1].id;
+
+                    if (this.formData.naddress) {
+                        for (var i = 0; i < this.formData.naddress.length; i++) {
+                            this.formData.naddress[i].locale = scope.optlang.code;
+                            this.formData.naddress[i].dateFormat = scope.df;
+                        }
+                    }
+                    if (this.formData.familyDetails) {
+                        for (var i = 0; i < this.formData.familyDetails.length; i++) {
+                            this.formData.familyDetails[i].locale = scope.optlang.code;
+                            this.formData.familyDetails[i].dateFormat = scope.df;
+                        }
+                    }
+
+                    if (scope.cfaOccupations) {
+                        this.formData.cfaOccupations = scope.cfaOccupations;
+                        for (var i = 0; i < this.formData.cfaOccupations.length; i++) {
+                            this.formData.cfaOccupations[i].locale = scope.optlang.code;
+                        }
+                    }
+
+                    if (this.formData.nomineeDetails) {
+                        for (var i = 0; i < this.formData.nomineeDetails.length; i++) {
+                            this.formData.nomineeDetails[i].locale = scope.optlang.code;
+                            this.formData.nomineeDetails[i].dateFormat = scope.df;
+                        }
+                    }
+
+                    for (var i in this.formData.nomineeDetails) {
+                        if (this.formData.nomineeDetails[i].dateOfBirth) {
+                            this.formData.nomineeDetails[i].dateOfBirth = dateFilter(scope.formData.nomineeDetails[i].dateOfBirth, scope.df);
+                        }
+                        if (this.formData.nomineeDetails[i].guardianDateOfBirth) {
+                            this.formData.nomineeDetails[i].guardianDateOfBirth = dateFilter(scope.formData.nomineeDetails[i].guardianDateOfBirth, scope.df);
+                        }
+                    }
+
+                    console.log(JSON.stringify(this.formData));
+
+                    resourceFactory.clientResource.save(this.formData, function (data) {
+                        location.path('/createcoclient/' + data.clientId);
+                    });
+
+
                 }
-
-                if(this.formData.nomineeDetails){
-                    for(var i = 0; i < this.formData.nomineeDetails.length; i++){
-                        this.formData.nomineeDetails[i].locale = scope.optlang.code;
-                        this.formData.nomineeDetails[i].dateFormat = scope.df;
-                    }
+                else{
+                    scope.cashflowmishmatch=true;
                 }
-
-                for(var i in this.formData.nomineeDetails){
-                    if (this.formData.nomineeDetails[i].dateOfBirth) {
-                        this.formData.nomineeDetails[i].dateOfBirth = dateFilter(scope.formData.nomineeDetails[i].dateOfBirth, scope.df);
-                    }
-                    if (this.formData.nomineeDetails[i].guardianDateOfBirth) {
-                        this.formData.nomineeDetails[i].guardianDateOfBirth = dateFilter(scope.formData.nomineeDetails[i].guardianDateOfBirth, scope.df);
-                    }
-                }
-
-                console.log(JSON.stringify(this.formData));
-
-                resourceFactory.clientResource.save(this.formData, function (data) {
-                    location.path('/createcoclient/' + data.clientId);
-                });
-            };
+            }
         }
     });
-    mifosX.ng.application.controller('CreateClientController', ['$scope', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', '$upload', '$rootScope', '$routeParams','$parse', mifosX.controllers.CreateClientController]).run(function ($log) {
+    mifosX.ng.application.controller('CreateClientController', ['$scope', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', '$upload', '$rootScope', '$routeParams','$parse','$q','$modal', mifosX.controllers.CreateClientController]).run(function ($log) {
         $log.info("CreateClientController initialized");
     });
 }(mifosX.controllers || {}));

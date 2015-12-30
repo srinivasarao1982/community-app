@@ -6,8 +6,13 @@
             <li class="active">{{'label.anchor.editclient' | translate}}</li>
         </ul>
     </div>
+
 	<form name="createclientform" novalidate="" class="form-horizontal well" rc-submit="submitAndAccept()">
 		<api-validate></api-validate>
+		<div ng-show="cashflowmishmatch==true">
+			<p  style="color:red">Cash Flow Mismatch Notification ||Annual Income Between  : {{revenue}} ||Annual Revenue is  : {{totalRevenue}} </p>
+
+		</div>
 		<fieldset>
 			<legend>{{'label.heading.editclient' | translate}}</legend>
 			<div>

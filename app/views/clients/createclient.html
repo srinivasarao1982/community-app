@@ -9,6 +9,7 @@
 
     <legend>{{'label.heading.createclient' | translate}}</legend>
 
+
     <div class="row">
         <div class="col-md-2"><button id="autofill" type="button" class="btn btn-primary" style="float:right;" ng-autofocus="selected" ng-click="autoFill()"
                 >Auto Fill
@@ -16,7 +17,12 @@
         <div class="col-md-10">
             <input placeholder="Auto fill" type="text" id="adhaarAutofill" name="nregaNo" ng-model="autofillHolder" class="form-control"/>
         </div>
-        
+
+    </div>
+
+    <div ng-show="cashflowmishmatch==true">
+        <p  style="color:red">Cash Flow Mismatch Notification ||Annual Income Between  : {{revenue}} ||Annual Revenue is  : {{totalRevenue}} </p>
+
     </div>
 
     <form name="createclientform" novalidate="" class="form-horizontal well" rc-submit="submitAndAccept()">

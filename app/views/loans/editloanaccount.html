@@ -74,8 +74,11 @@
         <td class="paddedbottom10">
             <input type="text" id="externalId" name="externalId" ng-model="formData.externalId" class="form-control"/>
         </td>
-        <td></td>
-        <td></td>
+        <td><label>LoanApplication Id</label>
+            <i class="icon-question-sign" tooltip="{{'label.tooltip.externalid' | translate}}"></i></td>
+        <td class="paddedbottom10">
+            <input type="text" id="loanApplicationId" name="lLoanApplicationId" ng-model="formData.loanApplicationId" class="form-control"/>
+        </td>
     </tr>
 </table>
 <div ng-hide="previewRepayment">

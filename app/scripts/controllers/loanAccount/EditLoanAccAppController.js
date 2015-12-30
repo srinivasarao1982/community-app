@@ -42,6 +42,7 @@
                 scope.formData.loanOfficerId = data.loanOfficerId;
                 scope.formData.loanPurposeId = data.loanPurposeId;
                 scope.formData.externalId = data.externalId;
+                scope.formData.loanApplicationId = data.loanApplicationId;
 
                 //update collaterals
                 if (scope.loanaccountinfo.collateral) {
