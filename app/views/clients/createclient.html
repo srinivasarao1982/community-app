@@ -64,8 +64,8 @@
 
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label">&nbsp;&nbsp;Title<span
-                            class="required" ng-show="isSalutationRequired">*</span></label>
+                    <div class="col-md-2"><label class="control-label"><span
+                            class="required" ng-show="isSalutationRequired">*</span>Title</label>
                     </div>
                     <div class="col-md-2">
                         <select id="title" name="title" ng-model="formData.clientExt.salutation" class="form-control"
@@ -425,14 +425,13 @@
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isLandlineNumberRequired">*
-                    </span>Landline number</label></div>
+                    <div class="col-md-2"><label class="control-label">
+                    Landline number</label></div>
                     <div class="col-md-4">
                         <input placeholder="LANDLINE NUMBER" type="text" id="landlineNumber"
                                                  name="landlineNumber0" ng-model="formData.naddress[0].landlineNo"
                                                  class="form-control" maxlength="20"
                                ng-required="isLandlineNumberRequired" ng-pattern="/^\d+$/"/>
-                        <span class="error" ng-show="submitted && createclientform.landlineNumber0.$error.required">{{'label.error.required'|translate}}</span>
                         <span class="required" ng-show="createclientform.landlineNumber0.$error.pattern">Only Numbers</span>
                     </div>
 
@@ -513,15 +512,14 @@
 
                 <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                     <div class="row">
-                        <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isTalukaRequired">*</span>Taluka</label></div>
+                        <div class="col-md-2"><label class="control-label">Taluka</label></div>
                         <div class="col-md-4">
                             <input placeholder="Taluka"
                                    type="text"
                                    id="taluka1"
                                    name="taluka1"
                                    ng-model="formData.naddress[1].taluka" class="form-control"
-                                   ng-required="isTalukaRequired"/>
-                            <span class="error" ng-show="submitted && createclientform.taluka1.$error.required">{{'label.error.required'|translate}}</span>
+                                  >
                         </div>
 
                         <label class="control-label col-md-2"><span class="required" ng-show="isDistrictRequired">*</span>District</label>
@@ -561,14 +559,12 @@
 
                 <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                     <div class="row">
-                        <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isLandlineNumberRequired">*
-                    </span>Landline number</label></div>
+                        <div class="col-md-2"><label class="control-label">Landline number</label></div>
                         <div class="col-md-4">
                             <input placeholder="LANDLINE NUMBER" type="text" id="landlineNumber1"
                                    name="landlineNumber1" ng-model="formData.naddress[1].landlineNo"
                                    class="form-control" maxlength="20"
-                                   ng-required="isLandlineNumberRequired" ng-pattern="/^\d+$/"/>
-                            <span class="error" ng-show="submitted && createclientform.landlineNumber1.$error.required">{{'label.error.required'|translate}}</span>
+                                    ng-pattern="/^\d+$/"/>
                             <span class="required" ng-show="createclientform.landlineNumber1.$error.pattern">Only Numbers</span>
                         </div>
 

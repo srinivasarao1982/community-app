@@ -20,6 +20,28 @@
             <form name="createcoclientform" novalidate="" class="form-horizontal well"  rc-submit="submitAndAccept()">
                 <api-validate></api-validate>
                 <fieldset>
+           <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label" for="firstname"><span
+                            class="required">*</span>Co Applicant Name</label></div>
+                    <div class="col-md-4">
+                        <input placeholder="FIRST NAME" type="text" id="firstname"
+                               name="firstname" ng-model="formData.coClientData[0].firstName" class="form-control"
+                               required late-Validate/>
+                        <form-validate valattributeform="createcoclientform" valattribute="firstname"/>
+                    </div>
+                    <div class="col-md-3">
+                        <input placeholder="MIDDLE NAME" type="text" id="middlename"
+                               ng-model="formData.coClientData[0].middleName" class="form-control"/>
+                    </div>
+                    <div class="col-md-3">
+                        <input placeholder="SURNAME" type="text" id="lastname" name="lastname"
+                               ng-model="formData.coClientData[0].lastName" class="form-control" required late-validate=""/>
+                        <form-validate valattributeform="createcoclientform" valattribute="lastname"/>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-2"><label class="control-label"><span
@@ -56,28 +78,6 @@
                     <div class="col-md-3">
                         <input placeholder="SURNAME" type="text" id="fatherlastname" name="fatherlastname"
                                ng-model="formData.coClientData[0].fatherLastName" class="form-control" required late-validate=""/>
-                        <form-validate valattributeform="createcoclientform" valattribute="lastname"/>
-                    </div>
-                </div>
-            </div>
-
-           <div class="form-group" ng-class="{'datafilled':isDatafilled}">
-                <div class="row">
-                    <div class="col-md-2"><label class="control-label" for="firstname"><span
-                            class="required">*</span>Co Applicant Name</label></div>
-                    <div class="col-md-4">
-                        <input placeholder="FIRST NAME" type="text" id="firstname"
-                               name="firstname" ng-model="formData.coClientData[0].firstName" class="form-control"
-                               required late-Validate/>
-                        <form-validate valattributeform="createcoclientform" valattribute="firstname"/>
-                    </div>
-                    <div class="col-md-3">
-                        <input placeholder="MIDDLE NAME" type="text" id="middlename"
-                               ng-model="formData.coClientData[0].middleName" class="form-control"/>
-                    </div>
-                    <div class="col-md-3">
-                        <input placeholder="SURNAME" type="text" id="lastname" name="lastname"
-                               ng-model="formData.coClientData[0].lastName" class="form-control" required late-validate=""/>
                         <form-validate valattributeform="createcoclientform" valattribute="lastname"/>
                     </div>
                 </div>
@@ -149,8 +149,7 @@
 
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label" for="taluka"><span
-                            class="required">*</span>Taluka</label></div>
+                    <div class="col-md-2"><label class="control-label" for="taluka">Taluka</label></div>
                     <div class="col-md-4">
                         <input placeholder="Taluka"
                                type="text"
@@ -159,8 +158,8 @@
                                ng-model="formData.naddress[0].taluka" class="form-control"
                                required
                                late-Validate/>
-                        <form-validate valattributeform="createcoclientform" valattribute="taluka"/>
                     </div>
+
                     <label class="control-label col-md-2" for="districtId"><span
                             class="required">*</span>District </label>
                     <div class="col-md-4">
@@ -239,7 +238,7 @@
             <hr/>
             <div class="col-md-offset-10">
                 <a id="cancel" ng-href="{{cancel}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
-                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CLIENT' ng-disabled="issave">{{'label.button.save' | translate}}
+                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CLIENT' ng-disabled="issave" ng-click="submitAndAccept()">{{'label.button.save' | translate}}
                 </button>
             </div>
 

@@ -235,6 +235,7 @@
 									</div>
 									<div class="col-md-8 col-sm-8">
 										{{clientData.clientDataExt.externalId2}}
+
 									</div>
 								</div>
 								<div class="row">
@@ -250,7 +251,10 @@
 										<strong  class="pull-right">Father/Spouse name:</strong>
 									</div>	
 									<div class="col-md-8 col-sm-8">
-										xxxx
+										{{clientData.clientDataExt.spfirstname+ " " +
+										clientData.clientDataExt.spmiddlename+ " " +
+										clientData.clientDataExt.splastname
+										}}
 									</div>
 								</div>
 								<div class="row">
@@ -396,7 +400,7 @@
 										<strong>House No:</strong>
 									</div>
 									<div class="col-md-6 col-sm-6">
-										{{communicatizonAddress.houseNo}}
+										{{communicationAddress.houseNo}}
 									</div>
 										
 								</div>
