@@ -14,10 +14,10 @@
                 >Auto Fill
             </button></div>
            <div class="col-md-10">
-            <input placeholder="Auto fill" type="text" id="adhaarAutofill" name="nregaNo" ng-model="autofillHolder" class="form-control"/>
+            <input placeholder="Auto fill" type="text" id="adhaarAutofill" name="nregaNo" ng-model="autofillHolder" ng-autofocus="true" class="form-control"/>
           </div>
           </div>
-            <form name="createcoclientform" novalidate="" class="form-horizontal well"  rc-submit="submitAndAccept()">
+            <form name="createcoclientform" novalidate="" class="form-horizontal well"  ng-submit="submitAndAccept()">
                 <api-validate></api-validate>
                 <fieldset>
            <div class="form-group">
@@ -36,8 +36,7 @@
                     </div>
                     <div class="col-md-3">
                         <input placeholder="SURNAME" type="text" id="lastname" name="lastname"
-                               ng-model="formData.coClientData[0].lastName" class="form-control" required late-validate=""/>
-                        <form-validate valattributeform="createcoclientform" valattribute="lastname"/>
+                               ng-model="formData.coClientData[0].lastName" class="form-control" />
                     </div>
                 </div>
             </div>
@@ -68,8 +67,7 @@
                     <div class="col-md-4">
                         <input placeholder="FIRST NAME" type="text" id="fatherfirstname"
                                name="fatherfirstname" ng-model="formData.coClientData[0].fatherFirstName" class="form-control"
-                               required late-Validate/>
-                        <form-validate valattributeform="createcoclientform" valattribute="firstname"/>
+                               />
                     </div>
                     <div class="col-md-3">
                         <input placeholder="MIDDLE NAME" type="text" id="fathermiddlename"
@@ -77,14 +75,12 @@
                     </div>
                     <div class="col-md-3">
                         <input placeholder="SURNAME" type="text" id="fatherlastname" name="fatherlastname"
-                               ng-model="formData.coClientData[0].fatherLastName" class="form-control" required late-validate=""/>
-                        <form-validate valattributeform="createcoclientform" valattribute="lastname"/>
+                               ng-model="formData.coClientData[0].fatherLastName" class="form-control" />
                     </div>
                 </div>
             </div>
 
-
-            <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+  <div class="form-group">
                 <div class="row">
                     <div class="col-md-2"><label class="control-label"><span
                             class="required">*</span>Date of Birth</label></div>
@@ -156,19 +152,16 @@
                                id="taluka"
                                name="taluka"
                                ng-model="formData.naddress[0].taluka" class="form-control"
-                               required
-                               late-Validate/>
+                               />
                     </div>
 
-                    <label class="control-label col-md-2" for="districtId"><span
-                            class="required">*</span>District </label>
+                    <label class="control-label col-md-2" for="districtId">District </label>
                     <div class="col-md-4">
                         <select name="districtId" ng-model="formData.naddress[0].district" class="form-control"
                                 ng-options="district.id as district.name for district in districtOptins"
                                 value="{{district.id}}" required late-validate="">
                             <option value="">{{'label.menu.select' | translate}}</option>
                         </select>
-                        <form-validate valattributeform="createcoclientform" valattribute="districtId"/>
                     </div>
                 </div>
             </div>
@@ -202,27 +195,24 @@
                     <div class="col-md-4"><input placeholder="" type="text" id="landlineNumber"
                                                  name="landlineNumber" ng-model="formData.naddress[0].landlineNo"
                                                  class="form-control"  maxlength="20"/></div>
-                    <label class="control-label col-md-2" for="mobileNumber"><span class="required">*</span>Mobile number </label>
+                    <label class="control-label col-md-2" for="mobileNumber">Mobile number </label>
 
                     <div class="col-md-4">
                         <input placeholder="Mobile Number"
                                type="text" id="mobileNumber"
                                name="mobileNumber" ng-model="formData.naddress[0].mobileNo"
-                               class="form-control" required late-Validate  maxlength="11"/>
-                        <form-validate valattributeform="createcoclientform" valattribute="mobileNumber"/>
+                               class="form-control"   maxlength="10"/>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label" for="firstname"><span
-                            class="required">*</span>Mother's Maiden Name</label></div>
+                    <div class="col-md-2"><label class="control-label" for="firstname">Mother's Maiden Name</label></div>
                     <div class="col-md-4">
                         <input placeholder="Mother's Maiden Name" type="text" id="mothersMaidenName"
                                name="mothersMaidenName" ng-model="formData.coClientData[0].mothersMaidenName" class="form-control"
-                               required late-Validate/>
-                        <form-validate valattributeform="createcoclientform" valattribute="mothersMaidenName"/>
+                              />
                     </div>
 
                     <label class="control-label col-md-2" for="emailId"><span class="required"></span>Email ID</label>
@@ -238,10 +228,11 @@
             <hr/>
             <div class="col-md-offset-10">
                 <a id="cancel" ng-href="{{cancel}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
-                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CLIENT' ng-disabled="issave" ng-click="submitAndAccept()">{{'label.button.save' | translate}}
+                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CLIENT' ng-autofocus="selected1" >{{'label.button.save' | translate}}
                 </button>
             </div>
 
         </fieldset>
     </form>
+
 </div>

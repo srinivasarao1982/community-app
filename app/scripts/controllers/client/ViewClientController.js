@@ -11,10 +11,15 @@
             scope.openSaving = true;
             scope.updateDefaultSavings = false;
             scope.loanviewactiveclose=true;
+            scope.savingsviewactiveclose=true
             scope.active=true;
             scope.correspondenceAddress1=[];
+            scope.savingactive=true;
             scope.routeToLoan = function (id) {
                 location.path('/viewloanaccount/' + id);
+            };
+            scope.routeToSavings =function(id){
+                location.path('/viewsavingaccount/' + id);
             };
             scope.routeToSaving = function (id, depositTypeCode) {
                 if (depositTypeCode === "depositAccountType.savingsDeposit") {
@@ -31,6 +36,14 @@
                 }
                 else{
                     scope.active=true;
+                }
+            }
+            scope.activecloseSavings = function(){
+                if(!this.savingsviewactiveclose){
+                    scope.savingactive=false;
+                }
+                else{
+                    scope.savingactive=true;
                 }
             }
             scope.haveFile = [];

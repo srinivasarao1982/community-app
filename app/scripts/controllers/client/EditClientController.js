@@ -91,6 +91,9 @@
             scope.$watch('formData.nomineeDetails[1].dateOfBirth',function(){
                 scope.AgeCalculate(1);
             });
+            scope.$watch('formData.coClientData[0].dateOfBirth',function(){
+                scope.AgeCalculate(2);
+            });
             scope.$watch('autofillHolder',function(){
 
                 if(scope.autofillHolder!=''&&scope.autofillHolder!=null) {
@@ -104,8 +107,11 @@
                 if(a==0) {
                     scope.date = dateFilter(this.formData.nomineeDetails[0].dateOfBirth, 'dd-MM-yyyy');
                 }
-                else{
+                else if(a==1){
                     scope.date = dateFilter(this.formData.nomineeDetails[1].dateOfBirth, 'dd-MM-yyyy');
+                }
+                else if(a==2){
+                    scope.date = dateFilter(this.formData.coClientData[0].dateOfBirth, 'dd-MM-yyyy');
                 }
                 var today= dateFilter(new Date(),'dd-MM-yyyy');
                 scope.birthDate=scope.date.split('-');
@@ -118,9 +124,12 @@
                 if(a==0) {
                     this.formData.nomineeDetails[0].age = age;
                 }
-                else{
+                else if(a==1){
                     this.formData.nomineeDetails[1].age = age;
 
+                }
+                else if(a==2){
+                    this.formData.coClientData[0].age = age;
                 }
             }
 
@@ -168,7 +177,10 @@
                     savingsProductId: data.savingsProductId,
                     genderId: data.gender.id
                 };
-
+                if(data.activationDate){
+                     var actDate=dateFilter(data.activationDate, scope.df);
+                    scope.formData.activationDate = new Date(actDate);
+                }
                 scope.formData.coClientData = [{}];
 
                 if(data.gender){
@@ -233,10 +245,15 @@
                     scope.formData.familyDetails = [{}];
                 }
 
+
                 for(var i in scope.formData.familyDetails){
                     if (scope.formData.familyDetails[i].dateOfBirth) {
+                        scope.showDate=true;
                         var dateOfBirth = dateFilter(scope.formData.familyDetails[i].dateOfBirth, scope.df);
-                        scope.formData.familyDetails[i].dateOfBirth = new Date(dateOfBirth);
+                        scope.formData.familyDetails[i].age = new Date(dateOfBirth);
+                    }
+                    else{
+                        scope.showDate=false;
                     }
                 }
 
@@ -330,20 +347,43 @@
                         break;
                     }
                 }
-                scope.annualIncomeData=scope.revenue.split("-");
-                var lowerlimit =scope.annualIncomeData[0].replace(/,/g, '');
-                var upperlimit =scope.annualIncomeData[1].replace(/,/g, '');
-                if(parseInt(scope.totalRevenue)<parseInt(lowerlimit)) {
-                    scope.cashflowmishmatch == true;
-                    return true;
-                }
-                else if(parseInt(scope.totalRevenue)>parseInt(upperlimit)) {
+                if(!angular.isUndefined(scope.revenue)) {
+                    if( scope.revenue.indexOf('-')!=-1) {
+                        scope.annualIncomeData = scope.revenue.split("-");
+                        scope.lowerlimit1 = scope.annualIncomeData[0].split(".")
+                        var lowerlimit = scope.lowerlimit1[1].replace(/,/g, '');
+                        var upperlimit = scope.annualIncomeData[1].replace(/,/g, '');
+                        if (parseInt(scope.totalRevenue) < parseInt(lowerlimit)) {
+                            scope.cashflowmishmatch == true;
+                            return true;
+                        }
+                        else if (parseInt(scope.totalRevenue) > parseInt(upperlimit)) {
+                            scope.cashflowmishmatch == true
+                            return true;
+                        }
+                    }
+                    else {
+                        scope.annualIncomeData = scope.revenue.split("Rs.")
+                        if (scope.annualIncomeData[0] === '> ') {
+                            var upperlimit = scope.annualIncomeData[1].replace(/,/g, '');
+                            if (parseInt(scope.totalRevenue) < parseInt(upperlimit)) {
+                                scope.cashflowmishmatch == true;
+                                return true;
+                            }
+                        }
+                        else {
+                            var upperlimit = scope.annualIncomeData[1].replace(/,/g, '');
+                            if (parseInt(scope.totalRevenue) > parseInt(upperlimit)) {
+                                scope.cashflowmishmatch == true
+                                return true;
+                            }
+                        }
+                    }
 
-                    scope.cashflowmishmatch==true
-                    return true;
                 }
                 //  }
             };
+
             scope.keyPress = function(){
                 scope.totalRevenue=0;
                 scope.totalExpense=0;
@@ -394,8 +434,8 @@
                     this.formData.savingsProductId = null;
                 }
                 if (scope.choice === 1) {
-                    if (scope.date.activationDate) {
-                        this.formData.activationDate = dateFilter(scope.date.activationDate, scope.df);
+                    if (scope.formData.activationDate) {
+                        this.formData.activationDate = dateFilter(scope.formData.activationDate, scope.df);
                     }
                 }
 
@@ -419,13 +459,24 @@
                         this.formData.naddress[i].dateFormat = scope.df;
                     }
                 }
-                if(this.formData.familyDetails){
-                    for(var i = 0; i < this.formData.familyDetails.length; i++){
+                if(this.formData.familyDetails) {
+                    for (var i = 0; i < this.formData.familyDetails.length; i++) {
                         this.formData.familyDetails[i].locale = scope.optlang.code;
                         this.formData.familyDetails[i].dateFormat = scope.df;
                     }
-                }
 
+                    for (var i in this.formData.familyDetails) {
+                        if(!angular.isUndefined(this.formData.familyDetails[i].age)) {
+                            if (this.formData.familyDetails[i].age.toString().length > 3) {
+                                this.formData.familyDetails[i].dateOfBirth = dateFilter(scope.formData.familyDetails[i].age, scope.df);
+                                this.formData.familyDetails[i].age = null;
+                            }
+                        }
+                        else{
+                            this.formData.familyDetails[i].dateOfBirth = null;
+                        }
+                    }
+                }
                 if(scope.cfaOccupations){
                     this.formData.cfaOccupations = scope.cfaOccupations;
                     for(var i = 0; i < this.formData.cfaOccupations.length; i++){

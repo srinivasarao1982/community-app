@@ -32,7 +32,7 @@
 							</div>
 						</div>
 
-						<label class="control-label col-md-2"><span class="required">*</span>{{'label.input.staff' | translate}}</label>
+						<label class="control-label col-md-1"><span class="required">*</span>{{'label.input.staff' | translate}}</label>
 						<div class="col-md-2">
 							<select id="staffId" name="staffId" ng-model="formData.staffId" class="form-control"
 									ng-options="staff.id as staff.displayName for staff in staffs" value="{{staff.id}}"
@@ -41,9 +41,13 @@
 							</select>
 							<form-validate valattributeform="createclientform" valattribute="staffId"/>
 						</div>
-
-						<label class="control-label col-md-2"></label>
-						<div class="col-md-2"></div>
+						<div class="col-md-2">
+						<label class="control-label" >Activation Date<span class="required">*</span></label>
+                       </div>
+						<div class="col-sm-3">
+							<input type="text" datepicker-pop="dd MMMM yyyy" id="{{modelName}}" name="modelName"
+								   ng-model="formData.activationDate" min="mindate" max="restrictDate"  class="form-control"/>
+						</div>
 					</div>
 				</div>
 
@@ -354,16 +358,14 @@
 
 				<div class="form-group" ng-class="{'datafilled':isDatafilled}">
 					<div class="row">
-						<div class="col-md-2"><label class="control-label"><span
-								class="required" ng-show="isTalukaRequired">*</span>Taluka</label></div>
+						<div class="col-md-2"><label class="control-label">Taluka</label></div>
 						<div class="col-md-4">
 							<input placeholder="Taluka"
 								   type="text"
 								   id="taluka"
 								   name="taluka0"
 								   ng-model="formData.naddress[0].taluka" class="form-control"
-								   ng-required="isTalukaRequired"/>
-							<span class="error" ng-show="submitted && createclientform.taluka0.$error.required">{{'label.error.required'|translate}}</span>
+								  />
 						</div>
 
 						<label class="control-label col-md-2"><span class="required" ng-show="isDistrictRequired">*</span>
@@ -410,17 +412,17 @@
 							<input placeholder="LANDLINE NUMBER" type="text" id="landlineNumber"
 								   name="landlineNumber0" ng-model="formData.naddress[0].landlineNo"
 								   class="form-control" maxlength="20"
-								   ng-required="isLandlineNumberRequired" ng-pattern="/^\d+$/"/>
+								  ng-pattern="/^\d+$/"/>
+
 							<span class="required" ng-show="createclientform.landlineNumber0.$error.pattern">Only Numbers</span>
 						</div>
 
-						<label class="control-label col-md-2"><span class="required" ng-show="isMobileNumberRequired">*</span>Mobile number </label>
+						<label class="control-label col-md-2">Mobile number </label>
 						<div class="col-md-4">
 							<input placeholder="Mobile Number"
 								   type="text" id="mobileNumber" name="mobileNumber0"
 								   ng-model="formData.naddress[0].mobileNo"
-								   class="form-control" ng-required="isMobileNumberRequired" maxlength="10"/>
-							<span class="error" ng-show="submitted && createclientform.mobileNumber0.$error.required">{{'label.error.required'|translate}}</span>
+								   class="form-control"  maxlength="10"/>
 							<span class="required" ng-show="createclientform.mobileNumber0.$error.pattern">Only Numbers</span>
 						</div>
 					</div>
@@ -497,9 +499,8 @@
 									   type="text"
 									   id="taluka1"
 									   name="taluka1"
-									   ng-model="formData.naddress[1].taluka" class="form-control"
-									   >
-								<span class="error" ng-show="submitted && createclientform.taluka1.$error.required">{{'label.error.required'|translate}}</span>
+									   ng-model="formData.naddress[1].taluka" class="form-control">
+
 							</div>
 
 							<label class="control-label col-md-2"><span class="required" ng-show="isDistrictRequired">*</span>District</label>
@@ -544,17 +545,17 @@
 								<input placeholder="LANDLINE NUMBER" type="text" id="landlineNumber1"
 									   name="landlineNumber1" ng-model="formData.naddress[1].landlineNo"
 									   class="form-control" maxlength="20"
-									   ng-required="isLandlineNumberRequired" ng-pattern="/^\d+$/"/>
+									  ng-pattern="/^\d+$/"/>
+
 								<span class="required" ng-show="createclientform.landlineNumber1.$error.pattern">Only Numbers</span>
 							</div>
 
-							<label class="control-label col-md-2"><span class="required" ng-show="isMobileNumberRequired">*</span>Mobile number </label>
+							<label class="control-label col-md-2"> Mobile number </label>
 							<div class="col-md-4">
 								<input placeholder="Mobile Number"
 									   type="text" id="mobileNumber1" name="mobileNumber1"
 									   ng-model="formData.naddress[1].mobileNo"
-									   class="form-control" ng-required="isMobileNumberRequired" maxlength="10"/>
-								<span class="error" ng-show="submitted && createclientform.mobileNumber1.$error.required">{{'label.error.required'|translate}}</span>
+									   class="form-control" maxlength="10"/>
 								<span class="required" ng-show="createclientform.mobileNumber1.$error.pattern">Only Numbers</span>
 							</div>
 						</div>
@@ -635,7 +636,7 @@
 						<div class="col-md-2"><span class="required" ng-show="isFamilyFirstNameRequired">*</span>Name</div>
 						<div class="col-md-2"><span class="required" ng-show="isFamilyRelationshipRequired">*</span>Relationship</div>
 						<div class="col-md-2"><span class="required" ng-show="isFamilyGenderRequired">*</span>Gender</div>
-						<div class="col-md-1"><span class="required" ng-show="isFamilyAgeRequired">*</span>Age</div>
+						<div class="col-md-1"><span class="required" ng-show="isFamilyAgeRequired">*</span>Age/D.o.b</div>
 						<div class="col-md-2"><span class="required" ng-show="isFamilyOccupationRequired">*</span>Occupation</div>
 						<div class="col-md-2"><span class="required" ng-show="isFamilyEducationalStatusRequired">*</span>Educational Status</div>
 						<div class="col-md-1">&nbsp;</div>
@@ -674,10 +675,17 @@
 							</div>
 						</ng-form>
 
-						<ng-form name="formfamilydetailsspAge" novalidate="" rc-submit="submit()">
+						<ng-form name="formfamilydetailsspAge" novalidate="" rc-submit="submit()" ng-show="showDate==true">
+							<div class="col-md-1">
+								<input placeholder="Age" type="text" id="spAge" name="spAge" ng-model="family.age" datepicker-pop="dd MMMM yyyy"
+									   class="form-control" maxlength="2"  ng-required="isFamilyAgeRequired" />
+								<span class="error" ng-show="submitted && formfamilydetailsspAge.spAge.$error.required">{{'label.error.required'|translate}}</span>
+							</div>
+						</ng-form>
+						<ng-form name="formfamilydetailsspAge" novalidate="" rc-submit="submit()" ng-show="showDate==false">
 							<div class="col-md-1">
 								<input placeholder="Age" type="text" id="spAge" name="spAge" ng-model="family.age"
-									   class="form-control" maxlength="2" number-format="" ng-required="isFamilyAgeRequired" />
+									   class="form-control" maxlength="2"  ng-required="isFamilyAgeRequired" />
 								<span class="error" ng-show="submitted && formfamilydetailsspAge.spAge.$error.required">{{'label.error.required'|translate}}</span>
 							</div>
 						</ng-form>
@@ -1069,8 +1077,7 @@
 							</div>
 							<div class="col-md-3">
 								<input placeholder="SURNAME" type="text" id="lastNameCo" name="lastNameCo"
-									   ng-model="formData.coClientData[0].lastName" class="form-control" required late-validate=""/>
-								<form-validate valattributeform="createcoclientform" valattribute="lastNameCo"/>
+									   ng-model="formData.coClientData[0].lastName" class="form-control" />
 							</div>
 						</div>
 					</div>
@@ -1117,7 +1124,7 @@
 									class="required">*</span>Date of Birth</label></div>
 							<div class="col-md-3">
 								<input id="dateofbirthCo" type="text" name="dateofbirthCo" datepicker-pop="dd MMMM yyyy"
-									   ng-model="formData.coClientData[0].dateOfBirth" is-open="opened1" class="form-control"
+									   ng-model="formData.coClientData[0].dateOfBirth" is-open="opened1" class="form-control" ng-change="AgeCalculate(2)"
 									   required
 									   late-Validate/>
 								<form-validate valattributeform="createcoclientform" valattribute="dateofbirthCo"/>
@@ -1126,14 +1133,13 @@
 							<div class="col-md-1"><label class="control-label"><span
 									class="required">*</span>Age</label></div>
 							<div class="col-md-3">
-								<input placeholder="Age" type="text" id="spAgeCo" name="spAgeCo" ng-model="formData.coClientData[0].age"
+								<input placeholder="Age" type="text" id="spAgeCo" name="spAgeCo" ng-model="formData.coClientData[0].age" ng-disabled="true"
 									   class="form-control" maxlength="2" number-format="" required
 									   late-validate=""/>
 								<form-validate valattributeform="createcoclientform" valattribute="spAgeCo"/>
 							</div>
 						</div>
 					</div>
-
 					<hr/>
 					<legend>Correspondence Address</legend>
 					<div class="form-group">
@@ -1184,15 +1190,13 @@
 									   name="talukaco"
 									   ng-model="formData.naddress[2].taluka" class="form-control"/>
 							</div>
-							<label class="control-label col-md-2"><span
-									class="required">*</span>District </label>
+							<label class="control-label col-md-2">District </label>
 							<div class="col-md-4">
 								<select name="districtIdco" ng-model="formData.naddress[2].district" class="form-control"
 										ng-options="district.id as district.name for district in districtOptins"
-										value="{{district.id}}" required late-validate="">
+										value="{{district.id}}" >
 									<option value="">{{'label.menu.select' | translate}}</option>
 								</select>
-								<form-validate valattributeform="createcoclientform" valattribute="districtIdco"/>
 							</div>
 						</div>
 					</div>
@@ -1227,27 +1231,24 @@
 														 name="landlineNumberCo" ng-model="formData.naddress[2].landlineNo"
 														 class="form-control"  maxlength="20"/></div>
 
-							<label class="control-label col-md-2" for="mobileNumber"><span class="required">*</span>Mobile number </label>
+							<label class="control-label col-md-2" for="mobileNumber">Mobile number </label>
 
 							<div class="col-md-4">
 								<input placeholder="Mobile Number"
 									   type="text" id="mobileNumberCo"
 									   name="mobileNumberCo" ng-model="formData.naddress[2].mobileNo"
 									   class="form-control" required late-Validate  maxlength="11"/>
-								<form-validate valattributeform="createcoclientform" valattribute="mobileNumberCo"/>
 							</div>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="row">
-							<div class="col-md-2"><label class="control-label"><span
-									class="required">*</span>Mother's Maiden Name</label></div>
+							<div class="col-md-2"><label class="control-label">Mother's Maiden Name</label></div>
 							<div class="col-md-4">
 								<input placeholder="Mother's Maiden Name" type="text" id="mothersMaidenName"
 									   name="mothersMaidenName" ng-model="formData.coClientData[0].mothersMaidenName" class="form-control"
-									   required late-Validate/>
-								<form-validate valattributeform="createcoclientform" valattribute="mothersMaidenName"/>
+									  >
 							</div>
 
 							<label class="control-label col-md-2" for="emailId"><span class="required"></span>Email ID</label>

@@ -13,6 +13,7 @@
 
             resourceFactory.coClientTemplateResource.get({}, function (coClientData) {
                 scope.spouseRelationShip = coClientData.spouseRelationShip;
+                scope.formData.coClientData[0].relationship=scope.spouseRelationShip[0].id;
                 scope.districtOptins = coClientData.district;
                 scope.stateOptions = coClientData.state;
                 scope.formData.naddress[0].state=scope.stateOptions[0].id;
@@ -23,11 +24,26 @@
                 scope.AgeCalculate();
             });
             scope.AgeCalculate = function(){
+                scope.birthDate=[];
+                scope.todayDates=[];
+                scope.date=dateFilter(this.formData.coClientData[0].dateOfBirth, 'dd-MM-yyyy');
+                var today= dateFilter(new Date(),'dd-MM-yyyy');
+                scope.birthDate=scope.date.split('-');
+                scope.todayDates=today.split('-');
+                var age = scope.todayDates[2]-scope.birthDate[2];
+                var m = scope.todayDates[1] - scope.birthDate[1];
+                if (m < 0 || (m === 0 && scope.todayDates[0] < scope.birthDate[0])) {
+                    age--;
+                }
+                scope.formData.coClientData[0].age=age;
+            }
+
 
             scope.$watch('autofillHolder',function(){
 
                 if(scope.autofillHolder!=''&&scope.autofillHolder!=null) {
                     scope.selected = true;
+                    scope.selected1 =false;
                 }
             });
             scope.isDatafilled = false;
@@ -86,6 +102,11 @@
                         scope.formData.coClientData[0].lastName = lastName;
 
                         // Spouse or fother name derived
+
+                        var gname = barCodedDataObject.getAttribute("gname");
+                        if(gname!=null && gname!=undefined && gname!=""){
+                            scope.formData.coClientData[0].fatherFirstName=gname.toUpperCase();;
+                        }
 
                         var co = barCodedDataObject.getAttribute("co");
                         if(co!=null) {
@@ -223,6 +244,8 @@
                         scope.addressabove = true;
                         scope.isDatafilled = true;
                         scope.autofillHolder = "";
+                        scope.selected1 =true;
+                        scope.selected=false;
 
                     }
                     else{
@@ -237,19 +260,7 @@
             };
 
 
-                scope.birthDate=[];
-                scope.todayDates=[];
-                scope.date=dateFilter(this.formData.coClientData[0].dateOfBirth, 'dd-MM-yyyy');
-                var today= dateFilter(new Date(),'dd-MM-yyyy');
-                scope.birthDate=scope.date.split('-');
-                scope.todayDates=today.split('-');
-                var age = scope.todayDates[2]-scope.birthDate[2];
-                var m = scope.todayDates[1] - scope.birthDate[1];
-                if (m < 0 || (m === 0 && scope.todayDates[0] < scope.birthDate[0])) {
-                    age--;
-                }
-                scope.formData.coClientData[0].age=age;
-            }
+
             scope.issave = false;
             scope.submitAndAccept = function () {
                 scope.issave = true;
