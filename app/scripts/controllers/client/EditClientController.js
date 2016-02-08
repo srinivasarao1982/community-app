@@ -105,13 +105,13 @@
                 scope.birthDate=[];
                 scope.todayDates=[];
                 if(a==0) {
-                    scope.date = dateFilter(this.formData.nomineeDetails[0].dateOfBirth, 'dd-MM-yyyy');
+                    scope.date = dateFilter(scope.formData.nomineeDetails[0].dateOfBirth, 'dd-MM-yyyy');
                 }
                 else if(a==1){
-                    scope.date = dateFilter(this.formData.nomineeDetails[1].dateOfBirth, 'dd-MM-yyyy');
+                    scope.date = dateFilter(scope.formData.nomineeDetails[1].dateOfBirth, 'dd-MM-yyyy');
                 }
                 else if(a==2){
-                    scope.date = dateFilter(this.formData.coClientData[0].dateOfBirth, 'dd-MM-yyyy');
+                    scope.date = dateFilter(scope.formData.coClientData[0].dateOfBirth, 'dd-MM-yyyy');
                 }
                 var today= dateFilter(new Date(),'dd-MM-yyyy');
                 scope.birthDate=scope.date.split('-');
@@ -175,13 +175,18 @@
                     externalId: data.externalId,
                     mobileNo: data.mobileNo,
                     savingsProductId: data.savingsProductId,
-                    genderId: data.gender.id
+                    genderId: data.gender.id,
+
                 };
                 if(data.activationDate){
                      var actDate=dateFilter(data.activationDate, scope.df);
                     scope.formData.activationDate = new Date(actDate);
                 }
-                scope.formData.coClientData = [{}];
+                if (data.timeline) {
+                    var submittedOnDate = dateFilter(data.timeline.submittedOnDate, scope.df);
+                    scope.date.submittedOnDate = new Date(submittedOnDate);
+                }
+
 
                 if(data.gender){
                     scope.formData.genderId = data.gender.id;
@@ -216,7 +221,7 @@
 
                 if (data.timeline.submittedOnDate) {
                     var submittedOnDate = dateFilter(data.timeline.submittedOnDate, scope.df);
-                    scope.date.submittedOnDate = new Date(submittedOnDate);
+                    scope.formData.submittedOnDate = new Date(submittedOnDate);
                 }
 
                 scope.formData.clientExt = {};
@@ -228,16 +233,22 @@
                 scope.formData.clientExt = clientData.clientDataExt;
                 scope.formData.naddress = clientData.addressExtData || [];
                 if(scope.formData.naddress == '' || scope.formData.naddress == null || !scope.formData.naddress){
-                    scope.formData.naddress = [{},{}];
+                    scope.formData.naddress = [{},{},{}];
+
                 }else if(scope.formData.naddress[1]){
                     var addresObj0 = scope.formData.naddress[0];
                     var addresObj1 = scope.formData.naddress[1];
+                    if(scope.formData.naddress.length<3){
+                        scope.formData.naddress.push({});
+                    }
                     if(JSON.stringify(addresObj0) == JSON.stringify(addresObj1)){
                         scope.addressabove = true;
                     }
                 }else{
                     scope.formData.naddress.push({});
                 }
+                //modify
+
                 scope.formData.familyDetails = clientData.familyDetailsExtData || [];
                 if(scope.formData.familyDetails == '' || scope.formData.familyDetails == null || !scope.formData.familyDetails){
                     scope.formData.familyDetails = [{}];
@@ -316,13 +327,21 @@
                         scope.formData.nomineeDetails[i].guardianDateOfBirth = new Date(guardianDateOfBirth);
                     }
                 }
+
+                scope.formData.coClientData = [{}];
+
                 if(clientData.coapplicantDetailsData.coapplicantData){
                     scope.formData.coClientData = clientData.coapplicantDetailsData.coapplicantData;
+                    if(scope.formData.coClientData.length>0){
                     for(var i in scope.formData.coClientData) {
                         if (scope.formData.coClientData[i].dateOfBirth) {
                             var dateOfBirth = dateFilter(scope.formData.coClientData[i].dateOfBirth, scope.df);
                             scope.formData.coClientData[i].dateOfBirth = new Date(dateOfBirth);
                         }
+                    }}
+                    else{
+                        scope.formData.coClientData.push({})
+
                     }
                 }
             });
@@ -443,8 +462,8 @@
                     this.formData.dateOfBirth = dateFilter(scope.formData.dateOfBirth, scope.df);
                 }
 
-                if(scope.date.submittedOnDate){
-                    this.formData.submittedOnDate = dateFilter(scope.date.submittedOnDate,  scope.df);
+                if(scope.formData.submittedOnDate){
+                    this.formData.submittedOnDate = dateFilter(scope.formData.submittedOnDate,  scope.df);
                 }
 
                 for(var i in this.formData.familyDetails){
@@ -459,7 +478,10 @@
                         this.formData.naddress[i].dateFormat = scope.df;
                     }
                 }
-                if(this.formData.familyDetails) {
+                    this.formData.naddress[0].addressType = scope.addressTypes[0].id;
+                    this.formData.naddress[1].addressType = scope.addressTypes[1].id;
+
+                    if(this.formData.familyDetails) {
                     for (var i = 0; i < this.formData.familyDetails.length; i++) {
                         this.formData.familyDetails[i].locale = scope.optlang.code;
                         this.formData.familyDetails[i].dateFormat = scope.df;
@@ -515,8 +537,9 @@
 
                 if(this.formData.naddress.length == 3) {
                     for (var i in scope.addressTypes) {
-                        if (scope.addressTypes[i].name == 'Spouse Address' && this.formData.naddress[2].district) {
-                            this.formData.naddress[2].addressType = scope.addressTypes[i].id;
+                       // if (scope.addressTypes[i].name == 'Spouse Address' && this.formData.naddress[2].district) {
+                            if (scope.addressTypes[i].name == 'Spouse Address' ) {
+                                this.formData.naddress[2].addressType = scope.addressTypes[i].id;
                             break;
                         }
                     }
