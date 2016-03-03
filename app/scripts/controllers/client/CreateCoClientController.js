@@ -39,13 +39,6 @@
             }
 
 
-            scope.$watch('autofillHolder',function(){
-
-                if(scope.autofillHolder!=''&&scope.autofillHolder!=null) {
-                    scope.selected = true;
-                    scope.selected1 =false;
-                }
-            });
             scope.isDatafilled = false;
             scope.autoFill = function (){
 
