@@ -289,7 +289,7 @@
                     idToNodeMap[data[i].id] = data[i];
                 }
                 scope.loanResource = function () {
-                    resourceFactory.loanResource.getAllLoans(function (loanData) {
+                    resourceFactory.loanResource.getAllLoans({"sqlSearch":"l.loan_status_id in (100,200)"},function (loanData) {
                         scope.loans = loanData.pageItems;
                         for (var i in scope.loans) {
                             if (scope.loans[i].status.pendingApproval) {
@@ -319,8 +319,8 @@
             });
 
 
-            resourceFactory.clientResource.getAllClients(function (data) {                
-                scope.groupedClients = _.groupBy(data.pageItems, "officeName");               
+            resourceFactory.clientResource.getAllClients({"sqlSearch":"c.status_enum like 100"},function (data) {
+                scope.groupedClients = _.groupBy(data.pageItems, "officeName");
             });
 
             scope.search = function () {

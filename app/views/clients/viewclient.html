@@ -515,9 +515,12 @@
 									<div class="col-md-6 col-sm-6" >
 									<strong>Member Of:</strong>
 									</div>
-									<div class="col-md-6 col-sm-6">
-												{{ 'label.unassigned' | translate }}
-									</div>
+									<span class="padded-td" data-ng-hide="client.groups">{{ 'label.unassigned' | translate }}</span>
+										<span class="padded-td" ng-repeat="group in client.groups">
+										 <a class="list-group-item-text" href="#/viewgroup/{{group.id}}">{{group.name}}</a>&nbsp;<span
+												data-ng-hide="client.groups">{{ 'label.unassigned' | translate }}</span><span
+												ng-show="!$last">|</span>
+										</span>
 								</div>
 						       <div class="row">
 							   <div class="col-md-6 col-sm-6" >

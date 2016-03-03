@@ -56,9 +56,11 @@
                         </select>
                         <span class="error" ng-show="submitted && createclientform.staffId.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
+                    <label class="control-label col-sm-1" for="externalId">External Id</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="externalId" name="externalId" ng-model="formData.externalId"  class="form-control"/>
 
-                    <label class="control-label col-md-2"></label>
-                    <div class="col-md-2"></div>
+                    </div>
                 </div>
             </div>
 
@@ -76,7 +78,7 @@
                         <span class="error" ng-show="submitted && createclientform.title.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                     <div class="col-sm-3"></div>
-                    <label class="control-label col-md-2"><span class="required">*</span> External Id2</label>
+                    <label class="control-label col-md-2"> External Id2</label>
 
                     <div class="col-md-3">
                         <input placeholder="EXTERNAL ID2" type="text" id="externalId2" name="externalId2"
@@ -380,14 +382,13 @@
                         <span class="error" ng-show="submitted && createclientform.taluka0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
-                    <label class="control-label col-md-2"><span class="required" ng-show="isDistrictRequired">*</span>
+                    <label class="control-label col-md-2">
                         District</label>
                     <div class="col-md-4">
                         <select name="districtId0" ng-model="formData.naddress[0].district" class="form-control"
                                 ng-options="district.id as district.name for district in districtOptins"
-                                value="{{district.id}}" ng-required="isDistrictRequired" required late-validate="">
+                                value="{{district.id}}" >
                             <option value="">{{'label.menu.select' | translate}}</option>
-                            <form-validate valattributeform="createcoclientform" valattribute="districtId"/>
                         </select>
                         <span class="error" ng-show="submitted && createclientform.districtId0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
@@ -405,13 +406,11 @@
                         <span class="error" ng-show="submitted && createclientform.stateId0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
-                    <label class="control-label col-md-2" for="pincode"><span
-                            class="required" ng-show="isPinCodeRequired">*</span>PIN Code </label>
+                    <label class="control-label col-md-2" for="pincode">PIN Code </label>
                     <div class="col-md-4">
                         <input placeholder="" type="text" id="pincode" name="pincode0"
-                               ng-model="formData.naddress[0].pinCode" class="form-control" ng-required="isPinCodeRequired"
+                               ng-model="formData.naddress[0].pinCode" class="form-control"
                                 maxlength="6" ng-pattern="/^\d+$/"/>
-                        <span class="error" ng-show="submitted && createclientform.pincode0.$error.required">{{'label.error.required'|translate}}</span>
                         <span class="required" ng-show="createclientform.pincode0.$error.pattern">Only Numbers</span>
                     </div>
                 </div>
@@ -435,7 +434,7 @@
                     <div class="col-md-4">
                         <input placeholder="Mobile Number"
                                type="text" id="mobileNumber" name="mobileNumber0"
-                               ng-model="formData.naddress[0].mobileNo"
+                               ng-model="formData.naddress[0].mobileNo" ng-pattern="/^\d+$/"
                                class="form-control" ng-required="isMobileNumberRequired" maxlength="10"/>
                         <span class="required" ng-show="createclientform.mobileNumber0.$error.pattern">Only Numbers</span>
                         <span class="required" ng-show="createclientform.mobileNumber0.maxlength">not more than 10 digit</span>
@@ -519,15 +518,14 @@
 
                         </div>
 
-                        <label class="control-label col-md-2"><span class="required" ng-show="isDistrictRequired">*</span>District</label>
+                        <label class="control-label col-md-2">District</label>
                         <div class="col-md-4">
                             <select name="districtId1" ng-model="formData.naddress[1].district" class="form-control"
                                     ng-options="district.id as district.name for district in districtOptins"
-                                    value="{{district.id}}" ng-required="isDistrictRequired">
+                                    value="{{district.id}}">
                                 <option value="">{{'label.menu.select' | translate}}</option>
                             </select>
-                            <span class="error" ng-show="submitted && createclientform.districtId1.$error.required">{{'label.error.required'|translate}}</span>
-                        </div>
+                       </div>
                     </div>
                 </div>
 
@@ -542,13 +540,11 @@
                             <span class="error" ng-show="submitted && createclientform.stateId1.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
 
-                        <label class="control-label col-md-2" for="pincode"><span class="required" ng-show="isPinCodeRequired">*</span>PIN Code </label>
+                        <label class="control-label col-md-2" for="pincode">PIN Code </label>
                         <div class="col-md-4">
                             <input placeholder="" type="text" id="pincode1" name="pincode1"
                                    ng-model="formData.naddress[1].pinCode" class="form-control"
-                                   ng-required="isPinCodeRequired"
                                    maxlength="6" ng-pattern="/^\d+$/"/>
-                            <span class="error" ng-show="submitted && createclientform.pincode1.$error.required">{{'label.error.required'|translate}}</span>
                             <span class="required" ng-show="createclientform.pincode1.$error.pattern">Only Numbers</span>
                         </div>
                     </div>
@@ -570,7 +566,7 @@
                         <div class="col-md-4">
                             <input placeholder="Mobile Number"
                                    type="text" id="mobileNumber1" name="mobileNumber1"
-                                   ng-model="formData.naddress[1].mobileNo"
+                                   ng-model="formData.naddress[1].mobileNo" ng-pattern="/^\d+$/"
                                    class="form-control"  maxlength="10"/>
                             <span class="required" ng-show="createclientform.mobileNumber1.$error.pattern">Only Numbers</span>
                         </div>
@@ -1053,6 +1049,7 @@
                     </div>
                     <div class="col-md-3"><label class="control-label" for="firstname"><span
                             class="required"></span>Guardian Relationship</label></div>
+
                     <div class="col-md-3">
                         <input placeholder="Guardian Relationship" type="text" id="guardianRelationship1"
                                name="guardianRelationship1"
@@ -1061,8 +1058,17 @@
                     </div>
                 </div>
             </div>
+            <hr/>
+            <div class="row">
+            <div class="form-group">
+                <div class="col-md-2"><label class="control-label">{{'label.input.submittedon' | translate}}</label></div>
 
-
+                <div class="col-sm-3">
+                    <input id="submittedon" type="text" name="submittedon" datepicker-pop="dd MMMM yyyy"
+                           ng-model="first.submitondate" is-open="opened1" min="'2000-01-01'" max="restrictDate"  class="form-control"/>
+                </div>
+            </div>
+             </div>
             <hr/>
             <div class="col-md-offset-10">
                 <a id="cancel" ng-href="{{cancel}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
