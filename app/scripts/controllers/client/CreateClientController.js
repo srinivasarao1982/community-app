@@ -111,12 +111,7 @@
             scope.$watch('formData.nomineeDetails[1].dateOfBirth',function(){
                 scope.AgeCalculate(1);
             });
-            scope.$watch('autofillHolder',function(){
-
-                if(scope.autofillHolder!=''&&scope.autofillHolder!=null) {
-                    scope.selected = true;
-                }
-            });
+            
             scope.AgeCalculate = function(a){
 
                 scope.birthDate=[];
