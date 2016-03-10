@@ -48,10 +48,10 @@
             }
             scope.haveFile = [];
             resourceFactory.clientResource.get({clientId: routeParams.id}, function (data) {
-                console.log(JSON.stringify(data));
+                //console.log(JSON.stringify(data));
                 scope.client = data;
                 scope.clientData = data.clientDetailedData;
-                console.log(JSON.stringify(scope.clientData));
+                //console.log(JSON.stringify(scope.clientData));
                 scope.formData.coClientData = [{}];
                 scope.coClientData = "";
                 if(scope.clientData.coapplicantDetailsData.coapplicantData.length > 0){
@@ -91,7 +91,7 @@
                     scope.coClientDataDisplay = scope.formData.coClientData[0];
                 }
 
-                console.log(JSON.stringify(scope.coClientDataDisplay));
+                //console.log(JSON.stringify(scope.coClientDataDisplay));
 
                 for(var i in data.clientDetailedData.addressExtData){
                     if(data.clientDetailedData.addressExtData[i].addressTypeLable == 'Comuniation Address'){
@@ -200,7 +200,7 @@
                 scope.buttonsArray.singlebuttons = scope.buttons;
                 resourceFactory.runReportsResource.get({reportSource: 'ClientSummary', genericResultSet: 'false', R_clientId: routeParams.id}, function (data) {
                     scope.client.ClientSummary = data[0];
-                    console.log('dddddd ----> : ',JSON.stringify(data));
+                   // console.log('dddddd ----> : ',JSON.stringify(data));
                 });
             });
             scope.deleteClient = function () {
