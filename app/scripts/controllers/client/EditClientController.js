@@ -68,6 +68,7 @@
 
             /********************************/
 
+            scope.formData = {};
             scope.offices = [];
             scope.date = {};
             scope.restrictDate = new Date();
@@ -85,53 +86,6 @@
             scope.deleteFamilyDetails = function (index) {
                 scope.formData.familyDetails.splice(index, 1);
             };
-            scope.$watch('formData.nomineeDetails[0].dateOfBirth',function(){
-                scope.AgeCalculate(0);
-            });
-            scope.$watch('formData.nomineeDetails[1].dateOfBirth',function(){
-                scope.AgeCalculate(1);
-            });
-            scope.$watch('formData.coClientData[0].dateOfBirth',function(){
-                scope.AgeCalculate(2);
-            });
-            scope.$watch('autofillHolder',function(){
-
-                if(scope.autofillHolder!=''&&scope.autofillHolder!=null) {
-                    scope.selected = true;
-                }
-            });
-            scope.AgeCalculate = function(a){
-
-                scope.birthDate=[];
-                scope.todayDates=[];
-                if(a==0) {
-                    scope.date = dateFilter(scope.formData.nomineeDetails[0].dateOfBirth, 'dd-MM-yyyy');
-                }
-                else if(a==1){
-                    scope.date = dateFilter(scope.formData.nomineeDetails[1].dateOfBirth, 'dd-MM-yyyy');
-                }
-                else if(a==2){
-                    scope.date = dateFilter(scope.formData.coClientData[0].dateOfBirth, 'dd-MM-yyyy');
-                }
-                var today= dateFilter(new Date(),'dd-MM-yyyy');
-                scope.birthDate=scope.date.split('-');
-                scope.todayDates=today.split('-');
-                var age = scope.todayDates[2]-scope.birthDate[2];
-                var m = scope.todayDates[1] - scope.birthDate[1];
-                if (m < 0 || (m === 0 && scope.todayDates[0] < scope.birthDate[0])) {
-                    age--;
-                }
-                if(a==0) {
-                    this.formData.nomineeDetails[0].age = age;
-                }
-                else if(a==1){
-                    this.formData.nomineeDetails[1].age = age;
-
-                }
-                else if(a==2){
-                    this.formData.coClientData[0].age = age;
-                }
-            }
 
             resourceFactory.clientResource.get({clientId: routeParams.id, template:'true', staffInSelectedOfficeOnly:true}, function (data) {
                 scope.offices = data.officeOptions;
@@ -178,6 +132,7 @@
                     genderId: data.gender.id,
 
                 };
+
                 if(data.activationDate){
                      var actDate=dateFilter(data.activationDate, scope.df);
                     scope.formData.activationDate = new Date(actDate);
@@ -341,10 +296,66 @@
                     }}
                     else{
                         scope.formData.coClientData.push({})
-
                     }
                 }
             });
+
+
+            scope.$watch('formData.nomineeDetails[0].dateOfBirth',function(){
+                scope.AgeCalculate(0);
+            });
+            scope.$watch('formData.nomineeDetails[1].dateOfBirth',function(){
+                scope.AgeCalculate(1);
+            });
+            scope.$watch('formData.coClientData[0].dateOfBirth',function(){
+                scope.AgeCalculate(2);
+            });
+
+            scope.$watch('autofillHolder',function(){
+
+                if(scope.autofillHolder!=''&&scope.autofillHolder!=null) {
+                    scope.selected = true;
+                }
+            });
+
+            scope.AgeCalculate = function(a){
+
+                scope.birthDate=[];
+                scope.todayDates=[];
+                if(a==0 && scope.formData.nomineeDetails && scope.formData.nomineeDetails[0] && scope.formData.nomineeDetails[0].dateOfBirth) {
+                    scope.date = dateFilter(scope.formData.nomineeDetails[0].dateOfBirth, 'dd-MM-yyyy');
+                }
+                else if(a==1 && scope.formData.nomineeDetails && scope.formData.nomineeDetails[1] && scope.formData.nomineeDetails[1].dateOfBirth){
+                    scope.date = dateFilter(scope.formData.nomineeDetails[1].dateOfBirth, 'dd-MM-yyyy');
+                }
+                else if(a==2 && scope.formData.coClientData && scope.formData.coClientData[0] && scope.formData.coClientData[0].dateOfBirth){
+                    scope.date = dateFilter(scope.formData.coClientData[0].dateOfBirth, 'dd-MM-yyyy');
+                }
+                var today= dateFilter(new Date(),'dd-MM-yyyy');
+
+                try{
+                    scope.birthDate=scope.date.split('-');
+                }catch(err){
+
+                }
+
+                scope.todayDates=today.split('-');
+                var age = scope.todayDates[2]-scope.birthDate[2];
+                var m = scope.todayDates[1] - scope.birthDate[1];
+                if (m < 0 || (m === 0 && scope.todayDates[0] < scope.birthDate[0])) {
+                    age--;
+                }
+                if(a==0 && this.formData.nomineeDetails && this.formData.nomineeDetails[0]) {
+                    this.formData.nomineeDetails[0].age = age;
+                }
+                else if(a==1 && this.formData.nomineeDetails && this.formData.nomineeDetails[1]){
+                    this.formData.nomineeDetails[1].age = age;
+
+                }
+                else if(a==2 && this.formData.coClientData && this.formData.coClientData[0]){
+                    this.formData.coClientData[0].age = age;
+                }
+            }
 
             scope.addressaboveSetting = function(){
                 if(scope.addressabove){
