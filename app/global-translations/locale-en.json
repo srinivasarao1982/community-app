@@ -2086,7 +2086,6 @@
     "#------": "------------",
 
     "#Admin-Organization": "....",
-
     "#Headings": "..",
     "label.heading.bulkloanreassignment": "Bulk Loan Reassignment",
     "label.heading.clients": "Clients",
@@ -2094,6 +2093,10 @@
     "label.heading.createholiday": "Create Holiday",
     "label.heading.activateholiday": "Activate Holiday",
     "label.heading.editholiday": "Edit Holiday",
+    "label.heading.emi":"Emi",
+    "label.input.centerName":"Center Name",
+    "label.input.groupName":"Group Name",
+    "label.heading.repaymentinfo" :"Repayment Info",
     "label.heading.deleteholiday": "Delete Holiday",
     "label.heading.createoffice": "Create Office",
     "label.heading.currencyname": "Currency Name",
