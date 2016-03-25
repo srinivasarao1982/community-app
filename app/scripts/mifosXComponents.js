@@ -38,6 +38,7 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'loanAccount/LoanDocumentController',
             'loanAccount/ViewLoanTransactionController',
             'loanAccount/LoanScreenReportController',
+            'loanAccount/NewJLGLoanAccountCenterByController',
             'groups/AssignStaffController',
             'client/ClientController',
             'client/EditClientController',
@@ -270,7 +271,8 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'NumberFormatDirective',
             'SuccessfulResponsesDirective',
             'TabsPersistenceDirective',
-            'AgeLimitDirective'
+            'AgeLimitDirective',
+            'UnSuccessfulResponseDirective',
         ]
     };
 

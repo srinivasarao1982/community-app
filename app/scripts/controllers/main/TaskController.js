@@ -14,6 +14,9 @@
             scope.approveData = {};
             scope.restrictDate = new Date();
             //this value will be changed within each specific tab
+            scope.centersPerPage = 15;
+            scope.centers = [];
+            scope.actualCenters = [];
             scope.requestIdentifier = "loanId";
 
             resourceFactory.checkerInboxResource.get({templateResource: 'searchtemplate'}, function (data) {
@@ -22,6 +25,55 @@
             resourceFactory.checkerInboxResource.search(function (data) {
                 scope.searchData = data;
             });
+            /* for displaying centers*/
+            var requestParams = {staffInSelectedOfficeOnly:true};
+            resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
+                data = clientData.clientBasicDetails;
+                scope.officesforDropDown = data.officeOptions;
+                //scope.formData.officeId = scope.offices[0].id;
+
+            });
+
+            scope.filterText = scope.searchCriteria.centers;
+
+            scope.onFilter = function () {
+                scope.searchCriteria.centers = scope.filterText;
+                scope.saveSC();
+            };
+            scope.getResultsPage = function (pageNumber) {
+                if(scope.searchText){
+                    var startPosition = (pageNumber - 1) * scope.centersPerPage;
+                    scope.centers = scope.actualCenters.slice(startPosition, startPosition + scope.centersPerPage);
+                    return;
+                }
+                var items = resourceFactory.centerResource.get({
+                    offset: ((pageNumber - 1) * scope.centersPerPage),
+                    limit: scope.centersPerPage,
+                    paged: 'true',
+                    orderBy: 'name',
+                    sortOrder: 'ASC'
+                }, function (data) {
+                    scope.centers = data.pageItems;
+                });
+            }
+            scope.initPage = function (officeId) {
+                var items = resourceFactory.centerResource.get({
+                    officeId: officeId,
+                    offset: 0,
+                    limit: scope.centersPerPage,
+                    paged: 'true',
+                    orderBy: 'name',
+                    sortOrder: 'ASC'
+                }, function (data) {
+                    scope.totalCenters = data.totalFilteredRecords;
+                    scope.centers = data.pageItems;
+                });
+            }
+            scope.changeoffice=function(officeId){
+                scope.initPage(officeId);
+            }
+            scope.initPage(scope.formData.officeId);
+
             scope.viewUser = function (item) {
                 scope.userTypeahead = true;
                 scope.formData.user = item.id;
@@ -281,7 +333,10 @@
             scope.routeToClient = function (id) {
                 location.path('viewclient/' + id);
             };
+            scope.routeToCenter = function(id){
+                location.path('jlgloanAccountcenterby/' + id);
 
+            };
             resourceFactory.officeResource.getAllOffices(function (data) {
                 scope.offices = data;
                 for (var i in data) {
@@ -289,7 +344,7 @@
                     idToNodeMap[data[i].id] = data[i];
                 }
                 scope.loanResource = function () {
-                    resourceFactory.loanResource.getAllLoans({"sqlSearch":"l.loan_status_id in (100,200)"},function (loanData) {
+                    resourceFactory.loanResource.getAllLoans({"sqlSearch":"l.loan_status_id in (100,200)","groupSearch":true,"orderBy" :"centerId"},function (loanData) {
                         scope.loans = loanData.pageItems;
                         for (var i in scope.loans) {
                             if (scope.loans[i].status.pendingApproval) {
@@ -319,7 +374,7 @@
             });
 
 
-            resourceFactory.clientResource.getAllClients({"sqlSearch":"c.status_enum like 100"},function (data) {
+            resourceFactory.clientResource.getAllClients({"sqlSearch":"c.status_enum like 100","groupSearch":true,"orderBy" :"centerId"},function (data) {
                 scope.groupedClients = _.groupBy(data.pageItems, "officeName");
             });
 
@@ -377,9 +432,13 @@
             };
 
             var ApproveLoanCtrl = function ($scope, $modalInstance) {
-                $scope.approve = function () {
-                    scope.bulkApproval();
-                    route.reload();
+                $scope.date = {};
+                $scope.restrictDate = new Date();
+                $scope.date.approveDate = new Date();
+
+                $scope.approve = function (e) {
+                    scope.bulkApproval(e);
+
                     $modalInstance.close('approve');
                 };
                 $scope.cancel = function () {
@@ -387,8 +446,8 @@
                 };
             }
 
-            scope.bulkApproval = function () {
-                scope.formData.approvedOnDate = dateFilter(new Date(), scope.df);
+            scope.bulkApproval = function (e) {
+                scope.formData.approvedOnDate = dateFilter(e, scope.df);
                 scope.formData.dateFormat = scope.df;
                 scope.formData.locale = scope.optlang.code;
                 var selectedAccounts = 0;
@@ -435,9 +494,13 @@
             };
 
             var DisburseLoanCtrl = function ($scope, $modalInstance) {
-                $scope.disburse = function () {
-                    scope.bulkDisbursal();
-                    route.reload();
+                $scope.date = {};
+                $scope.restrictDate = new Date();
+                $scope.date.disburseDate =new Date();
+
+                $scope.disburse = function (e) {
+                    scope.bulkDisbursal(e);
+
                     $modalInstance.close('disburse');
                 };
                 $scope.cancel = function () {
@@ -445,10 +508,11 @@
                 };
             }
 
-            scope.bulkDisbursal = function () {
-                scope.formData.actualDisbursementDate = dateFilter(new Date(), scope.df);
-                scope.formData.dateFormat = scope.df;
-                scope.formData.locale = scope.optlang.code;
+            scope.bulkDisbursal = function (e) {
+                scope.disburseData={};
+                scope.disburseData.actualDisbursementDate = dateFilter(e, scope.df);
+                scope.disburseData.dateFormat = scope.df;
+                scope.disburseData.locale = scope.optlang.code;
 
                 var selectedAccounts = 0;
                 var approvedAccounts = 0;
@@ -465,7 +529,7 @@
                 _.each(scope.loanDisbursalTemplate, function (value, key) { 
                     if (value == true) {
                         scope.batchRequests.push({requestId: reqId++, relativeUrl: "loans/"+key+"?command=disburse", 
-                        method: "POST", body: JSON.stringify(scope.formData)});                        
+                        method: "POST", body: JSON.stringify(scope.disburseData)});
                     }
                 });
 

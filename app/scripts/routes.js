@@ -592,6 +592,9 @@
             .when('/viewcenter/:id', {
                 templateUrl: 'views/centers/viewcenter.html'
             })
+            .when('/jlgloanAccountcenterby/:centerId', {
+                templateUrl: 'views/loans/jlgloanAccountcenterby.html'
+            })
             .when('/createcenter', {
                 templateUrl: 'views/centers/createcenter.html'
             })
