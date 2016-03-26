@@ -8,19 +8,38 @@
     </ul>
 
 
-            <legend>{{'label.heading.createcoclient' | translate}}</legend>
-            <div class="row">
-            <div class="col-md-2"><button id="autofill" type="button" class="btn btn-primary" style="float:right;" ng-autofocus="selected" ng-click="autoFill()"
-                >Auto Fill
-            </button></div>
-           <div class="col-md-10">
-            <input placeholder="Auto fill" type="text" id="adhaarAutofill" name="nregaNo" ng-model="autofillHolder" ng-autofocus="true" class="form-control"/>
-          </div>
-          </div>
-            <form name="createcoclientform" novalidate="" class="form-horizontal well"  ng-submit="submitAndAccept()">
-                <api-validate></api-validate>
-                <fieldset>
-           <div class="form-group">
+    <legend>{{'label.heading.createcoclient' | translate}}</legend>
+    <div class="row">
+        <div class="col-md-2">
+            <button id="autofill" type="button" class="btn btn-primary" style="float:right;" ng-autofocus="selected"
+                    ng-click="autoFill()"
+            >Auto Fill
+            </button>
+        </div>
+        <div class="col-md-10">
+            <input placeholder="Auto fill" type="text" id="adhaarAutofill" name="nregaNo" ng-model="autofillHolder"
+                   ng-autofocus="true" class="form-control"/>
+        </div>
+    </div>
+    <form name="createcoclientform" novalidate="" class="form-horizontal well" ng-submit="submitAndAccept()">
+        <api-validate></api-validate>
+        <fieldset>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label" for="firstname"><span
+                            class="required">*</span>Title</label></div>
+                    <div class="col-md-4">
+                        <select id="title" name="title" ng-model="formData.coClientData[0].salutation"
+                                class="form-control"
+                                ng-options="salutation.id as salutation.name for salutation in salutations"
+                                value="{{salutation.id}}" required late-Validate>
+                            <option value=""> {{'label.menu.select' | translate}}</option>
+                        </select>
+                        <form-validate valattributeform="createcoclientform" valattribute="title"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="row">
                     <div class="col-md-2"><label class="control-label" for="firstname"><span
                             class="required">*</span>Co Applicant Name</label></div>
@@ -36,38 +55,53 @@
                     </div>
                     <div class="col-md-3">
                         <input placeholder="SURNAME" type="text" id="lastname" name="lastname"
-                               ng-model="formData.coClientData[0].lastName" class="form-control" />
+                               ng-model="formData.coClientData[0].lastName" class="form-control"/>
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-2"><label class="control-label"><span
                             class="required">*</span>Details of Father/Spouse</label>
                     </div>
                     <div class="col-md-2">
-                        <select id="relationship" name="relationship" ng-model="formData.coClientData[0].relationship" class="form-control"
+                        <select id="relationship" name="relationship" ng-model="formData.coClientData[0].relationship"
+                                class="form-control"
                                 ng-options="spouse.id as spouse.name for spouse in spouseRelationShip"
                                 value="{{spouse.id}}" required late-Validate>
-                                value="{{spouse.id}}" required late-Validate>
+                            value="{{spouse.id}}" required late-Validate>
                             <option value=""> {{'label.menu.select' | translate}}</option>
                         </select>
                     </div>
                     <div class="col-sm-2">
                         <form-validate valattributeform="createcoclientform" valattribute="relationship"/>
                     </div>
+
+                    <div class="col-md-2"><label class="control-label"><span
+                            class="required">*</span>Gender</label>
+                    </div>
+                    <div class="col-md-2">
+                        <select id="genderId" name="genderId" ng-model="formData.coClientData[0].genderId"
+                                class="form-control"
+                                ng-options="gender.id as gender.name for gender in genderOptions"
+                                value="{{gender.id}}" required late-Validate>
+                            <option value=""> {{'label.menu.gender' | translate}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <form-validate valattributeform="createcoclientform" valattribute="genderId"/>
+                    </div>
                 </div>
             </div>
-
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
                     <div class="col-md-2"><label class="control-label" for="firstname"><span
                             class="required">*</span>Father's Name</label></div>
                     <div class="col-md-4">
                         <input placeholder="FIRST NAME" type="text" id="fatherfirstname"
-                               name="fatherfirstname" ng-model="formData.coClientData[0].fatherFirstName" class="form-control"
-                               />
+                               name="fatherfirstname" ng-model="formData.coClientData[0].fatherFirstName"
+                               class="form-control"
+                        />
                     </div>
                     <div class="col-md-3">
                         <input placeholder="MIDDLE NAME" type="text" id="fathermiddlename"
@@ -75,26 +109,27 @@
                     </div>
                     <div class="col-md-3">
                         <input placeholder="SURNAME" type="text" id="fatherlastname" name="fatherlastname"
-                               ng-model="formData.coClientData[0].fatherLastName" class="form-control" />
+                               ng-model="formData.coClientData[0].fatherLastName" class="form-control"/>
                     </div>
                 </div>
             </div>
-
-  <div class="form-group">
+            <div class="form-group">
                 <div class="row">
                     <div class="col-md-2"><label class="control-label"><span
                             class="required">*</span>Date of Birth</label></div>
                     <div class="col-md-3">
-                        <input id="dateofbirth" type="text" name="dateofbirth" datepicker-pop="dd MMMM yyyy"  max="restrictDate"
+                        <input id="dateofbirth" type="text" name="dateofbirth" datepicker-pop="dd MMMM yyyy"
+                               max="restrictDate"
                                ng-model="formData.coClientData[0].dateOfBirth" is-open="opened1" class="form-control"
                                required late-validate=""/>
-                        <form-validate valattributeform="createcoclientform" valattribute="dateofbirth" />
+                        <form-validate valattributeform="createcoclientform" valattribute="dateofbirth"/>
                     </div>
 
                     <div class="col-md-1"><label class="control-label"><span
                             class="required">*</span>Age</label></div>
                     <div class="col-md-3">
-                        <input placeholder="Age" type="text" id="spAge" name="spAge" ng-model="formData.coClientData[0].age" ng-disabled="true"
+                        <input placeholder="Age" type="text" id="spAge" name="spAge"
+                               ng-model="formData.coClientData[0].age" ng-disabled="true"
                                class="form-control" maxlength="2" number-format="" required
                                late-validate=""/>
                         <form-validate valattributeform="createcoclientform" valattribute="spAge"/>
@@ -102,8 +137,70 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <hr/>
+                <legend>
+                    <span class="required">*</span> Details Of Identity and Address proof (One ID & One Address
+                    Proof)
+                </legend>
+                <div class="row" ng-class="{'datafilled':isDatafilled}">
+                    <div class="col-md-2"><label class="control-label"><span class="required">*
+                    </span>Identity Proof </label></div>
+                    <div class="col-md-4">
+                        <select name="identityProofTypeId0"
+                                ng-model="formData.clientIdentifierData[0].documentTypeId"
+                                class="form-control"
+                                ng-options="identityProof.id as identityProof.name for identityProof in identityProofOptions"
+                                value="{{identityProof.id}}" required late-validate="">
+                            <option value="">{{'label.menu.select' | translate}}</option>
+                        </select>
+                        <span class="error"
+                              ng-show="submitted && createcoclientform.identityProofTypeId0.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
 
-            <div class="form-group" >
+                    <label class="control-label col-md-2"><span class="required">*
+                    </span>ID proof number </label>
+                    <div class="col-md-4">
+                        <input placeholder="ID proof number"
+                               type="text" name="identityProofNumber0"
+                               ng-model="formData.clientIdentifierData[0].documentKey"
+                               class="form-control" required late-validate=""/>
+                        <span class="error"
+                              ng-show="submitted && createcoclientform.identityProofNumber0.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label"><span class="required">*</span>Address Proof
+                    </label></div>
+                    <div class="col-md-4">
+                        <select name="identityProofTypeId1"
+                                ng-model="formData.clientIdentifierData[1].documentTypeId"
+                                class="form-control"
+                                ng-options="addressProof.id as addressProof.name for addressProof in addressProofOptions"
+                                value="{{addressProof.id}}" required late-validate="">
+                            <option value="">{{'label.menu.select' | translate}}</option>
+                        </select>
+                        <span class="error"
+                              ng-show="submitted && createcoclientform.identityProofTypeId1.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+
+                    <label class="control-label col-md-2"><span class="required">*</span>Address
+                        proof number </label>
+                    <div class="col-md-4">
+                        <input placeholder="Address Proof Number"
+                               type="text" name="identityProofNumber1"
+                               ng-model="formData.clientIdentifierData[1].documentKey"
+                               class="form-control" required late-validate=""/>
+                        <span class="error"
+                              ng-show="submitted && createcoclientform.identityProofNumber1.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <hr/>
                 <legend>Correspondence Address</legend>
                 <div class="row" ng-class="{'datafilled':isDatafilled}">
@@ -126,7 +223,7 @@
                     <div class="col-md-10">
                         <input placeholder=""
                                type="text" id="areaLocality" name="areaLocality"
-                               ng-model="formData.naddress[0].areaLocality" class="form-control" />
+                               ng-model="formData.naddress[0].areaLocality" class="form-control"/>
                     </div>
                 </div>
             </div>
@@ -139,7 +236,8 @@
                     <label class="control-label col-md-2" for="villageTown">Village/Town </label>
 
                     <div class="col-md-4"><input placeholder="" type="text" id="villageTown" name="villageTown"
-                                                 ng-model="formData.naddress[0].villageTown" class="form-control"/></div>
+                                                 ng-model="formData.naddress[0].villageTown" class="form-control"/>
+                    </div>
                 </div>
             </div>
 
@@ -152,7 +250,7 @@
                                id="taluka"
                                name="taluka"
                                ng-model="formData.naddress[0].taluka" class="form-control"
-                               />
+                        />
                     </div>
 
                     <label class="control-label col-md-2" for="districtId">District </label>
@@ -168,10 +266,12 @@
 
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label"><span class="required">*</span>State</label></div>
+                    <div class="col-md-2"><label class="control-label"><span class="required">*</span>State</label>
+                    </div>
                     <div class="col-md-4">
-                        <select  name="stateId" ng-model="formData.naddress[0].state" class="form-control"
-                                 ng-options="state.id as state.name for state in stateOptions" value="{{state.id}}" required late-validate="">
+                        <select name="stateId" ng-model="formData.naddress[0].state" class="form-control"
+                                ng-options="state.id as state.name for state in stateOptions" value="{{state.id}}"
+                                required late-validate="">
                             <option value="">{{'label.menu.select' | translate}}</option>
                         </select>
                         <form-validate valattributeform="createcoclientform" valattribute="stateId"/>
@@ -194,32 +294,35 @@
                         number </label></div>
                     <div class="col-md-4"><input placeholder="" type="text" id="landlineNumber"
                                                  name="landlineNumber" ng-model="formData.naddress[0].landlineNo"
-                                                 class="form-control"  maxlength="20"/></div>
+                                                 class="form-control" maxlength="20"/></div>
                     <label class="control-label col-md-2" for="mobileNumber">Mobile number </label>
 
                     <div class="col-md-4">
                         <input placeholder="Mobile Number"
                                type="text" id="mobileNumber"
                                name="mobileNumber" ng-model="formData.naddress[0].mobileNo"
-                               class="form-control"   maxlength="10"/>
+                               class="form-control" maxlength="10"/>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label" for="firstname">Mother's Maiden Name</label></div>
+                    <div class="col-md-2"><label class="control-label" for="firstname">Mother's Maiden Name</label>
+                    </div>
                     <div class="col-md-4">
                         <input placeholder="Mother's Maiden Name" type="text" id="mothersMaidenName"
-                               name="mothersMaidenName" ng-model="formData.coClientData[0].mothersMaidenName" class="form-control"
-                              />
+                               name="mothersMaidenName" ng-model="formData.coClientData[0].mothersMaidenName"
+                               class="form-control"
+                        />
                     </div>
 
                     <label class="control-label col-md-2" for="emailId"><span class="required"></span>Email ID</label>
                     <div class="col-md-4">
                         <input placeholder="Email Id" type="email" id="emailId"
                                name="emailId" ng-model="formData.coClientData[0].emailId" class="form-control"/>
-                        <span style="color:red" ng-show="createcoclientform.emailId.$dirty && createcoclientform.emailId.$invalid">
+                        <span style="color:red"
+                              ng-show="createcoclientform.emailId.$dirty && createcoclientform.emailId.$invalid">
                             <span ng-show="createcoclientform.emailId.$error.email">Invalid email address.</span>
                         </span>
                     </div>
@@ -228,7 +331,8 @@
             <hr/>
             <div class="col-md-offset-10">
                 <a id="cancel" ng-href="{{cancel}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
-                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CLIENT' ng-autofocus="selected1" >{{'label.button.save' | translate}}
+                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CLIENT'
+                        ng-autofocus="selected1" ng-click="submitted=true">{{'label.button.save' | translate}}
                 </button>
             </div>
 

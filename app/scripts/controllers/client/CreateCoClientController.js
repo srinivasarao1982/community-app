@@ -3,60 +3,97 @@
         CreateCoClientController: function (scope, resourceFactory, location, http, dateFilter, API_VERSION, $upload, $rootScope, routeParams) {
 
             scope.clientId = routeParams.id;
+            scope.cancel = function () {
+                if (scope.clientId) {
+                    location.path('/viewclient/' + scope.clientId);
+                }
+            };
             scope.formData = {};
             scope.formData.clientId = routeParams.id;
             scope.formData.coClientData = [{}];
+            scope.formData.clientIdentifierData = [{}, {}];
             scope.formData.naddress = [{}];
-            scope.restrictDate=new Date();
-            scope.formData.coClientData[0].age='';
+            scope.restrictDate = new Date();
+            scope.formData.coClientData[0].age = '';
             scope.selected = false;
 
             resourceFactory.coClientTemplateResource.get({}, function (coClientData) {
                 scope.spouseRelationShip = coClientData.spouseRelationShip;
-                scope.formData.coClientData[0].relationship=scope.spouseRelationShip[0].id;
+                scope.formData.coClientData[0].relationship = scope.spouseRelationShip[0].id;
                 scope.districtOptins = coClientData.district;
                 scope.stateOptions = coClientData.state;
-                scope.formData.naddress[0].state=scope.stateOptions[0].id;
+                scope.formData.naddress[0].state = scope.stateOptions[0].id;
+                scope.salutations = coClientData.salutations;
+
+                for (var i in scope.salutations) {
+                    if (scope.salutations[i].name == 'Mr') {
+                        scope.formData.coClientData[0].salutation = scope.salutations[i].id;
+                        break;
+                    }
+                }
+
+                scope.genderOptions = coClientData.genderOptions;
                 scope.addressTypes = coClientData.addressTypes;
 
+                scope.identityProofOptions = coClientData.identityProof;
+                for (var i in scope.identityProofOptions) {
+                    if (scope.identityProofOptions[i].name && scope.identityProofOptions[i].name.indexOf('Coapplicant-') < 0) {
+                        scope.identityProofOptions.splice(i, 1);
+                    }
+                }
+
+                scope.addressProofOptions = coClientData.addressProof;
+                for (var i in scope.addressProofOptions) {
+                    if (scope.addressProofOptions[i].name && scope.addressProofOptions[i].name.indexOf('Coapplicant-') < 0) {
+                        scope.addressProofOptions.splice(i, 1);
+                    }
+                }
+
             });
-            scope.$watch('formData.coClientData[0].dateOfBirth',function(){
-                scope.AgeCalculate();
+
+            scope.$watch('formData.coClientData[0].dateOfBirth', function () {
+                if (scope.formData.coClientData[0].dateOfBirth) {
+                    var dateOfBirth = scope.formData.coClientData[0].dateOfBirth;
+                    if ((new Date(dateOfBirth)).toString() != 'Invalid Date') {
+                        scope.AgeCalculate();
+                    }
+                }
             });
-            scope.AgeCalculate = function(){
-                scope.birthDate=[];
-                scope.todayDates=[];
-                scope.date=dateFilter(this.formData.coClientData[0].dateOfBirth, 'dd-MM-yyyy');
-                var today= dateFilter(new Date(),'dd-MM-yyyy');
-                scope.birthDate=scope.date.split('-');
-                scope.todayDates=today.split('-');
-                var age = scope.todayDates[2]-scope.birthDate[2];
+
+            scope.AgeCalculate = function () {
+                scope.birthDate = [];
+                scope.todayDates = [];
+                scope.date = dateFilter(this.formData.coClientData[0].dateOfBirth, 'dd-MM-yyyy');
+                var today = dateFilter(new Date(), 'dd-MM-yyyy');
+                scope.birthDate = scope.date.split('-');
+                scope.todayDates = today.split('-');
+                var age = scope.todayDates[2] - scope.birthDate[2];
                 var m = scope.todayDates[1] - scope.birthDate[1];
                 if (m < 0 || (m === 0 && scope.todayDates[0] < scope.birthDate[0])) {
                     age--;
                 }
-                scope.formData.coClientData[0].age=age;
+                scope.formData.coClientData[0].age = age;
             }
 
 
             scope.isDatafilled = false;
-            scope.autoFill = function (){
+            scope.autoFill = function () {
 
-                if(scope.autofillHolder.length > 25){
-                    if(window.DOMParser){
+                if (scope.autofillHolder.length > 25) {
+                    if (window.DOMParser) {
                         parser = new DOMParser();
                     }
-                    else{
+                    else {
                         alert("Browser not supported!");
                         return null;
                     }
 
                     xmlDoc = parser.parseFromString(scope.autofillHolder, 'text/xml');
                     var barCodedData = xmlDoc.getElementsByTagName("PrintLetterBarcodeData");
-                    if(barCodedData != undefined && barCodedData != null  && barCodedData != "" ){
+                    if (barCodedData != undefined && barCodedData != null && barCodedData != "") {
                         var barCodedDataObject = barCodedData[0];
 
-                    //    scope.formData.clientExt.aadhaarNo = barCodedDataObject.getAttribute("uid");
+                        //    scope.formData.clientExt.aadhaarNo = barCodedDataObject.getAttribute("uid");
                         // Name derived
                         var fullName = barCodedDataObject.getAttribute("name").toUpperCase();
                         var names = fullName.split(" ");
@@ -69,23 +106,20 @@
 
                         // Need to improve the name splitting logic for all scenarios
 
-                        if(names.length == 2)
-                        {
+                        if (names.length == 2) {
                             isMidNameDerived = true;
                         }
 
 
                         for (var i = 0; i < names.length; i++) {
 
-                            if(!isFirstNameDerived)
-                            {
-                                fistName =  names[i];
-                                isFirstNameDerived=true;
-                            }else if(!isMidNameDerived)
-                            {
-                                midName =  names[i];
-                                isMidNameDerived =  true;
-                            }else{
+                            if (!isFirstNameDerived) {
+                                fistName = names[i];
+                                isFirstNameDerived = true;
+                            } else if (!isMidNameDerived) {
+                                midName = names[i];
+                                isMidNameDerived = true;
+                            } else {
                                 lastName = lastName + names[i];
                             }
 
@@ -94,15 +128,56 @@
                         scope.formData.coClientData[0].middleName = midName;
                         scope.formData.coClientData[0].lastName = lastName;
 
+                        // Gender
+
+                        var gender = barCodedDataObject.getAttribute("gender");
+                        var genderSearchString = "female";
+                        if (gender.toLowerCase() == "m") {
+                            genderSearchString = "male";
+                        }
+
+
+                        var genderObj = _.find(scope.genderOptions, function (item) {
+                            return item.name.toLowerCase() == genderSearchString;
+                        });
+
+                        console.log("genderObj: " + genderObj);
+
+                        scope.formData.coClientData[0].genderId = genderObj.id;
+
+
+                        // Identity and address proof
+
+
+                        var idenityObj = _.find(scope.identityProofOptions, function (item) {
+                            return item.name.toLowerCase() == "aadhaar";
+                        });
+
+                        if (idenityObj != undefined && idenityObj != null) {
+                            scope.formData.clientIdentifierData[0].documentTypeId = idenityObj.id;
+                        }
+                        scope.formData.clientIdentifierData[0].documentKey = barCodedDataObject.getAttribute("uid");
+
+
+                        var addressObj = _.find(scope.addressProofOptions, function (item) {
+                            return item.name.toLowerCase() == "aadhaar";
+                        });
+
+                        if (addressObj != undefined && addressObj != null) {
+                            scope.formData.clientIdentifierData[1].documentTypeId = addressObj.id;
+                        }
+                        scope.formData.clientIdentifierData[1].documentKey = barCodedDataObject.getAttribute("uid");
+
                         // Spouse or fother name derived
 
                         var gname = barCodedDataObject.getAttribute("gname");
-                        if(gname!=null && gname!=undefined && gname!=""){
-                            scope.formData.coClientData[0].fatherFirstName=gname.toUpperCase();;
+                        if (gname != null && gname != undefined && gname != "") {
+                            scope.formData.coClientData[0].fatherFirstName = gname.toUpperCase();
+                            ;
                         }
 
                         var co = barCodedDataObject.getAttribute("co");
-                        if(co!=null) {
+                        if (co != null) {
                             co = co.toUpperCase();
                             var cos = co.split(" ");
                             var iscoFirstNameDerived = false;
@@ -153,113 +228,112 @@
 
                         }
                         // date of birth derived
-                        var dob =  barCodedDataObject.getAttribute("dob");
+                        var dob = barCodedDataObject.getAttribute("dob");
 
-                        if(dob != undefined && dob != null  && dob != "" ){
+                        if (dob != undefined && dob != null && dob != "") {
                             var dates = dob.split("/");
-                            if(dates.length<2){
+                            if (dates.length < 2) {
                                 var dates = dob.split("-");
-                                scope.formData.coClientData[0].dateOfBirth = new Date(dates[0],dates[1]-1,dates[2]);
+                                scope.formData.coClientData[0].dateOfBirth = new Date(dates[0], dates[1] - 1, dates[2]);
                             }
                             else {
                                 scope.formData.coClientData[0].dateOfBirth = new Date(dates[2], dates[1] - 1, dates[0]);
                             }
-                        }else{
-                            var yob =  barCodedDataObject.getAttribute("yob");
-                            scope.formData.coClientData[0].dateOfBirth = new Date(yob,6,1);
+                        } else {
+                            var yob = barCodedDataObject.getAttribute("yob");
+                            scope.formData.coClientData[0].dateOfBirth = new Date(yob, 6, 1);
                         }
-
 
 
                         // Address details
 
-                        var houseNo =  barCodedDataObject.getAttribute("house");
-                        var street =  barCodedDataObject.getAttribute("street");
-                        var loc =  barCodedDataObject.getAttribute("loc");
-                        var vtc =  barCodedDataObject.getAttribute("vtc");
-                        var po =  barCodedDataObject.getAttribute("po");
-                        var dist =  barCodedDataObject.getAttribute("dist");
-                        var subdist =  barCodedDataObject.getAttribute("subdist");
-                        var state =  barCodedDataObject.getAttribute("state");
-                        var pc =  barCodedDataObject.getAttribute("pc");
+                        var houseNo = barCodedDataObject.getAttribute("house");
+                        var street = barCodedDataObject.getAttribute("street");
+                        var loc = barCodedDataObject.getAttribute("loc");
+                        var vtc = barCodedDataObject.getAttribute("vtc");
+                        var po = barCodedDataObject.getAttribute("po");
+                        var dist = barCodedDataObject.getAttribute("dist");
+                        var subdist = barCodedDataObject.getAttribute("subdist");
+                        var state = barCodedDataObject.getAttribute("state");
+                        var pc = barCodedDataObject.getAttribute("pc");
 
-                        if(houseNo != undefined && houseNo != null){
+                        if (houseNo != undefined && houseNo != null) {
                             scope.formData.naddress[0].houseNo = houseNo.toUpperCase();
                         }
 
-                        if(street != undefined && street != null){
+                        if (street != undefined && street != null) {
                             scope.formData.naddress[0].streetNo = street.toUpperCase();
                         }
 
-                        if(loc != undefined && loc != null){
+                        if (loc != undefined && loc != null) {
                             scope.formData.naddress[0].areaLocality = loc.toUpperCase();
                         }
 
-                        if(po != undefined && po != null){
+                        if (po != undefined && po != null) {
                             scope.formData.naddress[0].landmark = po.toUpperCase();
                         }
 
-                        if(vtc != undefined && vtc != null){
+                        if (vtc != undefined && vtc != null) {
                             scope.formData.naddress[0].villageTown = vtc.toUpperCase();
                         }
 
-                        if(pc != undefined && pc != null){
+                        if (pc != undefined && pc != null) {
                             scope.formData.naddress[0].pinCode = pc.toUpperCase();
                         }
 
-                        if(subdist != undefined && subdist != null){
+                        if (subdist != undefined && subdist != null) {
                             scope.formData.naddress[0].taluka = subdist.toUpperCase();
                         }
 
 
-                        if( dist != undefined && dist != null ){
-                            var distObj =  _.find(scope.districtOptins, function(item) {return item.name.toLowerCase() == dist.toLowerCase();});
+                        if (dist != undefined && dist != null) {
+                            var distObj = _.find(scope.districtOptins, function (item) {
+                                return item.name.toLowerCase() == dist.toLowerCase();
+                            });
 
-                            if(distObj != undefined && distObj != null ) {
+                            if (distObj != undefined && distObj != null) {
                                 scope.formData.naddress[0].district = distObj.id;
                             }
 
                         }
 
 
-                        if( state != undefined && state != null ){
-                            var stateObj =  _.find(scope.stateOptions, function(item) {return item.name.toLowerCase() == state.toLowerCase();});
-                            if( stateObj != undefined && stateObj != null ){
+                        if (state != undefined && state != null) {
+                            var stateObj = _.find(scope.stateOptions, function (item) {
+                                return item.name.toLowerCase() == state.toLowerCase();
+                            });
+                            if (stateObj != undefined && stateObj != null) {
                                 scope.formData.naddress[0].state = stateObj.id;
                             }
 
                         }
 
 
-
-
-
                         scope.addressabove = true;
                         scope.isDatafilled = true;
                         scope.autofillHolder = "";
-                        scope.selected1 =true;
-                        scope.selected=false;
+                        scope.selected1 = true;
+                        scope.selected = false;
 
                     }
-                    else{
+                    else {
                         alert("Invalid read! Please read again.");
                     }
 
                 }
-                else{
+                else {
                     alert("Invalid read! Please read again.");
                 }
 
             };
 
 
-
             scope.issave = false;
             scope.submitAndAccept = function () {
                 scope.issave = true;
-                if(this.formData.coClientData){
-                    for(var i = 0; i < this.formData.coClientData.length; i++){
-                        if(this.formData.coClientData[i].relationship){
+                if (this.formData.coClientData) {
+                    for (var i = 0; i < this.formData.coClientData.length; i++) {
+                        if (this.formData.coClientData[i].relationship) {
                             this.formData.coClientData[i].clientId = scope.formData.clientId;
                             if (scope.formData.coClientData[i].dateOfBirth) {
                                 this.formData.coClientData[i].dateOfBirth = dateFilter(scope.formData.coClientData[i].dateOfBirth, scope.df);
@@ -270,14 +344,14 @@
                     }
                 }
 
-                if(this.formData.naddress){
-                    for(var i in scope.addressTypes){
-                        if(scope.addressTypes[i].name == 'Spouse Address'){
+                if (this.formData.naddress) {
+                    for (var i in scope.addressTypes) {
+                        if (scope.addressTypes[i].name == 'Spouse Address') {
                             this.formData.naddress[0].addressType = scope.addressTypes[i].id;
                             break;
                         }
                     }
-                    for(var i = 0; i < this.formData.naddress.length; i++){
+                    for (var i = 0; i < this.formData.naddress.length; i++) {
                         this.formData.naddress[i].locale = scope.optlang.code;
                         this.formData.naddress[i].dateFormat = scope.df;
                     }
