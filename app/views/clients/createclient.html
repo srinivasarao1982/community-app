@@ -732,8 +732,9 @@
                     <div class="col-md-2"><span class="required" ng-show="isFamilyFirstNameRequired">*</span>Name</div>
                     <div class="col-md-2"><span class="required" ng-show="isFamilyRelationshipRequired">*</span>Relationship
                     </div>
-                    <div class="col-md-2"><span class="required" ng-show="isFamilyGenderRequired">*</span>Gender</div>
-                    <div class="col-md-1"><span class="required" ng-show="isFamilyAgeRequired">*</span>Age/D.o.b</div>
+                    <div class="col-md-1"><span class="required" ng-show="isFamilyGenderRequired">*</span>Gender</div>
+                    <div class="col-md-1"><span class="required" ng-show="isFamilyDateOfBirthRequired">*</span>D.O.B</div>
+                    <div class="col-md-1"><span class="required" ng-show="isFamilyAgeRequired">*</span>Age</div>
                     <div class="col-md-2"><span class="required" ng-show="isFamilyOccupationRequired">*</span>Occupation
                     </div>
                     <div class="col-md-2"><span class="required" ng-show="isFamilyEducationalStatusRequired">*</span>Educational
@@ -767,7 +768,7 @@
                     </ng-form>
 
                     <ng-form name="formfamilydetailsgender" novalidate="" rc-submit="submit()">
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <select id="gender" name="gender" ng-model="family.gender" class="form-control"
                                     ng-options="gender.id as gender.name for gender in genderOptions"
                                     value="{{gender.id}}" ng-required="isFamilyGenderRequired">
@@ -777,12 +778,24 @@
                         </div>
                     </ng-form>
 
+                    <ng-form name="formfamilydetailsspDateOfBirth" novalidate="" rc-submit="submit()">
+                        <div class="col-md-1">
+                            <input placeholder="D.O.B" type="text" id="spdateOfBirth" name="spdateOfBirth"
+                                   ng-model="family.dateOfBirth"
+                                   datepicker-pop="dd MMMM yyyy"
+                                   class="form-control" ng-required="isFamilyDateOfBirthRequired" ng-change="familyAutoCalcAge()"/>
+                            <span class="error"
+                                  ng-show="submitted && formfamilydetailsspDateOfBirth.spdateOfBirth.$error.required">{{'label.error.required'|translate}}</span>
+                        </div>
+                    </ng-form>
+
                     <ng-form name="formfamilydetailsspAge" novalidate="" rc-submit="submit()">
                         <div class="col-md-1">
                             <input placeholder="Age" type="text" id="spAge" name="spAge" ng-model="family.age"
-                                   datepicker-pop="dd MMMM yyyy"
-                                   class="form-control" maxlength="2" ng-required="isFamilyAgeRequired"/>
+                                   class="form-control" maxlength="3" ng-pattern="/^\d+$/"
+                                   ng-required="isFamilyAgeRequired" ng-readonly="family.dateOfBirth" />
                             <span class="error" ng-show="submitted && formfamilydetailsspAge.spAge.$error.required">{{'label.error.required'|translate}}</span>
+                            <span class="error" ng-show="submitted && formfamilydetailsspAge.spAge.$error.pattern">Only Numbers</span>
                         </div>
                     </ng-form>
 

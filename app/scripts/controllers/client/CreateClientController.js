@@ -52,6 +52,7 @@
             scope.isFamilyRelationshipRequired = false;
             scope.isFamilyGenderRequired = false;
             scope.isFamilyAgeRequired = false;
+            scope.isFamilyDateOfBirthRequired = false;
             scope.isFamilyOccupationRequired = false;
             scope.isFamilyEducationalStatusRequired = false;
 
@@ -207,17 +208,17 @@
                 scope.districtOptins = clientData.district;
                 scope.stateOptions = clientData.state;
 
-                scope.identityProofOptions = clientData.identityProof;
-                for (var i in scope.identityProofOptions) {
-                    if (scope.identityProofOptions[i].name && scope.identityProofOptions[i].name.indexOf('Coapplicant-') > -1) {
-                        scope.identityProofOptions.splice(i, 1);
+                scope.identityProofOptions = [];
+                for (var i in clientData.identityProof) {
+                    if (clientData.identityProof[i].name && clientData.identityProof[i].name.indexOf('Coapplicant-') < 0) {
+                        scope.identityProofOptions.push(clientData.identityProof[i]);
                     }
                 }
 
-                scope.addressProofOptions = clientData.addressProof;
-                for (var i in scope.addressProofOptions) {
-                    if (scope.addressProofOptions[i].name && scope.addressProofOptions[i].name.indexOf('Coapplicant-') > -1) {
-                        scope.addressProofOptions.splice(i, 1);
+                scope.addressProofOptions = [];
+                for (var i in clientData.addressProof) {
+                    if (clientData.addressProof[i].name && clientData.addressProof[i].name.indexOf('Coapplicant-') < 0) {
+                        scope.addressProofOptions.push(clientData.addressProof[i]);
                     }
                 }
 
@@ -440,7 +441,7 @@
                             return item.name.toLowerCase() == genderSearchString;
                         });
 
-                        console.log("genderObj: " + genderObj);
+                        //console.log("genderObj: " + genderObj);
 
                         scope.formData.genderId = genderObj.id;
 
@@ -724,6 +725,55 @@
                 scope.formData.familyDetails.splice(index, 1);
             };
 
+            scope.$watch("formData.familyDetails", function (newValue, oldValue) {
+                if (scope.formData.familyDetails && scope.formData.familyDetails.length > 0) {
+                    for (var i in scope.formData.familyDetails) {
+                        if (scope.formData.familyDetails[i] && scope.formData.familyDetails[i].dateOfBirth) {
+                            var dateOfBirth = scope.formData.familyDetails[i].dateOfBirth;
+                            if ((new Date(dateOfBirth)).toString() != 'Invalid Date') {
+                                scope.autoCalculateAge('familymember', i);
+                            }
+                        }
+                    }
+                }
+            });
+
+            scope.familyAutoCalcAge = function () {
+                if (scope.formData.familyDetails && scope.formData.familyDetails.length > 0) {
+                    for (var i in scope.formData.familyDetails) {
+                        if (scope.formData.familyDetails[i] && scope.formData.familyDetails[i].dateOfBirth) {
+                            var dateOfBirth = scope.formData.familyDetails[i].dateOfBirth;
+                            if ((new Date(dateOfBirth)).toString() != 'Invalid Date') {
+                                scope.autoCalculateAge('familymember', i);
+                            }
+                        }
+                    }
+                }
+            };
+
+            scope.autoCalculateAge = function (type, index) {
+                scope.birthDate = [];
+                scope.todayDates = [];
+                scope.date = "";
+                if (type == 'familymember') {
+                    scope.date = dateFilter(new Date(scope.formData.familyDetails[index].dateOfBirth), 'dd-MM-yyyy');
+                }
+
+                var today = dateFilter(new Date(), 'dd-MM-yyyy');
+                scope.birthDate = scope.date.split('-');
+                scope.todayDates = today.split('-');
+                var age = scope.todayDates[2] - scope.birthDate[2];
+                var m = scope.todayDates[1] - scope.birthDate[1];
+                if (m < 0 || (m === 0 && scope.todayDates[0] < scope.birthDate[0])) {
+                    age--;
+                }
+                if (type == 'familymember') {
+                    scope.formData.familyDetails[index].age = age;
+                }
+            };
+
+            scope.familyAutoCalcAge();
+
             scope.submitAndAccept = function () {
                 scope.addressaboveSetting();
                 scope.result = scope.showNotification();
@@ -760,15 +810,6 @@
                     for (var i in this.formData.familyDetails) {
                         if (this.formData.familyDetails[i].dateOfBirth) {
                             this.formData.familyDetails[i].dateOfBirth = dateFilter(scope.formData.familyDetails[i].dateOfBirth, scope.df);
-                        }
-                    }
-
-                    for (var i in this.formData.familyDetails) {
-                        if (!angular.isUndefined(this.formData.familyDetails[i].age)) {
-                            if (this.formData.familyDetails[i].age.toString().length > 3) {
-                                this.formData.familyDetails[i].dateOfBirth = dateFilter(scope.formData.familyDetails[i].age, scope.df);
-                                this.formData.familyDetails[i].age = null;
-                            }
                         }
                     }
 
@@ -827,6 +868,8 @@
                             this.formData.naddress.splice(i, 1);
                         }
                     }
+
+                    scope.familyAutoCalcAge();
 
                     //console.log(JSON.stringify(this.formData));
 
