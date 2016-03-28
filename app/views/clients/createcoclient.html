@@ -26,9 +26,28 @@
         <fieldset>
             <div class="form-group">
                 <div class="row">
+                    <div class="col-md-2"><label><span
+                            class="required">*</span>Details of Father/Spouse</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="relationship" name="relationship" ng-model="formData.coClientData[0].relationship"
+                                class="form-control"
+                                ng-options="spouse.id as spouse.name for spouse in spouseRelationShip"
+                                value="{{spouse.id}}" required late-Validate>
+                            value="{{spouse.id}}" required late-Validate>
+                            <option value=""> {{'label.menu.select' | translate}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <form-validate valattributeform="createcoclientform" valattribute="relationship"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
                     <div class="col-md-2"><label class="control-label" for="firstname"><span
                             class="required">*</span>Title</label></div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <select id="title" name="title" ng-model="formData.coClientData[0].salutation"
                                 class="form-control"
                                 ng-options="salutation.id as salutation.name for salutation in salutations"
@@ -36,6 +55,21 @@
                             <option value=""> {{'label.menu.select' | translate}}</option>
                         </select>
                         <form-validate valattributeform="createcoclientform" valattribute="title"/>
+                    </div>
+
+                    <div class="col-md-1"><label class="control-label"><span
+                            class="required">*</span>Gender</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="genderId" name="genderId" ng-model="formData.coClientData[0].genderId"
+                                class="form-control"
+                                ng-options="gender.id as gender.name for gender in genderOptions"
+                                value="{{gender.id}}" required late-Validate>
+                            <option value=""> {{'label.menu.gender' | translate}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <form-validate valattributeform="createcoclientform" valattribute="genderId"/>
                     </div>
                 </div>
             </div>
@@ -59,40 +93,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-2"><label class="control-label"><span
-                            class="required">*</span>Details of Father/Spouse</label>
-                    </div>
-                    <div class="col-md-2">
-                        <select id="relationship" name="relationship" ng-model="formData.coClientData[0].relationship"
-                                class="form-control"
-                                ng-options="spouse.id as spouse.name for spouse in spouseRelationShip"
-                                value="{{spouse.id}}" required late-Validate>
-                            value="{{spouse.id}}" required late-Validate>
-                            <option value=""> {{'label.menu.select' | translate}}</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-2">
-                        <form-validate valattributeform="createcoclientform" valattribute="relationship"/>
-                    </div>
 
-                    <div class="col-md-2"><label class="control-label"><span
-                            class="required">*</span>Gender</label>
-                    </div>
-                    <div class="col-md-2">
-                        <select id="genderId" name="genderId" ng-model="formData.coClientData[0].genderId"
-                                class="form-control"
-                                ng-options="gender.id as gender.name for gender in genderOptions"
-                                value="{{gender.id}}" required late-Validate>
-                            <option value=""> {{'label.menu.gender' | translate}}</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-2">
-                        <form-validate valattributeform="createcoclientform" valattribute="genderId"/>
-                    </div>
-                </div>
-            </div>
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
                     <div class="col-md-2"><label class="control-label" for="firstname"><span

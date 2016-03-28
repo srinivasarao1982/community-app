@@ -35,17 +35,18 @@
                 scope.genderOptions = coClientData.genderOptions;
                 scope.addressTypes = coClientData.addressTypes;
 
-                scope.identityProofOptions = coClientData.identityProof;
-                for (var i in scope.identityProofOptions) {
-                    if (scope.identityProofOptions[i].name && scope.identityProofOptions[i].name.indexOf('Coapplicant-') < 0) {
-                        scope.identityProofOptions.splice(i, 1);
+                scope.identityProofOptions = [];
+                for (var i in coClientData.identityProof) {
+                    if (coClientData.identityProof[i].name && coClientData.identityProof[i].name.indexOf('Coapplicant-') > -1) {
+                        scope.identityProofOptions.push(coClientData.identityProof[i]);
                     }
                 }
 
-                scope.addressProofOptions = coClientData.addressProof;
-                for (var i in scope.addressProofOptions) {
-                    if (scope.addressProofOptions[i].name && scope.addressProofOptions[i].name.indexOf('Coapplicant-') < 0) {
-                        scope.addressProofOptions.splice(i, 1);
+                scope.addressProofOptions = [];
+                for (var i in coClientData.addressProof) {
+                    //alert(coClientData.addressProof[i].name && coClientData.addressProof[i].name.indexOf('Coapplicant-'));
+                    if (coClientData.addressProof[i].name && coClientData.addressProof[i].name.indexOf('Coapplicant-') > -1) {
+                        scope.addressProofOptions.push(coClientData.addressProof[i]);
                     }
                 }
 
@@ -63,7 +64,7 @@
             scope.AgeCalculate = function () {
                 scope.birthDate = [];
                 scope.todayDates = [];
-                scope.date = dateFilter(this.formData.coClientData[0].dateOfBirth, 'dd-MM-yyyy');
+                scope.date = dateFilter(new Date(this.formData.coClientData[0].dateOfBirth), 'dd-MM-yyyy');
                 var today = dateFilter(new Date(), 'dd-MM-yyyy');
                 scope.birthDate = scope.date.split('-');
                 scope.todayDates = today.split('-');
@@ -141,7 +142,7 @@
                             return item.name.toLowerCase() == genderSearchString;
                         });
 
-                        console.log("genderObj: " + genderObj);
+                        //console.log("genderObj: " + genderObj);
 
                         scope.formData.coClientData[0].genderId = genderObj.id;
 
