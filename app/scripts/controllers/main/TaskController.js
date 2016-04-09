@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        TaskController: function (scope, resourceFactory, route, dateFilter, $modal, location) {
+        TaskController: function (scope, resourceFactory, route, dateFilter, $modal, location,$scope,$timeout) {
             scope.clients = [];
             scope.loans = [];
             scope.offices = [];
@@ -17,7 +17,13 @@
             scope.centersPerPage = 15;
             scope.centers = [];
             scope.actualCenters = [];
+            scope.searchText = "";
+            scope.searchResults = [];
             scope.requestIdentifier = "loanId";
+            scope.groups = [];
+            scope.loanOfficers=[];
+            scope.staffs =[];
+            scope.formData1={};
 
             resourceFactory.checkerInboxResource.get({templateResource: 'searchtemplate'}, function (data) {
                 scope.checkerTemplate = data;
@@ -30,16 +36,22 @@
             resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
                 data = clientData.clientBasicDetails;
                 scope.officesforDropDown = data.officeOptions;
-                //scope.formData.officeId = scope.offices[0].id;
-
             });
+            scope.changeOffice=function(officeId){
+                var requestParams1 = {staffInSelectedOfficeOnly:true,loanOfficersOnly:true,officeId:officeId};
+                resourceFactory.clientTemplateResource.get(requestParams1, function (clientData) {
+                    data = clientData.clientBasicDetails;
+                    scope.loanOfficers = data.staffOptions;
+                });
+            }
+           scope.changeclientOffice=function(officeId){
+               var requestParamsforclients = {staffInSelectedOfficeOnly:true,officeId:officeId};
+               resourceFactory.clientTemplateResource.get(requestParamsforclients, function (clientData) {
+                   data = clientData.clientBasicDetails;
+                   scope.staffs = data.staffOptions;
+               });
 
-            scope.filterText = scope.searchCriteria.centers;
-
-            scope.onFilter = function () {
-                scope.searchCriteria.centers = scope.filterText;
-                scope.saveSC();
-            };
+           }
             scope.getResultsPage = function (pageNumber) {
                 if(scope.searchText){
                     var startPosition = (pageNumber - 1) * scope.centersPerPage;
@@ -69,9 +81,34 @@
                     scope.centers = data.pageItems;
                 });
             }
-            scope.changeoffice=function(officeId){
-                scope.initPage(officeId);
+            scope.search1 = function (searchText) {
+                scope.actualCenters = [];
+                scope.searchResults = [];
+
+                    resourceFactory.globalSearch.search({query: searchText ,  resource: "groups"}, function (data) {
+                        var arrayLength = data.length;
+                        for (var i = 0; i < arrayLength; i++) {
+                            var result = data[i];
+                            var center = {};
+                            center.status = {};
+                            center.subStatus = {};
+                            if(result.entityType  == 'CENTER') {
+                                center.name = result.entityName;
+                                center.id = result.entityId;
+                                center.officeName = result.parentName;
+                                center.status.value = result.entityStatus.value;
+                                center.status.code = result.entityStatus.code;
+                                center.externalId = result.entityExternalId;
+                                scope.actualCenters.push(center);
+                            }
+                        }
+                        var numberOfCenters = scope.actualCenters.length;
+                        scope.totalCenters = numberOfCenters;
+                        scope.centers = scope.actualCenters.slice(0, scope.centersPerPage);
+                    });
+
             }
+
             scope.initPage(scope.formData.officeId);
 
             scope.viewUser = function (item) {
@@ -337,47 +374,76 @@
                 location.path('jlgloanAccountcenterby/' + id);
 
             };
-            resourceFactory.officeResource.getAllOffices(function (data) {
-                scope.offices = data;
-                for (var i in data) {
-                    data[i].loans = [];
-                    idToNodeMap[data[i].id] = data[i];
-                }
-                scope.loanResource = function () {
-                    resourceFactory.loanResource.getAllLoans({"sqlSearch":"l.loan_status_id in (100,200)","groupSearch":true,"orderBy" :"centerId"},function (loanData) {
-                        scope.loans = loanData.pageItems;
-                        for (var i in scope.loans) {
-                            if (scope.loans[i].status.pendingApproval) {
-                                var tempOffice = undefined;
-                                if (scope.loans[i].clientOfficeId) {
-                                    tempOffice = idToNodeMap[scope.loans[i].clientOfficeId];
-                                    tempOffice.loans.push(scope.loans[i]);
-                                } else {
-                                    if (scope.loans[i].group) {
-                                        tempOffice = idToNodeMap[scope.loans[i].group.officeId];
+            scope.loanApprovalAndDisburse=function (officeId,loanOfficeId) {
+                     scope.sql='';
+                     if(loanOfficeId!=null && officeId!=null ) {
+                         scope.sql = "l.loan_status_id in (100,200) and o.id = " + officeId + " and l.loan_officer_id =" + loanOfficeId;
+                     }
+                    else if (officeId!=null){
+                         scope.sql = "l.loan_status_id in (100,200) and o.id = " + officeId ;
+                     }
+                    else{
+                         scope.sql = "l.loan_status_id in (100,200)";
+                     }
+                resourceFactory.officeResource.getAllOffices(function (data) {
+                    scope.offices = data;
+                    for (var i in data) {
+                        data[i].loans = [];
+                        idToNodeMap[data[i].id] = data[i];
+                    }
+                    scope.loanResource = function () {
+                        resourceFactory.loanResource.getAllLoans({
+                            "sqlSearch":  scope.sql,      //"l.loan_status_id in (100,200)",
+                            "groupSearch": true,
+                            "orderBy": "centerId"
+                        }, function (loanData) {
+                            scope.loans = loanData.pageItems;
+                            for (var i in scope.loans) {
+                                if (scope.loans[i].status.pendingApproval) {
+                                    var tempOffice = undefined;
+                                    if (scope.loans[i].clientOfficeId) {
+                                        tempOffice = idToNodeMap[scope.loans[i].clientOfficeId];
                                         tempOffice.loans.push(scope.loans[i]);
+                                    } else {
+                                        if (scope.loans[i].group) {
+                                            tempOffice = idToNodeMap[scope.loans[i].group.officeId];
+                                            tempOffice.loans.push(scope.loans[i]);
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        var finalArray = [];
-                        for (var i in scope.offices) {
-                            if (scope.offices[i].loans && scope.offices[i].loans.length > 0) {
-                                finalArray.push(scope.offices[i]);
+                            var finalArray = [];
+                            for (var i in scope.offices) {
+                                if (scope.offices[i].loans && scope.offices[i].loans.length > 0) {
+                                    finalArray.push(scope.offices[i]);
+                                }
                             }
-                        }
-                        scope.offices = finalArray;
-                    });
-                };
-                scope.loanResource();
-            });
-
-
-            resourceFactory.clientResource.getAllClients({"sqlSearch":"c.status_enum like 100","groupSearch":true,"orderBy" :"centerId"},function (data) {
-                scope.groupedClients = _.groupBy(data.pageItems, "officeName");
-            });
-
+                            scope.offices = finalArray;
+                        });
+                    };
+                    scope.loanResource();
+                });
+            }
+            scope.clientPendingforApproval=function(officeId,staffId) {
+                scope.sqlsearchforclient='';
+                if(staffId!=null && officeId!=null){
+                    scope.sqlsearchforclient="c.status_enum like 100 and c.office_id = "+officeId +" and  c.staff_id = "+staffId ;
+                }
+                else if(officeId!=null){
+                    scope.sqlsearchforclient="c.status_enum like 100 and c.office_id = "+officeId ;
+                }
+                else{
+                    scope.sqlsearchforclient="c.status_enum like 100";
+                }
+                resourceFactory.clientResource.getAllClients({
+                    "sqlSearch": scope.sqlsearchforclient,
+                    "groupSearch": true,
+                    "order by" :"centerId"
+                }, function (data) {
+                    scope.groupedClients = _.groupBy(data.pageItems, "officeName");
+                });
+            }
             scope.search = function () {
                 scope.isCollapsed = true;
                 var reqFromDate = dateFilter(scope.date.from, 'yyyy-MM-dd');
@@ -477,6 +543,7 @@
                             scope.loanTemplate[data[i].body.loanId] = false;
                             if (selectedAccounts == approvedAccounts) {
                                 scope.loanResource();
+                                route.reload();
                             }
                         }
                         
@@ -550,7 +617,7 @@
 
         }
     });
-    mifosX.ng.application.controller('TaskController', ['$scope', 'ResourceFactory', '$route', 'dateFilter', '$modal', '$location', mifosX.controllers.TaskController]).run(function ($log) {
+    mifosX.ng.application.controller('TaskController', ['$scope', 'ResourceFactory', '$route', 'dateFilter', '$modal', '$location','$scope','$timeout', mifosX.controllers.TaskController]).run(function ($log) {
         $log.info("TaskController initialized");
     });
 }(mifosX.controllers || {}));

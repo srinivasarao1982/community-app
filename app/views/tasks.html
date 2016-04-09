@@ -122,21 +122,36 @@
 				</tab>
 				<tab heading="{{'label.heading.clientapproval' | translate}}" has-permission='READ_CLIENT'>
 				    <div class="head-affix">
-				        <table class="table condensed-table">
-				            <thead>
-				            <tr>
-				                <th>
-				                    <input ng-autofocus="true" ng-model="filterText" type="text" class="input-sm form-control"
-				                           placeholder="{{'label.input.filterbyname' | translate}}">
-				                </th>
-				                <th>
-				                    <button type="button" class="btn btn-success" data-ng-click="approveClient()" has-permission='ACTIVATE_CLIENT'><i
-				                            class="icon-ok"></i>{{'label.button.approve' | translate}}
-				                    </button>
-				                </th>
-				            </tr>
-				            </thead>
-				        </table>
+						<div class="row">
+							<div class="col-md-2">
+								<select  name="officeId" ng-model="formData.officeId" class="form-control width170px ng-pristine ng-valid"
+										 ng-options="office.id as office.name for office in officesforDropDown" value="{{office.id}}"
+										 ng-change="changeclientOffice(formData.officeId)" ng-required="isOfficeIdRequired">
+									<option value=""> {{'label.menu.select' | translate}}</option>
+								</select>
+							</div>
+							<div class="col-md-3">
+								<select id="staffId" name="staff" ng-model="formData.staffId" class="form-control width170px ng-pristine ng-valid"
+										ng-options="staff.id as staff.displayName for staff in staffs" value="{{staff.id}}">
+									<option value=""> {{'label.menu.select' | translate}}</option>
+								</select>
+							</div>
+							<div class="col-md-1">
+								<button type="button" class="btn btn-primary" ng-click="clientPendingforApproval(formData.officeId,formData.staffId)" ><i class="icon-ok"></i>{{'label.button.submit'
+									| translate}}
+								</button>
+							</div>
+							<div class="col-md-3">
+								<input ng-autofocus="true" ng-model="filterText" type="text" class="input-sm form-control"
+									   placeholder="{{'label.input.filterbyname' | translate}}">
+							</div>
+							<div class="col-md-1">
+								<button type="button" class="btn btn-success" data-ng-click="approveClient()" has-permission='ACTIVATE_CLIENT'><i
+										class="icon-ok"></i>{{'label.button.approve' | translate}}
+								</button>
+							</div>
+						</div>
+
 				    </div>
 				    <script type="text/ng-template" id="approveclient.html">
         <div class="modal-header silver">
@@ -194,13 +209,16 @@
 							<thead>
 							<tr>
 								<th>
-									<input ng-autofocus="true" type="text" class="input-sm form-control" ng-model="filterText" type="text" ng-keyup="onFilter()"
+									<input ng-autofocus="true" ng-model="filterText" type="text" class="input-sm form-control"
 										   placeholder="{{'label.input.filterbyname' | translate}}">
 								</th>
-								<th>{{'label.input.office' | translate}}<span class="required">*</span></th>
-								<th><select chosen="offices" id="officeId" ng-model="formData.officeId " class="form-control"
-											ng-options="office.id as office.name for office in officesforDropDown" ng-change="changeoffice(formData.officeId)"
-											value="{{office.id}}"></select></th>
+								<th>
+									<input ng-autofocus="true" type="text" class="input-sm form-control" ng-model="searchText" type="text"
+										   placeholder="{{'label.input.searchByNameExternalId' | translate}}">
+								</th>
+								<th> <button type="button" class="btn btn-primary" ng-click="search1(searchText)" ><i class="icon-ok"></i>{{'label.button.submit'
+									| translate}}
+								</button></th>
 
 							</tr>
 							</thead>
@@ -238,22 +256,38 @@
 
 				<tab heading="{{'label.heading.loanapproval' | translate}}" has-permission='READ_LOAN'>
 				    <div class="head-affix">
-				        <table class="table condensed-table">
-				            <thead>
-				            <tr>
-				                <th>
-				                    <input ng-autofocus="true" ng-model="filterText1" type="text" class="input-sm form-control"
-				                           placeholder="{{'label.input.filterbyname' | translate}}">
-				                </th>
-				                <th>
-				                    <button type="button" class="btn btn-success" data-ng-click="approveLoan()" has-permission='APPROVE_LOAN'><i class="icon-ok"></i>{{'label.button.approve'
-				                        | translate}}
-				                    </button>
-				                </th>
-				            </tr>
-				            </thead>
-				        </table>
-				    </div>
+						<div class="row">
+							<div class="col-md-2">
+									<select  name="officeId" ng-model="formData1.officeId" class="form-control width170px ng-pristine ng-valid"
+											ng-options="office.id as office.name for office in officesforDropDown" value="{{office.id}}"
+											ng-change="changeOffice(formData1.officeId)" ng-required="isOfficeIdRequired">
+										<option value=""> {{'label.menu.select' | translate}}</option>
+									</select>
+							</div>
+                            <div class="col-md-3">
+										<select id="loanOfficerId" name="loanOfficerId" ng-model="formData1.loanOfficerId" class="form-control width170px ng-pristine ng-valid"
+												ng-options="loanofficer.id as loanofficer.displayName for loanofficer in loanOfficers" value="{{loanofficer.id}}"
+												ng-required="isOfficeIdRequired">
+											<option value=""> {{'label.menu.select' | translate}}</option>
+										</select>
+							</div>
+							<div class="col-md-1">
+								 <button type="button" class="btn btn-primary" ng-click="loanApprovalAndDisburse(formData1.officeId,formData1.loanOfficerId)" ><i class="icon-ok"></i>{{'label.button.submit'
+										| translate}}
+									</button>
+							</div>
+							<div class="col-md-3">
+							<input ng-autofocus="true" ng-model="filterText" type="text" class="input-sm form-control"
+								   placeholder="{{'label.input.filterbyname' | translate}}">
+								</div>
+							<div class="col-md-1">
+								<button type="button" class="btn btn-success" data-ng-click="approveLoan()" has-permission='APPROVE_LOAN'><i class="icon-ok"></i>{{'label.button.approve'
+									| translate}}
+								</button>
+							</div>
+
+						</div>
+						</div>
 					<script type="text/ng-template" id="approveloan.html">
 						<div class="modal-header silver">
 							<h3 class="bolder">{{'label.heading.approve' | translate}}</h3>
@@ -288,7 +322,7 @@
 				                    </tr>
 				                    </thead>
 				                    <tbody>
-				                    <tr ng-repeat="loan in office.loans  track by loan.id| filter:filterText1  ">
+				                    <tr ng-repeat="loan in office.loans | filter:filterText ">
 				                        <td><input type="checkbox" ng-model="loanTemplate[loan.id]"></td>
 										<!--
                                         ng-if="client.centerName && client.groupName">{{client.displayName}} &nbsp;&nbsp;&nbsp;&nbsp; ({{client.centerName}} &nbsp; / &nbsp; {{client.groupName}})
@@ -309,21 +343,36 @@
 				</tab>
 				<tab heading="{{'label.heading.loandisbursal' | translate}}" has-permission='READ_LOAN'>
 				    <div class="head-affix">
-				        <table class="table condensed-table">
-				            <thead>
-				            <tr>
-				                <th>
-				                    <input ng-autofocus="true" ng-model="filterText2" type="text" class="input-sm form-control"
-				                           placeholder="{{'label.input.filterbyname' | translate}}">
-				                </th>
-				                <th>
-				                    <button type="button" class="btn btn-success" data-ng-click="disburseLoan()" has-permission='APPROVE_LOAN'><i class="icon-ok"></i>{{'label.button.disburse'
-				                        | translate}}
-				                    </button>
-				                </th>
-				            </tr>
-				            </thead>
-				        </table>
+						<div class="row">
+							<div class="col-md-2">
+								<select  name="officeId" ng-model="formData.officeId" class="form-control width170px ng-pristine ng-valid"
+										 ng-options="office.id as office.name for office in officesforDropDown" value="{{office.id}}"
+										 ng-change="changeOffice(formData.officeId)" ng-required="isOfficeIdRequired">
+									<option value=""> {{'label.menu.select' | translate}}</option>
+								</select>
+							</div>
+							<div class="col-md-3">
+								<select id="loanOfficerId" name="loanOfficerId" ng-model="formData.loanOfficerId" class="form-control width170px ng-pristine ng-valid"
+										ng-options="loanofficer.id as loanofficer.displayName for loanofficer in loanOfficers" value="{{loanofficer.id}}"
+										ng-required="isOfficeIdRequired">
+									<option value=""> {{'label.menu.select' | translate}}</option>
+								</select>
+							</div>
+							<div class="col-md-1">
+								<button type="button" class="btn btn-primary" ng-click="loanApprovalAndDisburse(formData.officeId,formData.loanOfficerId)" ><i class="icon-ok"></i>{{'label.button.submit'
+									| translate}}
+								</button>
+							</div>
+							<div class="col-md-3">
+								<input ng-autofocus="true" ng-model="filterText" type="text" class="input-sm form-control"
+									   placeholder="{{'label.input.filterbyname' | translate}}">
+							</div>
+							<div class="col-md-1">
+								<button type="button" class="btn btn-success" data-ng-click="disburseLoan()" has-permission='APPROVE_LOAN'><i class="icon-ok"></i>{{'label.button.disburse'
+									| translate}}
+								</button>
+							</div>
+						</div>
 				    </div>
 					<script type="text/ng-template" id="disburseloan.html">
 						<div class="modal-header silver">
@@ -356,7 +405,7 @@
 				            </tr>
 				            </thead>
 				            <tbody>
-				            <tr ng-repeat="loan in loans track by loan.id | filter : {status.waitingForDisbursal :'true' }| filter:filterText2 ">
+				            <tr ng-repeat="loan in loans | filter : {status.waitingForDisbursal :'true' }| filter:filterText ">
 				            	<td><input type="checkbox" ng-model="loanDisbursalTemplate[loan.id]"></td>
 								<td class="pointer"  ng-if="loan.group.name && loan.centerName"><a href='#/viewclient/{{loan.clientId}}'>{{loan.clientName}} &nbsp;&nbsp; ( {{loan.centerName}} &nbsp;/&nbsp; {{loan.group.name}}) </a></td>
 								<td class="pointer" ng-if="loan.group.name && !loan.centerName"><a href='#/viewclient/{{loan.clientId}}' >{{loan.clientName}} &nbsp;&nbsp;( {{loan.group.name}}) </a></td>
@@ -372,4 +421,4 @@
 			</tabset>
 		</fieldset>
 	</div>
-</div>
+	</div>

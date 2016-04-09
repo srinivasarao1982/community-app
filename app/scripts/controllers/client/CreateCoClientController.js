@@ -151,7 +151,7 @@
 
 
                         var idenityObj = _.find(scope.identityProofOptions, function (item) {
-                            return item.name.toLowerCase() == "aadhaar";
+                            return item.name.toLowerCase() == "coapplicant-aadhaar";
                         });
 
                         if (idenityObj != undefined && idenityObj != null) {
@@ -161,7 +161,7 @@
 
 
                         var addressObj = _.find(scope.addressProofOptions, function (item) {
-                            return item.name.toLowerCase() == "aadhaar";
+                            return item.name.toLowerCase() == "coapplicant-aadhaar";
                         });
 
                         if (addressObj != undefined && addressObj != null) {
