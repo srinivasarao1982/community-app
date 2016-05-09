@@ -123,17 +123,17 @@
 				<tab heading="{{'label.heading.clientapproval' | translate}}" has-permission='READ_CLIENT'>
 				    <div class="head-affix">
 						<div class="row">
-							<div class="col-md-2">
-								<select  name="officeId" ng-model="formData.officeId" class="form-control width170px ng-pristine ng-valid"
+							<div class="col-md-3">
+								<select chosen="officesforDropDown" name="officeId" ng-model="formData.officeId" class="form-control width170px ng-pristine ng-valid"
 										 ng-options="office.id as office.name for office in officesforDropDown" value="{{office.id}}"
 										 ng-change="changeclientOffice(formData.officeId)" ng-required="isOfficeIdRequired">
-									<option value=""> {{'label.menu.select' | translate}}</option>
+									<option value=""> {{'label.selectoffice' | translate}}</option>
 								</select>
 							</div>
 							<div class="col-md-3">
-								<select id="staffId" name="staff" ng-model="formData.staffId" class="form-control width170px ng-pristine ng-valid"
+								<select chosen="staffs" id="staffId" name="staff" ng-model="formData.staffId" class="form-control width170px ng-pristine ng-valid"
 										ng-options="staff.id as staff.displayName for staff in staffs" value="{{staff.id}}">
-									<option value=""> {{'label.menu.select' | translate}}</option>
+									<option value=""> {{'label.menu.selectstaff' | translate}}</option>
 								</select>
 							</div>
 							<div class="col-md-1">
@@ -257,18 +257,18 @@
 				<tab heading="{{'label.heading.loanapproval' | translate}}" has-permission='READ_LOAN'>
 				    <div class="head-affix">
 						<div class="row">
-							<div class="col-md-2">
-									<select  name="officeId" ng-model="formData1.officeId" class="form-control width170px ng-pristine ng-valid"
+							<div class="col-md-3">
+									<select chosen="officesforDropDown" name="officeId" ng-model="formData1.officeId" class="form-control width170px ng-pristine ng-valid"
 											ng-options="office.id as office.name for office in officesforDropDown" value="{{office.id}}"
 											ng-change="changeOffice(formData1.officeId)" ng-required="isOfficeIdRequired">
-										<option value=""> {{'label.menu.select' | translate}}</option>
+										<option value=""> {{'label.selectoffice' | translate}}</option>
 									</select>
 							</div>
                             <div class="col-md-3">
-										<select id="loanOfficerId" name="loanOfficerId" ng-model="formData1.loanOfficerId" class="form-control width170px ng-pristine ng-valid"
+										<select  chosen="loanOfficers" id="loanOfficerId" name="loanOfficerId" ng-model="formData1.loanOfficerId" class="form-control width170px ng-pristine ng-valid"
 												ng-options="loanofficer.id as loanofficer.displayName for loanofficer in loanOfficers" value="{{loanofficer.id}}"
 												ng-required="isOfficeIdRequired">
-											<option value=""> {{'label.menu.select' | translate}}</option>
+											<option value=""> {{'loanOfficerIdSelectAll' | translate}}</option>
 										</select>
 							</div>
 							<div class="col-md-1">
@@ -344,18 +344,18 @@
 				<tab heading="{{'label.heading.loandisbursal' | translate}}" has-permission='READ_LOAN'>
 				    <div class="head-affix">
 						<div class="row">
-							<div class="col-md-2">
-								<select  name="officeId" ng-model="formData.officeId" class="form-control width170px ng-pristine ng-valid"
+							<div class="col-md-3">
+								<select chosen="officesforDropDown"  name="officeId" ng-model="formData.officeId" class="form-control width170px ng-pristine ng-valid"
 										 ng-options="office.id as office.name for office in officesforDropDown" value="{{office.id}}"
 										 ng-change="changeOffice(formData.officeId)" ng-required="isOfficeIdRequired">
-									<option value=""> {{'label.menu.select' | translate}}</option>
+									<option value=""> {{'label.selectoffice' | translate}}</option>
 								</select>
 							</div>
 							<div class="col-md-3">
-								<select id="loanOfficerId" name="loanOfficerId" ng-model="formData.loanOfficerId" class="form-control width170px ng-pristine ng-valid"
+								<select  chosen="loanOfficers" id="loanOfficerId" name="loanOfficerId" ng-model="formData.loanOfficerId" class="form-control width170px ng-pristine ng-valid"
 										ng-options="loanofficer.id as loanofficer.displayName for loanofficer in loanOfficers" value="{{loanofficer.id}}"
 										ng-required="isOfficeIdRequired">
-									<option value=""> {{'label.menu.select' | translate}}</option>
+									<option value=""> {{'loanOfficerIdSelectAll' | translate}}</option>
 								</select>
 							</div>
 							<div class="col-md-1">

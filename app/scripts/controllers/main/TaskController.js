@@ -513,9 +513,10 @@
             }
 
             scope.bulkApproval = function (e) {
-                scope.formData.approvedOnDate = dateFilter(e, scope.df);
-                scope.formData.dateFormat = scope.df;
-                scope.formData.locale = scope.optlang.code;
+                scope.approveData={};
+                scope.approveData.approvedOnDate = dateFilter(e, scope.df);
+                scope.approveData.dateFormat = scope.df;
+                scope.approveData.locale = scope.optlang.code;
                 var selectedAccounts = 0;
                 var approvedAccounts = 0;
                 _.each(scope.loanTemplate, function (value, key) {

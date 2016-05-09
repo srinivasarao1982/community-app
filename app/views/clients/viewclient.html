@@ -545,7 +545,7 @@
 
 								<div class="row" >
 	       							<div ng-show="active==true">
-									<div ng-repeat="loan in clientAccounts.loanAccounts" ng-if="loan.status.closed==false">
+									<div ng-repeat="loan in clientAccounts.loanAccounts" ng-if="loan.status.id==300">
 		       								<div class="col-md-4 col-sm-4" >
 												<i ng-hide="loan.inArrears" tooltip-placement="right" tooltip="{{loan.status.value}}"
 												   class="icon-stop {{loan.status.code | StatusLookup}}"></i>
@@ -559,7 +559,7 @@
 									</div>
 									</div>
 									<div ng-show="active==false">
-									<div ng-repeat="loan in clientAccounts.loanAccounts" ng-if="loan.status.closed==true">
+									<div ng-repeat="loan in clientAccounts.loanAccounts" ng-if="loan.status.id!=300">
 										<div class="col-md-4 col-sm-4">
 											<i tooltip-placement="right" tooltip="{{loan.status.value}}"
 											   class="icon-stop {{loan.status.code | StatusLookup}}"></i>

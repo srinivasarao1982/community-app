@@ -12,6 +12,7 @@
             scope.transactionAmountField = false;
             scope.showPaymentDetails = false;
             scope.paymentTypes = [];
+            scope.showErrors = false;
 
             switch (scope.action) {
                 case "approve":
@@ -55,6 +56,9 @@
                 case "deposit":
                     resourceFactory.savingsTrxnsTemplateResource.get({savingsId: scope.accountId}, function (data) {
                         scope.paymentTypes = data.paymentTypeOptions;
+                        if (data.paymentTypeOptions.length > 0) {
+                            scope.formData.paymentTypeId = data.paymentTypeOptions[0].id;
+                        }
                     });
                     scope.title = 'label.heading.depositmoneytosavingaccount';
                     scope.labelName = 'label.input.transactiondate';
@@ -69,6 +73,9 @@
                 case "withdrawal":
                     resourceFactory.savingsTrxnsTemplateResource.get({savingsId: scope.accountId}, function (data) {
                         scope.paymentTypes = data.paymentTypeOptions;
+                        if (data.paymentTypeOptions.length > 0) {
+                            scope.formData.paymentTypeId = data.paymentTypeOptions[0].id;
+                        }
                     });
                     scope.title = 'label.heading.withdrawmoneyfromsavingaccount';
                     scope.labelName = 'label.input.transactiondate';
@@ -198,6 +205,7 @@
             };
 
             scope.submit = function () {
+                scope.showErrors=false;
                 var params = {command: scope.action};
                 if (scope.action != "undoapproval") {
                     this.formData.locale = scope.optlang.code;
@@ -205,10 +213,18 @@
                 }
                 if (scope.action == "deposit" || scope.action == "withdrawal" || scope.action == "modifytransaction") {
                     if (scope.action == "withdrawal") {
+                        if(angular.isUndefined(this.formData.receiptNumber)){
+                            scope.showErrors=true;
+                            scope.showPaymentDetails=true;
+                        }
                         if (this.formData.transactionDate) {
                             this.formData.transactionDate = dateFilter(this.formData.transactionDate, scope.df);
                         }
                     } else if (scope.action == "deposit") {
+                        if(angular.isUndefined(this.formData.receiptNumber)){
+                            scope.showErrors=true;
+                            scope.showPaymentDetails=true;
+                        }
                         if (this.formData.transactionDate) {
                             this.formData.transactionDate = dateFilter(this.formData.transactionDate, scope.df);
                         }
@@ -221,9 +237,10 @@
                         params.transactionId = routeParams.transactionId;
                     }
                     params.savingsId = scope.accountId;
+                    if(!scope.showErrors){
                     resourceFactory.savingsTrxnsResource.save(params, this.formData, function (data) {
                         location.path('/viewsavingaccount/' + data.savingsId);
-                    });
+                    });}
                 } else if (scope.action == "editsavingcharge") {
                     if (this.formData.feeOnMonthDayFullDate) {
                         this.formData.feeOnMonthDay = dateFilter(this.formData.feeOnMonthDayFullDate, scope.df);

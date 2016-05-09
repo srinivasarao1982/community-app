@@ -18,6 +18,9 @@
             scope.meetingDate = routeParams.meetingDate;
             var submittedStaffId = [];
             scope.details = false;
+            scope.showPaymentDetails = false;
+            scope.showerror=false;
+
 
             resourceFactory.centerResource.getAllMeetingFallCenters(params, function (data) {
                 if (data[0]) {
@@ -29,6 +32,17 @@
                 }
             });
 
+            //scope.showPaymentDetailsFn = function () {
+            scope.paymentDetail = {};
+                scope.showPaymentDetails = true;
+            scope.paymentDetail.paymentTypeId = "";
+            scope.paymentDetail.accountNumber = "";
+            scope.paymentDetail.checkNumber = "";
+            scope.paymentDetail.routingCode = "";
+            scope.paymentDetail.receiptNumber = "";
+            scope.paymentDetail.bankNumber = "";
+         // };
+            
             scope.detailsShow = function() {
                 if (scope.details) {
                     scope.details = false;
@@ -61,6 +75,9 @@
                 }
                 resourceFactory.centerResource.save({'centerId': scope.centerId, command: 'generateCollectionSheet'}, scope.formData, function (data) {
                     scope.collectionsheetdata = data;
+                    if (scope.collectionsheetdata.paymentTypeOptions.length > 0) {
+                        scope.paymentDetail.paymentTypeId = scope.collectionsheetdata.paymentTypeOptions[0].id;
+                    }
                     scope.clientsAttendanceArray(data.groups);
                     scope.total(data);
                 });
@@ -295,6 +312,16 @@
                 scope.formData.bulkDisbursementTransactions = [];
                 scope.formData.bulkRepaymentTransactions = scope.bulkRepaymentTransactions;
                 scope.formData.bulkSavingsDueTransactions = scope.bulkSavingsDueTransactions;
+                scope.formData.paymentTypeId = scope.paymentDetail.paymentTypeId;
+                scope.formData.accountNumber = scope.paymentDetail.accountNumber;
+                scope.formData.checkNumber = scope.paymentDetail.checkNumber;
+                scope.formData.routingCode =scope.paymentDetail.routingCode;
+                scope.formData.receiptNumber = scope.paymentDetail.receiptNumber;
+                if(scope.paymentDetail.receiptNumber=="") {
+                    scope.showerror=true;
+                }
+                scope.formData.bankNumber = scope.paymentDetail.bankNumber;
+
 
                 resourceFactory.centerResource.save({'centerId': scope.centerId, command: 'saveCollectionSheet'}, scope.formData, function (data) {
                     for (var i = 0; i < centerIdArray.length; i++) {
@@ -314,12 +341,19 @@
                     }
                     for (var i = 0; i < centerIdArray.length; i++) {
                         if (!scope.staffCenterData[i].submitted) {
+                            scope.showPaymentDetails = false;
+                            scope.paymentDetail.accountNumber = "";
+                            scope.paymentDetail.checkNumber = "";
+                            scope.paymentDetail.routingCode = "";
+                            scope.paymentDetail.receiptNumber = "";
+                            scope.paymentDetail.bankNumber = "";
                             scope.getAllGroupsByCenter(deepCopy(scope.staffCenterData[i].id), deepCopy(scope.staffCenterData[i].collectionMeetingCalendar.id));
                             break;
                         }
                     }
                     
                 });
+
             };
         }
     });

@@ -48,11 +48,9 @@
             }
             scope.haveFile = [];
             resourceFactory.clientResource.get({clientId: routeParams.id}, function (data) {
-                //console.log(JSON.stringify(data));
                 scope.client = data;
                 scope.clientData = data.clientDetailedData;
-                //console.log(JSON.stringify(scope.clientData));
-                scope.formData.coClientData = [{}];
+                                                                                                                                                                                   scope.formData.coClientData = [{}];
                 scope.coClientData = "";
                 if(scope.clientData.coapplicantDetailsData.coapplicantData.length > 0){
                     scope.formData.coClientData = scope.clientData.coapplicantDetailsData.coapplicantData;
