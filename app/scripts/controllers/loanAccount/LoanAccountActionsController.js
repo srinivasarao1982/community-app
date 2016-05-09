@@ -17,6 +17,7 @@
             scope.disbursementDetails = [];
             scope.showTrancheAmountTotal = 0;
             scope.processDate = false;
+            scope.showErrors=false;
 
             switch (scope.action) {
                 case "approve":
@@ -387,6 +388,7 @@
 
             scope.submit = function () {
                 scope.processDate = false;
+                scope.showErrors=false;
                 var params = {command: scope.action};
                 if(scope.action == "recoverguarantee"){
                     params.command = "recoverGuarantees";
@@ -421,10 +423,20 @@
                         params.command = 'modify';
                         params.transactionId = routeParams.transactionId;
                     }
+                    if(scope.action == "repayment"){
+                        if(angular.isUndefined(this.formData.receiptNumber))
+                        {
+                            scope.showErrors = true;
+                            scope.showPaymentDetails = true;
+
+                        }
+                    }
+                    if(!scope.showErrors){
                     params.loanId = scope.accountId;
                     resourceFactory.loanTrxnsResource.save(params, this.formData, function (data) {
                         location.path('/viewloanaccount/' + data.loanId);
                     });
+                }
                 } else if (scope.action == "deleteloancharge") {
                     resourceFactory.LoanAccountResource.delete({loanId: routeParams.id, resourceType: 'charges', chargeId: routeParams.chargeId}, this.formData, function (data) {
                         location.path('/viewloanaccount/' + data.loanId);
