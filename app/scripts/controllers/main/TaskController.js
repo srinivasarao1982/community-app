@@ -182,7 +182,9 @@
                 var newValue = !scope.loanDisbursalAllCheckBoxesMet();
                 if(!angular.isUndefined(scope.loans)) {
                     for (var i = scope.loans.length - 1; i >= 0; i--) {
-                        scope.loanDisbursalTemplate[scope.loans[i].id] = newValue; 
+                        if(scope.loans[i].status.id==200) {
+                            scope.loanDisbursalTemplate[scope.loans[i].id] = newValue;
+                        }
                     };
                 }
             }
@@ -513,10 +515,11 @@
             }
 
             scope.bulkApproval = function (e) {
-                scope.approveData={};
-                scope.approveData.approvedOnDate = dateFilter(e, scope.df);
-                scope.approveData.dateFormat = scope.df;
-                scope.approveData.locale = scope.optlang.code;
+
+                var approveData={};
+                approveData.approvedOnDate = dateFilter(e, scope.df);
+                approveData.dateFormat = scope.df;
+                approveData.locale = scope.optlang.code;
                 var selectedAccounts = 0;
                 var approvedAccounts = 0;
                 _.each(scope.loanTemplate, function (value, key) {
@@ -532,7 +535,7 @@
                 _.each(scope.loanTemplate, function (value, key) { 
                     if (value == true) {
                         scope.batchRequests.push({requestId: reqId++, relativeUrl: "loans/"+key+"?command=approve", 
-                        method: "POST", body: JSON.stringify(scope.formData)});                        
+                        method: "POST", body: JSON.stringify(approveData)});
                     }
                 });
 

@@ -424,7 +424,7 @@
                             }
                         } else {
                             var yob = barCodedDataObject.getAttribute("yob");
-                            scope.formData.dateOfBirth = new Date(yob, 6, 1);
+                            scope.formData.dateOfBirth = new Date(yob, 5, 1);
                         }
 
 

@@ -260,18 +260,22 @@
                     }
                 }
 
+
+
+
                 _.each(scope.groupArray, function (group) {
                         _.each(group.clients, function (client) {
                             _.each(client.savings, function (saving) {
                                 var dueAmount = saving.dueAmount;
-                                if (isNaN(dueAmount)) {
-                                    dueAmount = parseInt(0);
+                                if(!angular.isUndefined(dueAmount)) {
+                                    if (dueAmount > 0) {
+                                        var savingsDepositTransaction = {
+                                            savingsId: saving.savingsId,
+                                            transactionAmount: dueAmount
+                                        };
+                                        scope.bulkSavingsDueTransactions.push(savingsDepositTransaction);
+                                    }
                                 }
-                                var savingsDepositTransaction = {
-                                    savingsId:saving.savingsId,
-                                    transactionAmount:dueAmount
-                                };
-                                scope.bulkSavingsDueTransactions.push(savingsDepositTransaction);
                             });
                         });
                     });
@@ -296,7 +300,7 @@
             };
 
             scope.submit = function () {
-
+                scope.showerror=false;
                scope.total(scope.collectionsheetdata);
 
                 scope.formData.calendarId = scope.calendarId;
@@ -321,19 +325,23 @@
                     scope.showerror=true;
                 }
                 scope.formData.bankNumber = scope.paymentDetail.bankNumber;
+                if( scope.showerror==false) {
+                    resourceFactory.centerResource.save({
+                        'centerId': scope.centerId,
+                        command: 'saveCollectionSheet'
+                    }, scope.formData, function (data) {
+                        for (var i = 0; i < centerIdArray.length; i++) {
+                            if (scope.centerId === centerIdArray[i].id && centerIdArray.length >= 1) {
+                                scope.staffCenterData[i].submitted = true;
+                                submittedStaffId.push({id: scope.staffCenterData[i].id});
+                            }
 
-
-                resourceFactory.centerResource.save({'centerId': scope.centerId, command: 'saveCollectionSheet'}, scope.formData, function (data) {
-                    for (var i = 0; i < centerIdArray.length; i++) {
-                        if (scope.centerId === centerIdArray[i].id && centerIdArray.length >= 1) {
-                            scope.staffCenterData[i].submitted = true;
-                            submittedStaffId.push({id: scope.staffCenterData[i].id});
                         }
-                    }
 
-                    if (centerIdArray.length === submittedStaffId.length) {
-                        location.path('/entercollectionsheet');
-                    }
+                        if (centerIdArray.length === submittedStaffId.length) {
+                            location.path('/entercollectionsheet');
+                        }
+
 
                     if (centerIdArray.length-1 === submittedStaffId.length) {
                         scope.submitNextShow = false;
@@ -353,6 +361,10 @@
                     }
                     
                 });
+
+
+                }
+
 
             };
         }
