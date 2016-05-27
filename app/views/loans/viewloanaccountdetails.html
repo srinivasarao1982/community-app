@@ -233,6 +233,10 @@
                                 <td>{{'label.heading.matureson' | translate}}</td>
                                 <td><span class="padded-td">{{loandetails.timeline.expectedMaturityDate | DateFormat}}</span></td>
                             </tr>
+                            <tr data-ng-show="loandetails.firstInstallmentEmiAmount">
+                                <td>{{'label.input.firstInstallmentEmiAmount' | translate}}</td>
+                                <td><span class="padded-td">{{loandetails.firstInstallmentEmiAmount| number}}</span></td>
+                            </tr>
                             <tr data-ng-show="loandetails.canDefineInstallmentAmount">
                                 <td>{{'label.input.fixedemiamount' | translate}}</td>
                                 <td><span class="padded-td">{{loandetails.fixedEmiAmount| number}}</span></td>
