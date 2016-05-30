@@ -569,8 +569,6 @@
 
             scope.submitAndAccept = function () {
                 scope.addressaboveSetting();
-                scope.result = false;//scope.showNotification();
-                if (scope.result != true) {
                     this.formData.locale = scope.optlang.code;
                     this.formData.dateFormat = scope.df;
                     if (scope.opensavingsproduct == 'false') {
@@ -672,10 +670,7 @@
                     resourceFactory.clientResource.update({'clientId': routeParams.id}, this.formData, function (data) {
                         location.path('/viewclient/' + routeParams.id);
                     });
-                }
-                else {
-                    scope.cashflowmishmatch = true;
-                }
+
 
             }
 

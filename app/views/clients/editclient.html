@@ -804,7 +804,7 @@
                             <div class="col-md-1">
                                 <input placeholder="Age" type="text" id="spAge" name="spAge" ng-model="family.age"
                                        class="form-control" maxlength="3" ng-pattern="/^\d+$/"
-                                       ng-required="isFamilyAgeRequired" ng-readonly="family.dateOfBirth" />
+                                       ng-required="isFamilyAgeRequired" ng-click="familyAutoCalcAge()" />
                                 <span class="error" ng-show="submitted && formfamilydetailsspAge.spAge.$error.required">{{'label.error.required'|translate}}</span>
                                 <span class="error" ng-show="submitted && formfamilydetailsspAge.spAge.$error.pattern">Only Numbers</span>
                             </div>
@@ -1593,7 +1593,7 @@
             <hr/>
             <div class="col-md-offset-10">
                 <a id="cancel" ng-href="{{cancel}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
-                <button id="save" type="submit" class="btn btn-primary" ng-hide="blockUI" ng-click="submitAndAccept()"
+                <button id="save" type="button" class="btn btn-primary" ng-hide="blockUI" ng-click="submitAndAccept()"
                         has-permission='CREATE_CLIENT'>{{'label.button.save' | translate}}
                 </button>
                 <button class="btn btn-info" ng-show="blockUI"><strong>{{'label.button.processing' |
