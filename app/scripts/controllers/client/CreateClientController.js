@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        CreateClientController: function (scope, resourceFactory, location, http, dateFilter, API_VERSION, $upload, $rootScope, routeParams, $parse, $q, $modal, $scope) {
+        CreateClientController: function (scope, resourceFactory, location, http, dateFilter, API_VERSION, $upload, $rootScope, routeParams, $parse, $q, $modal, $scope,$timeout) {
 
             /*********************************/
             scope.isOfficeIdRequired = true; // Capture Office
@@ -776,9 +776,7 @@
 
             scope.submitAndAccept = function () {
                 scope.addressaboveSetting();
-                scope.result = scope.showNotification();
-                if (scope.result != true) {
-                    var reqDate = dateFilter(scope.first.date, scope.df);
+                   var reqDate = dateFilter(scope.first.date, scope.df);
 
                     this.formData.locale = scope.optlang.code;
                     this.formData.active = this.formData.active || false;
@@ -878,14 +876,11 @@
                     });
 
 
-                }
-                else {
-                    scope.cashflowmishmatch = true;
-                }
+
             }
         }
     });
-    mifosX.ng.application.controller('CreateClientController', ['$scope', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', '$upload', '$rootScope', '$routeParams', '$parse', '$q', '$modal', mifosX.controllers.CreateClientController]).run(function ($log) {
+    mifosX.ng.application.controller('CreateClientController', ['$scope', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', '$upload', '$rootScope', '$routeParams', '$parse', '$q', '$modal','$scope','$timeout', mifosX.controllers.CreateClientController]).run(function ($log) {
         $log.info("CreateClientController initialized");
     });
 }(mifosX.controllers || {}));

@@ -97,11 +97,13 @@
                     }else if(data.clientDetailedData.addressExtData[i].addressTypeLable == 'KYC address'){
                         scope.kycAddress = data.clientDetailedData.addressExtData[i];
                     }else if(data.clientDetailedData.addressExtData[i].addressTypeLable == 'Spouse Address'){
-                        scope.correspondenceAddress1[i] = data.clientDetailedData.addressExtData[i];
+                        scope.correspondenceAddress = data.clientDetailedData.addressExtData[i];
+                        /*alert(JSON.stringify(scope.correspondenceAddress1[i]));
                         if(scope.correspondenceAddress1.length==3)
                         {
-                            scope.correspondenceAddress=scope.correspondenceAddress1[2]
-                        }
+                            scope.correspondenceAddress=scope.correspondenceAddress1[i];
+                            alert("3");
+                        }*/
                     }
                 }
 
