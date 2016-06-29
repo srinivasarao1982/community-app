@@ -432,6 +432,11 @@
                     scope.formData.naddress[1] = jQuery.extend(true, {}, scope.formData.naddress[0]);
                     if (!isNaN(idObj2)) {
                         scope.formData.naddress[1].id = idObj2;
+                        for (var j = 0; j < scope.addressTypes.length; j++) {
+                            if (scope.addressTypes[j].name == 'KYC address') {
+                                this.formData.naddress[1].addressType = scope.addressTypes[j].id;
+                            }
+                        }
                     }
                 }
             };
