@@ -86,7 +86,8 @@
                     minimumDaysBetweenDisbursalAndFirstRepayment: scope.product.minimumDaysBetweenDisbursalAndFirstRepayment,
                     principalThresholdForLastInstallment: scope.product.principalThresholdForLastInstallment,
                     installmentAmountInMultiplesOf: scope.product.installmentAmountInMultiplesOf,
-                    canDefineInstallmentAmount : scope.product.canDefineInstallmentAmount
+                    canDefineInstallmentAmount : scope.product.canDefineInstallmentAmount,
+                    adjustFirstEMIAmount : scope.product.adjustFirstEMIAmount
                 };
 
                 if (scope.product.isInterestRecalculationEnabled) {
@@ -421,6 +422,10 @@
                 this.formData.locale = scope.optlang.code;
                 this.formData.startDate = reqFirstDate;
                 this.formData.closeDate = reqSecondDate;
+
+                if(this.formData.adjustFirstEMIAmount){
+                    this.formData.firstInstallmentAmountInMultiplesOf = 1;
+                }
 
                 //Interest recalculation data
                 if (this.formData.isInterestRecalculationEnabled) {

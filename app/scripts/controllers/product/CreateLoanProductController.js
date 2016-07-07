@@ -282,6 +282,9 @@
                 this.formData.dateFormat = scope.df;
                 this.formData.startDate = reqFirstDate;
                 this.formData.closeDate = reqSecondDate;
+                if(this.formData.adjustFirstEMIAmount){
+                    this.formData.firstInstallmentAmountInMultiplesOf = 1;
+                }
 
                 //Interest recalculation data
                 if (this.formData.isInterestRecalculationEnabled) {
