@@ -12,6 +12,8 @@
                 scope.isClosedCenter = scope.center.status.value == 'Closed';
                 scope.staffData.staffId = data.staffId;
                 scope.meeting = data.collectionMeetingCalendar;
+                var today  =  new Date();
+                scope.meetingtime =  new Date(data.collectionMeetingCalendar.meetingTime.iLocalMillis + (today.getTimezoneOffset() * 60*1000) );
             });
             scope.routeTo = function (id) {
                 location.path('/viewsavingaccount/' + id);
