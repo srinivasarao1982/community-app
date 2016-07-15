@@ -1296,6 +1296,7 @@
     "loanPreClosureInterestCalculationStrategy.tillPreClosureDate":"Calculate till pre closure date",
     "loanPreClosureInterestCalculationStrategy.tillRestFrequencyDate":"Calculate till rest frequency date",
     "label.input.isConfigLoanAttributes" : "Allow overriding select terms and settings in loan accounts",
+    "label.input.adjustfirstinstallmentamount":"Adjust first Installment for rounding",
 
     "#Buttons": "..",
     "label.button.addloancharge": "Add Loan Charge",

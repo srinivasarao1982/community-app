@@ -272,11 +272,6 @@
                 </td>
             </tr>
             <tr>
-                <td colspan=2>
-                    <label>{{ 'label.input.firstInstallmentEmiAmount' | translate }}:</label>&nbsp;
-                    <input id="firstInstallmentEmiAmount" type="text" ng-model="formData.firstInstallmentEmiAmount" class="form-control" number-format/>&nbsp;
-
-                </td>
                 <td colspan=2 data-ng-show="loanaccountinfo.canDefineInstallmentAmount">
                     <label>{{ 'label.input.fixedemiamount' | translate }}:</label>&nbsp;
                     <input id="fixedEmiAmount" type="text" ng-model="formData.fixedEmiAmount" class="form-control" number-format/>&nbsp;
