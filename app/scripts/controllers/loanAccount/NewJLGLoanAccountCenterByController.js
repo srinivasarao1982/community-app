@@ -57,7 +57,7 @@
                     for(var i in data.product.charges){
                         scope.chargeName=scope.chargeName+data.product.charges[i].name;
                     }
-                    scope.previewRepayments(null,data.principal,scope.clientId,data.product.charges,null,null);
+                  //  scope.previewRepayments(null,data.principal,scope.clientId,data.product.charges,null,null);
                     for( var i in scope.groups ) {
                         scope.clients[i] = scope.groups[i].activeClientMembers.map(function (client) {
                             client.principal = data.product.principal;
