@@ -13,7 +13,6 @@
             var centerIdArray = [];
             scope.submitNextShow = true;
             scope.submitShow = false;
-            scope.forcedSubmit = false;
             scope.completedCenter = false;
             scope.officeName = routeParams.officeName;
             scope.meetingDate = routeParams.meetingDate;
@@ -55,11 +54,9 @@
             scope.getAllGroupsByCenter = function (centerId, calendarId) {
                 scope.submitNextShow = true;
                 scope.submitShow = false;
-                scope.forcedSubmit = false;
                 if (centerIdArray.length-1 === submittedStaffId.length || centerIdArray.length === 1) {
                     scope.submitNextShow = false;
                     scope.submitShow = true;
-                    scope.forcedSubmit=false;
                 }
                 scope.selectedTab = centerId;
                 scope.centerId = centerId;
@@ -73,7 +70,6 @@
                     if (centerId == submittedStaffId[i].id) {
                         scope.submitNextShow = false;
                         scope.submitShow = false;
-                        scope.forcedSubmit = false;
                         break;
                     }
                 }
@@ -319,11 +315,6 @@
                 scope.formData.clientsAttendance = scope.clientsAttendance;
                 scope.formData.bulkDisbursementTransactions = [];
                 scope.formData.bulkRepaymentTransactions = scope.bulkRepaymentTransactions;
-	            scope.formData.forcedSubmitOfCollectionSheet=false;
-                if (scope.forcedSubmit == true) {
-                    scope.formData.forcedSubmitOfCollectionSheet = true;
-                }
-                scope.forcedSubmit = false;
                 scope.formData.bulkSavingsDueTransactions = scope.bulkSavingsDueTransactions;
                 scope.formData.paymentTypeId = scope.paymentDetail.paymentTypeId;
                 scope.formData.accountNumber = scope.paymentDetail.accountNumber;
@@ -355,7 +346,6 @@
                     if (centerIdArray.length-1 === submittedStaffId.length) {
                         scope.submitNextShow = false;
                         scope.submitShow = true;
-                        scope.forcedSubmit = false;
                     }
                     for (var i = 0; i < centerIdArray.length; i++) {
                         if (!scope.staffCenterData[i].submitted) {
@@ -369,11 +359,7 @@
                             break;
                         }
                     }
-                }, function(data){
-                    scope.forcedSubmit = true;
-                    scope.submitShow = false;
-                    scope.submitNextShow = false;
-                    scope.formData.forcedSubmitOfCollectionSheet = true;
+                    
                 });
 
 
