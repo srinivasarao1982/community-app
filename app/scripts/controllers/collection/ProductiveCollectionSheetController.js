@@ -222,20 +222,24 @@
                         var ll = scope.loanArray.length;
                         for (var k = 0; k < ll; k++) {
                             scope.loan = scope.loanArray[k];
-                            if (scope.loan.totalDue > 0) {
-                                scope.bulkRepaymentTransactions.push({
-                                    loanId: scope.loan.loanId,
-                                    transactionAmount: scope.loan.totalDue
-                                });
+                            if (scope.loan.totalDue > 0 ) {
+                                if(scope.loan.accountStatusId >200) {
+                                    scope.bulkRepaymentTransactions.push({
+                                        loanId: scope.loan.loanId,
+                                        transactionAmount: scope.loan.totalDue
+                                    });
+                                }
                             }
 
                             for (var l = 0; l < loanProductArrayDup.length; l++) {
                                 if (loanProductArrayDup[l].productId == scope.loan.productId) {
-                                    if (scope.loan.chargesDue) {
-                                        loanProductArrayDup[l].transactionAmount = Number(loanProductArrayDup[l].transactionAmount + Number(scope.loan.totalDue) + Number(scope.loan.chargesDue));
-                                        loanProductArrayDup[l].transactionAmount = Math.ceil(loanProductArrayDup[l].transactionAmount * 100) / 100;
-                                    } else {
-                                        loanProductArrayDup[l].transactionAmount = Number(loanProductArrayDup[l].transactionAmount + Number(scope.loan.totalDue));
+                                    if (scope.loan.accountStatusId > 200) {
+                                        if (scope.loan.chargesDue) {
+                                            loanProductArrayDup[l].transactionAmount = Number(loanProductArrayDup[l].transactionAmount + Number(scope.loan.totalDue) + Number(scope.loan.chargesDue));
+                                            loanProductArrayDup[l].transactionAmount = Math.ceil(loanProductArrayDup[l].transactionAmount * 100) / 100;
+                                        } else {
+                                            loanProductArrayDup[l].transactionAmount = Number(loanProductArrayDup[l].transactionAmount + Number(scope.loan.totalDue));
+                                        }
                                     }
                                 }
                             }
