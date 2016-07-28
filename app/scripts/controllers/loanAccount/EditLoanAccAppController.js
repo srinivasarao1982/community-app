@@ -298,6 +298,9 @@
                     var restFrequencyDate = dateFilter(scope.date.recalculationCompoundingFrequencyDate, scope.df);
                     scope.formData.recalculationCompoundingFrequencyDate = restFrequencyDate;
                 }
+                if(this.formData.fixedEmiAmount == undefined){
+                    this.formData.fixedEmiAmount = null;
+                }
                 resourceFactory.loanResource.put({loanId: routeParams.id}, this.formData, function (data) {
                     location.path('/viewloanaccount/' + data.loanId);
                 });
