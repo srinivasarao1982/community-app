@@ -129,7 +129,6 @@
                 scope.formData.graceOnInterestCharged = scope.loanaccountinfo.graceOnInterestCharged;
                 scope.formData.syncDisbursementWithMeeting = scope.loanaccountinfo.syncDisbursementWithMeeting;
                 scope.formData.fixedEmiAmount = scope.loanaccountinfo.fixedEmiAmount;
-                scope.formData.firstInstallmentEmiAmount = scope.loanaccountinfo.firstInstallmentEmiAmount;
                 scope.formData.maxOutstandingLoanBalance = scope.loanaccountinfo.maxOutstandingLoanBalance;
                 scope.formData.createStandingInstructionAtDisbursement = scope.loanaccountinfo.createStandingInstructionAtDisbursement;
 
