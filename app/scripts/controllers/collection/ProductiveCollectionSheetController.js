@@ -13,6 +13,7 @@
             var centerIdArray = [];
             scope.submitNextShow = true;
             scope.submitShow = false;
+            scope.forcedSubmit = false;
             scope.completedCenter = false;
             scope.officeName = routeParams.officeName;
             scope.meetingDate = routeParams.meetingDate;
@@ -54,9 +55,11 @@
             scope.getAllGroupsByCenter = function (centerId, calendarId) {
                 scope.submitNextShow = true;
                 scope.submitShow = false;
+                scope.forcedSubmit = false;
                 if (centerIdArray.length-1 === submittedStaffId.length || centerIdArray.length === 1) {
                     scope.submitNextShow = false;
                     scope.submitShow = true;
+                    scope.forcedSubmit = false;
                 }
                 scope.selectedTab = centerId;
                 scope.centerId = centerId;
@@ -70,6 +73,7 @@
                     if (centerId == submittedStaffId[i].id) {
                         scope.submitNextShow = false;
                         scope.submitShow = false;
+                        scope.forcedSubmit = false;
                         break;
                     }
                 }
@@ -329,6 +333,11 @@
                     scope.showerror=true;
                 }
                 scope.formData.bankNumber = scope.paymentDetail.bankNumber;
+		        scope.formData.forcedSubmitOfCollectionSheet=false;
+                if (scope.forcedSubmit == true) {
+                    scope.formData.forcedSubmitOfCollectionSheet = true;
+                }
+                scope.forcedSubmit = false;
                 if( scope.showerror==false) {
                     resourceFactory.centerResource.save({
                         'centerId': scope.centerId,
@@ -364,7 +373,14 @@
                         }
                     }
                     
-                });
+                }, function(data) {
+                        if(data.data.errors[0].userMessageGlobalisationCode == "error.msg.Collection.has.already.been.added") {
+                            scope.forcedSubmit = true;
+                            scope.submitShow = false;
+                            scope.submitNextShow = false;
+                            scope.formData.forcedSubmitOfCollectionSheet = true;
+                        }
+                    });
 
 
                 }
