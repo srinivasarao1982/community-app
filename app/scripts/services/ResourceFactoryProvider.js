@@ -151,8 +151,8 @@
                         update: {method: 'PUT', params: {}},
                         getAllInterestRateCharts: {method: 'GET', params: {productId: '@productId'}, isArray: true}
                     }),
-                    batchResource: defineResource(apiVer + "/batches", {}, { 
-                        post: {method: 'POST', params: {}, isArray: true}                       
+                    batchResource: defineResource(apiVer + "/batches", {}, {
+                        post: {method: 'POST', params: {}, isArray: true}
                     }),
                     loanResource: defineResource(apiVer + "/loans/:loanId/:resourceType/:resourceId", {resourceType: '@resourceType', loanId: '@loanId', resourceId: '@resourceId'}, {
                         getAllLoans: {method: 'GET', params: {}},
@@ -368,6 +368,9 @@
                     }),
                     centerAccountResource: defineResource(apiVer + "/centers/:centerId/accounts", {centerId: '@centerId'}, {
                         getAll: {method: 'GET', params: {}, isArray: true}
+                    }),
+                    centerClientResource:defineResource(apiVer + "/centers/:centerId/clientdetails",{centerId: '@centerId'},{
+                        get:{method:'GET',params:{}}
                     }),
                     centerResource: defineResource(apiVer + "/centers/:centerId/:anotherresource", {centerId: '@centerId', anotherresource: '@anotherresource'}, {
                         get: {method: 'GET', params: {}},

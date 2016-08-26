@@ -9,6 +9,9 @@
             scope.hidePentahoReport = true;
             resourceFactory.centerResource.get({centerId: routeParams.id, associations: 'groupMembers,collectionMeetingCalendar'}, function (data) {
                 scope.center = data;
+                $rootScope.officeName= data.officeName;
+                $rootScope.officeId = data.officeId;
+                $rootScope.centerName = data.name;
                 scope.isClosedCenter = scope.center.status.value == 'Closed';
                 scope.staffData.staffId = data.staffId;
                 scope.meeting = data.collectionMeetingCalendar;

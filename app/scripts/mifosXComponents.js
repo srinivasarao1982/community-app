@@ -236,7 +236,9 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'organization/cashmgmt/EditCashierController',
             'organization/cashmgmt/CashierTransactionsController',
             'organization/cashmgmt/CashierFundsAllocationSettlementController',
-            'accounting/DefineOpeningBalancesController'
+            'accounting/DefineOpeningBalancesController',
+            'savings/JlgSavingsAccountController',
+            'savings/JlgSavingsAccountGroupController'
         ],
         filters: [
             'StatusLookup',
