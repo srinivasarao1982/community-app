@@ -193,7 +193,8 @@
     "label.button.deselectAll": "Deselect All",
     "label.button.clientpayments": "Client Payments",
     "label.button.submitandprint": "Submit And Print",
-
+    "label.button.bulk.undo.transactions": "Bulk undo transactions",
+    "label.button.preview": "Preview",
 
     "#Misc Labels": "..",
     "label.uniquelyidentifiedwithid": "Uniquely identified with Id",
@@ -2127,6 +2128,7 @@
     "label.anchor.organization": "Organization",
     "label.anchor.bulkloanreassignment": "Bulk Loan Reassignment",
     "label.anchor.bulkjlgloanapplication": "Bulk JLG Loan Application",
+    "label.anchor.bulkundotransactions": "Bulk undo transactions",
     "label.anchor.manageemployees": "Manage Employees",
     "label.anchor.createemployee": "Create Employee",
     "label.anchor.createholiday": "Create Holiday",
@@ -2538,6 +2540,7 @@
     "label.heading.editproductmix": "Edit Product Mix",
     "label.heading.productmix": "Product Mix",
     "label.heading.productname": "Product Name",
+    "label.heading.productnamewithloanId": "Product Name(LoanId)",
     "label.heading.allowedproducts": "Allowed Products",
     "label.heading.restrictedproducts": "Restricted Products",
     "label.heading.ispenalty": "Is Penalty?",

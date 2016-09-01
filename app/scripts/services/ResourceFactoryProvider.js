@@ -369,8 +369,11 @@
                     centerAccountResource: defineResource(apiVer + "/centers/:centerId/accounts", {centerId: '@centerId'}, {
                         getAll: {method: 'GET', params: {}, isArray: true}
                     }),
-                    centerClientResource:defineResource(apiVer + "/centers/:centerId/clientdetails",{centerId: '@centerId'},{
-                        get:{method:'GET',params:{}}
+                    centerClientResource:defineResource(apiVer + "/centers/:centerId/clientdetails",{centerId: '@centerId'}, {
+                            get: {method: 'GET', params: {}}
+                    }),
+                    centerBulkTransactionResource: defineResource(apiVer + "/centers/:centerId/transactions", {centerId: '@centerId', transactionDate: '@transactionDate'}, {
+                        get: {method: 'GET', params: {}, isArray: true}
                     }),
                     centerResource: defineResource(apiVer + "/centers/:centerId/:anotherresource", {centerId: '@centerId', anotherresource: '@anotherresource'}, {
                         get: {method: 'GET', params: {}},

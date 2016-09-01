@@ -202,6 +202,7 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'centers/CloseCenterController',
             'centers/CenterAttendanceController',
             'centers/ManageGroupMembersController',
+            'centers/BulkUndoTransactionsController',
             'product/CreateChargeController',
             'product/EditChargeController',
             'configurations/GlobalConfigurationController',
