@@ -595,6 +595,12 @@
             .when('/jlgloanAccountcenterby/:centerId', {
                 templateUrl: 'views/loans/jlgloanAccountcenterby.html'
             })
+            .when('/jlgsavingAccountcenterby/:centerId', {
+                templateUrl: 'views/savings/jlgsavingAccountcenterby.html'
+            })
+            .when('/jlgsavingsAccountgroupby/:groupId', {
+                templateUrl: 'views/savings/jlgsavingsAccountgroupby.html'
+            })
             .when('/createcenter', {
                 templateUrl: 'views/centers/createcenter.html'
             })
