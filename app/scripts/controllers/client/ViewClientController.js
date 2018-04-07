@@ -15,6 +15,8 @@
             scope.active=true;
             scope.correspondenceAddress1=[];
             scope.savingactive=true;
+            scope.clientbankdetails={};
+            scope.showaddbutton=true;
             scope.routeToLoan = function (id) {
                 location.path('/viewloanaccount/' + id);
             };
@@ -451,9 +453,29 @@
                     }
                 });
             };
-
+            scope.delebankDetails1=function(bankId) {
+                for (var p in  scope.clientdocuments) {
+                if (scope.clientdocuments[p].name === 'Scan copy of passbook') {
+                    scope.documentid = scope.clientdocuments[p].id;
+                }
+            }
+                resourceFactory.clientbankDetailsResourceforsave.deletebankdetails({bankdetailsId: bankId},function(data){
+                }
+            );
+                resourceFactory.clientDocumentsResource.delete({clientId: routeParams.id, documentId: scope.documentid}, '', function (data) {
+                });
+               scope.showaddbutton=true;
+                //route.reload();
+               // route.reload();
+            };
             resourceFactory.DataTablesResource.getAllDataTables({apptable: 'm_client'}, function (data) {
                 scope.clientdatatables = data;
+            });
+            resourceFactory.clientbankDetailsResource.get({clientId:routeParams.id},function(data){
+                scope.clientbankdetails=data;
+                if(data.id>0){
+                    scope.showaddbutton=false;
+                }
             });
 
             scope.dataTableChange = function (clientdatatable) {
@@ -504,7 +526,6 @@
             scope.getClientDocuments = function () {
                 resourceFactory.clientDocumentsResource.getAllClientDocuments({clientId: routeParams.id}, function (data) {
                     for (var l in data) {
-
                         var loandocs = {};
                         loandocs = API_VERSION + '/' + data[l].parentEntityType + '/' + data[l].parentEntityId + '/documents/' + data[l].id + '/attachment?tenantIdentifier=' + $rootScope.tenantIdentifier;
                         data[l].docUrl = loandocs;

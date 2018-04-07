@@ -1,0 +1,128 @@
+<div class="row" ng-controller="EditBankDetailsController">
+    <div>
+        <ul class="breadcrumb">
+            <li><a href="#/clients">{{'label.anchor.clients' | translate}}</a></li>
+            <li><a href="#/viewclient/{{clientId}}">{{'label.anchor.viewclient' | translate}}</a></li>
+            <li class="active">{{'label.anchor.editclientbankdetails' | translate}}</li>
+        </ul>
+    </div>
+    <form name="clientbankdetailsform" novalidate="" class="form-horizontal well" rc-submit="submit()">
+        <api-validate></api-validate>
+        <div ng-show="benificarynamecheck">
+            <p style="color:red"> Beneificiaryname  not matching-{{formData.beneficiaryname}}  {{formData.beneficiaryname1}}</p>
+        </div>
+        <div ng-show="accountnocheckcheck">
+            <p style="color:red">Account number not matching -{{formData.accountnumber}}    {{formData.accountnumber1}}</p>
+        </div>
+        <div ng-show="ifscoceinvalid">
+            <p style="color:red">Invalid Ifsc Code-{{formData.ifsccode}}</p>
+        </div>
+        <fieldset>
+            <legend>{{'label.heading.editclientbankdetails' | translate}}</legend>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.beneficiaryname' | translate}}<span
+                        class="required">*</span></label>
+                <div class="col-sm-3">
+                    <input id="beneficiarynameId" type="password" name="beneficiaryname" ng-model="formData.beneficiaryname"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.beneficiaryname1' | translate}}<span
+                        class="required">*</span></label>
+                <div class="col-sm-3">
+                    <input id="beneficiarynameId1" type="password" name="beneficiaryname" ng-model="formData.beneficiaryname1"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.accountno' | translate}}<span
+                        class="required">*</span></label>
+                <div class="col-sm-3">
+                    <input id="accountnoId" type="password" name="accountno" ng-model="formData.accountnumber"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.accountno1' | translate}}<span
+                        class="required">*</span></label>
+                <div class="col-sm-3">
+                    <input id="accountnoId1" type="password" name="accountno" ng-model="formData.accountnumber1"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.ifsccode' | translate}}<span
+                        class="required">*</span></label>
+                <div class="col-sm-3">
+                    <input id="ifsccode" type="text" name="ifsccode" ng-model="formData.ifsccode"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+                <button id="bankdetails" type="button"  class="btn btn-primary" ng-click="getbankdetails()">{{'label.button.bandetails' | translate}}</button>
+
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.branchname' | translate}}<span
+                        class="required">*</span></label>
+                <div class="col-sm-3">
+                    <input id="branchname" type="text" name="branchname" ng-model="formData.branchname"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.branchaddress' | translate}}<span
+                        class="required">*</span></label>
+                <div class="col-sm-3">
+                    <input id="branchaddress" type="text" name="branchaddress" ng-model="formData.branchaddress"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.lasttransactiondate' | translate}}<span
+                        class="required">*</span></label>
+                <div class="col-sm-3">
+                    <input id="lasttransactiondate" type="text" name="lasttransactiondate"  datepicker-pop="dd MMMM yyyy" ng-model="date1"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.lasttransactionamount' | translate}}<span
+                        class="required">*</span></label>
+                <div class="col-sm-3">
+                    <input id="lastransactionamount" type="text" name="lasttransactionamount" ng-model="formData.lasttransactionamount"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+            </div>
+            <div class="form-group" ng-show="!udocumentUpdated">
+             <table>
+            <tr ng-repeat="clientdocument in clientdocuments" ng-if="clientdocument.name=='Scan copy of passbook'">
+                <td>{{clientdocument.name}}</td>
+                <td>{{clientdocument.fileName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a ng-click="deleteDocument(clientdocument.id,$index)"><i class="icon-remove"></i></a>
+                </td>&nbsp;
+            </tr>
+             </table>
+            </div>
+            <div class="form-group" ng-show="udocumentUpdated">
+                <label class="control-label col-sm-2" for="file">{{'label.input.selectpassbook' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input type="file" id="file" ng-file-select="onFileSelect($files)">
+                </div>
+            </div>
+
+            <div class="col-md-offset-3">
+                <a id="cancel" href="#/viewclient/{{clientId}}">
+                    <button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+                </a>
+                <button id="save" type="button" ng-click="submit()",has-permission='CREATE_BANKDETAILS' class="btn btn-primary">{{'label.button.save' | translate}}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

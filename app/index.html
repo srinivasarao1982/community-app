@@ -12,104 +12,249 @@
 
 <div id="loaderWrapper" data-ng-hide="domReady" style="position: absolute; height: 100%; width: 100%; top: 0;">
     <div id="loader" style="margin: 175px auto">
-        <img src="./images/MifosX_logo.png" alt="MifosX" style="min-width: 50px;   width: 6%; margin: 0 auto" class="img-responsive">
-        <img src="./images/loader.gif" style="margin: 10px auto" class="img-responsive">
+        <img src="./images/MifosX_logo.jpg" alt="MifosX" style="min-width: 50px;   width: 6%; margin: 0 auto" class="img-responsive">
+        <img src="./images/nirantara.gif" style="margin: 10px auto" class="img-responsive">
     </div>
 </div>
 <div data-ng-hide="!domReady" data-ng-cloak>
     <!-- Login Form  -->
-    <div class="container well" data-ng-hide="currentSession.user != null" >
+    <div class="container" style="margin-top:10vh;" data-ng-hide="currentSession.user != null" data-ng-controller="LoginFormController">
 
-        <div class="row form-search ng-pristine ng-valid paddedbottom" data-ng-form="loginForm" data-ng-controller="LoginFormController">
-            <div class="pull-right ">
-                {{ 'label.input.changelanguage' | translate }}
-                <div class="btn-group" dropdown>
-			      <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
-			        {{optlang.name}} <span class="caret"></span>
-			      </button>
-			      <ul class="dropdown-menu lang-dropdown">
-			         <li ng-repeat="lang in langs">
-			             <a href="#" ng-click="changeLang(lang, $event)">{{lang.name}}</a>
-			         </li>
-			      </ul>
-			    </div>
-            </div>
-            <br/><br/>
-            <div ng-hide="resetPassword">
-    	    <form class="form-inline pull-right" role="form">
-    		<label class="error" data-ng-show="authenticationFailed"><strong>{{ authenticationErrorMessage | translate }}</strong></label>
-    		<div class="form-group">
-    		    <input ng-autofocus="true" type="text" data-ng-model="loginCredentials.username" placeholder="{{ 'label.input.username' | translate }}" class="input-sm form-control" required id="uid">
-    		</div>
-    		<div class="form-group">
-    		    <input type="password" data-ng-model="loginCredentials.password" placeholder="{{ 'label.input.password' | translate }}" class="input-sm form-control"  required id="pwd">
-    		</div>
-    		<button class="btn btn-success" type="submit" data-ng-click="login()" id="login-button">{{ 'label.button.signin' | translate }}</button>
-    	    </form>
-            </div>
-            <div ng-show="resetPassword">
-    	    <form class="form-inline pull-right" role="form">
-    		<label><strong>{{ 'label.message.password.expired' | translate }}</strong></label>
-    	        <div class="form-group">
-    	            <input type="password" data-ng-model="passwordDetails.password" placeholder="{{ 'label.input.password' | translate }}" class="input-sm form-control"  required id="password">
-    	        </div>
-    		<div class="form-group">
-    		    <input type="password" data-ng-model="passwordDetails.repeatPassword" placeholder="{{ 'label.input.repeatpassword' | translate }}" class="input-sm form-control"  required id="repeatPassword">
-    		</div>
-                    <button class="btn btn-success" type="submit" data-ng-click="updatePassword()" id="updatepassword-button">{{ 'label.button.resetPassword' | translate }}</button>
-    	    </form>
-            </div>
-        </div>
-        <div class="row col-md-8 col-lg-offset-2 paddedbottom">
-        	<div class="col-md-3">
-                <img src="./images/MifosX_logo.png" alt="MifosX" width="150" class="img-responsive"/>
-            </div>
-            <div class="col-md-9">
-                <h1>{{ 'label.heading.mifosx' | translate }}</h1>
-    <span>{{ 'label.heading.version' | translate }} {{ version }}</span>
-                <br /> <span>{{ 'label.heading.uptodate' | translate }}</span>
-                <br /> <span ng-bind-html="text"></span>
-            </div>
-        </div>
+
         <div class="row">
-        <div class="col-md-4">
-                <div style="border: 1px solid #DDDDDD;padding:15px;">
-                    <div style="background-color: #F5F5F5;border-bottom: 1px solid #DDDDDD;padding: 10px 15px;margin: -15px -15px 15px;">
-                        <strong>{{ 'label.heading.resources' | translate }}</strong>
+            <div class="col-xs-12">
+                <div class="pull-right ">
+                    {{ 'label.input.changelanguage' | translate }}
+                    <div class="btn-group" uib-dropdown>
+                        <button type="button" class="btn btn-primary dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                            {{optlang.name}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu lang-dropdown">
+                            <li ng-repeat="lang in langs">
+                                <a href ng-click="changeLang(lang, $event)">{{lang.name}}</a>
+                            </li>
+                        </ul>
                     </div>
-                    <ul>
-                        <li><a target="https://mifosforge.jira.com/wiki/display/MIFOS/User+Documentation" href="https://mifosforge.jira.com/wiki/display/MIFOS/User+Documentation">{{ 'label.anchor.usermanual' | translate }}</a></li>
-                        <li><a target="https://mifosforge.jira.com/wiki/pages/viewpage.action?pageId=14712842" href="https://mifosforge.jira.com/wiki/pages/viewpage.action?pageId=14712842">{{ 'label.anchor.functionalspec' | translate }}</a></li>
-                        <li><a target="http://mifos.cloud.answerhub.com/index.html" href="http://mifos.org/pages-2/faq/">{{ 'label.anchor.faq' | translate }}</a></li>
-                    </ul>
-                </div>
-        </div>
-        <div class="col-md-4">
-                <div style="border: 1px solid #DDDDDD;padding:15px;">
-                    <div style="background-color: #F5F5F5;border-bottom: 1px solid #DDDDDD;padding: 10px 15px;margin: -15px -15px 15px;">
-                        <strong>{{ 'label.heading.community' | translate }}</strong>
-                    </div>
-                    <ul>
-                        <li><a target="https://groups.google.com/forum/#!forum/mifosusers" href="https://groups.google.com/forum/#!forum/mifosusers">{{ 'label.anchor.usersgroup' | translate }}</a></li>
-                        <li><a target="https://groups.google.com/forum/#!forum/mifosdeveloper" href="https://groups.google.com/forum/#!forum/mifosdeveloper">{{ 'label.anchor.developergroup' | translate }}</a></li>
-                        <li><a target="http://mifos.org/resources/community/communications/#mifos-irc" href="http://mifos.org/community/communications/mifos-irc">{{ 'label.anchor.irc' | translate }}</a></li>
-                    </ul>
-                </div>
-        </div>
-        <div class="col-md-4">
-                <div style="border: 1px solid #DDDDDD;padding:15px;">
-                    <div style="background-color: #F5F5F5;border-bottom: 1px solid #DDDDDD;padding: 10px 15px;margin: -15px -15px 15px;">
-                        <strong>{{ 'label.heading.news' | translate }}</strong>
-                    </div>
-                    <ul>
-                        <li>Register for <a target="https://attendee.gototraining.com/54cd7/rt/6379303047234164225" href="https://attendee.gototraining.com/rt/8133286876815830273">Mifosx Bi-Weekly User meeting </a></li>
-                        <li><a target="http://sourceforge.net/projects/mifos/" href="http://sourceforge.net/projects/mifos/">MifosX v1.26.0 is now Available!</a></li>
-                        <li><a target="http://google-opensource.blogspot.in/" href="http://google-opensource.blogspot.in/">GSoC blog</a></li>
-                    </ul>
                 </div>
 
+                <div ng-show="resetPassword">
+                    <form class="form-inline pull-right" role="form">
+                        <label><strong>{{ 'label.message.password.expired' | translate }}</strong></label>
+
+                        <div class="form-group">
+                            <input type="password" data-ng-model="passwordDetails.password"
+                                   placeholder="{{ 'label.input.password' | translate }}" class="input-sm form-control"
+                                   required
+                                   id="password">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" data-ng-model="passwordDetails.repeatPassword"
+                                   placeholder="{{ 'label.input.repeatpassword' | translate }}"
+                                   class="input-sm form-control"
+                                   required id="repeatPassword">
+                        </div>
+                        <button class="btn btn-success" type="submit" data-ng-click="updatePassword()"
+                                id="updatepassword-button">{{ 'label.button.resetPassword' | translate }}
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+
         </div>
-      </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-4 text-center">
+                        <img src="images/mifos-logo-flat.jpg" alt="Mifos X" style="width:80%; margin:auto;"
+                             class=" text-center img-responsive"/>
+                    </div>
+                </div>
+                <hr>
+
+                <div data-ng-form="loginForm">
+
+                    <div class="row" ng-hide="resetPassword || twoFactorRequired">
+                        <div class="col-sm-4 col-sm-offset-4">
+
+                            <div class="alert alert-danger" ng-show="authenticationFailed">
+                                {{ authenticationErrorMessage | translate }}
+                            </div>
+
+                            <form class="form">
+
+                                <div class="form-group">
+                                    <label for="uid">USERNAME</label>
+                                    <input type="text" name="username" id="uid" class="form-control"
+                                           ng-model="loginCredentials.username"
+                                           placeholder="{{ 'label.input.username' | translate |lowercase }}"
+                                           required/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pwd"><ui>PASSWORD</ui></label>
+                                    <input type="password" name="password" id="pwd" class="form-control"
+                                           ng-model="loginCredentials.password" autocomplete="new-password"
+                                           placeholder="{{ 'label.input.password' | translate | lowercase }}"
+                                           required/>
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-block btn-primary" type="submit" data-ng-show="!load" data-ng-click="login()"
+                                            id="login-button">
+                                        {{'label.button.signin' | translate }}
+                                    </button>
+                                    <button class="btn btn-block btn-primary" type="submit" data-ng-show="load">
+                                        <img data-ng-src="images/ring.svg" alt=""> <b>loading...</b>
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <div class="row" ng-show="twoFactorRequired && !otpRequested">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <h4>{{'label.heading.twofactor' | translate}}</h4>
+                            <hr>
+
+                            <p>{{'label.otp.delivery.info' | translate}}</p>
+                            <form class="form">
+                                <div class="form-group">
+                                    <div ng-repeat="deliveryMethod in twoFactorDeliveryMethods" class="radio form-group">
+                                        <label for="{{deliveryMethod.name}}">
+                                            <input type="radio" id="{{deliveryMethod.name}}" name="otpDeliveryMethods"
+                                                   ng-model="$parent.selectedDeliveryMethodName" value="{{deliveryMethod.name}}">
+                                            {{'label.otp.delivery.select.' + deliveryMethod.name | translate:deliveryMethod}}</label>
+                                    </div>
+                                    <div class="checkbox form-group">
+                                        <label for="twofactorRememberMe">
+                                            <input type="checkbox" id="twofactorRememberMe" name="twofactorRememberMe" ng-model="twofactorRememberMe">
+                                            {{'label.button.tfa.remember_me' | translate }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-block btn-primary" type="submit" data-ng-show="!load" data-ng-click="requestOTP()"
+                                            id="otp-request-button">
+                                        {{'label.button.otp.request' | translate}}
+                                    </button>
+                                    <button class="btn btn-block btn-primary" type="submit" data-ng-show="load">
+                                        <img data-ng-src="images/ring.svg" alt=""> <b>loading...</b>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-show="otpRequested">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <hr>
+                            <h4>{{'label.heading.twofactor' | translate}}</h4>
+                            <p>
+                                {{'label.otp.verify.info' | translate}}
+                            </p>
+
+                            <div class="alert alert-danger" ng-show="otpTokenError">
+                                {{otpErrorMessage | translate}}
+                            </div>
+
+                            <form class="form">
+                                <div class="form-group">
+                                    <label for="otpToken">{{'label.otp.token' | translate}}</label>
+                                    <input type="text" id="otpToken" name="otpDeliveryMethods" class="form-control"
+                                           ng-model="otpToken">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-block btn-primary" type="submit" data-ng-show="!load" data-ng-click="validateOTP()"
+                                            id="otp-verify-button">
+                                        {{'label.button.signin' | translate }}
+                                    </button>
+                                    <button class="btn btn-block btn-primary" type="submit" data-ng-show="load">
+                                        <img data-ng-src="images/ring.svg" alt=""> <b>loading...</b>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <hr/>
+
+                <div class="row" style="background-color: #F5F5F5;border-bottom: 1px solid #DDDDDD;padding: 10px 15px;margin: -15px -15px 15px;">
+                    <div class="col-xs-4 text-center" >
+
+                        <ul class="list-unstyled">
+                            <li><strong>RESOURCES</strong></li>
+                            <li style="color:blue"><a target="https://mifosforge.jira.com/wiki/display/MIFOS/User+Manual"
+                                   href="https://mifosforge.jira.com/wiki/display/MIFOS/User+Manual">{{
+                                'label.anchor.usermanual' | translate }}</a></li>
+                            <li style="color:blue"><a target="https://mifosforge.jira.com/wiki/pages/viewpage.action?pageId=14712842"
+                                   href="https://mifosforge.jira.com/wiki/pages/viewpage.action?pageId=14712842">{{
+                                'label.anchor.functionalspec' | translate }}</a></li>
+                            <li style="color:blue"><a href="https://mifosforge.jira.com/wiki/display/MDZ/Welcome+in+the+Zone">{{
+                                'label.anchor.developerzone' | translate }}</a></li>
+                        </ul>
+
+                    </div>
+                    <div class="col-xs-4 text-center" >
+                        <ul class="list-unstyled">
+                            <li><strong>COMMUNITY</strong></li>
+                            <li style="color:blue"><a target="https://groups.google.com/forum/#!forum/mifosusers"
+                                   href="https://groups.google.com/forum/#!forum/mifosusers">{{
+                                'label.anchor.usersgroup' |
+                                translate }}</a></li>
+                            <li style="color:blue"><a target="https://groups.google.com/forum/#!forum/mifosdeveloper"
+                                   href="https://groups.google.com/forum/#!forum/mifosdeveloper">{{
+                                'label.anchor.developergroup' | translate }}</a></li>
+                            <li style="color:blue"><a target="http://mifos.org/resources/community/communications/#mifos-irc"
+                                   href="http://mifos.org/community/communications/mifos-irc">{{ 'label.anchor.irc' |
+                                translate
+                                }}</a></li>
+                        </ul>
+
+                    </div>
+                    <div class="col-xs-4 text-center" >
+                        <ul class="list-unstyled">
+                            <li><strong>CONTRIBUTE</strong></li>
+                            <li style="color:blue"><a target="https://mifosforge.jira.com/wiki/display/MDZ/Key+Design+Principles"
+                                   href="https://mifosforge.jira.com/wiki/display/MDZ/Key+Design+Principles/">{{
+                                'label.anchor.keydesignprinciples' | translate }}</a></li>
+                            <li style="color:blue"><a target="https://mifosforge.jira.com/wiki/display/MDZ/Working+with+Code"
+                                   href="http://sourceforge.net/projects/mifos/">{{ 'label.anchor.workingwithcode' |
+                                translate
+                                }}</a></li>
+                            <li style="color:blue"><a target="http://mifos.org/donate/" href="http://mifos.org/donate/">{{
+                                'label.anchor.donate' |
+                                translate }}</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3 text-center">
+                        <br>
+
+                        <p class=" text-muted"><span ng-bind-html="text"></span>
+                            <br>
+                            <span style=" display: inline-block; margin:auto;min-width:40px; border-bottom:2px solid #e0e0e0;">&nbsp;</span>
+                        </p>
+
+                    </div>
+                </div>
+                <p class="text-center text-muted small">
+                    <span>{{ 'label.heading.version' | translate }} {{ version }}</span>
+                    <br/> <span>{{ 'label.heading.uptodate' | translate }}</span>
+                </p>
+            </div>
+        </div>
     </div>
 
     <!-- Navbar -->
@@ -135,7 +280,7 @@
             </div>
         </div>
         <div class="left-nav">
-        	<ul class="nav nav-pills nav-stacked margin-nav">
+            <ul class="nav nav-pills nav-stacked margin-nav">
                 <li><a class="black" href="#/help"><i class="icon-keyboard icon-large"></i>&nbsp;&nbsp;{{ 'label.anchor.keyboardshortcut' | translate}}</a></li>
                 <li class="divider"></li>
                 <li><a class="black" href="#/nav/offices"><i class="icon-compass icon-large"></i>&nbsp;&nbsp;{{ 'label.anchor.navigation' | translate}}</a></li>
@@ -165,9 +310,9 @@
             </ul>
         </div>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        	<div class="container-fluid container">
+            <div class="container-fluid container">
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    		      	<a class="brand" href="#/home"><img src="./images/MifosX_logoSmall.png" alt="MifosX" height="20"></a>
+                    <a class="brand" href="#/home"><img src="./images/MifosX_logoSmall.png" alt="MifosX" height="20"></a>
                     <ul class="nav navbar-nav" id="main-menu-left">
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" ng-class="{ activate: isActive('clients') }"  href="#"><i class="icon-group"></i> {{ 'label.anchor.clients' | translate }}<b class="caret"></b></a>
@@ -200,7 +345,7 @@
                                 <li><a href="#/templates" has-permission='READ_TEMPLATE'>{{ 'label.anchor.templates' | translate }}</a></li>
                             </ul>
                         </li>
-                	</ul>
+                    </ul>
                     <ul class="nav navbar-nav navbar-right" id="main-menu-right">
                         <li class="dropdown" id="user-menu">
                             <a id="user-dropdown" class="dropdown-toggle" data-toggle="dropdown" href="#"> {{currentSession.user.name}}<b class="caret"></b></a>
@@ -225,9 +370,9 @@
                         <div class="whitebg" ng-view></div>
                     </div>
                     <!-- Footer -->
-					<footer>
-						<p align="center"> <a href="https://mifosforge.jira.com/browse/MIFOSX/component/11710/?selectedTab=com.atlassian.jira.jira-projects-plugin:component-changelog-panel" target="_blank"> {{'label.relVersion' | translate}} {{version}} | {{'label.relDate' | translate}} {{releasedate}} </a> </p>
-					</footer>
+                    <footer>
+                        <p align="center"> <a href="https://mifosforge.jira.com/browse/MIFOSX/component/11710/?selectedTab=com.atlassian.jira.jira-projects-plugin:component-changelog-panel" target="_blank"> {{'label.relVersion' | translate}} {{version}} | {{'label.relDate' | translate}} {{releasedate}} </a> </p>
+                    </footer>
                     <hr>
                 </div> <!-- /row-fluid -->
             </div><!-- /blockui-->

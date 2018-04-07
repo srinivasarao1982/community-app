@@ -497,6 +497,15 @@
                         getAll: {method: 'GET', params: {}, isArray: true},
                         get: {method: 'GET' , params: {paymentTypeId: '@paymentTypeId'}},
                         update: {method: 'PUT', params: {paymentTypeId: '@paymentTypeId'}}
+                    }),
+                    clientbankDetailsResource: defineResource(apiVer + "/bankdetails/:bankdetailsId/:ifsccode", {bankdetails: '@bankdetails', ifsccode: '@ifsccode'}, {
+                    get: {method: 'GET', params: {}},
+                    getAll: {method: 'GET', params: {ifsccode: '@ifsccode'}},
+                }),
+                    clientbankDetailsResourceforsave: defineResource(apiVer + "/bankdetails/:bankdetailsId", {bankdetails: '@bankdetails'}, {
+                        update: { method: 'PUT',params: {bankdetailsId: '@bankdetailsId'}},
+                        deletebankdetails: { method:'DELETE',params:{bankdetailsId: '@bankdetailsId'}}
+
                     })
                 };
             }];

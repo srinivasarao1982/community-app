@@ -882,6 +882,63 @@
 		        </tbody>
 		    </table>
 		</tab>
+
+		<tab heading="{{'label.heading.clientsbankdetails' | translate}}" select="getClientDocuments()" has-permission='READ_BANKDETAILS' >
+			<div class="pull-right">
+				<a ng-hide="!showaddbutton" href="#/addclientbankdetails/{{client.id}}" class="btn btn-primary" has-permission='CREATE_BANKDETAILS'><i
+						class="icon-plus icon-white"></i>
+					{{'label.button.add' | translate}}</a>
+				<a ng-hide="showaddbutton" href="#/editclientbankdetails/{{clientbankdetails.id}}/{{client.id}}" class="btn btn-primary" has-permission='UPDATE_BANKDETAILS'><i
+						class="icon-plus icon-white"></i>
+					{{'label.button.edit' | translate}}</a>
+				<button ng-hide="showaddbutton" id="delete" type="button" ng-click="delebankDetails1(clientbankdetails.id)",has-permission='DELETE_BANKDETAILS' class="btn btn-primary">{{'label.button.delete' | translate}}</button>
+
+			</div>
+			<br><br>
+			<div class="row span" style="margin-left:-1px;margin-top: -20px" ng-show="!showaddbutton">
+				<div class="col-sm-12 col-md-12">
+					<table class="table table-striped table-bordered">
+						<tr>
+							<th class="table-bold-loan">{{'label.input.beneficiaryname' | translate}}</th>
+							<td><span class="padded-td">{{clientbankdetails.beneficiaryname}}</span></span>
+							</td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.accountno' | translate}}</th>
+							<td><span class="padded-td">{{clientbankdetails.accountnumber}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.ifsccode' | translate}}</th>
+							<td><span class="padded-td">{{clientbankdetails.ifsccode}}</span></td>
+
+
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.branchname' | translate}}</th>
+							<td><span class="padded-td"></span>{{clientbankdetails.branchname}}</td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.branchaddress' | translate}}</th>
+							<td><span class="padded-td">{{clientbankdetails.branchaddress}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.lasttransactiondate' | translate}}</th>
+							<td><span class="padded-td"></span>{{clientbankdetails.lasttransactiondate| DateFormat}}</td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.lasttransactionamount' | translate}}</th>
+							<td><span class="padded-td">{{clientbankdetails.lasttransactionamount}}</span></td>
+						</tr>
+						<tr ng-repeat="clientdocument in clientdocuments" ng-if="clientdocument.name=='Scan copy of passbook'">
+							<td>{{clientdocument.name}}</td>
+							<td>{{clientdocument.fileName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<a target="_blank" href="{{hostUrl}}{{clientdocument.docUrl}}"><i class="icon-cloud-download"></i></a></td>&nbsp;
+												</tr>
+					</table>
+				</div>
+			</div>
+			</tab>
+
 		<tab heading="{{clientdatatable.registeredTableName}}" ng-repeat="clientdatatable in clientdatatables"
 		     select="dataTableChange(clientdatatable)" has-permission='READ_{{clientdatatable.registeredTableName}}'>
 		    <div>
