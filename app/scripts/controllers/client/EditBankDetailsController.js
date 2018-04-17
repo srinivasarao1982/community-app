@@ -17,12 +17,6 @@
             scope.accountnocheckcheck=false;
             scope.isDocument=false;
 
-            scope.beneficarynamecheck=function(){
-                if(scope.formData.beneficiaryname!=scope.formData.beneficiaryname1){
-                    scope.benificarynamecheck=true;
-                }
-
-            }
             scope.accountnocheck=function(){
                 if(scope.formData.accountnumber!=scope.formData.accountnumber1){
                     scope.accountnocheckcheck=true;
@@ -65,13 +59,18 @@
                 resourceFactory.clientbankDetailsResource.getAll({ifsccode: scope.formData.ifsccode},function(data){
                     if(!angular.isUndefined(data.Bank)) {
                         scope.bankdetails=data;
-                    scope.formData.branchname=data.Bank +""+data.Branch;
+                    scope.formData.branchname=data.Branch;
                     scope.formData.branchaddress=data.Address+ ","+"city:"+data.City+","+"District:-"+data.District+"State:"+data.State
+                    scope.formData.bankname=data.Bank;
+                    scope.formData.micrcode=data.MICR;
+                    scope.ifscoceinvalid=false;
                     }
                     else{
                         scope.ifscoceinvalid=true;
                         scope.formData.branchname="";
                         scope.formData.branchaddress="";
+                        scope.formData.bankname="";
+                        scope.formData.micrcode="";
                     }
                 });
             }
@@ -79,16 +78,14 @@
             //scope.formData.locale = scope.optlang.code;
             //scope.formData.dateFormat = scope.df;
             scope.submit = function () {
-                if(scope.benificarynamecheck==true){
-                    scope.benificarynamecheck=false;
-                }
+
                 if(scope.accountnocheckcheck==true){
                     scope.accountnocheckcheck=false;
                 }
 
                 scope.accountnocheck();
-                scope.beneficarynamecheck();
-                if (!scope.benificarynamecheck && !scope.accountnocheckcheck) {
+               
+                if ( !scope.accountnocheckcheck) {
                     if (scope.udocumentUpdated) {
                         $upload.upload({
                             url: $rootScope.hostUrl + API_VERSION + '/clients/' + scope.clientId + '/documents',

@@ -15,12 +15,7 @@
             scope.accountnocheckcheck=false;
             scope.ifscoceinvalid=false;
 
-            scope.accountnocheck=function(){
-                if(scope.formData.beneficiaryname!=scope.formData.beneficiaryname1){
-                    scope.benificarynamecheck=true;
-                }
 
-            }
             scope.beneficarynamecheck=function(){
                 if(scope.formData.accountnumber!=scope.formData.accountnumber1){
                     scope.accountnocheckcheck=true;
@@ -32,8 +27,10 @@
                     if(!angular.isUndefined(data.Bank)) {
                         scope.ifscoceinvalid=false;
                         scope.bankdetails = data;
-                        scope.formData.branchname = data.Bank + "" + data.Branch;
+                        scope.formData.branchname = data.Branch;
                         scope.formData.branchaddress = data.Address + "," + "city:" + data.City + "," + "District:-" + data.District + "State:" + data.State
+                        scope.formData.bankname=data.Bank;
+                        scope.formData.micrcode=data.MICR;
                     }
                     else{
                         scope.ifscoceinvalid=true;
@@ -46,17 +43,14 @@
             scope.formData.locale = scope.optlang.code;
             scope.formData.dateFormat = scope.df;
             scope.submit = function () {
-                if(scope.benificarynamecheck==true){
-                    scope.benificarynamecheck=false;
-                }
                 if(scope.accountnocheckcheck==true){
                     scope.accountnocheckcheck=false;
                 }
-                scope.accountnocheck();
+              //  scope.accountnocheck();
                 scope.beneficarynamecheck();
                // scope.benificarynamecheck = false;
                // scope.accountnocheckcheck = false;
-                if (!scope.benificarynamecheck && !scope.accountnocheckcheck) {
+                if (!scope.accountnocheckcheck) {
                     $upload.upload({
                         url: $rootScope.hostUrl + API_VERSION + '/clients/' + scope.clientId + '/documents',
                         data: scope.formData1,

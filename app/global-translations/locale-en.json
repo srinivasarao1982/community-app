@@ -455,6 +455,8 @@
     "label.input.lasttransactiondate":"Last Transaction Date",
     "label.input.lasttransactionamount":"Last Transaction Amount",
     "label.input.selectpassbook":"Select Passbook",
+    "label.input.micrcode":"Micr Code",
+    "label.input.bankname":"Bank Name",
 
     "#Buttons": "..",
     "label.button.login": "Login",
