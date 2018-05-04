@@ -88,6 +88,8 @@
     "label.heading.interest.paid":"Interest Paid",
     "label.heading.principal.repayment":"Principal Paid",
     "label.heading.arrears":"Arrears",
+    "label.heading.accepted/rejected":"C B Accepted/Rejected",
+    "label.heading.remark":"Remark",
 
     "#Menu Links": "..",
     "label.menu.selectloanofficer": "Select Staff",
@@ -149,6 +151,7 @@
     "label.input.true": "True",
     "label.input.false": "False",
     "label.input.repaymentdate" : "Repayment date",
+    "label.input.isUpdate":" Is Update",
 
     "#Buttons": "..",
     "label.button.previous": "Previous",
@@ -196,6 +199,7 @@
     "label.button.submitandprint": "Submit And Print",
     "label.button.bulk.undo.transactions": "Bulk undo transactions",
     "label.button.preview": "Preview",
+    "label.button.editbulkjlpartialloan":"Edit Partial Loan",
 
     "#Misc Labels": "..",
     "label.uniquelyidentifiedwithid": "Uniquely identified with Id",
@@ -221,6 +225,7 @@
     "label.today": "Today",
     "label.relDate": "Mifos X Release Date: ",
     "label.relVersion": "Release Version: ",
+    "label.selectstatus":"Select Status",
 
     "label.error.required": "Required Field",
 
@@ -326,6 +331,7 @@
     "label.heading.waiveloancharge":"Waive Loan Charge",
     "label.heading.payloancharge":"Pay Loan Charge",
     "label.heading.editclientbankdetails":"Update Client Bank Details",
+    "label.heading.id/name":"Id/client Name",
 
     "#Anchors": "..",
     "label.anchor.paycharge":"Pay Charge",
@@ -472,6 +478,7 @@
     "label.button.signin": "Sign In",
     "label.button.resetPassword": "Reset Password",
     "label.button.viewpermissions":"View Permissions",
+    "label.button.bulkjlpartialloan":"Partial Loan Application",
 
     "#Misc Labels": "..",
     "label.youneedtologintoaccessthisarea": "You need to login to access this area",
@@ -518,6 +525,7 @@
     "label.heading.clientrejected":"Client Rejected",
     "label.heading.withdrawn":"Client Withdrawn",
     "label.heading.clientsbankdetails":"Client Bank Details",
+    "label.heading.rpdonumber":"RPDO number",
     "#Anchors": "..",
     "label.anchor.clients": "Clients",
     "label.anchor.createclient": "Create Client",
@@ -550,6 +558,7 @@
     "label.input.withdrawalreason":"Withdrawal reason",
     "label.input.clientName":"Client Name",
     "label.input.clientId":"Client Id",
+    "label.input.loantenure":"Loan Tenure",
 
     "#Buttons": "..",
     "label.button.createclient": "Create Client",
@@ -1238,6 +1247,7 @@
     "label.heading.savingsLinkage" : "Savings Linkage",
     "label.heading.tranche": "Tranche",
     "label.heading.configurableAttributes" : "Configurable Terms and Settings",
+    "label.heading.submitteddate":"Submitted Date",
 
     "#Anchors": "..",
     "label.anchor.viewloanaccount": "View Loan Account",
@@ -2345,6 +2355,7 @@
     "label.anchor.viewAccountNumberPreferences":"View Account Number Preferences",
     "label.anchor.editAccountNumberPreferences":"Edit Account Number Preferences",
     "label.anchor.viewEntityMapping":"Entity Mapping",
+    "label.anchor.partialloan":"Partial Loan",
 
     "#Inputs": "..",
     "label.input.entity": "Entity",
@@ -2445,6 +2456,9 @@
     "label.button.editcode":"Edit Code",
     "label.button.pending.tasks":"Pending Tasks",
     "label.button.addpreferences":"Add Preferences",
+    "label.button.updatepartialloanstatus":"Update Partial Loan Staus",
+    "label.button.viewpartialloan":"View Partial Loan",
+
 
     "#Misc Labels": "..",
     "label.selectstatus": "Select status",

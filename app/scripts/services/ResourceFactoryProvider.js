@@ -506,7 +506,19 @@
                         update: { method: 'PUT',params: {bankdetailsId: '@bankdetailsId'}},
                         deletebankdetails: { method:'DELETE',params:{bankdetailsId: '@bankdetailsId'}}
 
+                    }),
+                    partialLoanResourceforgettemplate: defineResource(apiVer + "/partialloan/template/:parentId/:isActive", {parentId:'@parentId',isActive:'@isActive'}, {
+                        get: {method: 'GET', params: {parentId:'@parentId',isActive:'@isActive'}}
+                    }),
+                    partialLoanResourceforget: defineResource(apiVer + "/partialloan/:parentId", {parentId:'@parentId'}, {
+                        get: {method: 'GET', params: {parentId:'@parentId'},isArray : true},
+                    }),
+                    partialLoanResourceforupdate: defineResource(apiVer + "/partialloan/:clientId/:groupId", {clientId: '@clientId', groupId: '@groupId'}, {
+                        update: { method: 'PUT',params: {clientId: '@clientId' ,groupId:'@groupId'}},
+
                     })
+
+
                 };
             }];
         }

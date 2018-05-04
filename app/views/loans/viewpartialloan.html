@@ -1,0 +1,41 @@
+<div class="col-md-12" ng-controller="ViewPartialLoanController">
+    <ul class="breadcrumb">
+        <li class="active">{{'label.anchor.partialloan' | translate}}</li>
+    </ul>
+    <api-validate></api-validate>
+    <div class="pull-right">
+        <a  href="#/editjlgpartialloancenterby/{{centerId}}" class="btn btn-primary" has-permission='UPDATE_PARTIALLOAN'><i
+                class="icon-plus icon-white"></i>
+            {{'label.button.updatepartialloanstatus' | translate}}</a>
+        <button  id="delete" type="button" ng-click="routeTo()",has-permission='UPDATE_PARTIALLOAN' class="btn btn-primary">{{'label.button.cancel' | translate}}</button>
+
+    </div>
+    <div class="clearfix"></div>
+
+    <table class="table table-striped .width100">
+        <thead>
+        <tr class="graybg">
+            <th>{{'label.heading.id/name' | translate}}</th>
+            <th>{{'label.heading.rpdonumber' | translate}}</th>
+            <th>{{'label.heading.loanamount' | translate}}</th>
+            <th>{{'label.heading.submitteddate' | translate}}</th>
+            <th>{{'label.heading.status' | translate}}</th>
+            <th>{{'label.heading.remark'|translate}}</th>
+            <th>{{'label.heading.isactive'|translate}}</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="partial1 in partialLoanDataforreturn" >
+            <td >{{partial1.clientId}}/{{partial1.clientName}}</td>
+            <td >{{partial1.rpdoNumber}}</td>
+            <td >{{partial1.loanAmount}}</td>
+            <td >{{partial1.submittedDate|DateFormat}}</td>
+            <td >{{partial1.StatusData}}</td>
+            <td >{{partial1.remark}}</td>
+            <td ><i class="icon-stop {{partial1.isActive | StatusLookup}}"></i>&nbsp;&nbsp;{{partial1.isActive}}</td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>

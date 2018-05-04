@@ -604,6 +604,15 @@
             .when('/jlgloanAccountcenterby/:centerId', {
                 templateUrl: 'views/loans/jlgloanAccountcenterby.html'
             })
+            .when('/jlgpartialloancenterby/:centerId', {
+                templateUrl: 'views/loans/partialloanapplication.html'
+            })
+            .when('/editjlgpartialloancenterby/:centerId', {
+                templateUrl: 'views/loans/editpartialLoan.html'
+            })
+            .when('/viewjlgpartialloan/:centerId', {
+                templateUrl: 'views/loans/viewpartialloan.html'
+            })
             .when('/jlgsavingAccountcenterby/:centerId', {
                 templateUrl: 'views/savings/jlgsavingAccountcenterby.html'
             })
