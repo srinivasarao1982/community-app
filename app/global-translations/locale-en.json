@@ -152,6 +152,7 @@
     "label.input.false": "False",
     "label.input.repaymentdate" : "Repayment date",
     "label.input.isUpdate":" Is Update",
+    "label.input.cbreportReceiveDate":" Cb Report Receive Date",
 
     "#Buttons": "..",
     "label.button.previous": "Previous",

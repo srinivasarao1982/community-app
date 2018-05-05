@@ -32,6 +32,7 @@
             // Fetch loan products for initital product drop-down
             resourceFactory.loanResource.get(scope.inparams, function (data) {
                 scope.products = data.productOptions;
+                scope.loanApplicationCommonData.loantenure=data.termFrequency;
                 if (data.center) {
                     scope.center.name = data.center.name;
                 }
@@ -53,6 +54,7 @@
                     scope.caledars = data.calendarOptions;
                     scope.loanPurposes = data.loanPurposeOptions;
                     scope.termFrequency = data.termFrequency;
+                    scope.loanApplicationCommonData.loantenure=data.termFrequency;
                     scope.termPeriodFrequencyType = data.termPeriodFrequencyType;
                     scope.emi=null;
                     scope.clientId=scope.groups[0].activeClientMembers[0].id;

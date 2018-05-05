@@ -24,6 +24,9 @@
             scope.approveData={};
             scope.principalChange=false;
             scope.showdatails=true;
+            scope.loanstatus=false;
+            scope.remarkstatus=false;
+            scope.cbreceivedate=false;
             if (scope.center.id) {
                 scope.inparams.centerId = scope.center.id;
             }
@@ -31,10 +34,12 @@
             // Fetch loan products for initital product drop-down
             resourceFactory.loanResource.get(scope.inparams, function (data) {
                 scope.products = data.productOptions;
+                scope.loanProductChange(scope.products[0].id);
                 if (data.center) {
                     scope.center.name = data.center.name;
                 }
             });
+
 
             resourceFactory.partialLoanResourceforgettemplate.get({parentId:scope.center.id,isActive:1}, function (data) {
                 scope.statusOptions = data.status;
@@ -201,30 +206,53 @@
 
 
             scope.submit = function () {
+                scope.loanstatus=false;
+                scope.remarkstatus=false;
+                scope.cbreceivedate=false;
 
-                this.batchRequests = [];
+                if (angular.isUndefined(scope.loanApplicationCommonData.cbreceivedate)) {
+                    scope.cbreceivedate = true;
+                }
                 for (var i in scope.selectedClients ) {
-                    if( scope.selectedClients[i].isSelected ){
-
-                        var loanapplication = {};
-
-                        loanapplication.locale = scope.optlang.code;
-                        loanapplication.dateFormat =  scope.df;
-                        loanapplication.groupId = scope.selectedClients[i].groupId;
-                        loanapplication.clientId =  scope.selectedClients[i].id;
-                        loanapplication.productId = scope.productDetails.id;
-
-                        loanapplication.externalId=scope.selectedClients[i].extId;
-                        loanapplication.loanPurposeId=scope.selectedClients[i].loanPurposeId;
-                        loanapplication.status=scope.selectedClients[i].status;
-                        loanapplication.remark=scope.selectedClients[i].remark;
-                        resourceFactory.partialLoanResourceforupdate.update({clientId:loanapplication.clientId,groupId:loanapplication.groupId},loanapplication, function (data) {
-                        });
-
+                if( scope.selectedClients[i].isSelected ) {
+                    if (angular.isUndefined(scope.selectedClients[i].status1)) {
+                        scope.loanstatus = true;
+                    }
+                    if (angular.isUndefined(scope.selectedClients[i].remark)) {
+                        scope.remarkstatus = true;
                     }
 
                 }
-                location.path('/viewcenter/' + scope.center.id);
+                }
+                if (!scope.loanstatus && !scope.remarkstatus && !scope.cbreceivedate ) {
+                    this.batchRequests = [];
+                    for (var i in scope.selectedClients) {
+                        if (scope.selectedClients[i].isSelected) {
+
+                            var loanapplication = {};
+
+                            loanapplication.locale = scope.optlang.code;
+                            loanapplication.dateFormat = scope.df;
+                            loanapplication.groupId = scope.selectedClients[i].groupId;
+                            loanapplication.clientId = scope.selectedClients[i].id;
+                            loanapplication.productId = scope.productDetails.id;
+                            loanapplication.cbreceivedate=dateFilter(scope.loanApplicationCommonData.cbreceivedate, scope.df);
+
+                            loanapplication.externalId = scope.selectedClients[i].extId;
+                            loanapplication.loanPurposeId = scope.selectedClients[i].loanPurposeId;
+                            loanapplication.status = scope.selectedClients[i].status1;
+                            loanapplication.remark = scope.selectedClients[i].remark;
+                            resourceFactory.partialLoanResourceforupdate.update({
+                                clientId: loanapplication.clientId,
+                                groupId: loanapplication.groupId
+                            }, loanapplication, function (data) {
+                            });
+
+                        }
+
+                    }
+                    location.path('/viewcenter/' + scope.center.id);
+                }
 
             };
 

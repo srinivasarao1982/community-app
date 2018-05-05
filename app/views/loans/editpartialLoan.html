@@ -6,14 +6,25 @@
     <form name="newjlgloanform" novalidate="" class="well form-inline">
         <unsuccessful-response></unsuccessful-response>
         <api-validate></api-validate>
+        <div ng-show="loanstatus">
+            <p style="color:red">Status is not selected  </p>
+        </div>
+        <div ng-show="remarkstatus">
+            <p style="color:red">Remark field Can Not be blank</p>
+        </div>
+        <div ng-show="cbreceivedate">
+            <p style="color:red">Cb Receive Date Can Not be blank</p>
+        </div>
         <div class="row" ng-show="showdatails">
-            <label>{{ 'label.input.product' | translate }}<span class="required">*</span>:&nbsp;</label>
-            <i class="icon-question-sign" tooltip="{{'label.tooltip.product' | translate}}"></i>
-            <select id="productId" ng-model="selectedProduct.id"
+            <label>{{ 'label.input.cbreportReceiveDate' | translate }}<span class="required">*</span>:&nbsp;</label>
+           <!-- <select id="productId" ng-model="selectedProduct.id"
                     ng-options="product.id as product.name for product in products" value="{{product.id}}"
                     ng-change="loanProductChange(selectedProduct.id)" class="form-control" required="required">
                 <option style="display:none" value="">{{'label.selectloanproduct' | translate}}</option>
-            </select>
+            </select>-->
+            <input type="text" id="cbreportreceivedate" name="cbreportreceivedate" datepicker-pop="dd MMMM yyyy"
+                   ng-model="loanApplicationCommonData.cbreceivedate" is-open="opened" class="form-control"/>
+
             <p></p>
             <div ng-show="false">
                 <table class="width100">
@@ -37,7 +48,7 @@
          </div>
         <div ng-show="showdatails">
         <div class="row">
-            <div data-ng-show="productDetails" class="well">
+            <div class="well">
                 <!--
                 <table class="width100">
                     <tr>
@@ -95,7 +106,7 @@
             </div>
         </div>
         <div ng-show="loanaccountinfo">
-            <div class="row "data-ng-show="productDetails">
+            <div class="row">
                 <table class="table table-condensed">
                     <thead>
                     <tr class="active">
@@ -142,7 +153,7 @@
                         </td>
                         <td colspan="2">{{client.firstname}}</td>
                         <td>
-                            <select id="statusId" ng-model="group.activeClientMembers[outerIndex].status"
+                            <select id="statusId" ng-model="group.activeClientMembers[outerIndex].status1"
                                     ng-options="status.id as status.name for status in statusOptions" value="{{status.id}}"
                                     class="form-control" required="required">
                                 <option style="display:none" value="">{{'label.selectstatus' | translate}}</option>
