@@ -267,6 +267,14 @@
 						                        <th>{{ 'label.numofactiveoverdueclientloans' | translate }}</th>
 						                        <td><span class="padded-td">{{summary.overdueClientLoans}}</span></td>
 						                    </tr>
+											<tr>
+												<th>{{ 'label.input.centerType' | translate }}</th>
+												<td><span class="padded-td">{{center.isnewCenter}}</span></td>
+											</tr>
+											<tr>
+												<th>{{ 'label.input.iscbcheckRequired' | translate }}</th>
+												<td><span class="padded-td">{{center.iscbCheckRequired}}</span></td>
+											</tr>
 								        </table>
 							    	</div>
 						    	</div>
@@ -276,35 +284,40 @@
 			        <br/>
 			    </div>
 			</tab>
-			<tab heading="{{ 'label.heading.notes' | translate }}" has-permission='READ_GROUPNOTE'>
-			    <br/>
+			<tab heading="{{ 'label.heading.task' | translate }}" has-permission='READ_TASK'>
+				<br/>
+				<div class="pull-right">
+					<a href="#/createtask/{{centerId}}/{{officeId1}}" class="btn btn-primary" has-permission='CREATE_TASK'><i
+							class="icon-plus icon-white"></i>
+						{{'label.button.createtask' | translate}}</a>
 
-			    <form>
-			        <div class="form-group">
-			            <div class="col-sm-12 col-md-12">
-			                <textarea rows="1" class="form-control marginbottom0px" id="textarea"
-			                          placeholder="{{ 'label.input.enternote' | translate }}" ng-model="formData.note"></textarea>
-
-			                <div class="notewrapper col-md-12">
-			                        <span class="pull-right noteaddbuttonwrapper">
-			                            <button class="btn btn-primary" type="submit" ng-click="saveNote()" has-permission='CREATE_GROUPNOTE'>{{ 'label.button.add' | translate }} </button>
-			                        </span>
-			                </div>
-			            </div>
-			        </div>
-			    </form>
-				<div class="col-md-12">
-					<br/>
-					<div ng-repeat="note in notes | orderBy:predicate:reverse">
-				        <blockquote>
-				            <p>{{note.note}}</p>
-				            {{note.id}}
-				            <small>{{'label.createdby' | translate}} :&nbsp;{{note.createdByUsername}}</small>
-				            <small>{{'label.createdon' | translate}} :&nbsp;{{note.createdOn | DateFormat}}</small>
-				        </blockquote>
+				</div>
+				<br><br>
+				<div class="row span" style="margin-left:-1px;margin-top: -20px">
+					<div class="col-sm-12 col-md-12">
+							<table class="table table-striped .width100">
+								<thead>
+								<tr>
+                                    <th class="table-bold-loan"><strong>{{'label.input.tasktype' | translate}}</strong></th>
+                                    <th class="table-bold-loan"><strong>{{'label.input.taskcreatedate' | translate}}</strong></th>
+                                    <th class="table-bold-loan"><strong>{{'label.input.expectedcompletedDate' | translate}}</strong></th>
+                                    <th class="table-bold-loan"><strong>{{'label.input.completedBy' | translate}}</strong></th>
+                                    <th class="table-bold-loan"><strong>{{'label.input.taskstatus'|translate}}</strong></th>
+								</thead>
+								</tr>
+								<tbody>
+								<tr ng-repeat="task in tasks track by $index">
+									<td class="pointer" data-ng-click="routeToeditTask(task.taskId,centerId,officeId1)">{{task.taskType}}</td>
+									<td class="pointer" data-ng-click="routeToeditTask(task.taskId,centerId,officeId1)">{{task.taskcreatedDate | DateFormat}}</td>
+									<td class="pointer" data-ng-click="routeToeditTask(task.taskId,centerId,officeId1)">{{task.expectedCompletedDate | DateFormat}}</td>
+									<td class="pointer" data-ng-click="routeToeditTask(task.taskId,centerId,officeId1)">{{task.staffName }}</td>
+									<td class="pointer" data-ng-click="routeToeditTask(task.taskId,centerId,officeId1)">{{task.status.value}}</td>
+								</tr>
+								</tbody>
+							</table>
 					</div>
 				</div>
-			    </ul>
+				</ul>
 			</tab>
 			</tab>
 			<tab heading="{{centerdatatable.registeredTableName}}" ng-repeat="centerdatatable in centerdatatables" has-permission='READ_{{centerdatatable.registeredTableName}}'

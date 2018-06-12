@@ -501,7 +501,7 @@
                     clientbankDetailsResource: defineResource(apiVer + "/bankdetails/:bankdetailsId/:ifsccode", {bankdetails: '@bankdetails', ifsccode: '@ifsccode'}, {
                     get: {method: 'GET', params: {}},
                     getAll: {method: 'GET', params: {ifsccode: '@ifsccode'}},
-                }),
+                     }),
                     clientbankDetailsResourceforsave: defineResource(apiVer + "/bankdetails/:bankdetailsId", {bankdetails: '@bankdetails'}, {
                         update: { method: 'PUT',params: {bankdetailsId: '@bankdetailsId'}},
                         deletebankdetails: { method:'DELETE',params:{bankdetailsId: '@bankdetailsId'}}
@@ -515,9 +515,33 @@
                     }),
                     partialLoanResourceforupdate: defineResource(apiVer + "/partialloan/:clientId/:groupId", {clientId: '@clientId', groupId: '@groupId'}, {
                         update: { method: 'PUT',params: {clientId: '@clientId' ,groupId:'@groupId'}},
+                    }),
+                    taskResource: defineResource(apiVer + "/task/template", {}, {
+                        get: {method: 'GET', params: {}},
+                    }),
+                    taskResourcesave: defineResource(apiVer + "/task/", {}, {
+                        get: {method: 'GET', params: {taskId:'@taskId'}},
+                        update: { method: 'PUT',params: {taskId:'@taskId'}},
+                    }),
+                    taskResourceforupdate: defineResource(apiVer + "/task/:taskId", {taskId:'@taskId'}, {
+                        update: { method: 'PUT',params: {taskId:'@taskId'}},
+                    }),
+                    taskResourceforGet: defineResource(apiVer + "/task/retriveall/", {}, {
+                        get: {method: 'GET', params: {},isArray : true},
+                    }),
+                    taskConfigurationResource: defineResource(apiVer + "/task/template/taskconfiguration", {}, {
+                        get: {method: 'GET', params: {}},
+                    }),
+                    taskConfigurationResourceforSave: defineResource(apiVer + "/task/taskconfiguration", {}, {
+                        get: {method: 'GET', params: {taskconfigurationId:'@taskconfigurationId'}},
+                    }),
+                    taskConfigurationResourceforretriveall:defineResource(apiVer + "/task/alltaskconfiguration", {}, {
+                        get: {method: 'GET', params: {},isArray : true},
+                    }),
+                    taskConfigurationResourceforUpdate:defineResource(apiVer + "/task/taskconfiguration/:taskconfigurationId", {taskconfigurationId:'@taskconfigurationId'}, {
+                        update: {method: 'PUT', params: {taskconfigurationId:'@taskconfigurationId'}},
 
-                    })
-
+                    }),
 
                 };
             }];

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<div class="content-container" ng-controller="CreateTaskController">
+    <ul class="breadcrumb">
+        <li><a href="#/viewcenter/{{centerId}}">{{'label.heading.viewTask' | translate}}</a></li>
+    </ul>
+            <div class="">
+                <form name="createtaskform" novalidate="" class="card form-horizontal well" >
+                    <api-validate></api-validate>
+                    <fieldset>
+                        <legend>{{'label.heading.createtask' | translate}}</legend>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"><strong>
+                                {{'label.input.tasktype' | translate}} <span class="required" >*</span>
+                            </strong></label>
+                            <div class="col-sm-3">
+                                <div>
+                                    <select chosen="taskTypes" id="taskTypeId" ng-model="formData.tasktype"  class="form-control" required
+                                            late-Validate
+                                            ng-options="tasktype.id as tasktype.name for tasktype in taskTypes" value="{{tasktype.id}}"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"><strong>{{'label.input.compltedby' | translate}}<span class="required" >*</span></strong></label>
+                            <div class="col-sm-3">
+                                <select  chosen="staffOptions" id="staffId" ng-model="formData.staffId"  class="form-control"
+                                         ng-options="staff.id as staff.displayName for staff in staffOptions" value="{{staff.id}}">
+                                    <option value="">--{{'label.menu.staff' | translate}}--</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <legend>{{'label.heading.taskDetails' | translate}} <a class="btn btn-primary" style="float:right;"
+                                                                                          ng-click="addtaskdescription()" ><i class="icon-plus icon-white"></i>{{'label.button.addextradetails' | translate }}</a>
+
+                            </legend>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-3"><span class="required" >*</span> <label ><strong>{{'label.add.taskdescription'|translate}}</strong></label></div>
+                                <div class="col-md-3"><span class="required" >*</span><label><strong>{{'label.add.descriptionvalue'|translate}}</strong></label></div>
+                                <div class="col-md-2">&nbsp;<label><strong>{{'label.remove.row'|translate}}</strong></label> </div>
+                            </div>
+
+                            <div class="form-group" ng-repeat="taskextradetail in formData.taskextradetails track by $index">
+                                <ng-form name="formcalendarperiod" novalidate="" rc-submit="submit()">
+                                    <div class="col-md-3">
+                                        <select chosen="descriptions" id="description" name="descriptionName" ng-model="taskextradetail.id"
+                                                class="form-control"
+                                                ng-options="description.id as description.name for description in descriptions"
+                                                value="{{description.id}}" ng-required="isfeeRequired">
+                                            <option value=""> {{'label.menu.descriptionName' | translate}}</option></select>
+                                    </div>
+                                </ng-form>
+
+                                <ng-form name="descriptionValue" novalidate="" rc-submit="submit()">
+                                    <div class="col-md-3">
+                                        <input class="form-control" type="text" id="descriptionValue" name="descriptionValue" ng-model="taskextradetail.descriptionValue"  />
+                                        </select>
+                                    </div>
+                                </ng-form>
+
+                                <ng-form>
+                                    <div class="col-md-2"><!--<span><a ng-click="deleteCalendarDetails($index)"><i class="icon-remove icon-blur"></i></a></span> jjj-->
+                                      <button class="btn-warning" type="button"
+                                                data-ng-click="deletedescription($index)"><i class="icon-remove icon-white"></i>
+                                        </button>
+                                    </div>
+                                </ng-form>
+
+                            </div>
+                        </div>
+                        <div class="col-md-offset-4">
+                            <a id="cancel" ng-href="#/viewcenter/{{centerId}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                            <button id="save" type="submit" class="btn btn-primary" ng-hide="blockUI" ng-click="submit()"
+                                    has-permission='CREATE_TASK'>{{'label.button.save' | translate}}
+                            </button>
+                            <button class="btn btn-info" ng-show="blockUI"><strong>{{'label.button.processing' |
+                                translate}}</strong></button>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+
+</div>

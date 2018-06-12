@@ -1,0 +1,43 @@
+<div class="content-container" ng-controller="TaskControllerConfiguration">
+    <ul class="breadcrumb">
+        <li class="active">{{'label.anchor.taskconfiguration' | translate}}</li>
+    </ul>
+    <api-validate></api-validate>
+
+    <div >
+        <br/>
+        <div class="pull-right">
+            <a href="#/createtaskconfiguration" class="btn btn-primary" has-permission='CREATE_TASKCONFIGURATION'><i
+                    class="icon-plus icon-white"></i>
+                {{'label.button.createtaskconfiguration' | translate}}</a>
+                   </div>
+                   <br>
+            <div class="row">
+                <div class="row span" style="margin-left:-1px;margin-top: -20px">
+                    <div class="col-sm-12 col-md-12">
+                        <table class="table table-striped .width100">
+                            <thead>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.tasktype' | translate}}</strong></th>
+                                <th class="table-bold-loan"><strong>{{'label.input.noofdays' | translate}}</strong></th>
+                                <th class="table-bold-loan"><strong>{{'label.input.nooftask' | translate}}</strong></th>
+                                <th class="table-bold-loan"><strong>{{'label.input.completedBy' | translate}}</strong></th>
+                                <th class="table-bold-loan"><strong>{{'label.input.centertype'|translate}}</strong></th>
+                            </thead>
+                            </tr>
+                            <tbody>
+                            <tr ng-repeat="task in taskconfigure track by $index">
+                                <td class="pointer" data-ng-click="routeToeditTask(task.taskconfigurationId)">{{task.taskType}}</td>
+                                <td class="pointer" data-ng-click="routeToeditTask(task.taskconfigurationId)">{{task.nooftask}}</td>
+                                <td class="pointer" data-ng-click="routeToeditTask(task.taskconfigurationId)">{{task.noofdays }}</td>
+                                <td class="pointer" data-ng-click="routeToeditTask(task.taskconfigurationId)">{{task.completedBy }}</td>
+                                <td class="pointer" data-ng-click="routeToeditTask(task.taskconfigurationId)">{{task.centerType}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+    </div>
+        </div>
+    </div></div>
+

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<div class="content-container" ng-controller="ViewTaskController">
+    <ul class="breadcrumb">
+        <a href="#/viewcenter/{{centerId}}">{{'label.heading.viewTask' | translate}}</a></li>
+    </ul>
+     <div class="card-content">
+                <form name="viewtaskForm" novalidate="" rc-submit="submit()">
+                    <api-validate></api-validate>
+                    <div class="pull-right">
+                        <a href="#/editetask/{{taskId}}/{{centerId}}/{{officeId}}" class="btn btn-primary" has-permission='UPDATE_TASK'><i
+                                class="icon-edit icon-white"></i>
+                            {{'label.button.edit' | translate}}</a>
+                    </div>
+                    <fieldset>
+
+
+                            <legend>{{'label.heading.viewTask' | translate}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{'Task Extra Details'}}
+                             </legend>
+                        <div class="row" style="margin-left:-1px;margin-right: 1px;">
+                            <div class="col-sm-4 col-md-4">
+                                <table class="table table-striped table-bordered" >
+                                    <tr>
+                                        <th class="table-bold-loan"><strong>{{'label.input.tasktype' | translate}}</strong></th>
+                                        <td>{{taskData.taskType}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-bold-loan"><strong>{{'label.input.taskcreatedDate'  | translate}}</strong></th>
+                                        <td><span class="padded-td">{{taskData.taskcreatedDate|DateFormat}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-bold-loan"><strong>{{'label.input.expectedCompletedData'  | translate}}</strong></th>
+                                        <td><span class="padded-td">{{taskData.expectedCompletedDate|DateFormat}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-bold-loan"><strong>{{'label.input.completedDate'  | translate}}</strong></th>
+                                        <td><span class="padded-td">{{taskData.completedDate|DateFormat}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-bold-loan"><strong>{{'label.input.completedBy'  | translate}}</strong></th>
+                                        <td><span class="padded-td">{{taskData.staffName}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-bold-loan"><strong>{{'label.input.taskstatus'  | translate}}</strong></th>
+                                        <td><span class="padded-td">{{taskData.status.value}}</span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <table class="table table-striped table-bordered">
+                                    <th><strong>{{'label.heading.extraDetails'|translate}}</strong></th><th><strong>{{'label.heading.extraDetailsValue'|translate}}</strong></th>
+                                    <tr ng-repeat="taskdetail in taskdetailsData track by $index">
+                                      <td>{{taskdetail.detailsDescription}}</td><td>{{taskdetail.descriptionValue}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <legend>{{'label.input.note' | translate}} </legend>
+                            <table class="table table-striped table-bordered" >
+                                <tr>
+                                    <th class="table-bold-loan">{{'label.input.note' | translate}}</th>
+                                    <td>{{taskData.note}}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="row">
+                            <legend>{{'label.input.Attendende Details' | translate}}</legend>
+                            <table class="table table-striped table-bordered">
+                                <th><strong>{{'label.heading.name and clientId'|translate}}</strong></th><th><strong>{{'label.heading.attendence'|translate}}</strong></th>
+                                <tr ng-repeat="clientAttendences in clientAttendenceData track by $index">
+                                    <td>{{clientAttendences.clientName}}-{{clientAttendences.clientId}} </td><td>{{clientAttendences.clientAttendence.value}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </fieldset>
+                </form>
+     </div>
+</div>

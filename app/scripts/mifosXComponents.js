@@ -244,7 +244,15 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'organization/cashmgmt/CashierFundsAllocationSettlementController',
             'accounting/DefineOpeningBalancesController',
             'savings/JlgSavingsAccountController',
-            'savings/JlgSavingsAccountGroupController'
+            'savings/JlgSavingsAccountGroupController',
+            'task/CreateTaskController',
+            'task/EditTaskController',
+            'task/TaskController',
+            'task/ViewTaskController',
+            'task/CreateTaskConfigurationController',
+            'task/EditTaskConfigurationController',
+            'task/TaskControllerConfiguration',
+            'task/ViewTaskConfigurationController',
         ],
         filters: [
             'StatusLookup',

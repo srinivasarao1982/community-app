@@ -324,6 +324,11 @@
     "error.msg.loan.close.cannot.be.undone.before.client.transfer.date": " The date on which the loan is repaid in full cannot be earlier than client's transfer date of ({{params[0].value}}) ",
     "error.msg.loan.repayment.or.waiver.account.is.not.active" : "Loan account is not active",
     "error.msg.loan.cannot.delete" : "Loan Cannot be deleted once it disbursed",
+    "error.msg.field.blank.invalid":"Value of ({{params[0].value}}) field cannot be blank",
+    "error.msg.task.configurationexist":"Task Configuration alreay exist for center of taskType ({{params[0].value}})",
+    "error.msg.task.id.invalid":"Task Details Cannot be null for {{params[0].value}} ",
+    "error.msg.task.is .Active":"Task is in Active State for this center {{params[0].value}}",
+    "error.msg.task.id.invalid":"Task with identifier {{params[0].value}} does not exist",
 
     "#---------": "------------",
     "#Common loan/saving charges": "....",
@@ -342,9 +347,15 @@
     "label.anchor.donate":"Donate",
     "label.anchor.workingwithcode":"Working with code",
     "label.anchor.editclientbankdetails":"Update Client Bank Details",
+    "label.heading.task":"Task",
 
     "#Inputs": "..",
     "label.input.paymentdate":"Payment date",
+    "label.input.tasktype":"Task Type",
+    "label.input.taskcreatedate":"Task Created Date",
+    "label.input.expectedcompletedDate":"Expected Completed Date",
+    "label.input.staff":"Staff",
+    "label.input.note":"Note",
 
     "#---------": "------------",
 
@@ -407,6 +418,7 @@
 
     "#Menu Links": "..",
     "label.menu.office": "Office",
+    "label.menu.staff":"Select staff",
 
     "#Anchors": "..",
     "label.anchor.startpage": "Start Page",
@@ -446,6 +458,7 @@
     "label.anchor.keyboardshortcut":"Keyboard Shortcuts",
     "label.anchor.collectionsheet":"Collection sheet",
     "label.anchor.save":"Save",
+    "label.anchor.taskconfiguration":"Task Configuration",
 
     "#Inputs": "..",
     "label.input.searchbyuser": "Search by user",
@@ -464,6 +477,14 @@
     "label.input.selectpassbook":"Select Passbook",
     "label.input.micrcode":"Micr Code",
     "label.input.bankname":"Bank Name",
+    "label.input.taskcreatedDate":"Task Created Date",
+    "label.input.expectedCompletedData":"Expected Completed Date",
+    "label.input.completedBy":"Completed By",
+    "label.input.taskstatus":"Task Status",
+    "label.input.completedDate":"Completed Date",
+    "label.input.Attendende Details":"Attendence Details",
+
+
 
     "#Buttons": "..",
     "label.button.login": "Login",
@@ -480,6 +501,8 @@
     "label.button.resetPassword": "Reset Password",
     "label.button.viewpermissions":"View Permissions",
     "label.button.bulkjlpartialloan":"Partial Loan Application",
+    "label.button.createtask":"Create Task",
+    "label.button.addextradetails":"Add Extra Details",
 
     "#Misc Labels": "..",
     "label.youneedtologintoaccessthisarea": "You need to login to access this area",
@@ -527,6 +550,15 @@
     "label.heading.withdrawn":"Client Withdrawn",
     "label.heading.clientsbankdetails":"Client Bank Details",
     "label.heading.rpdonumber":"RPDO number",
+    "label.heading.viewTask":"View Task",
+    "label.heading.edittask":"Edit Task",
+    "label.heading.taskDetails":"Task Deatils",
+    "label.heading.attendenceDetails":"Attendence Details",
+    "label.heading.name and clientId":"Name - ClientId",
+    "label.heading.extraDetails":"Extra Deatails",
+    "label.heading.extraDetailsValue":"Extra Details Value",
+    "label.heading.attendence":"Attendence",
+    "label.input.taskStaus":" Task Status",
     "#Anchors": "..",
     "label.anchor.clients": "Clients",
     "label.anchor.createclient": "Create Client",
@@ -541,6 +573,8 @@
     "label.anchor.rejecttransfer": "Reject Transfer Client",
     "label.anchor.undotransfer": "Undo Transfer Client",
     "label.anchor.reactivate":"Reactivate",
+    "label.anchor.editTask":"Edit Task",
+
 
     "#Inputs": "..",
     "label.input.filterbynameaccno": "Filter display by name/account#/staff/office",
@@ -640,6 +674,7 @@
     "error.msg.client.close.is.under.transfer": "Client under Transfer cannot be closed",
     "error.msg.clients.submittedOnDate.after.activation.date":"Submitted on date cannot be after the activation date",
     "validation.msg.client.closureReasonId.cannot.be.blank":"Closure reason cannot be blank",
+    "error.msg.nooftaskexceed":"no of task is increasing than configure value",
 
     "#--------": "------------",
 
@@ -672,6 +707,7 @@
     "label.menu.selectstaff": "Select Staff",
     "label.menu.selectgroup": "Select Group",
     "label.menu.gender": "Select Gender",
+    "label.menu.attendence":"Select Attendence",
 
     "#Anchors": "..",
     "label.anchor.groups": "Groups",
@@ -679,6 +715,13 @@
     "label.anchor.attachmeeting": "Attach Meeting",
     "label.anchor.editmeeting": "Edit Meeting",
     "label.anchor.creategroup": "Create Group",
+    "label.anchor.createTask":"Create Task",
+    "label.heading.createtask":"Create Task",
+    "label.input.tasktype":"Task Type",
+    "label.input.compltedby":"Completed By",
+    "label.add.taskdescription":"Task Description",
+    "label.add.descriptionvalue":"Description Value",
+    "label.menu.descriptionName":"Description Name",
 
     "#Inputs": "..",
     "label.input.role": "Role",
@@ -710,6 +753,7 @@
     "label.button.attachmeeting": "Attach Meeting",
     "label.button.editcalendarbasedonmeetingdates":"Change Future Meetings",
     "label.button.forcedsubmit":"Forced Submit",
+    "label.button.edittaskconfiguration" :"Edit Task Configuration",
 
     "#Misc Labels": "..",
     "label.nextmeetingon": "Next meeting on",
@@ -3473,6 +3517,7 @@
 
     "label.anchor.tellercashmanagement":"Teller / Cashier Management",
     "label.view.tellercashmanagement":"Manage Tellers / Cashiers and Cash Allocation and Settlement",
+    "label.view.taskconfiguration":"Manage Tranning Task CGT/GRT/GQT",
     "label.anchor.tellers":"Tellers",
     "label.anchor.cashiers":"Cashiers",
     "label.anchor.createTeller":"Create Teller",
@@ -3494,6 +3539,8 @@
     "label.heading.cashmgmt.createTeller":"Create Teller",
     "label.heading.cashmgmt.cashier.allocateFunds":"Allocate Funds To Cashier",
     "label.input.teller.name":"Teller Name",
+    "label.input.noofdays":"No Of Days",
+    "label.input.centertype":"Center Type",
     "label.input.teller.office":"Office",
     "label.input.teller.startDate":"Start Date",
     "label.input.teller.endDate":"End Date",
@@ -3519,6 +3566,8 @@
     "label.input.teller.cashier.endTime":"Till (time)",
     "label.anchor.editteller": "Edit Teller",
     "label.anchor.editcashier": "Edit Cashier",
+    "label.anchor.edittaskconfiguration":"Edit Task Configuration",
+    "label.heading.editTaskCnfiguration":"Edit Task Configuration",
     "validation.msg.teller.status.cannot.be.blank":"Status must be specified",
     "validation.msg.teller.startDate.cannot.be.blank":"Start Date must be specified",
     "label.button.cashier.allocatefunds":" Allocate Cash",
@@ -3539,6 +3588,7 @@
     "label.input.teller.cashiertxn.txnAmount": "Amount",
     "label.input.teller.cashiertxn.txnNote": "Notes/Comments",
     "label.button.addpaymentdetail": "Add Payment Detail",
+    "label.button.createtaskconfiguration":"Create Task Configuration",
     "label.anchor.individualcollectionsheet": "Individual Collection Sheet",
 
     "------------------": "------------",
@@ -3555,11 +3605,17 @@
 
     "#Working Days": "....",
     "label.anchor.workingDays":"Working Days",
+    "label.anchor.viewtaskconfiguration":"View Task Configuration",
     "label.view.workingDays":"Define working days and configure behavior of payments due on holidays",
     "label.heading.workingDays":"Working Days",
+    "label.heading.viewTaskCnfiguration":"View Task Congiguration",
+    "label.heading.createTaskCnfiguration":"Create Task Configuration",
     "label.input.workingDays":"Working Days",
     "label.input.paymentsDueOnHolidays":"Payments due on non working days",
     "label.input.extendTermForDailyRepayments" : "Extend the term for loans following a daily repayment schedule",
+    "label.input.centerType":"Is New Center",
+    "label.input.iscbcheckRequired":"Is Cb CheckRequired",
+    "label.input.nooftask":"No Of task",
 
     "#----------------------": "------------",
 

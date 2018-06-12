@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<div class="content-container" ng-controller="ViewTaskConfigurationController">
+    <ul class="breadcrumb">
+        <li><a href="#/taskconfiguration">{{'label.anchor.viewtaskconfiguration' | translate}}</a></li>
+    </ul>
+    <div class="">
+        <div class="pull-right">
+        <a href="#/edittaskconfiguration/{{taskData.taskconfigurationId}}" class="btn btn-primary" has-permission='UPDATE_TASKCONFIGURATION'><i
+                class="icon-edit icon-white"></i>
+            {{'label.button.edittaskconfiguration' | translate}}</a>
+        </div>
+        <br>
+        <br>
+        <form name="viewtaskconfiguration" novalidate="" class="card form-horizontal well" rc-submit="submit()">
+            <api-validate></api-validate>
+            <fieldset>
+                <legend>{{'label.heading.viewTaskCnfiguration' | translate}}</legend>
+                <div class="row" style="margin-left:-1px;margin-right: 1px;">
+                    <div class="col-sm-4 col-md-4">
+                        <table class="table table-striped table-bordered" >
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.tasktype' | translate}}</strong></th>
+                                <td>{{taskData.taskType}}</td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.compltedby'  | translate}}</strong></th>
+                                <td><span class="padded-td">{{taskData.completedBy}}</span></td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.noofdays'  | translate}}</strong></th>
+                                <td><span class="padded-td">{{taskData.noofdays}}</span></td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.nooftask'  | translate}}</strong></th>
+                                <td><span class="padded-td">{{taskData.nooftask}}</span></td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.centerType'  | translate}}</strong></th>
+                                <td><span class="padded-td"> {{taskData.centerType}}</span></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+</div>

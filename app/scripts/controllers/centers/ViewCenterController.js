@@ -7,10 +7,17 @@
             scope.formData = {};
             scope.report = false;
             scope.hidePentahoReport = true;
+            scope.centerId=routeParams.id;
+            scope.isnewcenter
+            //scope.tasks=[];
+
             resourceFactory.centerResource.get({centerId: routeParams.id, associations: 'groupMembers,collectionMeetingCalendar'}, function (data) {
                 scope.center = data;
-                $rootScope.officeName= data.officeName;
-                $rootScope.officeId = data.officeId;
+                scope.officeId1=data.officeId;
+                scope.isnewcenter=data.isnewCenter;
+                scope.iscbcheckrequired=data.iscbCheckRequired;
+                $rootScope.officeName= Name;
+                $rootdata.officeScope.officeId = data.officeId;
                 $rootScope.centerName = data.name;
                 scope.isClosedCenter = scope.center.status.value == 'Closed';
                 scope.staffData.staffId = data.staffId;
@@ -19,10 +26,15 @@
             scope.routeTo = function (id) {
                 location.path('/viewsavingaccount/' + id);
             };
+            scope.routeToeditTask = function (id,centerId,officeId) {
+                location.path('/viewtask/' + id+"/"+centerId+"/"+officeId);
+            };
             resourceFactory.runReportsResource.get({reportSource: 'GroupSummaryCounts', genericResultSet: 'false', R_groupId: routeParams.id}, function (data) {
                 scope.summary = data[0];
             });
-
+            resourceFactory.taskResourceforGet.get({centerId:routeParams.id},function(data){
+                scope.tasks=data;
+            });
             resourceFactory.centerAccountResource.get({centerId: routeParams.id}, function (data) {
                 scope.accounts = data;
             });

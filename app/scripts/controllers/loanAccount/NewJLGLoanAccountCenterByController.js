@@ -65,17 +65,29 @@
                   //  scope.previewRepayments(null,data.principal,scope.clientId,data.product.charges,null,null);
                     for( var i in scope.groups ) {
                         scope.clients[i] = scope.groups[i].activeClientMembers.map(function (client) {
-                                if(scope.acceptedclientsIdOptions.indexOf(client.id) !== -1) {
-                            client.principal = data.product.principal;
-                            client.groupId=scope.groups[i].id;
-                            client.charges = data.product.charges.map(function (charge) {
-                                charge.isDeleted = false;
-                                return _.clone(charge);
-                            });
-                            scope.selectedClients.push(client);
-                            scope.selectedClients1.push(client);
-                            return client;
+                            if(data.center.iscbCheckRequired=='Yes'){
+                                if (scope.acceptedclientsIdOptions.indexOf(client.id) !== -1) {
+                                    client.principal = data.product.principal;
+                                    client.groupId = scope.groups[i].id;
+                                    client.charges = data.product.charges.map(function (charge) {
+                                        charge.isDeleted = false;
+                                        return _.clone(charge);
+                                    });
+                                    scope.selectedClients.push(client);
+                                    scope.selectedClients1.push(client);
+                                    return client;
                                 }
+                            }else{
+                                client.principal = data.product.principal;
+                                client.groupId = scope.groups[i].id;
+                                client.charges = data.product.charges.map(function (charge) {
+                                    charge.isDeleted = false;
+                                    return _.clone(charge);
+                                });
+                                scope.selectedClients.push(client);
+                                scope.selectedClients1.push(client);
+                                return client;
+                            }
                         });
 
                         scope.groups[i].activeClientMembers=scope.selectedClients1;

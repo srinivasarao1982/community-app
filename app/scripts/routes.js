@@ -181,6 +181,18 @@
             .when('/organization', {
                 templateUrl: 'views/administration/organization.html'
             })
+            .when('/taskconfiguration', {
+                templateUrl: 'views/task/taskconfiguration.html'
+            })
+            .when('/viewtaskconfiguration/:id', {
+                templateUrl: 'views/task/viewtskconfiguration.html'
+            })
+            .when('/createtaskconfiguration', {
+                templateUrl: 'views/task/createtaskconfiguration.html'
+            })
+            .when('/edittaskconfiguration/:id', {
+                templateUrl: 'views/task/edittaskconfiguration.html'
+            })
             .when('/system', {
                 templateUrl: 'views/administration/system.html'
             })
@@ -598,6 +610,9 @@
             .when('/viewcenter/:id', {
                 templateUrl: 'views/centers/viewcenter.html'
             })
+             .when('/viewtask/:id/:centerId/:officeId', {
+              templateUrl: 'views/task/viewtask.html'
+             })
             .when('/bulkundotransactions/:centerId', {
                 templateUrl: 'views/centers/bulkundotransactions.html'
             })
@@ -744,6 +759,15 @@
             })
             .when('/viewtellers/:id', {
                 templateUrl: 'views/organization/cashmgmt/viewTeller.html'
+            })
+            .when('/createtask/:id/:officeId', {
+                templateUrl: 'views/task/createtask.html'
+            })
+            .when('/editetask/:id/:centerId/:officeId', {
+                templateUrl: 'views/task/edittask.html'
+            })
+            .when('/viewtask/:id', {
+                templateUrl: 'views/task/viewtask.html'
             })
             .when('/tellers/:tellerId/cashiers', {
                 templateUrl: 'views/organization/cashmgmt/cashiersForTeller.html'

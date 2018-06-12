@@ -50,6 +50,20 @@
                                is-open="opened" min="'2000-01-01'" max="restrictDate" class="form-control"/>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">{{'label.input.centerType' | translate}}:</label>
+
+                    <div class="col-sm-3">
+                        <input type="checkbox"  ng-model="formData.isnewCenter"  ng-checked="isnewcentes"></input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">{{'label.input.iscbcheckRequired' | translate}}:</label>
+
+                    <div class="col-sm-3">
+                        <input type="checkbox"  ng-model="formData.iscbcheckRequired" ng-checked="iscbcheckrequireds"></input>
+                    </div>
+                </div>
                 <div class="col-md-offset-2 paddedleft120">
                     <a href="#/viewcenter/{{edit.id}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
                     <button type="button" class="btn btn-primary" data-ng-click="updateGroup()" has-permission='UPDATE_CENTER'>{{'label.button.save' |

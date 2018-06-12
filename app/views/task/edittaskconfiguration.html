@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<div class="content-container" ng-controller="EditTaskConfigurationController">
+    <ul class="breadcrumb">
+        <li><a href="#/viewtaskconfiguration/{{taskconfigId}}">{{'label.anchor.viewtaskconfiguration' | translate}}</a></li>
+    </ul>
+    <div class="">
+        <form name="edittaskconfiguration" novalidate="" class="card form-horizontal well" rc-submit="submit()">
+            <api-validate></api-validate>
+            <fieldset>
+                <legend>{{'label.heading.editTaskCnfiguration' | translate}}</legend>
+                <div class="form-group">
+                    <label class="control-label col-sm-2"><strong>
+                        {{'label.input.tasktype' | translate}} <span ng-show="forceOffice == null" class="required">*</span>
+                    </strong></label>
+                    <div class="col-sm-3">
+                        <div>
+                            <select  id="taskTypeId" ng-model="formData.tasktypeId"  class="form-control" required
+                                    late-Validate
+                                    ng-options="tasktype.id as tasktype.name for tasktype in taskTypes" value="{{tasktype.id}}"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2"><strong>{{'label.input.compltedby' | translate}}<span class="required" >*</span></strong></label>
+                    <div class="col-sm-3">
+                        <select   id="staffId" ng-model="formData.completedby"  class="form-control"
+                                 ng-options="staff.id as staff.name for staff in completedBy" value="{{staff.id}}">
+                            <option value="">--{{'label.menu.staff' | translate}}--</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2"><strong>{{'label.input.noofdays' | translate}}<span class="required" >*</span></strong></label>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" id="noofdays" name="noOfdays" ng-model="formData.noofdays"  />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2"><strong>{{'label.input.nooftask' | translate}}<span class="required" >*</span></strong></label>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" id="nooftask" name="nooftask" ng-model="formData.nooftask"  />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2"><strong>{{'label.input.centerType' | translate}}<span class="required" >*</span></strong></label>
+                    <div class="col-sm-3">
+                        <input type="checkbox"  ng-model="formData.centertype"  ng-checked="centertypes"></input>
+
+                    </div>
+                </div>
+                <div class="col-md-offset-4">
+                    <a id="cancel" ng-href="#/viewtaskconfiguration/{{taskconfigId}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                    <button id="save" type="submit" class="btn btn-primary" ng-hide="blockUI"
+                            has-permission='EDIT_TASKCONFIGURATION'>{{'label.button.save' | translate}}
+                    </button>
+                    <button class="btn btn-info" ng-show="blockUI"><strong>{{'label.button.processing' |
+                        translate}}</strong></button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+
+</div>
