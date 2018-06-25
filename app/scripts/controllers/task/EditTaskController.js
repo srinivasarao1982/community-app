@@ -102,6 +102,7 @@
                 }
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
+                this.formData.centerId=routeParams.centerId;
                 this.formData.feestructureDetails = scope.formData.feestructureDetails
                 resourceFactory.taskResourceforupdate.update({'taskId': routeParams.id}, this.formData, function (data) {
                     location.path('/viewtask/' + routeParams.id+"/"+routeParams.centerId+"/"+routeParams.officeId);

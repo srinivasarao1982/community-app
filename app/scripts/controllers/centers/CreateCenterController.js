@@ -70,7 +70,13 @@
                 for (var i in scope.addedGroups) {
                     scope.formData.groupMembers[i] = scope.addedGroups[i].id;
                 }
+                this.formData.isnewCenter=1;
+                if(scope.formData.iscbcheckRequired){
+                    this.formData.iscbcheckRequired=1;
+                }else{
+                    this.formData.iscbcheckRequired=0;
 
+                }
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
                 this.formData.active = this.formData.active || false;

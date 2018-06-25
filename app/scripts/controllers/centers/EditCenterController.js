@@ -43,16 +43,26 @@
                 this.formData.activationDate = reqDate;
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
-                if(scope.formData.isnewCenter){
-                    this.formData.isnewCenter=1;
+                if(angular.isUndefined(scope.formData.isnewCenter)){
+                if(scope.formData.isnewCenter||scope.isnewcentes) {
+                    this.formData.isnewCenter = 1;
+                } }else {
+                    if (scope.formData.isnewCenter) {
+                        this.formData.isnewCenter = 1;
 
-                }else{
-                    this.formData.isnewCenter=0;
+                    } else {
+                        this.formData.isnewCenter = 0;
+                    }
                 }
-                if(scope.formData.iscbcheckRequired){
-                    this.formData.iscbcheckRequired=1;
-                }else{
-                    this.formData.iscbcheckRequired=0;
+                if(angular.isUndefined(scope.formData.iscbcheckRequired)){
+                    if(scope.formData.iscbcheckRequired||scope.iscbcheckrequireds){
+                        this.formData.iscbcheckRequired=1;
+                }}else {
+                    if (scope.formData.iscbcheckRequired ) {
+                        this.formData.iscbcheckRequired = 1;
+                    } else {
+                        this.formData.iscbcheckRequired = 0;
+                    }
                 }
                 resourceFactory.centerResource.update({centerId: routeParams.id}, this.formData, function (data) {
                     location.path('/viewcenter/' + routeParams.id);
