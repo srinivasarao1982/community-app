@@ -50,7 +50,7 @@
                 this.formData.dateFormat = scope.df;
                 this.formData.centerId=routeParams.id;
                 this.formData.officeId=routeParams.officeId;
-                this.formData.staffId=1.
+                //this.formData.staffId=1.
                // this.formData.expectedcompleteddate='12 May 2017';
              //   this.formData.feeDetails = scope.formData.feeDetails
                 resourceFactory.taskResourcesave.save(this.formData, function (data) {

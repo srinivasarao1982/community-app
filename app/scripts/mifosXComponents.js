@@ -247,7 +247,6 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'savings/JlgSavingsAccountGroupController',
             'task/CreateTaskController',
             'task/EditTaskController',
-            'task/TaskController',
             'task/ViewTaskController',
             'task/CreateTaskConfigurationController',
             'task/EditTaskConfigurationController',
