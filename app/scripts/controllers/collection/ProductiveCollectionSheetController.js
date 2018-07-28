@@ -21,7 +21,7 @@
             scope.details = false;
             scope.showPaymentDetails = false;
             scope.showerror=false;
-
+            scope.showErrors1=false;
 
             resourceFactory.centerResource.getAllMeetingFallCenters(params, function (data) {
                 if (data[0]) {
@@ -333,7 +333,7 @@
                     scope.showerror=true;
                 }
                 if( !(/^\d+$/.test(scope.paymentDetail.receiptNumber))){
-                    scope.showErrors = true;
+                    scope.showErrors1 = true;
                 }
                 scope.formData.bankNumber = scope.paymentDetail.bankNumber;
 		        scope.formData.forcedSubmitOfCollectionSheet=false;

@@ -7,6 +7,9 @@
     <div ng-show="showerror==true">
        <p style="color: #ff0000" >{{'validation.msg.receipt.number.mandatory'|translate}}</p>
     </div>
+    <div ng-show="showErrors1==true">
+        <p style="color: #ff0000" >Receipt Number must be numeric</p>
+    </div>
     <div>
         <div class="col-md-offset-9 paddedtop">
             <button class="btn btn-primary" ng-click="viewFullScreen()">{{'label.button.viewfullscreen' | translate}}

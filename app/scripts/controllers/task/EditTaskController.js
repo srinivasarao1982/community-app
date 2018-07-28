@@ -68,7 +68,7 @@
                 scope.clientId = scope.groups[0].activeClientMembers[0].id;
                 for (var i in scope.groups) {
                     scope.clients[i] = scope.groups[i].activeClientMembers.map(function (client) {
-
+                       client.attendanceType=1;
                         scope.selectedClients.push(client);
                         scope.selectedClients1.push(client);
                         return client;
