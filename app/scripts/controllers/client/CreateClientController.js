@@ -188,8 +188,9 @@
                 //console.log(JSON.stringify(clientData));
                 data = clientData.clientBasicDetails;
                 scope.salutations = clientData.salutation;
-                scope.formData.clientExt.salutation = scope.salutations[0].id;
+                scope.formData.clientExt.salutation = scope.salutations[2].id;
                 scope.martialStatusOptions = clientData.maritalStatus;
+                scope.formData.clientExt.maritalStatus=clientData.maritalStatus[0].id;
                 scope.ProfessionOptions = clientData.profession;
                 scope.eductionalQualificationOptions = clientData.educationQualification;
                 scope.annualIncomeOptions = clientData.annualIncome;

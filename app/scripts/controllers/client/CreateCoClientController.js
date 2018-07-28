@@ -19,7 +19,7 @@
 
             resourceFactory.coClientTemplateResource.get({}, function (coClientData) {
                 scope.spouseRelationShip = coClientData.spouseRelationShip;
-                scope.formData.coClientData[0].relationship = scope.spouseRelationShip[0].id;
+                scope.formData.coClientData[0].relationship = scope.spouseRelationShip[1].id;
                 scope.districtOptins = coClientData.district;
                 scope.stateOptions = coClientData.state;
                 scope.formData.naddress[0].state = scope.stateOptions[0].id;

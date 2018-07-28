@@ -428,7 +428,10 @@
                         {
                             scope.showErrors = true;
                             scope.showPaymentDetails = true;
-
+                        }
+                        if( !(/^\d+$/.test(this.formData.receiptNumber))){
+                            scope.showErrors = true;
+                            scope.showPaymentDetails = true;
                         }
                     }
                     if(!scope.showErrors){

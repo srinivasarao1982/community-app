@@ -332,6 +332,9 @@
                 if(scope.paymentDetail.receiptNumber=="") {
                     scope.showerror=true;
                 }
+                if( !(/^\d+$/.test(scope.paymentDetail.receiptNumber))){
+                    scope.showErrors = true;
+                }
                 scope.formData.bankNumber = scope.paymentDetail.bankNumber;
 		        scope.formData.forcedSubmitOfCollectionSheet=false;
                 if (scope.forcedSubmit == true) {
