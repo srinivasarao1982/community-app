@@ -1995,7 +1995,9 @@
 
     "error.msg.savingsaccount.unknown.data.integrity.issue": "An unexpected problem occurred when creating/updating the savings account. Error logged on server.",
     "error.msg.duplicate.document.key":"Duplicate DocumentKey  {{params[0].value}}",
-     "error.msg.duplicate.receipt.number":" Duplicate Receipt Number {{params[0].value}}",
+     "error.msg.duplicate.receipt.number":"Duplicate Receipt Number {{params[0].value}}",
+    "error.msg.receipt.number.mandatory":"Receipt Number is Mandatory {{params[0].value}}",
+    "error.msg.receipt.number.numeric":"Receipt Number must be numeric {{params[0].value}}",
   "validation.msg.savingsaccount.submittedOnDate.cannot.be.blank": "Submitted on date is mandatory.",
     "validation.msg.savingsaccount.activationDate.cannot.be.blank": "Activation date is mandatory when setting account as `Active`.",
     "validation.msg.savingsaccount.accountNo.cannot.be.blank": "Account no. is mandatory.",

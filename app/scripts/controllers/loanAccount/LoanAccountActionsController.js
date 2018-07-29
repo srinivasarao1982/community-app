@@ -430,10 +430,6 @@
                             scope.showErrors = true;
                             scope.showPaymentDetails = true;
                         }
-                        if( !(/^\d+$/.test(this.formData.receiptNumber))){
-                            scope.showErrors1 = true;
-                            scope.showPaymentDetails = true;
-                        }
                     }
                     if(!scope.showErrors){
                     params.loanId = scope.accountId;
