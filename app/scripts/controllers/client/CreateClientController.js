@@ -777,6 +777,9 @@
 
             scope.submitAndAccept = function () {
                 scope.addressaboveSetting();
+                this.formData.mobileNo=scope.formData.naddress[1].mobileNo;
+                this.formData.mobileNo=scope.formData.naddress[0].mobileNo;
+
                    var reqDate = dateFilter(scope.first.date, scope.df);
 
                     this.formData.locale = scope.optlang.code;
@@ -801,6 +804,7 @@
                         this.formData.dateOfBirth = dateFilter(scope.formData.dateOfBirth, scope.df);
                     }
 
+
                     if (!scope.opensavingsproduct) {
                         this.formData.savingsProductId = null;
                     }
@@ -818,12 +822,14 @@
                                 for (var j = 0; j < scope.addressTypes.length; j++) {
                                     if (scope.addressTypes[j].name == 'Comuniation Address') {
                                         this.formData.naddress[i].addressType = scope.addressTypes[j].id;
+
                                     }
                                 }
                             } else if (i == 1) {
                                 for (var j = 0; j < scope.addressTypes.length; j++) {
                                     if (scope.addressTypes[j].name == 'KYC address') {
                                         this.formData.naddress[i].addressType = scope.addressTypes[j].id;
+                                        //this.formData.mobileNo=scope.formData.naddress[0].mobileNo;
                                     }
                                 }
                             }

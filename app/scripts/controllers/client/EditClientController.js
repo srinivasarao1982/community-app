@@ -576,7 +576,10 @@
                 scope.addressaboveSetting();
                     this.formData.locale = scope.optlang.code;
                     this.formData.dateFormat = scope.df;
-                    if (scope.opensavingsproduct == 'false') {
+                this.formData.mobileNo=scope.formData.naddress[1].mobileNo;
+                this.formData.mobileNo=scope.formData.naddress[0].mobileNo;
+
+                if (scope.opensavingsproduct == 'false') {
                         this.formData.savingsProductId = null;
                     }
                     if (scope.choice === 1) {
@@ -592,6 +595,10 @@
                     if (scope.formData.submittedOnDate) {
                         this.formData.submittedOnDate = dateFilter(scope.formData.submittedOnDate, scope.df);
                     }
+
+                if (scope.formData.activationDate) {
+                    this.formData.activationDate = dateFilter(scope.formData.activationDate, scope.df);
+                }
 
                     if (this.formData.familyDetails) {
                         for (var i = 0; i < this.formData.familyDetails.length; i++) {
