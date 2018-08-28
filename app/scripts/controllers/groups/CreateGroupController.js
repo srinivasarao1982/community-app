@@ -15,11 +15,17 @@
             scope.formData = {};
             scope.formData.clientMembers = [];
             scope.forceOffice = null;
-
+            scope.rblOffice=[];
             var requestParams = {orderBy: 'name', sortOrder: 'ASC', staffInSelectedOfficeOnly: true};
             if (routeParams.centerId) {
                 requestParams.centerId = routeParams.centerId;
             }
+            resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                scope.rblOffice=data;
+            });
+            resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:2},function(data){
+                scope.sequenceNumber=data.sequenceNo;
+            });
             resourceFactory.groupTemplateResource.get(requestParams, function (data) {
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
@@ -61,6 +67,12 @@
                 }
             };
             scope.changeOffice = function (officeId) {
+                for(var i=0;i<scope.rblOffice.length;i++){
+                    if(officeId==scope.rblOffice[i].id){
+                        scope.formData.externalId= scope.sequenceNumber;
+                        break;
+                    }
+                }
                 scope.addedClients = [];
                 scope.available = [];
                 resourceFactory.groupTemplateResource.get({staffInSelectedOfficeOnly: false, officeId: officeId,staffInSelectedOfficeOnly:true
@@ -109,7 +121,12 @@
                 this.formData.dateFormat = scope.df;
                 this.formData.active = this.formData.active || false;
                 resourceFactory.groupResource.save(this.formData, function (data) {
-                    location.path('/viewgroup/' + data.resourceId);
+                    var request={
+                        "sequenceNumber":scope.sequenceNumber+1
+                    }
+                    resourceFactory.sequenceNumberResource.update({entityId:2},request,function(data){
+                        location.path('/viewgroup/' + data.resourceId);
+                    });
                 });
             };
         }

@@ -17,6 +17,18 @@
             scope.routeToMem = function (id) {
                 location.path('/viewclient/' + id);
             };
+            scope.groupTypeOptions =[{"id":1,"name":"SHG"},{"id":2,"name":"JLG"}];
+            scope.groupId=routeParams.id;
+
+            resourceFactory.rblgroupresource.get({groupId:routeParams.id},function (data) {
+                scope.groupExtra=data;
+                if(scope.groupExtra.groupType==1){
+                    scope.groupExtra.groupType="SHG";
+                }else{
+                    scope.groupExtra.groupType="JLG";
+
+                }
+            });
             resourceFactory.groupResource.get({groupId: routeParams.id, associations: 'all'}, function (data) {
                 scope.group = data;
                 $rootScope.groupName = data.centerName;

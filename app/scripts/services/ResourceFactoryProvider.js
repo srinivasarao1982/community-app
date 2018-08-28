@@ -542,7 +542,26 @@
                         update: {method: 'PUT', params: {taskconfigurationId:'@taskconfigurationId'}},
 
                     }),
+                    rblcenterresource:defineResource(apiVer + "/rbl/rblcenter/:centerId", {centerId:'@centerId'}, {
+                        update: {method: 'PUT', params: {centerId:'@centerId'}},
+                        get: {method: 'GET', params: {centerId:'@centerId'},isArray : false},
 
+                    }),
+                    rblcustomerresource:defineResource(apiVer + "/rbl/rblclients/:customerId", {customerId:'@customerId'}, {
+                        update: {method: 'PUT', params: {customerId:'@centerId'}},
+                        get: {method: 'GET', params: {customerId:'@customerId'},isArray : false},
+                    }),
+                    rblgroupresource:defineResource(apiVer + "/rbl/rblgroup/:groupId", {groupId:'@groupId'}, {
+                        update: {method: 'PUT', params: {groupId:'@groupId'}},
+                        get: {method: 'GET', params: {groupId:'@groupId'},isArray : false},
+                    }),
+                    rblloanresource:defineResource(apiVer + "/rbl/rblloan/:loanId", {groupId:'@loanId'}, {
+                        update: {method: 'PUT', params: {loanId:'@loanId'}},
+                        get: {method: 'GET', params: {loanId:'@loanId'},isArray : false},
+                    }),
+                    sequenceNumberResource: defineResource(apiVer + "/offices/sequenceNumber/:entityId", {entityId: "@entityId"}, {
+                         update: { method: 'PUT', params: {entityId:'@entityId'}},
+                    }),
                 };
             }];
         }

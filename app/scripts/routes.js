@@ -793,6 +793,30 @@
             .when('/tellers/:tellerId/editcashier/:id', {
                 templateUrl: 'views/organization/cashmgmt/editcashier.html'
             })
+            .when('/createclientextraDetails/:clientId', {
+                templateUrl: 'views/rbl/createrblcustomer.html'
+            })
+            .when('/editclientextraDetails/:clientId', {
+                templateUrl: 'views/rbl/editrblcustomer.html'
+            })
+            .when('/createrblcenterextradetails/:centerId', {
+                templateUrl: 'views/rbl/createrblcenter.html'
+            })
+            .when('/editrblcenterextradetails/:centerId', {
+                templateUrl: 'views/rbl/editrblcenter.html'
+            })
+            .when('/creategroupextradetails/:groupId', {
+                templateUrl: 'views/rbl/createrblgroup.html'
+            })
+            .when('/editgroupextradetails/:groupId', {
+                templateUrl: 'views/rbl/editrblgroup.html'
+            })
+            .when('/createloanextradeatils/:loanId', {
+                templateUrl: 'views/rbl/createrblloan.html'
+            })
+            .when('/editloanextradeatils/:loanId', {
+                templateUrl: 'views/rbl/editrblloan.html'
+            })
             ;
         $locationProvider.html5Mode(false);
     };

@@ -1,0 +1,185 @@
+<div class="col-md-12">
+    <ul class="breadcrumb">
+        <li><a href="#/centers">{{'label.anchor.customersextraDetails' | translate}}</a></li>
+        <li class="active">{{'label.anchor.customercenterextraDetails' | translate}}</li>
+    </ul>
+    <form name="createrblcustomerform" novalidate="" class="form-horizontal well" ng-controller="CreateRblCustomerController"
+          rc-submit="submit()">
+        <api-validate></api-validate>
+        <fieldset>
+            <legend>{{'label.heading.clientExtraDetails' | translate}}</legend>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pensioncard">{{'label.input.pensionCard' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input ng-autofocus="true" type="text" id="pensioncard" name="pensioncard" maxlength="50" ng-model="formData.pensioncard" class="form-control" required
+                           late-Validate/>
+                    <span class="required"
+                          ng-show="createrblcustomerform.pensioncard.$error.maxlength">not more than 50 digit</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="gurdainName">{{'label.input.gurdianName' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input ng-autofocus="true" type="text" id="gurdainName" name="gurdainName" maxlength="100" ng-model="formData.gurdainName" class="form-control" required
+                           late-Validate/>
+                    <span class="required"
+                          ng-show="createrblcustomerform.gurdainName.$error.maxlength">not more than 100 digit</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="gurdiandateofBirth">{{'label.input.gurdianDateofBirth' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input id="gurdiandateofBirth" type="text" datepicker-pop="dd MMMM yyyy" ng-model="formData.gurdiandateofBirth"
+                           is-open="opened" min="'2000-01-01'" max="restrictDate" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="spouseName">{{'label.input.spouseName' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input ng-autofocus="true" type="text" id="spouseName" name="spouseName" maxlength="100" ng-model="formData.spouseName" class="form-control" required
+                           late-Validate/>
+                    <span class="required"
+                          ng-show="createrblcustomerform.spouseName.maxlength">not more than 100 digit</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="spousedateofbIrt">{{'label.input.spouseDateofBirth' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input id="spousedateofbIrt" type="text" datepicker-pop="dd MMMM yyyy" ng-model="formData.spousedateofbIrt"
+                           is-open="opened" min="'2000-01-01'" max="restrictDate" class="form-control"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="health">{{'label.input.health' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-md-3">
+                    <select id="health" name="health" ng-model="formData.health" class="form-control"
+                            ng-options="health.id as health.name for health in healthOptions" value="{{health.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
+                    <span class="error" ng-show="submitted && createrblcustomerform.health.$error.required">{{'label.error.required'|translate}}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="language">{{'label.input.language' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-md-3">
+                    <select id="language" name="language" ng-model="formData.language" class="form-control"
+                            ng-options="language.id as language.name for language in languageOptions" value="{{language.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
+                    <span class="error" ng-show="submitted && createrblcustomerform.language.$error.required">{{'label.error.required'|translate}}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="language">{{'label.input.cardissueFl' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-md-3">
+                    <select id="caedissueflag" name="caedissueflag" ng-model="formData.caedissueflag" class="form-control"
+                            ng-options="caedissueflag.id as caedissueflag.name for caedissueflag in caedissueflagOptions" value="{{caedissueflag.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
+                    <span class="error" ng-show="submitted && createrblcustomerform.caedissueflag.$error.required">{{'label.error.required'|translate}}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="language">{{'label.input.cbcheck' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-md-3">
+                    <select id="cbchck" name="cbchck" ng-model="formData.cbchck" class="form-control"
+                            ng-options="cbchck.id as cbchck.name for cbchck in cbchckOptions" value="{{cbchck.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
+                    <span class="error" ng-show="submitted && createrblcustomerform.cbchck.$error.required">{{'label.error.required'|translate}}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="language">{{'label.input.renewalflag' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-md-3">
+                    <select id="renwalflag" name="renwalflag" ng-model="formData.renwalflag" class="form-control"
+                            ng-options="renwalflag.id as renwalflag.name for renwalflag in renwalflagOptions" value="{{renwalflag.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
+                    <span class="error" ng-show="submitted && createrblcustomerform.renwalflag.$error.required">{{'label.error.required'|translate}}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="language">{{'label.input.mothertounge' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-md-3">
+                    <select id="mothertoung" name="mothertoung" ng-model="formData.mothertoung" class="form-control"
+                            ng-options="mothertoung.id as mothertoung.name for mothertoung in mothertoungOptions" value="{{mothertoung.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
+                    <span class="error" ng-show="submitted && createrblcustomerform.mothertoung.$error.required">{{'label.error.required'|translate}}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="language">{{'label.input.gurdianGender' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-md-3">
+                    <select id="gurdiangender" name="gurdiangender" ng-model="formData.gurdiangender" class="form-control"
+                            ng-options="gurdiangender.id as gurdiangender.name for gurdiangender in gurdiangenderOptions" value="{{gurdiangender.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
+                    <span class="error" ng-show="submitted && createrblcustomerform.gurdiangender.$error.required">{{'label.error.required'|translate}}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="language">{{'label.input.adharseedingconstant' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-md-3">
+                    <select id="adharseedingconstant" name="adharseedingconstant" ng-model="formData.adharseedingconstant" class="form-control"
+                            ng-options="adharseedingconstant.id as adharseedingconstant.name for adharseedingconstant in adharseedingconstantOptions" value="{{adharseedingconstant.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
+                    <span class="error" ng-show="submitted && createrblcustomerform.adharseedingconstant.$error.required">{{'label.error.required'|translate}}</span>
+                </div>
+            </div>
+
+
+            <div class="col-md-offset-2 paddedleft">
+                <a id="cancel" href="#/centers" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CLIENT'>{{'label.button.save' | translate}}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

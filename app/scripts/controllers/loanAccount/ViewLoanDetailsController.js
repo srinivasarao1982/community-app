@@ -117,7 +117,24 @@
                         break;
                 }
             };
+            scope.pslcodeOptions =[{"id":1,"name":103},{"id":2,"name":104},{"id":3,"name":107},{"id":4,"name":108},{"id":5,"name":114},{"id":6,"name":125}];
+            scope.topuploanflagOptions=[{"id":1,"name":"Normal Loan"},{"id":2,"name":"Top UpLoan"}];
 
+            resourceFactory.rblloanresource.get({loanId:routeParams.loanId},function (data) {
+                scope.loanextraData=data;
+
+                for(var i=0;i<=scope.pslcodeOptions.length;i++){
+                   if(data.pslcode==scope.pslcodeOptions[i].id){
+                       scope.loanextraData.pslcode=scope.pslcodeOptions[i].name;
+                   }
+                }
+              if(data.topuploanflag==1){
+                  scope.loanextraData.topuploanflag="Normal Loan";
+              }
+              else{
+                  scope.loanextraData.topuploanflag="Top UpLoan";
+              }
+            });
             scope.delCharge = function (id) {
                 $modal.open({
                     templateUrl: 'delcharge.html',

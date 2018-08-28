@@ -10,7 +10,15 @@
             scope.centerId=routeParams.id;
             scope.isnewcenter
             //scope.tasks=[];
-
+            var requestParams = {staffInSelectedOfficeOnly: true};
+            requestParams.officeId = 1;
+            resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
+                scope.districtOptins = clientData.district;
+                scope.stateOptions = clientData.state;
+            });
+            resourceFactory.rblcenterresource.save({centerId:routeParams.centerId},this.formData, function (data) {
+                scope.centraextradata=data;
+            });
             resourceFactory.centerResource.get({centerId: routeParams.id, associations: 'groupMembers,collectionMeetingCalendar'}, function (data) {
                 scope.center = data;
                 scope.officeId1=data.officeId;

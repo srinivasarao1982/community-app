@@ -10,14 +10,27 @@
             scope.restrictDate = new Date();
             scope.first.date = new Date();
             scope.addedGroups = [];
+            scope.rblOffice=[];
             resourceFactory.centerTemplateResource.get({staffInSelectedOfficeOnly:true},function (data) {
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
                 scope.groups = data.groupMembersOptions;
                 scope.formData.officeId = data.officeOptions[0].id;
             });
+            resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                scope.rblOffice=data;
+            });
+            resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:3},function(data){
+                scope.sequenceNumber=data.sequenceNo;
+            });
 
             scope.changeOffice = function () {
+                for(var i=0;i<scope.rblOffice.length;i++){
+                    if(officeId==scope.rblOffice[i].id){
+                        scope.formData.externalId= scope.sequenceNumber;
+                        break;
+                    }
+                }
                 resourceFactory.centerTemplateResource.get({staffInSelectedOfficeOnly:true, officeId: scope.formData.officeId
                 }, function (data) {
                     scope.staffs = data.staffOptions;
@@ -81,7 +94,12 @@
                 this.formData.dateFormat = scope.df;
                 this.formData.active = this.formData.active || false;
                 resourceFactory.centerResource.save(this.formData, function (data) {
-                    location.path('/viewcenter/' + data.resourceId);
+                    var request={
+                        "sequenceNumber":scope.sequenceNumber+1
+                    }
+                    resourceFactory.sequenceNumberResource.update({entityId:3},request,function(data){
+                        location.path('/viewcenter/' + data.resourceId);
+                    });
                 });
             };
         }

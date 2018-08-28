@@ -1,0 +1,105 @@
+<div class="col-md-12">
+    <ul class="breadcrumb">
+        <li><a href="#/groups">{{'label.anchor.groupextraDetails' | translate}}</a></li>
+        <li class="active">{{'label.anchor.groupextraDetails' | translate}}</li>
+    </ul>
+    <form name="createrblgroupform" novalidate="" class="form-horizontal well" ng-controller="CreateRblGroupController"
+          rc-submit="submit()">
+        <api-validate></api-validate>
+        <fieldset>
+            <legend>{{'label.heading.groupExtraDeatails' | translate}}</legend>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="maxcenter">{{'label.input.maxcenter' | translate}}<span
+                        class="required">*</span>
+                    <i class="icon-question-sign" tooltip="{{'label.tooltip.maximum.value' | translate}}" tooltip-append-to-body="true"></i>
+
+                </label>
+
+                <div class="col-sm-3">
+                    <input ng-autofocus="true" type="text" id="maxcenter" name="maxcenter" maxlength="4" ng-model="formData.maxcenter" class="form-control" required
+                           late-Validate/>
+                    <span class="error" ng-show="submitted && createrblgroupform.maxcenter.$error.required">{{'label.error.required'|translate}}</span>
+                    <span class="required"
+                          ng-show="createrblgroupform.maxcenter.maxlength">not more than 4 digit</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="minNumber">{{'label.input.minNumber' | translate}}<span
+                        class="required">*</span>
+                    <i class="icon-question-sign" tooltip="{{'label.tooltip.minvalue' | translate}}" tooltip-append-to-body="true"></i>
+                </label>
+
+                <div class="col-sm-3">
+                    <input ng-autofocus="true" type="text" id="minNumber" name="minNumber" maxlength="1" ng-model="formData.minNumber" class="form-control" required
+                           late-Validate/>
+                    <span class="error" ng-show="submitted && createrblgroupform.minNumber.$error.required">{{'label.error.required'|translate}}</span>
+                    <span class="required"
+                          ng-show="createrblgroupform.minNumber.maxlength">not more than 1 digit</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="maxnumber">{{'label.input.maxnumber' | translate}}<span
+                        class="required">*</span>
+                    <i class="icon-question-sign" tooltip="{{'label.tooltip.maxvalue' | translate}}" tooltip-append-to-body="true"></i>
+                </label>
+
+                <div class="col-sm-3">
+                    <input ng-autofocus="true" type="text" id="maxnumber" name="maxnumber" maxlength="1" ng-model="formData.maxnumber" class="form-control" required
+                           late-Validate/>
+                    <span class="error" ng-show="submitted && createrblgroupform.maxnumber.$error.required">{{'label.error.required'|translate}}</span>
+                    <span class="required"
+                          ng-show="createrblgroupform.maxnumber.maxlength">not more than 1 digit</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="meetingTime">{{'label.input.meetingTime' | translate}}<span
+                        class="required">*</span>
+                    <i class="icon-question-sign" tooltip="{{'label.tooltip.meetingtime.formate' | translate}}" tooltip-append-to-body="true"></i>
+
+                </label>
+
+                <div class="col-sm-3">
+                    <input ng-autofocus="true" type="text" id="meetingTime" name="meetingTime"  ng-model="formData.meetingTime" class="form-control" required
+                           late-Validate/>
+                    <span class="error" ng-show="submitted && createrblgroupform.maxnumber.$error.required">{{'label.error.required'|translate}}</span>
+                 </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="distancefrombranch">{{'label.input.distancefrombranch' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input ng-autofocus="true" type="text" id="distancefrombranch" name="distancefrombranch"  ng-model="formData.distancefrombranch" class="form-control" required
+                           late-Validate/>
+                    <span class="error" ng-show="submitted && createrblgroupform.distancefrombranch.$error.required">{{'label.error.required'|translate}}</span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="groupType">{{'label.input.groupType' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-md-3">
+                    <select id="groupType" name="groupType" ng-model="formData.groupType" class="form-control"
+                            ng-options="groupType.id as groupType.name for groupType in groupTypeOptions" value="{{groupType.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
+                    <span class="error" ng-show="submitted && createrblcustomerform.groupType.$error.required">{{'label.error.required'|translate}}</span>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-offset-2 paddedleft">
+                <a id="cancel" href="#/centers" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CENTER'>{{'label.button.save' | translate}}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

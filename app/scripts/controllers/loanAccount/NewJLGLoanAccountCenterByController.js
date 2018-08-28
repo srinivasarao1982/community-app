@@ -58,9 +58,25 @@
                     scope.termFrequency = data.termFrequency;
                     scope.termPeriodFrequencyType = data.termPeriodFrequencyType;
                     scope.emi=null;
+                    scope.rblOffice=[];
                     scope.clientId=scope.groups[0].activeClientMembers[0].id;
+
                     for(var i in data.product.charges){
                         scope.chargeName=scope.chargeName+data.product.charges[i].name;
+                    }
+
+                    resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                        scope.rblOffice=data;
+                    });
+                    resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:4},function(data){
+                        scope.sequenceNumber=data.sequenceNo;
+                    });
+
+                    for(var i=0;i<scope.rblOffice.length;i++){
+                        if(officeId== scope.groups[i].officeId){
+                            scope.isrbl=1;
+                            break;
+                        }
                     }
                   //  scope.previewRepayments(null,data.principal,scope.clientId,data.product.charges,null,null);
                     for( var i in scope.groups ) {
@@ -69,6 +85,15 @@
                                 if (scope.acceptedclientsIdOptions.indexOf(client.id) !== -1) {
                                     client.principal = data.product.principal;
                                     client.groupId = scope.groups[i].id;
+                                    if(scope.isrbl==1){
+                                        client.extId= scope.sequenceNumber;
+                                        scope.isrbl=scope.isrbl+1;
+                                        scope.sequenceNumber=scope.sequenceNumber+1;
+                                    }else{
+                                        client.extId= scope.sequenceNumber;
+                                        scope.sequenceNumber=scope.sequenceNumber+1
+                                    }
+                                    ;
                                     client.charges = data.product.charges.map(function (charge) {
                                         charge.isDeleted = false;
                                         return _.clone(charge);
@@ -279,6 +304,12 @@
                     for (var i = 0; i < data.length; i++) {
                         if(data[i].statusCode == 200 )
                             scope.response.success.push(data[i]);
+                        var request={
+                            "sequenceNumber":scope.sequenceNumber
+                        }
+                        resourceFactory.sequenceNumberResource.update({entityId:4},request,function(data){
+                            location.path('/viewgroup/' + data.resourceId);
+                        });
                         else
                             scope.response.failed.push(data[i]);
 
