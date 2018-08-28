@@ -329,6 +329,7 @@
     "error.msg.task.id.invalid":"Task Details Cannot be null for {{params[0].value}} ",
     "error.msg.task.is .Active":"Task is in Active State for this center {{params[0].value}}",
     "error.msg.task.id.invalid":"Task with identifier {{params[0].value}} does not exist",
+    "error.msg.mandatory.key.field":"{{params[0].value}} is  Mandatory",
 
     "#---------": "------------",
     "#Common loan/saving charges": "....",

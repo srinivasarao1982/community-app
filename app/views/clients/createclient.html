@@ -31,6 +31,12 @@
 
     <form name="createclientform" novalidate="" class="form-horizontal well" ng-submit="submitAndAccept()">
         <api-validate></api-validate>
+        <div ng-show="identificationProfferror">
+            <p style="color:red"> Clients Identity Proff is Mandatory</p>
+        </div>
+        <div ng-show="addressproffError">
+            <p style="color:red"> Clients Address Proff is Mandatory</p>
+        </div>
         <fieldset>
             <div class="form-group">
                 <div class="row">
