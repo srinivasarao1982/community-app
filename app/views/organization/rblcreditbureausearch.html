@@ -1,0 +1,112 @@
+<div class="col-md-12" ng-controller="RblCreditBureauSearch">
+    <div>
+        <ul class="breadcrumb">
+            <li><a href="#/organization">{{'label.anchor.creditBureauSearch' | translate}}</a></li>
+            <li class="active">{{'label.anchor.creditBureauSearch' | translate}}</li>
+        </ul>
+    </div>
+    <api-validate></api-validate>
+
+    <div class="form-inline paddedtop paddedbottom10" ng-show="isCollapsed">
+        <div class="form-group">
+            <input type="radio" name="Request" value="Request" checked> Request<br>
+        </div>
+        <div class="form-group">
+            <input type="radio" name="Request" value="Response"> Response<br>
+        </div>
+        <div class="form-group">
+            <input type="radio" name="Request" value="Error">Error<br>
+        </div>
+           <div class="form-group">
+            <select id="rblOffice" ng-model="formData.officeId" name="officeId"
+                    ng-options="office.id as office.name for office in rblOffice"
+                    ng-change="changeOffice(formData.officeId)" value="{{office.id}}" class="form-control">
+                <option value="">{{'label.menu.select' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select id="staffCenterData" ng-model="formData.center" name="centerId"
+                    ng-options="center.id as center.name for center in staffCenterData"
+                    value="{{center.id}}" class="form-control">
+                <option value="">{{'label.input.center' | translate}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input class="form-control width155px" type="text" datepicker-pop="dd MMMM yyyy" ng-model="date.first" is-open="opened" min="minDate" max="'2020-06-22'" placeholder="{{ 'label.input.fromdate' | translate }}"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control width155px" type="text" datepicker-pop="dd MMMM yyyy" ng-model="date.second" is-open="opened1" min="minDate" max="'2020-06-22'" placeholder="{{ 'label.input.todate' | translate }}"/>
+        </div>
+        <div class="form-group clear">
+            <a ng-click="getTransactions()" class="btn btn-primary control" has-permission='READ_STANDINGINSTRUCTION '><i class="icon-search icon-white"></i></a></center>
+        </div>
+    </div>
+    <div class="pull-right" ng-show="!isCollapsed">
+        <button ng-click="isCollapsed = !isCollapsed" class="btn btn-primary control"><i class="icon-chevron-down icon-white"></i>{{
+            'label.button.parameters' | translate }}
+        </button>
+    </div>
+    <div ng-show="displayrequesErrorResults">
+        <br>
+        <table class="table">
+            <thead>
+            <tr class="graybg">
+                <th>{{'label.heading.customerName' | translate}}</th>
+                <th>{{'label.heading.clientId' | translate}}</th>
+                <th>{{'label.heading.externalId' | translate}}</th>
+                <th>{{'label.heading.barcodeNo' | translate}}</th>
+                <th>{{'label.heading.loanAmount' | translate}}</th>
+                <th>{{'label.heading.branchCode' | translate}}</th>
+                <th>{{'label.heading.branchName' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="pointer-main" ng-repeat="transaction in transactions.currentPageItems">
+                <td>{{transaction.fromClient.displayName}}({{transaction.fromClient.id}})</td>
+                <td>{{transaction.fromAccount.productName}}({{transaction.fromAccount.id}})</td>
+                <td>{{transaction.toClient.displayName}}({{transaction.toClient.id}})</td>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-show="displayresponseResults">
+        <br>
+        <table class="table">
+            <thead>
+            <tr class="graybg">
+                <th>{{'label.heading.clientId' | translate}}</th>
+                <th>{{'label.heading.requestUid' | translate}}</th>
+                <th>{{'label.heading.serviceName' | translate}}</th>
+                <th>{{'label.heading.chanelId' | translate}}</th>
+                <th>{{'label.heading.creditApprove' | translate}}</th>
+                <th>{{'label.heading.region' | translate}}</th>
+                <th>{{'label.heading.eligibleAmount' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="pointer-main" ng-repeat="transaction in transactions.currentPageItems">
+                <td>{{transaction.fromClient.displayName}}({{transaction.fromClient.id}})</td>
+                <td>{{transaction.fromAccount.productName}}({{transaction.fromAccount.id}})</td>
+                <td>{{transaction.toClient.displayName}}({{transaction.toClient.id}})</td>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <script type="text/ng-template" id="errorlog.html">
+        <div class="modal-header silver">
+            <h3 class="bolder">{{'label.heading.errorlog' | translate}}</h3>
+        </div>
+        <div class="modal-body">
+            <p>{{error}}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">{{'label.button.close' | translate}}</button>
+        </div>
+    </script>
+</div>

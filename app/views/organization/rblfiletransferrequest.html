@@ -1,0 +1,98 @@
+<div class="col-md-12">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.rblfileTransferRquest' | translate}}</a></li>
+        <li class="active">{{'label.anchor.rblfileTransferRquest' | translate}}</li>
+    </ul>
+    <form name="createrblfiletransferform" novalidate="" class="form-horizontal well" ng-controller="RblFileTransferController"
+          rc-submit="submit()">
+        <api-validate></api-validate>
+        <fieldset>
+            <legend>{{'label.anchor.rblfileTransferRquest' | translate}}</legend>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" >{{'label.input.office' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <select chosen="rblOffice" id="officeId" ng-model="formData.officeId"
+                            ng-options="office.id as office.name for office in rblOffice" value="{{office.id}}"
+                            ng-change="changeOffice(formData.officeId)" class="form-control">
+                        <option value=""> {{'label.menu.select' | translate}}</option>
+
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <form-validate valattributeform="createrblfiletransferform" valattribute="name"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.center' | translate}}<span class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <select chosen="staffCenterData" id="centerId" ng-model="formData.centerId"
+                            ng-options="center.id as center.name for center in staffCenterData" value="{{center.id}}"
+                            ng-change="getAllGroupsByCenter(formData.centerId)" class="form-control">
+                        <option value=""> {{'label.menu.select' | translate}}</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr class="active">
+                        <th> {{'label.input.Los.select'|translate}} </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="row" ng-show="showDetails">
+                    <table class="table table-condensed" class="col-sm-12">
+                        <thead class="col-sm-8">
+                        <tr class="active">
+                            <th>{{'label.heading.groupname' | translate}}</th>
+                            <th style="width: 250px;"></th>
+                            <th>{{'label.heading.clientaccountNo' | translate}}</th>
+                        </tr>
+                        </thead>
+                        <tbody ng-repeat="group in groups" ng-init="outerIndex1=$index">
+                        <tr class="col-sm-12">
+                            <td><b>{{group.name}}"</b></td>
+                            <td style="width: 185px;" ></td>
+                            <td> <input type="checkbox" ng-model="group.selected"  ng-click="checkAll(group)"></td>
+                            <td>{{'label.heading.selectAll' | translate}}</td>
+                        </tr>
+
+                        <tr ng-repeat ="client in group.activeClientMembers" class="col-sm-8"  >
+                            <td style="width: 353px;"></td>
+                            <td>
+                                <input type="checkbox"  ng-model="client.ischecked"/>
+                            </td>
+
+                            <td>{{client.displayName}}&nbsp;({{client.accountNo}})</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="col-md-offset-2 paddedleft">
+                <a id="cancel" href="#/centers" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CENTER'>{{'label.button.save' | translate}}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

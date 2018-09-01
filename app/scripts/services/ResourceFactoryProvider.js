@@ -38,7 +38,8 @@
                     officeResource: defineResource(apiVer + "/offices/:officeId", {officeId: "@officeId"}, {
                         getAllOffices: {method: 'GET', params: {}, isArray: true},
                         getAllOfficesInAlphabeticalOrder: {method: 'GET', params: {orderBy: 'name', sortOrder: 'ASC'}, isArray: true},
-                        update: { method: 'PUT'}
+                        update: { method: 'PUT'},
+                        getAllRblOffices: {method: 'GET', params: {}, isArray: false}
                     }),
                     coClientResource: defineResource(apiVer + "/coapplicant/:coapplicantId", {coapplicantId: '@coapplicantId'}, {
                         update: { method: 'PUT'}

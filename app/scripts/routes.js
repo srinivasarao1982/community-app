@@ -817,6 +817,18 @@
             .when('/editloanextradeatils/:loanId', {
                 templateUrl: 'views/rbl/editrblloan.html'
             })
+            .when('/rblcreditbureaurequest', {
+                templateUrl: 'views/organization/rblcreditbureaurequest.html'
+            }).when('/rblfiletransferrequest', {
+               templateUrl: 'views/organization/rblfiletransferrequest.html'
+              }).when('/rblfilesearch', {
+                 templateUrl: 'views/organization/rblfilesearch.html'
+              }).when('/creditbureaurequestsearch', {
+                 templateUrl: 'views/organization/rblcreditbureausearch.html'
+                })
+
+
+
             ;
         $locationProvider.html5Mode(false);
     };

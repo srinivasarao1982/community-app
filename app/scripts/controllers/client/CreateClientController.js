@@ -97,11 +97,12 @@
 
             //scope.formData.dateOfBirth = scope.dobStartFrom;
 
-            resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
-                scope.rblOffice=data;
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                scope.rblOffice=data.allowedParents;
             });
-            resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:1},function(data){
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:1},function(data){
                 scope.sequenceNumber=data.sequenceNo;
+                this.formData.externalId=scope.sequenceNumber;
             });
             var requestParams = {staffInSelectedOfficeOnly: true};
             if (routeParams.groupId) {
@@ -689,6 +690,7 @@
 
             scope.changeOffice = function (officeId) {
                 for(var i=0;i<scope.rblOffice.length;i++){
+                    alert("test");
                     if(officeId==scope.rblOffice[i].id){
                         scope.formData.externalId= scope.sequenceNumber;
                             break;

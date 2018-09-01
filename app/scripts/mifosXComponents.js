@@ -260,6 +260,11 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'rbl/EditRblCustomerController',
             'rbl/EditRblGroupController',
             'rbl/EditRblLoanController',
+            'organization/RblCreditBureauRequestController',
+            'organization/RblCreditBureauSearch',
+            'organization/RblFileRequestSearch',
+            'organization/RblFileTransferController'
+
         ],
         filters: [
             'StatusLookup',
