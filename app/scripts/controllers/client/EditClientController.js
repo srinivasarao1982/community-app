@@ -593,7 +593,7 @@
                 if(angular.isUndefined(this.formData.staffId)){
                     scope.staffError=true;
                 }
-               
+
                 if(angular.isUndefined(this.formData.firstname)){
                     scope.firstNameError=true;
                 }
