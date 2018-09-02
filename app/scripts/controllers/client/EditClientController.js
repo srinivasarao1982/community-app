@@ -65,7 +65,12 @@
             scope.isNomineeDOBRequired = false;
             scope.isNomineeGuardianAddressRequired = false;
 
-
+            scope.staffError=false;
+            scope.firstNameError=false;
+            scope.genderError=false;
+            scope.dateOfBirthError=false;
+            scope.clientclificationError=false;
+            scope.erroroccur =true;
             /********************************/
 
             scope.formData = {};
@@ -573,12 +578,34 @@
             scope.familyAutoCalcAge();
 
             scope.submitAndAccept = function () {
+                scope.staffError=false;
+                scope.firstNameError=false;
+                scope.genderError=false;
+                scope.dateOfBirthError=false;
+                scope.clientclificationError=false;
+                scope.erroroccur =true;
                 scope.addressaboveSetting();
                     this.formData.locale = scope.optlang.code;
                     this.formData.dateFormat = scope.df;
                 this.formData.mobileNo=scope.formData.naddress[1].mobileNo;
                 this.formData.mobileNo=scope.formData.naddress[0].mobileNo;
 
+                if(angular.isUndefined(this.formData.staffId)){
+                    scope.staffError=true;
+                }
+               
+                if(angular.isUndefined(this.formData.firstname)){
+                    scope.firstNameError=true;
+                }
+                if(angular.isUndefined(this.formData.genderId)){
+                    scope.genderError=true;
+                }
+                if(angular.isUndefined(this.formData.dateOfBirth)){
+                    scope.dateOfBirthError=true;
+                }
+                if(angular.isUndefined(this.formData.clientClassificationId)){
+                    scope.clientclificationError=true;
+                }
                 if (scope.opensavingsproduct == 'false') {
                         this.formData.savingsProductId = null;
                     }
@@ -676,13 +703,15 @@
                             this.formData.naddress.splice(i, 1);
                         }
                     }
-
+                  if(scope.staffError||scope.firstNameError||scope.genderError||scope.dateOfBirthError||scope.clientclificationError) {
+                    scope.erroroccur =false;
+                }
                     scope.familyAutoCalcAge();
-
-                    resourceFactory.clientResource.update({'clientId': routeParams.id}, this.formData, function (data) {
-                        location.path('/viewclient/' + routeParams.id);
-                    });
-
+                       if(scope.erroroccur){
+                        resourceFactory.clientResource.update({'clientId': routeParams.id}, this.formData, function (data) {
+                            location.path('/viewclient/' + routeParams.id);
+                        });
+                    }
 
             }
 

@@ -202,10 +202,10 @@
                 scope.formData.officeId = scope.offices[0].id;
                 scope.savingproducts = data.savingProductOptions;
                 scope.genderOptions = data.genderOptions;
-                scope.formData.genderId = scope.genderOptions[0].id;
+               // scope.formData.genderId = scope.genderOptions[0].id;
                 scope.clienttypeOptions = data.clientTypeOptions;
                 scope.clientClassificationOptions = data.clientClassificationOptions;
-                scope.formData.clientClassificationId = scope.clientClassificationOptions[0].id;
+               // scope.formData.clientClassificationId = scope.clientClassificationOptions[0].id;
                 scope.districtOptins = clientData.district;
                 scope.stateOptions = clientData.state;
 

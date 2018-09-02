@@ -288,7 +288,7 @@
                     <div class="col-md-2">
                         <input placeholder="A D H A A R N U M B E R" type="text" id="aadhaar_no" name="aadhaar_no"
                                ng-model="formData.clientExt.aadhaarNo"
-                               class="form-control" maxlength="100" ng-required="isAadhaarNoRequired"/>
+                               class="form-control" maxlength="12" ng-required="isAadhaarNoRequired"/>
                         <span class="error" ng-show="submitted && createclientform.aadhaar_no.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
@@ -687,7 +687,7 @@
                         <input placeholder="ID proof number"
                                type="text" name="identityProofNumber0"
                                ng-model="formData.clientIdentifierData[0].documentKey"
-                               class="form-control" ng-required="isIdentityProofNumberRequired"/>
+                               class="form-control" ng-required="isIdentityProofNumberRequired" maxlength="12"/>
                         <span class="error"
                               ng-show="submitted && createclientform.identityProofNumber0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
@@ -716,7 +716,7 @@
                         <input placeholder="Address Proof Number"
                                type="text" name="identityProofNumber1"
                                ng-model="formData.clientIdentifierData[1].documentKey"
-                               class="form-control" ng-required="isAddressProofNumberRequired"/>
+                               class="form-control" ng-required="isAddressProofNumberRequired" maxlength="12"/>
                         <span class="error"
                               ng-show="submitted && createclientform.identityProofNumber1.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
