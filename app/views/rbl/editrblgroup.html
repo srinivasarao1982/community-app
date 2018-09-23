@@ -1,10 +1,9 @@
 <div class="col-md-12" ng-controller="EditRblGroupController" >
     <ul class="breadcrumb">
-        <li><a href="#/groups">{{'label.anchor.groupextraDetails' | translate}}</a></li>
+        <li><a href="/viewgroup/{{groupId}}">{{'label.anchor.groupextraDetails' | translate}}</a></li>
         <li class="active">{{'label.anchor.groupextraDetails' | translate}}</li>
     </ul>
-    <form name="createrblgroupform" novalidate="" class="form-horizontal well"   class="form-horizontal well" rc-submit="submit()"
-          >
+    <form name="createrblgroupform" novalidate="" class="form-horizontal well"   class="form-horizontal well">
         <api-validate></api-validate>
         <fieldset>
             <legend>{{'label.heading.groupExtraDeatails' | translate}}</legend>
@@ -61,9 +60,11 @@
                 </label>
 
                 <div class="col-sm-3">
-                    <input ng-autofocus="true" type="text" id="meetingTime" name="meetingTime"  ng-model="formData.meetingTime" class="form-control" required
-                           late-Validate/>
-                    <span class="error" ng-show="submitted && createrblgroupform.maxnumber.$error.required">{{'label.error.required'|translate}}</span>
+                    <select id="meetingTime" name="meetingTime" ng-model="formData.meetingTime" class="form-control"
+                            ng-options="meetingTime.id as meetingTime.name for meetingTime in meetingTimeOptions" value="{{meetingTime.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
@@ -95,8 +96,8 @@
 
 
             <div class="col-md-offset-2 paddedleft">
-                <a id="cancel" href="#/centers" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
-                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_RBLGROUP'>{{'label.button.save' | translate}}</button>
+                <a id="cancel" href="#/viewgroup/{{groupId}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                <button id="save" ng-click="submit()"type="submit" class="btn btn-primary" has-permission='CREATE_RBLGROUP'>{{'label.button.save' | translate}}</button>
             </div>
         </fieldset>
     </form>

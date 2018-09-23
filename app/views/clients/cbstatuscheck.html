@@ -1,0 +1,65 @@
+<div class="col-md-12">
+    <ul class="breadcrumb">
+        <li><a href="#/viewclient{{clientId}}">{{'label.anchor.cbstatusCheck' | translate}}</a></li>
+        <li class="active">{{'label.anchor.cbstatusCheck' | translate}}</li>
+    </ul>
+    <form name="cbstatuscheckRequest" novalidate="" class="form-horizontal well" ng-controller="CbStatusCheckController">
+        <api-validate></api-validate>
+        <fieldset>
+            <legend>{{'label.anchor.cbstatusCheck' | translate}}</legend>
+
+            <div class="form-group">
+                <input type="radio" name="Request"  ng-model="request" value="request" ng-click="valueFor('request')" checked><Strong>Request</Strong>
+            </div>
+            <div class="form-group">
+                <input type="radio" name="Request" ng-model="response" value="Response" ng-click="valueFor('response')"><Strong>Response</Strong>
+            </div>
+            <div class="form-group">
+                <input type="radio" name="Request" ng-model="error" value="Error" ng-click="valueFor('Error')"><Strong>Error<Strong>
+            </div>
+            <div class="form-group" ng-show="requestvalue">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr class="active">
+                        <th>{{'label.input.customer_Name'|translate}}</th>
+                        <th>{{'label.input.checkdate'|translate}}</th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="creditBureauResult in creditBureauResults"   >
+                        <td>{{creditBureauResult.customerName}}</td>
+                        <td>{{creditBureauResult.checkDate|DateFormat}}</td>
+
+                    </tr>
+                </table>
+            </div>
+
+            <div class="form-group" ng-show="!requestvalue">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr class="active">
+                        <th>{{'label.input.customer_Name'|translate}}</th>
+                        <th>{{'label.input.checkdate'|translate}}</th>
+                        <th>{{'label.input.creditApproved'|translate}}</th>
+                        <th>{{'label.input.reason'|translate}}</th>
+                        <th>{{'label.input.eligibleAmount'|translate}}</th>
+                    </tr>
+                    </th>
+                    </tr>
+                    </thead>
+
+                    <tr ng-repeat ="creditBureauResult in creditBureauResults"   >
+                        <td>{{creditBureauResult.clientId}}</td>
+                        <td>{{creditBureauResult.checkdate|DateFormat}}</td>
+                        <td>{{creditBureauResult.credit_Approved}}</td>
+                        <td>{{creditBureauResult.reason}}</td>
+                        <td>{{creditBureauResult.eligible_Amount}}</td>
+                    </tr>
+                </table>
+            </div>
+                    <div class="col-md-offset-2 paddedleft">
+                <a id="cancel" href="#/viewclient{{clientId}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                <button id="save"  ng-click="submit()" type="submit" class="btn btn-primary" has-permission='READ_CLIENT'>{{'label.button.save' | translate}}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

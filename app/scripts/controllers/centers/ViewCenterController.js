@@ -8,7 +8,8 @@
             scope.report = false;
             scope.hidePentahoReport = true;
             scope.centerId=routeParams.id;
-            scope.isnewcenter
+            scope.isnewcenter;
+            scope.showextradetails=false;
             //scope.tasks=[];
             var requestParams = {staffInSelectedOfficeOnly: true};
             requestParams.officeId = 1;
@@ -16,7 +17,13 @@
                 scope.districtOptins = clientData.district;
                 scope.stateOptions = clientData.state;
             });
-            resourceFactory.rblcenterresource.save({centerId:routeParams.centerId},this.formData, function (data) {
+            resourceFactory.rblcenterresource.get({centerId:routeParams.id}, function (data) {
+                if(angular.isUndefined(data.meetingTime)){
+                    scope.showextradetails=false;
+                }
+                else{
+                    scope.showextradetails=true
+                }
                 scope.centraextradata=data;
             });
             resourceFactory.centerResource.get({centerId: routeParams.id, associations: 'groupMembers,collectionMeetingCalendar'}, function (data) {

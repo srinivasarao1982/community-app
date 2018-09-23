@@ -22,6 +22,7 @@
             scope.chargeName='';
             scope.groups=[];
             scope.approveData={};
+            scope.sequenceNumberData=[];
             scope.principalChange=false;
             if (scope.center.id) {
                 scope.inparams.centerId = scope.center.id;
@@ -34,10 +35,13 @@
                     scope.center.name = data.center.name;
                 }
             });
-            resourceFactory.partialLoanResourceforgettemplate.get({parentId:scope.center.id,isActive:0}, function (data) {
+            resourceFactory.partialLoanResourceforgettemplate.get({parentId:scope.center.id,isActive:0,isDisburse:0}, function (data) {
                 scope.statusOptions = data.status;
                 scope.acceptedclientsIdOptions=data.acceptedclientsId;
+            });
 
+            resourceFactory.partialLoanResourceforget.get({parentId:scope.center.id,isSequenceNumber:true}, function (data) {
+                scope.sequenceNumberData=data;
             });
 
            scope.changePrincipal=function(){
@@ -85,15 +89,13 @@
                                 if (scope.acceptedclientsIdOptions.indexOf(client.id) !== -1) {
                                     client.principal = data.product.principal;
                                     client.groupId = scope.groups[i].id;
-                                    if(scope.isrbl==1){
-                                        client.extId= scope.sequenceNumber;
-                                        scope.isrbl=scope.isrbl+1;
-                                        scope.sequenceNumber=scope.sequenceNumber+1;
-                                    }else{
-                                        client.extId= scope.sequenceNumber;
-                                        scope.sequenceNumber=scope.sequenceNumber+1
+                                    alert(scope.sequenceNumberData[0].clientId);
+                                    for(var p=0;p<=scope.sequenceNumberData.length;p++){
+                                        if(scope.sequenceNumberData[p].clientId==client.id){
+                                            client.extId=scope.sequenceNumberData[p].SequenceNumber;
+                                            break;
+                                        }
                                     }
-                                    ;
                                     client.charges = data.product.charges.map(function (charge) {
                                         charge.isDeleted = false;
                                         return _.clone(charge);
@@ -302,25 +304,27 @@
                 resourceFactory.batchResource.post(this.batchRequests, function (data) {
 
                     for (var i = 0; i < data.length; i++) {
-                        if(data[i].statusCode == 200 )
+                        if (data[i].statusCode == 200) {
                             scope.response.success.push(data[i]);
-                        var request={
-                            "sequenceNumber":scope.sequenceNumber
                         }
-                        resourceFactory.sequenceNumberResource.update({entityId:4},request,function(data){
-                            location.path('/viewgroup/' + data.resourceId);
-                        });
                         else
-                            scope.response.failed.push(data[i]);
-
+                        {
+                            scope.response.failed.push(data[i]);                        }
                     }
 
                     if(scope.response.failed.length === 0 ){
-                        location.path('/viewcenter/' + scope.center.id);
+                        var params = {};
+                        params.isgrtCompleted =0;
+                        params.iscbchecked=0;
+                        params.locale = scope.optlang.code;
+                        params.dateFormat = scope.df;
+                        resourceFactory.centerResource.update({centerId: scope.center.id}, params, function (data) {
+                             location.path('/viewcenter/' + scope.center.id);
+                        });
+                      //  location.path('/viewcenter/' + scope.center.id);
                     }
 
                 });
-
 
             };
 

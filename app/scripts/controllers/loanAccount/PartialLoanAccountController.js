@@ -28,7 +28,14 @@
             if (scope.center.id) {
                 scope.inparams.centerId = scope.center.id;
             }
+            scope.rblOffice=[];
 
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                scope.rblOffice=data.allowedParents;
+            });
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:3},function(data){
+                scope.sequenceNumber=data.sequenceNo;
+            });
             // Fetch loan products for initital product drop-down
             resourceFactory.loanResource.get(scope.inparams, function (data) {
                 scope.products = data.productOptions;
@@ -62,10 +69,19 @@
                         scope.chargeName=scope.chargeName+data.product.charges[i].name;
                     }
                     //  scope.previewRepayments(null,data.principal,scope.clientId,data.product.charges,null,null);
+                    var p=1;
                     for( var i in scope.groups ) {
                         scope.clients[i] = scope.groups[i].activeClientMembers.map(function (client) {
                             client.principal = data.product.principal;
                             client.groupId=scope.groups[i].id;
+                            if(p==1){
+                                client.extId=scope.sequenceNumber;
+                            }
+                            else{
+                                scope.sequenceNumber=scope.sequenceNumber+1;
+                                client.extId=scope.sequenceNumber;
+                            }
+                            p=p+1;
                             client.charges = data.product.charges.map(function (charge) {
                                 charge.isDeleted = false;
                                 return _.clone(charge);
@@ -244,7 +260,6 @@
                     }
                     resourceFactory.batchResource.post(this.batchRequests, function (data) {
 
-
                         for (var i = 0; i < data.length; i++) {
                             if (data[i].statusCode == 200)
                                 scope.response.success.push(data[i]);
@@ -254,9 +269,15 @@
                         }
 
                         if (scope.response.failed.length === 0) {
-                            location.path('/viewjlgpartialloan/' + scope.center.id);
-                        }
+                            var seqNumber = {};
+                            seqNumber.sequenceNumber = scope.sequenceNumber;
+                            seqNumber.locale = scope.optlang.code;
+                            seqNumber.dateFormat = scope.df;
+                            resourceFactory.sequenceNumberResource.update({id: 4}, seqNumber, function (data) {
+                                location.path('/viewjlgpartialloan/' + scope.center.id);
 
+                            });
+                        }
                     });
 
                 }

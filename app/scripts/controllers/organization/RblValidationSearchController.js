@@ -1,18 +1,18 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        RblCreditBureauSearch: function (scope, routeParams, resourceFactory, dateFilter, location) {
+        RblValidationSearchController: function (scope, routeParams, resourceFactory, dateFilter, location) {
             var params = {};
             params.locale = scope.optlang.code;
             params.dateFormat = scope.df;
             scope.formData={};
             scope.requestvalue=true;
             var param={};
-            scope.formData.valufor='request';
+            scope.formData.valufor='CB';
             scope.requestvalue=true;
-            scope.creditBureauResults=[];
+            scope.fileData=[];
 
             scope.valueFor=function(val){
-                this.formData.valufor=val;
+                this.formData.fileType=val;
             }
             scope.rblOffice=[];
             scope.showDetails=false;
@@ -38,20 +38,20 @@
                 if (scope.formData.toDate) {
                     this.formData.toDate = dateFilter(scope.formData.toDate,'yyyy-MM-dd');
                 }
-                if(scope.formData.valufor=='response'){
+                if(scope.formData.valufor=='CB'){
                     scope.requestvalue=false;
                 }
-                if(scope.formData.valufor=='Error'){
+                if(scope.formData.valufor=='RBL'){
                     scope.requestvalue=true;
                 }
-                resourceFactory.rblvalidationresource.get( scope.formData,function(data){
-                    scope.creditBureauResults=data;
+                resourceFactory.rblvalidationresourceforValidate.get( scope.formData,function(data){
+                    scope.fileData=data;
                 })
             }
 
         }
     });
-    mifosX.ng.application.controller('RblCreditBureauSearch', ['$scope', '$routeParams', 'ResourceFactory', 'dateFilter', '$location', mifosX.controllers.RblCreditBureauSearch]).run(function ($log) {
-        $log.info("RblCreditBureauSearch initialized");
+    mifosX.ng.application.controller('RblValidationSearchController', ['$scope', '$routeParams', 'ResourceFactory', 'dateFilter', '$location', mifosX.controllers.RblValidationSearchController]).run(function ($log) {
+        $log.info("RblValidationSearchController initialized");
     });
 }(mifosX.controllers || {}));

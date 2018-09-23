@@ -1,10 +1,10 @@
 <div class="col-md-12">
     <ul class="breadcrumb">
-        <li><a href="#/groups">{{'label.anchor.groupextraDetails' | translate}}</a></li>
+        <li><a href="#/viewgroup/{{groupId}}">{{'label.anchor.groupextraDetails' | translate}}</a></li>
         <li class="active">{{'label.anchor.groupextraDetails' | translate}}</li>
     </ul>
-    <form name="createrblgroupform" novalidate="" class="form-horizontal well" ng-controller="CreateRblGroupController"
-          rc-submit="submit()">
+    <form name="createrblgroupform" novalidate="" class="form-horizontal well" ng-controller="CreateRblGroupController">
+
         <api-validate></api-validate>
         <fieldset>
             <legend>{{'label.heading.groupExtraDeatails' | translate}}</legend>
@@ -15,13 +15,13 @@
                     <i class="icon-question-sign" tooltip="{{'label.tooltip.maximum.value' | translate}}" tooltip-append-to-body="true"></i>
 
                 </label>
-
+                
                 <div class="col-sm-3">
-                    <input ng-autofocus="true" type="text" id="maxcenter" name="maxcenter" maxlength="4" ng-model="formData.maxcenter" class="form-control" required
+                    <input ng-autofocus="true" ng-pattern="/^\d+$/" type="text" id="maxcenter" name="maxcenter" maxlength="4" ng-model="formData.maxcenter" class="form-control" required
                            late-Validate/>
                     <span class="error" ng-show="submitted && createrblgroupform.maxcenter.$error.required">{{'label.error.required'|translate}}</span>
                     <span class="required"
-                          ng-show="createrblgroupform.maxcenter.maxlength">not more than 4 digit</span>
+                          ng-show="createrblgroupform.maxcenter.$error.pattern">Only Numbers</span>
                 </div>
             </div>
 
@@ -61,12 +61,13 @@
                     <i class="icon-question-sign" tooltip="{{'label.tooltip.meetingtime.formate' | translate}}" tooltip-append-to-body="true"></i>
 
                 </label>
-
                 <div class="col-sm-3">
-                    <input ng-autofocus="true" type="text" id="meetingTime" name="meetingTime"  ng-model="formData.meetingTime" class="form-control" required
-                           late-Validate/>
-                    <span class="error" ng-show="submitted && createrblgroupform.maxnumber.$error.required">{{'label.error.required'|translate}}</span>
-                 </div>
+                <select id="meetingTime" name="meetingTime" ng-model="formData.meetingTime" class="form-control"
+                        ng-options="meetingTime.id as meetingTime.name for meetingTime in meetingTimeOptions" value="{{meetingTime.id}}"
+                        ng-required="isStateRequired">
+                    <option value="">{{'label.menu.select' | translate}}</option>
+                </select>
+                </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="distancefrombranch">{{'label.input.distancefrombranch' | translate}}<span
@@ -97,8 +98,8 @@
 
 
             <div class="col-md-offset-2 paddedleft">
-                <a id="cancel" href="#/centers" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
-                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CENTER'>{{'label.button.save' | translate}}</button>
+                <a id="cancel" href="#/viewgroup/{{groupId}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                <button id="save" ng-click="submit()" type="submit" class="btn btn-primary" has-permission='CREATE_RBLGROUP'>{{'label.button.save' | translate}}</button>
             </div>
         </fieldset>
     </form>

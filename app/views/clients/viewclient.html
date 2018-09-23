@@ -192,6 +192,9 @@
 						        <li class="{{button.icon}}" data-ng-show="client.status.value=='Active'">
 						            <a href="#/newclientrecurringdepositaccount/{{client.id}}">{{'label.newrecurringdepositaccount' | translate}}</a>
 						        </li>
+								 <li class="{{button.icon}}" data-ng-show="client.status.value=='Active'">
+						            <a href="#/clientcbreport/{{client.id}}">{{'label.cbreport' | translate}}</a>
+						        </li>
 						    </ul>
 						</span>
 				    </div>
@@ -893,66 +896,79 @@
 		<tab heading="{{ 'label.heading.clientExtraDetails' | translate }}" has-permission='READ_CLIENT'>
 			<br/>
 			<div class="pull-right">
-				<a href="#/createclientextraDetails/{{clientId}}" ng-show="showextradetails"class="btn btn-primary" has-permission='CREATE_RBLCUSTOMER'><i
+				<a href="#/createclientextraDetails/{{clientId}}" ng-show="!showextradetails" class="btn btn-primary" has-permission='CREATE_RBLCUSTOMER'><i
 						class="icon-plus icon-white"></i>
 					{{'label.button.createextradetails' | translate}}</a>
-				<a href="#/editclientextraDetails/{{clientId}}" ng-show="!showextradetails" class="btn btn-primary" has-permission='UPDATE_RBLCUSTOMER'><i
+				<a href="#/editclientextraDetails/{{clientId}}" ng-show="showextradetails"class="btn btn-primary" has-permission='UPDATE_RBLCUSTOMER'><i
 						class="icon-plus icon-white"></i>
 					{{'label.button.editextradetails' | translate}}</a>
 
 			</div>
 			<br><br>
-			<div class="row" style="margin-left:-1px;margin-right: 1px;" ng-show="!showextradetails">
+			<div class="row" style="margin-left:-1px;margin-right: 1px;" ng-show="showextradetails">
 				<div class="col-sm-8 col-md-8">
 					<table class="table table-striped table-bordered" >
 						<tr>
 							<th class="table-bold-loan"><strong>{{'label.input.pensionCard' | translate}}</strong></th>
-							<td>{{scope.rblcustomerData.pensioncard}}</td>
+							<td><span class="padded-td">{{rblcustomerData.pensioncard}}</span></td>
 						</tr>
 						<tr>
 							<th class="table-bold-loan"><strong>{{'label.input.health'  | translate}}</strong></th>
-							<td><span class="padded-td">{{scope.rblcustomerData.healthdata}}</span></td>
+							<td><span class="padded-td">{{rblcustomerData.health}}</span></td>
 						</tr>
 						<tr>
 							<th class="table-bold-loan"><strong>{{'label.input.language'  | translate}}</strong></th>
-							<td><span class="padded-td">{{scope.rblcustomerData.language}}</span></td>
+							<td><span class="padded-td">{{rblcustomerData.language}}</span></td>
 						</tr>
 						<tr>
 							<th class="table-bold-loan"><strong>{{'label.input.cardissueFl'  | translate}}</strong></th>
-							<td><span class="padded-td">{{scope.rblcustomerData.caedissueflagValue}}</span></td>
+							<td><span class="padded-td">{{rblcustomerData.caedissueflag}}</span></td>
 						</tr>
 						<tr>
 							<th class="table-bold-loan"><strong>{{'label.input.cbcheck'  | translate}}</strong></th>
-							<td><span class="padded-td"> {{scope.rblcustomerData.cbchckValue}}</span></td>
+							<td><span class="padded-td"> {{rblcustomerData.cbchck}}</span></td>
 						</tr>
 						<tr>
 							<th class="table-bold-loan"><strong>{{'label.input.renewalflag'  | translate}}</strong></th>
-							<td><span class="padded-td"> {{scope.rblcustomerData.renwalflagValue}}</span></td>
+							<td><span class="padded-td"> {{rblcustomerData.renwalflag}}</span></td>
 						</tr>
 						<tr>
 							<th class="table-bold-loan"><strong>{{'label.input.mothertounge'  | translate}}</strong></th>
-							<td><span class="padded-td"> {{scope.rblcustomerData.mothertoung}}</span></td>
+							<td><span class="padded-td"> {{rblcustomerData.mothertoung}}</span></td>
 						</tr>
 						<tr>
 							<th class="table-bold-loan"><strong>{{'label.input.gurdianName'  | translate}}</strong></th>
-							<td><span class="padded-td"> {{scope.rblcustomerData.gurdainName}}</span></td>
+							<td><span class="padded-td"> {{rblcustomerData.gurdainName}}</span></td>
 						</tr>
 						<tr>
 							<th class="table-bold-loan"><strong>{{'label.input.gurdianDateofBirth'  | translate}}</strong></th>
-							<td><span class="padded-td"> {{scope.rblcustomerData.gurdiandateofBirth}}</span></td>
+							<td><span class="padded-td"> {{rblcustomerData.gurdiandateofBirth|DateFormat}}</span></td>
 						</tr>
 						<tr>
 							<th class="table-bold-loan"><strong>{{'label.input.gurdianGender'  | translate}}</strong></th>
-							<td><span class="padded-td"> {{scope.rblcustomerData.gurdiangender}}</span></td>
+							<td><span class="padded-td"> {{ rblcustomerData.gurdiangender}}</span></td>
 						</tr>
 						<tr>
 							<th class="table-bold-loan"><strong>{{'label.input.spouseName'  | translate}}</strong></th>
-							<td><span class="padded-td"> {{scope.rblcustomerData.spouseName}}</span></td>
+							<td><span class="padded-td"> {{rblcustomerData.spouseName}}</span></td>
 						</tr>
 						<tr>
 							<th class="table-bold-loan"><strong>{{'label.input.spouseDateofBirth'  | translate}}</strong></th>
-							<td><span class="padded-td"> {{scope.rblcustomerData.spousedateofbIrt}}</span></td>
+							<td><span class="padded-td"> {{rblcustomerData.spousedateofbIrt|DateFormat}}</span></td>
 						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.gurdianrelation'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{rblcustomerData.relation}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.gurdiantitle'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{rblcustomerData.gurdianTitle}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.gurdianMobileNo'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{rblcustomerData.gurdianMobileNo}}</span></td>
+						</tr>
+
 
 					</table>
 				</div>

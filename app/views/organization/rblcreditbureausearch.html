@@ -9,13 +9,13 @@
 
     <div class="form-inline paddedtop paddedbottom10" ng-show="isCollapsed">
         <div class="form-group">
-            <input type="radio" name="Request" value="Request" checked> Request<br>
+            <input type="radio" name="Request" value="Request" ng-click="valueFor('request')" checked> Request<br>
         </div>
         <div class="form-group">
-            <input type="radio" name="Request" value="Response"> Response<br>
+            <input type="radio" name="Request" value="Response" ng-click="valueFor('response')"> Response<br>
         </div>
         <div class="form-group">
-            <input type="radio" name="Request" value="Error">Error<br>
+            <input type="radio" name="Request" value="Error" ng-click="valueFor('Error')">Error<br>
         </div>
            <div class="form-group">
             <select id="rblOffice" ng-model="formData.officeId" name="officeId"
@@ -25,7 +25,7 @@
             </select>
         </div>
         <div class="form-group">
-            <select id="staffCenterData" ng-model="formData.center" name="centerId"
+            <select id="staffCenterData" ng-model="formData.centerId" name="centerId"
                     ng-options="center.id as center.name for center in staffCenterData"
                     value="{{center.id}}" class="form-control">
                 <option value="">{{'label.input.center' | translate}}</option>
@@ -33,13 +33,13 @@
         </div>
 
         <div class="form-group">
-            <input class="form-control width155px" type="text" datepicker-pop="dd MMMM yyyy" ng-model="date.first" is-open="opened" min="minDate" max="'2020-06-22'" placeholder="{{ 'label.input.fromdate' | translate }}"/>
+            <input class="form-control width155px" type="text" datepicker-pop="dd MMMM yyyy" ng-model="formData.fromDate" is-open="opened" min="minDate" max="'2020-06-22'" placeholder="{{ 'label.input.fromdate' | translate }}"/>
         </div>
         <div class="form-group">
-            <input class="form-control width155px" type="text" datepicker-pop="dd MMMM yyyy" ng-model="date.second" is-open="opened1" min="minDate" max="'2020-06-22'" placeholder="{{ 'label.input.todate' | translate }}"/>
+            <input class="form-control width155px" type="text" datepicker-pop="dd MMMM yyyy" ng-model="formData.toDate" is-open="opened1" min="minDate" max="'2020-06-22'" placeholder="{{ 'label.input.todate' | translate }}"/>
         </div>
         <div class="form-group clear">
-            <a ng-click="getTransactions()" class="btn btn-primary control" has-permission='READ_STANDINGINSTRUCTION '><i class="icon-search icon-white"></i></a></center>
+            <a ng-click="submit()" class="btn btn-primary control" has-permission='READ_STANDINGINSTRUCTION '><i class="icon-search icon-white"></i></a></center>
         </div>
     </div>
     <div class="pull-right" ng-show="!isCollapsed">
@@ -47,13 +47,12 @@
             'label.button.parameters' | translate }}
         </button>
     </div>
-    <div ng-show="displayrequesErrorResults">
+    <div ng-show="requestvalue">
         <br>
         <table class="table">
             <thead>
             <tr class="graybg">
                 <th>{{'label.heading.customerName' | translate}}</th>
-                <th>{{'label.heading.clientId' | translate}}</th>
                 <th>{{'label.heading.externalId' | translate}}</th>
                 <th>{{'label.heading.barcodeNo' | translate}}</th>
                 <th>{{'label.heading.loanAmount' | translate}}</th>
@@ -62,17 +61,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="pointer-main" ng-repeat="transaction in transactions.currentPageItems">
-                <td>{{transaction.fromClient.displayName}}({{transaction.fromClient.id}})</td>
-                <td>{{transaction.fromAccount.productName}}({{transaction.fromAccount.id}})</td>
-                <td>{{transaction.toClient.displayName}}({{transaction.toClient.id}})</td>
+            <tr class="pointer-main" ng-repeat="creditBureauResult in creditBureauResults">
+                <td>{{creditBureauResult.customerName}}</td>
+                <td>{{creditBureauResult.externalId}}</td>
+                <td>{{creditBureauResult.barcodeNo}}</td>
+                <td>{{creditBureauResult.loanAmount}}</td>
+                <td>{{creditBureauResult.branchCode}}</td>
+                <td>{{creditBureauResult.branchName}}</td>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
 
-    <div ng-show="displayresponseResults">
+    <div ng-show="!requestvalue">
         <br>
         <table class="table">
             <thead>
@@ -87,11 +89,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="pointer-main" ng-repeat="transaction in transactions.currentPageItems">
-                <td>{{transaction.fromClient.displayName}}({{transaction.fromClient.id}})</td>
-                <td>{{transaction.fromAccount.productName}}({{transaction.fromAccount.id}})</td>
-                <td>{{transaction.toClient.displayName}}({{transaction.toClient.id}})</td>
-                </td>
+            <tr class="pointer-main"  ng-repeat="creditBureauResult in creditBureauResults">
+               <td>{{creditBureauResult.clientId}}</td>
+               <td>{{creditBureauResult.requestUid}}</td>
+               <td>{{creditBureauResult.serviceName}}</td>
+               <td>{{creditBureauResult.chhanelId}}</td>
+               <td>{{creditBureauResult.credit_Approved}}</td>
+               <td>{{creditBureauResult.reason}}</td>
+               <td>{{creditBureauResult.eligible_Amount}}</td>
             </tr>
             </tbody>
         </table>

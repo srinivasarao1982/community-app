@@ -812,38 +812,37 @@
                     <tab heading="{{ 'label.heading.loanExtraDetails' | translate }}" has-permission='READ_LOAN'>
                         <br/>
                         <div class="pull-right">
-                            a href="#/createloanextradeatils/{{loanId}}" class="btn btn-primary" has-permission='UPDATE_RBLLOAN'><i
+                           <a href="#/createloanextradeatils/{{loanId}}" ng-show="!showextradetails" class="btn btn-primary" has-permission='UPDATE_RBLLOAN'><i
                                 class="icon-plus icon-white"></i>
-                            {{'label.button.editLoanExtraDetails' | translate}}</a>
-                            <a href="#/editloanextradeatils/{{loanId}}" class="btn btn-primary" has-permission='UPDATE_RBLLOAN'><i
+                            {{'label.button.createextradetails' | translate}}</a>
+                            <a href="#/editloanextradeatils/{{loanId}}"  ng-show="showextradetails" class="btn btn-primary" has-permission='UPDATE_RBLLOAN'><i
                                     class="icon-plus icon-white"></i>
-                                {{'label.button.editLoanExtraDetails' | translate}}</a>
+                                {{'label.button.editextradetails' | translate}}</a>
                         </div>
                         <br><br>
-                        <div class="row" style="margin-left:-1px;margin-right: 1px;">
+                        <div class="row" style="margin-left:-1px;margin-right: 1px;"  ng-show="showextradetails" >
                             <div class="col-sm-4 col-md-4">
                                 <table class="table table-striped table-bordered" >
                                     <tr>
                                         <th class="table-bold-loan"><strong>{{'label.input.pslcode' | translate}}</strong></th>
-                                        <td>{{scope.loanextraData.pslcode}}</td>
+                                        <td>{{loanextraData.pslcode}}</td>
                                     </tr>
                                     <tr>
                                         <th class="table-bold-loan"><strong>{{'label.input.topuploanflag'  | translate}}</strong></th>
-                                        <td><span class="padded-td">{{scope.loanextraData.topUpflag}}</span></td>
+                                        <td><span class="padded-td">{{loanextraData.topUpflag}}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="table-bold-loan"><strong>{{'label.input.hosiptalcash'  | translate}}</strong></th>
-                                        <td><span class="padded-td">{{scope.loanextraData.hosiptalCash}}</span></td>
+                                        <td><span class="padded-td">{{loanextraData.hosiptalCash}}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="table-bold-loan"><strong>{{'label.input.prpaidcharge'  | translate}}</strong></th>
-                                        <td><span class="padded-td">{{scope.loanextraData.prpaidcharge}}</span></td>
+                                        <td><span class="padded-td">{{loanextraData.prpaidcharge}}</span></td>
                                     </tr>
 
                                 </table>
                             </div>
                         </div>
-
                         </ul>
                     </tab>
 

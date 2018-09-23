@@ -3,21 +3,21 @@
         <li><a href="#/centers">{{'label.anchor.centersextraDetails' | translate}}</a></li>
         <li class="active">{{'label.anchor.createcenterextraDetails' | translate}}</li>
     </ul>
-    <form name="createrblcenterform" novalidate="" class="form-horizontal well" ng-controller="CreateRblCenterController"
-          rc-submit="submit()">
+    <form name="createrblcenterform" novalidate="" class="form-horizontal well" ng-controller="CreateRblCenterController">
+
         <api-validate></api-validate>
         <fieldset>
             <legend>{{'label.heading.centerExtraDeatails' | translate}}</legend>
-
             <div class="form-group">
                 <label class="control-label col-sm-2" for="maxindividual">{{'label.input.maximumindividual' | translate}}<span
                         class="required">*</span>
                     <i class="icon-question-sign" tooltip="{{'label.tooltip.maximum.value' | translate}}" tooltip-append-to-body="true"></i>
                 </label>
-
                 <div class="col-sm-3">
-                    <input ng-autofocus="true" type="text" id="maxindividual" name="maxindividual" ng-model="formData.maximumindividual" class="form-control" required
+                    <input ng-autofocus="true"  ng-pattern="/^\d+$/" type="text" id="maxindividual" name="maxindividual" ng-model="formData.maximumindividual" class="form-control" required
                            late-Validate/>
+                    <span class="required" ng-show="createrblcenterform.maxindividual.$error.pattern">Only Numbers</span>
+
                 </div>
 
             </div>
@@ -28,16 +28,17 @@
 
                 </label>
                 <div class="col-sm-3">
-                    <input ng-autofocus="true" type="text" id="meetingTime" name="meetingTime" ng-model="formData.meetingTime" class="form-control" required
-                           late-Validate/>
+                    <select id="meetingTime" name="meetingTime" ng-model="formData.meetingTime" class="form-control"
+                            ng-options="meetingTime.id as meetingTime.name for meetingTime in meetingTimeOptions" value="{{meetingTime.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="meetingTime">{{'label.input.description' | translate}}<span
-                        class="required">*</span></label>
-
+                <label class="control-label col-sm-2" for="meetingTime">{{'label.input.description' | translate}}</label>
                 <div class="col-sm-3">
-                    <input ng-autofocus="true" type="text" id="dscription" name="dscription" ng-model="formData.dscription" class="form-control" />
+                    <input ng-autofocus="true" type="text" maxlength="30" id="dscription" name="dscription" ng-model="formData.dscription" class="form-control" />
                 </div>
 
             </div>
@@ -82,7 +83,7 @@
 
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label">Landmark<span  class="required">*</span>
+                    <div class="col-md-2"><label class="control-label">Landmark
                     </label></div>
                     <div class="col-md-4">
                         <input placeholder="Landmark" type="text" id="landmark" name="landmark"
@@ -105,7 +106,7 @@
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
                     <div class="col-md-2"><label class="control-label"><span
-                            class="required" ng-show="isTalukaRequired">*</span>Taluka</label></div>
+                            class="required" >*</span>Taluka</label></div>
                     <div class="col-md-4">
                         <input placeholder="Taluka"
                                type="text"
@@ -116,7 +117,7 @@
                         <span class="error" ng-show="submitted && createrblcenterform.taluk.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
-                    <label class="control-label col-md-2">
+                    <label class="control-label col-md-2"><span  class="required">*</span>
                         District</label>
                     <div class="col-md-4">
                         <select name="district" ng-model="formData.district" class="form-control"
@@ -131,7 +132,7 @@
 
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label"><span class="required" ng-show="isStateRequired">*</span>State</label>
+                    <div class="col-md-2"><label class="control-label"><span class="required" >*</span>State</label>
                     </div>
                     <div class="col-md-4">
                         <select name="state" ng-model="formData.state" class="form-control"
@@ -142,7 +143,7 @@
                         <span class="error" ng-show="submitted && createrblcenterform.state.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
-                    <label class="control-label col-md-2" for="pincode">PIN Code </label>
+                    <label class="control-label col-md-2" for="pincode"><span  class="required">*</span> PIN Code </label>
                     <div class="col-md-4">
                         <input placeholder="" type="text" id="pincode" name="pincode"
                                ng-model="formData.pincode" class="form-control"
@@ -154,7 +155,7 @@
 
             <div class="col-md-offset-2 paddedleft">
                 <a id="cancel" href="#/centers" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
-                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CENTER'>{{'label.button.save' | translate}}</button>
+                <button id="save" ng-click="submit()" type="submit" class="btn btn-primary" has-permission='CREATE_RBLCENETR'>{{'label.button.save' | translate}}</button>
             </div>
         </fieldset>
     </form>

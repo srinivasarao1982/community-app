@@ -825,11 +825,15 @@
                  templateUrl: 'views/organization/rblfilesearch.html'
               }).when('/creditbureaurequestsearch', {
                  templateUrl: 'views/organization/rblcreditbureausearch.html'
-                })
+              }).when('/clientcbreport/:id', {
+                 templateUrl: 'views/clients/cbstatuscheck.html'
+              }).when('/rblvalidatefilesearch', {
+               templateUrl: 'views/organization/rblvalidationSearch.html'
+                 })
 
 
 
-            ;
+        ;
         $locationProvider.html5Mode(false);
     };
     mifosX.ng.application.config(defineRoutes).run(function ($log) {

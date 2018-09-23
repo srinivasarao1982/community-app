@@ -1,130 +1,42 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        RblFileRequestSearch: function (scope, routeParams, resourceFactory, dateFilter, location) {
-            var params = {};
-            params.locale = scope.optlang.code;
-            params.dateFormat = scope.df;
-            params.meetingDate = routeParams.meetingDate;
-            params.officeId = routeParams.officeId;
-            params.staffId = routeParams.staffId;
-            if (params.staffId === "undefined") {
-                params.staffId = null;
-            }
-            var centerIdArray = [];
-            scope.submitNextShow = true;
-            scope.submitShow = false;
-            scope.forcedSubmit = false;
-            scope.completedCenter = false;
-            scope.officeName = routeParams.officeName;
-            scope.meetingDate = routeParams.meetingDate;
-            var submittedStaffId = [];
-            scope.details = false;
-            scope.showPaymentDetails = false;
-            scope.showerror=false;
-            scope.showErrors1=false;
-            scope.rblOffice=[];
-            scope.showDetails=false;
-            scope.staffCenterData=[];
-            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
-                scope.rblOffice=data.allowedParents;
-            });
-            scope.changeOffice=function(officeId){
-                var params = {};
-                params.officeId = officeId;
-                resourceFactory.centerResource.getAllMeetingFallCenters(params, function (data) {
-                    //if (data[0]) {
-                    scope.staffCenterData = data;//[0].meetingFallCenters;
-                    /* for (var i = 0; i < scope.staffCenterData.length; i++) {
-                         centerIdArray.push({id: scope.staffCenterData[i].id, calendarId: scope.staffCenterData[i].collectionMeetingCalendar.id});
-                     }*/
-                    // }
-                })
-            }
+        RblFileRequestSearch: function (scope, routeParams, resourceFactory, dateFilter, location,API_VERSION, $rootScope) {
+            scope.fileTypes='send';
 
-            scope.getAllGroupsByCenter =function(centerId) {
-                scope.showDetails=true;
-                resourceFactory.centerClientResource.get({centerId: centerId}, function (data) {
-                    scope.groups = data.groupMembers;
-                })
-            }
-            scope.checkAll = function(group)
-            {
-                for(var i =0;i < group.activeClientMembers.length;i++){
-                    group.activeClientMembers[i].ischecked = true;
+            scope.valueFor=function(val){
+                this.formData.fileType=val;
+                if(val=='received'){
+                    scope.fileTypes='receive';
+                }else{
+                    scope.fileTypes='send';
                 }
             }
+          //  scope.url=$rootScope.hostUrl + API_VERSION + '/clients/';
+          // scope.test='/root/.mifosx/Nirantara/documents/';
+            scope.test = $rootScope.hostUrl + API_VERSION + '/clients/' + 4 + '/documents/' + 3 + '/rblattachment?tenantIdentifier=' + $rootScope.tenantIdentifier;
 
-
-
-            //scope.showPaymentDetailsFn = function () {
-
-            // };
+            scope.fileData=[];
 
             scope.submit=function() {
-                this.batchRequests = [];
-                this.formData = {};
-                this.formData.clientDetails=[];
-                var clientId;
-                for(var j=0;j<scope.groups.length;j++){
-                    for(var i =0;i < scope.groups[j].activeClientMembers.length;i++){
-                        if(scope.groups[j].activeClientMembers[i].ischecked){
-                            clientId =clientId+","+scope.groups[j].activeClientMembers[i].id
-                            /*  var savingsApplication = {};
-                              savingsApplication.clientId = scope.groups[j].activeClientMembers[i].id;
-                              savingsApplication.date= dateFilter(scope.date.submittedOnDate, scope.df);
-                              if(scope.isactivate){
-                                  savingsApplication.active=true;
-                              }else{
-                                  savingsApplication.active=false;
-                              }
-                              savingsApplication.fieldOfficerId=scope.fieldOfficer;
-                              savingsApplication.locale = scope.optlang.code;
-                              savingsApplication.dateFormat =  scope.df;
-                              savingsApplication.productId=scope.productId;
-  */                            this.batchRequests.push({requestId: i, relativeUrl: "savingsaccounts?command=defaultValues",
-                                method: "POST", body: JSON.stringify(savingsApplication)});
-                        }
-
-                    }
+                if (scope.formData.fromDate) {
+                    this.formData.fromDate = dateFilter(scope.formData.fromDate, 'yyyy-MM-dd');
                 }
-                resourceFactory.batchResource.post(this.batchRequests, function (data) {
-
-                    for (var i = 0; i < data.length; i++) {
-                        if(data[i].statusCode == 200 )
-                            scope.response.success.push(data[i]);
-                        else
-                            scope.response.failed.push(data[i]);
-
-                    }
-
-                    if(scope.response.failed.length === 0 ){
-                        location.path('/viewcenter/' + scope.centerId);
-                    }
-
-                });
-
-                location.path('/viewcenter/' + scope.centerId);
+                if (scope.formData.toDate) {
+                    this.formData.toDate = dateFilter(scope.formData.toDate,'yyyy-MM-dd');
+                }
+                if(angular.isUndefined( this.formData.fileType)){
+                    this.formData.fileType='send';
+                }
+                //scope.formData=false;
+                resourceFactory.rblvalidationFileresource.get( scope.formData,function(data){
+                    scope.fileData=data;
+                })
             };
-
-            scope.cancel = function () {
-                if (scope.centerId) {
-                    location.path('/viewcenter/' + scope.centerId);
-                }
-            };
-
-
-            scope.detailsShow = function() {
-                if (scope.details) {
-                    scope.details = false;
-                } else {
-                    scope.details = true;
-                }
-            }
 
 
         }
     });
-    mifosX.ng.application.controller('RblFileRequestSearch', ['$scope', '$routeParams', 'ResourceFactory', 'dateFilter', '$location', mifosX.controllers.RblFileRequestSearch]).run(function ($log) {
+    mifosX.ng.application.controller('RblFileRequestSearch', ['$scope', '$routeParams', 'ResourceFactory', 'dateFilter', '$location','API_VERSION','$rootScope', mifosX.controllers.RblFileRequestSearch]).run(function ($log) {
         $log.info("RblFileRequestSearch initialized");
     });
 }(mifosX.controllers || {}));

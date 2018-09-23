@@ -17,6 +17,7 @@
 
 
             var requestParams = {staffInSelectedOfficeOnly:true};
+            requestParams.taskType=1;
             if (routeParams.officeId) {
                 requestParams.officeId = routeParams.officeId;
             }
@@ -28,6 +29,14 @@
                 scope.attendenceTypeOption=data.attendenceTypeOptions;
                 scope.staffOptions =data.staffOptions;
             });
+            scope.taskTypechange=function(taskTypeId){
+                var Param={}
+                Param.taskType=taskTypeId;
+                Param.officeId=routeParams.officeId;
+                resourceFactory.taskResource.get(Param, function (data) {
+                    scope.staffOptions =data.staffOptions;
+                });
+            }
             resourceFactory.taskConfigurationResource.get(requestParams, function (data) {
 
                 scope.descriptions =data.descriptions;

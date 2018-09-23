@@ -8,6 +8,7 @@
             scope.staffData = {};
             scope.openLoan = true;
             scope.openSaving = true;
+            scope.showextradetails=false;
             scope.routeToLoan = function (id) {
                 location.path('/viewloanaccount/' + id);
             };
@@ -22,6 +23,11 @@
 
             resourceFactory.rblgroupresource.get({groupId:routeParams.id},function (data) {
                 scope.groupExtra=data;
+                if(angular.isUndefined(data.groupType)){
+                    scope.showextradetails=false;
+                }else{
+                    scope.showextradetails=true;
+                }
                 if(scope.groupExtra.groupType==1){
                     scope.groupExtra.groupType="SHG";
                 }else{

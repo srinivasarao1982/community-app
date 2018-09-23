@@ -908,13 +908,10 @@
                     //console.log(JSON.stringify(this.formData));
 
                     resourceFactory.clientResource.save(this.formData, function (data) {
-                        var request={
-                            "sequenceNumber":scope.sequenceNumber+1
-                        }
-                        resourceFactory.sequenceNumberResource.update({entityId:1},request,function(data){
+
                             location.path('/createcoclient/' + data.clientId);
 
-                        });
+
                     });
 
 

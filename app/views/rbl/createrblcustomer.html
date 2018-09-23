@@ -3,15 +3,14 @@
         <li><a href="#/centers">{{'label.anchor.customersextraDetails' | translate}}</a></li>
         <li class="active">{{'label.anchor.customercenterextraDetails' | translate}}</li>
     </ul>
-    <form name="createrblcustomerform" novalidate="" class="form-horizontal well" ng-controller="CreateRblCustomerController"
-          rc-submit="submit()">
+    <form name="createrblcustomerform" novalidate="" class="form-horizontal well" ng-controller="CreateRblCustomerController">
+
         <api-validate></api-validate>
         <fieldset>
             <legend>{{'label.heading.clientExtraDetails' | translate}}</legend>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="pensioncard">{{'label.input.pensionCard' | translate}}<span
-                        class="required">*</span></label>
+                <label class="control-label col-sm-2" for="pensioncard">{{'label.input.pensionCard' | translate}}</label>
 
                 <div class="col-sm-3">
                     <input ng-autofocus="true" type="text" id="pensioncard" name="pensioncard" maxlength="50" ng-model="formData.pensioncard" class="form-control" required
@@ -22,8 +21,7 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="gurdainName">{{'label.input.gurdianName' | translate}}<span
-                        class="required">*</span></label>
+                <label class="control-label col-sm-2" for="gurdainName">{{'label.input.gurdianName' | translate}}</label>
 
                 <div class="col-sm-3">
                     <input ng-autofocus="true" type="text" id="gurdainName" name="gurdainName" maxlength="100" ng-model="formData.gurdainName" class="form-control" required
@@ -34,28 +32,25 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="gurdiandateofBirth">{{'label.input.gurdianDateofBirth' | translate}}<span
-                        class="required">*</span></label>
+                <label class="control-label col-sm-2" for="gurdiandateofBirth">{{'label.input.gurdianDateofBirth' | translate}}</label>
 
                 <div class="col-sm-3">
                     <input id="gurdiandateofBirth" type="text" datepicker-pop="dd MMMM yyyy" ng-model="formData.gurdiandateofBirth"
-                           is-open="opened" min="'2000-01-01'" max="restrictDate" class="form-control"/>
+                           is-open="opened"  max="restrictDate" class="form-control"/>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="spouseName">{{'label.input.spouseName' | translate}}<span
-                        class="required">*</span></label>
+                <label class="control-label col-sm-2" for="spouseName">{{'label.input.spouseName' | translate}}</label>
 
                 <div class="col-sm-3">
-                    <input ng-autofocus="true" type="text" id="spouseName" name="spouseName" maxlength="100" ng-model="formData.spouseName" class="form-control" required
+                    <input  type="text" id="spouseName" name="spouseName" maxlength="100" ng-model="formData.spouseName" class="form-control" required
                            late-Validate/>
                     <span class="required"
                           ng-show="createrblcustomerform.spouseName.maxlength">not more than 100 digit</span>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="spousedateofbIrt">{{'label.input.spouseDateofBirth' | translate}}<span
-                        class="required">*</span></label>
+                <label class="control-label col-sm-2" for="spousedateofbIrt">{{'label.input.spouseDateofBirth' | translate}}</label>
 
                 <div class="col-sm-3">
                     <input id="spousedateofbIrt" type="text" datepicker-pop="dd MMMM yyyy" ng-model="formData.spousedateofbIrt"
@@ -64,8 +59,7 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="health">{{'label.input.health' | translate}}<span
-                        class="required">*</span></label>
+                <label class="control-label col-sm-2" for="health">{{'label.input.health' | translate}}</label>
 
                 <div class="col-md-3">
                     <select id="health" name="health" ng-model="formData.health" class="form-control"
@@ -78,8 +72,7 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="language">{{'label.input.language' | translate}}<span
-                        class="required">*</span></label>
+                <label class="control-label col-sm-2" for="language">{{'label.input.language' | translate}}</label>
 
                 <div class="col-md-3">
                     <select id="language" name="language" ng-model="formData.language" class="form-control"
@@ -87,7 +80,6 @@
                             ng-required="isStateRequired">
                         <option value="">{{'label.menu.select' | translate}}</option>
                     </select>
-                    <span class="error" ng-show="submitted && createrblcustomerform.language.$error.required">{{'label.error.required'|translate}}</span>
                 </div>
             </div>
 
@@ -106,8 +98,7 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="language">{{'label.input.cbcheck' | translate}}<span
-                        class="required">*</span></label>
+                <label class="control-label col-sm-2" for="language">{{'label.input.cbcheck' | translate}}</label>
 
                 <div class="col-md-3">
                     <select id="cbchck" name="cbchck" ng-model="formData.cbchck" class="form-control"
@@ -120,8 +111,7 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="language">{{'label.input.renewalflag' | translate}}<span
-                        class="required">*</span></label>
+                <label class="control-label col-sm-2" for="language">{{'label.input.renewalflag' | translate}}</label>
 
                 <div class="col-md-3">
                     <select id="renwalflag" name="renwalflag" ng-model="formData.renwalflag" class="form-control"
@@ -134,8 +124,7 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="language">{{'label.input.mothertounge' | translate}}<span
-                        class="required">*</span></label>
+                <label class="control-label col-sm-2" for="language">{{'label.input.mothertounge' | translate}}</label>
 
                 <div class="col-md-3">
                     <select id="mothertoung" name="mothertoung" ng-model="formData.mothertoung" class="form-control"
@@ -162,8 +151,32 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="language">{{'label.input.adharseedingconstant' | translate}}<span
-                        class="required">*</span></label>
+                <label class="control-label col-sm-2" for="language">{{'label.input.gurdiantitle' | translate}}</label>
+
+                <div class="col-md-3">
+                    <select id="gurdianTitle" name="gurdianTitle" ng-model="formData.gurdianTitle" class="form-control"
+                            ng-options="gurdianTitle.id as gurdianTitle.name for gurdianTitle in gurdianTitleOptions" value="{{gurdianTitle.id}}"
+                            >
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
+                    <span class="error" ng-show="submitted && createrblcustomerform.gurdiangender.$error.required">{{'label.error.required'|translate}}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="language">{{'label.input.gurdianrelation' | translate}}</label>
+
+                <div class="col-md-3">
+                    <select id="gurdianrelation" name="gurdianrelation" ng-model="formData.gurdianrelation" class="form-control"
+                            ng-options="gurdianrelation.id as gurdianrelation.name for gurdianrelation in gurdianrelationOptions" value="{{gurdianrelation.id}}"
+                    >
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="language">{{'label.input.adharseedingconstant' | translate}}</label>
 
                 <div class="col-md-3">
                     <select id="adharseedingconstant" name="adharseedingconstant" ng-model="formData.adharseedingconstant" class="form-control"
@@ -174,11 +187,21 @@
                     <span class="error" ng-show="submitted && createrblcustomerform.adharseedingconstant.$error.required">{{'label.error.required'|translate}}</span>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="gurdianMobileNo">{{'label.input.gurdianMobileNo' | translate}}</label>
+
+                <div class="col-sm-3">
+                    <input ng-autofocus="true" type="text"  ng-pattern="/^\d+$/" id="gurdianMobileNo" name="gurdianMobileNo" maxlength="10" ng-model="formData.gurdianMobileNo" class="form-control"
+                          />
+                    <span class="required" ng-show="createrblcustomerform.gurdianMobileNo.$error.pattern">Only Numbers</span>
+
+                </div>
+            </div>
 
 
             <div class="col-md-offset-2 paddedleft">
                 <a id="cancel" href="#/centers" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
-                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CLIENT'>{{'label.button.save' | translate}}</button>
+                <button  ng-click="submit()" id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CLIENT'>{{'label.button.save' | translate}}</button>
             </div>
         </fieldset>
     </form>

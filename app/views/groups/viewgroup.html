@@ -481,41 +481,41 @@
 			<tab heading="{{ 'label.heading.groupExtraDeatails' | translate }}" has-permission='READ_GROUP'>
 				<br/>
 				<div class="pull-right">
-					<a href="#/creategroupextradetails/{{groupId}}" class="btn btn-primary" has-permission='CREATE_RBLGROUP'><i
+					<a href="#/creategroupextradetails/{{groupId}}" ng-show="!showextradetails" class="btn btn-primary" has-permission='CREATE_RBLGROUP'><i
 							class="icon-plus icon-white"></i>
 						{{'label.button.createextradetails' | translate}}</a>
-					<a href="#/editgroupextradetails/{{groupId}}" class="btn btn-primary" has-permission='UPDATE_RBLGROUP'><i
+					<a href="#/editgroupextradetails/{{groupId}}" ng-show="showextradetails" class="btn btn-primary" has-permission='UPDATE_RBLGROUP'><i
 							class="icon-plus icon-white"></i>
 						{{'label.button.editextradetails' | translate}}</a>
 
 				</div>
 				<br><br>
-				<div class="row" style="margin-left:-1px;margin-right: 1px;">
+				<div class="row" style="margin-left:-1px;margin-right: 1px;" ng-show="showextradetails">
 					<div class="col-sm-4 col-md-4">
 						<table class="table table-striped table-bordered" >
 							<tr>
 								<th class="table-bold-loan"><strong>{{'label.input.maxcenter' | translate}}</strong></th>
-								<td>{{scope.groupExtra.maxcenter}}</td>
+								<td>{{groupExtra.maxcenter}}</td>
 							</tr>
 							<tr>
 								<th class="table-bold-loan"><strong>{{'label.input.grouptype'  | translate}}</strong></th>
-								<td><span class="padded-td">{{scope.groupExtra.groupTypeValue}}</span></td>
+								<td><span class="padded-td">{{groupExtra.groupType}}</span></td>
 							</tr>
 							<tr>
 								<th class="table-bold-loan"><strong>{{'label.input.minnumber'  | translate}}</strong></th>
-								<td><span class="padded-td">{{scope.groupExtra.minNumber}}</span></td>
+								<td><span class="padded-td">{{groupExtra.minNumber}}</span></td>
 							</tr>
 							<tr>
 								<th class="table-bold-loan"><strong>{{'label.input.maxnumber'  | translate}}</strong></th>
-								<td><span class="padded-td">{{scope.groupExtra.maxnumber}}</span></td>
+								<td><span class="padded-td">{{groupExtra.maxnumber}}</span></td>
 							</tr>
 							<tr>
 								<th class="table-bold-loan"><strong>{{'label.input.distancefrombranch'  | translate}}</strong></th>
-								<td><span class="padded-td"> {{scope.groupExtra.distancefrombranch}}</span></td>
+								<td><span class="padded-td"> {{groupExtra.distancefrombranch}}</span></td>
 							</tr>
 							<tr>
 								<th class="table-bold-loan"><strong>{{'label.input.meetingtime'  | translate}}</strong></th>
-								<td><span class="padded-td"> {{scope.groupExtra.meetingTime}}</span></td>
+								<td><span class="padded-td"> {{groupExtra.meetingTime}}</span></td>
 							</tr>
 
 						</table>

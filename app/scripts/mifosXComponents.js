@@ -56,6 +56,7 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'client/UploadClientIdentifierDocumentController',
             'client/ClientScreenReportController',
             'client/ClientsBankDetailsController',
+            'client/CbStatusCheckController',
             'product/LoanProductController',
             'product/CreateLoanProductController',
             'product/CreateSavingProductController',
@@ -263,7 +264,8 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'organization/RblCreditBureauRequestController',
             'organization/RblCreditBureauSearch',
             'organization/RblFileRequestSearch',
-            'organization/RblFileTransferController'
+            'organization/RblFileTransferController',
+            'organization/RblValidationSearchController',
 
         ],
         filters: [

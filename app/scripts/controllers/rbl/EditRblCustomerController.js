@@ -20,7 +20,12 @@
             scope.caedissueflagOptions =[{"id":0,"name":"False"},{"id":1,"name":"True"}];
             scope.cbchckOptions =[{"id":0,"name":"Yes"},{"id":1,"name":"No"}];
             scope.renwalflagOptions=[{"id":0,"name":"No"},{"id":1,"name":"Yes"}];
-            scope.gurdiangenderOptions=[{"id":0,"name":"Male"},{"id":1,"name":"Female"},{"id":0,"name":"Others"},{"id":1,"name":"Transgender"}];
+            scope.gurdiangenderOptions=[{"id":0,"name":"Male"},{"id":1,"name":"Female"},{"id":2,"name":"Others"},{"id":3,"name":"Transgender"}];
+            scope.languageOptions=[{"id":"kn-IN","name": "Kannada"},{"id":"hi-IN","name": "Hindi" },{"id":"or-IN" ,"name": "Oriya" },{"id":"en-US","name": "English"},{"id":"mr-IN" ,"name": "Marathi"},{"id":"ml-IN","name": "Malayalam"},{"id":"sn-IN","name": "Sanskrit"},{"id":"ta-IN","name": "Tamil"},{"id":"sn-IN" ,"name": "Sanskrit"},
+                {"id":"bn-IN","name": "Bengali"},{"id":"or-IN" ,"name": "Oriya"}, {"id":"ud-IN" ,"name": "Urdu"}, {"id":"gg-IN" ,"name": "Gujrati"}, {"id":"en-OT" ,"name": "Others"}];
+            scope.mothertoungOptions=[{"id":"kn-IN","name": "Kannada"},{"id":"hi-IN","name": "Hindi" },{"id":"or-IN" ,"name": "Oriya" },{"id":"en-US","name": "English"},{"id":"mr-IN" ,"name": "Marathi"},{"id":"ml-IN","name": "Malayalam"},{"id":"sn-IN","name": "Sanskrit"},{"id":"ta-IN","name": "Tamil"},{"id":"sn-IN" ,"name": "Sanskrit"},
+                {"id":"bn-IN","name": "Bengali"},{"id":"or-IN" ,"name": "Oriya"}, {"id":"ud-IN" ,"name": "Urdu"}, {"id":"gg-IN" ,"name": "Gujrati"}, {"id":"en-OT" ,"name": "Others"}];
+            scope.adharseedingconstantOptions =[{"id":1,"name":"Yes"},{"id":2,"name":"No"}];
 
             var requestParams = {staffInSelectedOfficeOnly: true};
             requestParams.officeId = 1;
@@ -28,16 +33,64 @@
             resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
                 scope.districtOptins = clientData.district;
                 scope.stateOptions = clientData.state;
+                scope.gurdianTitleOptions = clientData.salutation;
+                scope.gurdianrelationOptions = clientData.familyrelationShip;
+
+
             });
 
             resourceFactory.rblcustomerresource.get({customerId:routeParams.clientId}, function (clientData) {
+
+
                 scope.formData=clientData;
+
+                resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
+                    scope.gurdianTitleOptions = clientData.salutation;
+                    scope.gurdianrelationOptions = clientData.familyrelationShip;
+
+                    if (clientData.gurdiandateofBirth) {
+
+                        var dobDate = dateFilter(clientData.gurdiandateofBirth, scope.df);
+                        this.formData.gurdiandateofBirth = new Date(dobDate);
+                    }
+                    if (clientData.spousedateofbIrt) {
+                        var dobDate = dateFilter(clientData.spousedateofbIrt, scope.df);
+                        this.formData.spousedateofbIrt = new Date(dobDate);
+                    }
+
+                    for (var i = 0; i < scope.gurdianTitleOptions.length; i++) {
+                        alert(scope.gurdianTitleOptions[i].codescore);
+                        if (clientData.gurdianTitle == scope.gurdianTitleOptions[i].codescore) {
+                            this.formData.gurdianTitle = scope.gurdianTitleOptions[i].id;
+                            break;
+                        }
+                    }
+                    for (var i = 0; i < scope.gurdianrelationOptions.length; i++) {
+                        if (clientData.relation == scope.gurdianrelationOptions[i].codescore) {
+                            this.formData.gurdianrelation = scope.gurdianrelationOptions[i].id;
+                            break;
+                        }
+                    }
+                    for (var i = 0; i < scope.gurdianTitleOptions.length; i++) {
+
+                        if (scope.formData.gurdianTitle == scope.gurdianTitleOptions[i].codescore) {
+                            scope.formData.gurdianTitle = scope.gurdianTitleOptions[i].id;
+                            break;
+                        }
+                    }
+                    for (var i = 0; i < scope.gurdianrelationOptions.length; i++) {
+                        if (scope.formData.relation == scope.gurdianrelationOptions[i].codescore) {
+                            scope.formData.relation = scope.gurdianrelationOptions[i].id;
+                            break;
+                        }
+                    }
+                });
             });
 
 
             scope.submit = function () {
                 if (scope.formData.gurdiandateofBirth) {
-                    this.formData.submittedOnDate = dateFilter(scope.formData.gurdiandateofBirth, scope.df);;
+                    this.formData.gurdiandateofBirth = dateFilter(scope.formData.gurdiandateofBirth, scope.df);;
                 }
                 if (scope.formData.spousedateofbIrt) {
                     this.formData.spousedateofbIrt = dateFilter(scope.formData.spousedateofbIrt, scope.df);;

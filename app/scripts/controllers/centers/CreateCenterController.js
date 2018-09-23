@@ -17,15 +17,18 @@
                 scope.groups = data.groupMembersOptions;
                 scope.formData.officeId = data.officeOptions[0].id;
             });
-            resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
-                scope.rblOffice=data;
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                scope.rblOffice=data.allowedParents;
             });
-            resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:3},function(data){
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:3},function(data){
                 scope.sequenceNumber=data.sequenceNo;
             });
 
-            scope.changeOffice = function () {
+            scope.changeOffice = function (officeId) {
+                alert(officeId);
                 for(var i=0;i<scope.rblOffice.length;i++){
+                    alert(officeId);
+                    alert("rblofficeId"+scope.rblOffice[i].id);
                     if(officeId==scope.rblOffice[i].id){
                         scope.formData.externalId= scope.sequenceNumber;
                         break;
@@ -94,12 +97,7 @@
                 this.formData.dateFormat = scope.df;
                 this.formData.active = this.formData.active || false;
                 resourceFactory.centerResource.save(this.formData, function (data) {
-                    var request={
-                        "sequenceNumber":scope.sequenceNumber+1
-                    }
-                    resourceFactory.sequenceNumberResource.update({entityId:3},request,function(data){
-                        location.path('/viewcenter/' + data.resourceId);
-                    });
+                    location.path('/viewcenter/' + data.resourceId);
                 });
             };
         }

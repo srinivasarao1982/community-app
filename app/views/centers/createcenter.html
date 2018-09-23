@@ -27,7 +27,7 @@
 	            <div class="col-sm-3">
 	                <select chosen="offices" id="officeId" ng-model="formData.officeId"
 	                        ng-options="office.id as office.name for office in offices" value="{{office.id}}"
-	                        ng-change="changeOffice()" class="form-control">
+	                        ng-change="changeOffice(formData.officeId)" class="form-control">
 	                </select>
 	            </div>
 	        </div>
@@ -85,6 +85,20 @@
 
 				<div class="col-sm-3">
 					<input type="checkbox"  ng-model="formData.iscbcheckRequired" ></input>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2">{{'label.input.iscbChecked' | translate}}:</label>
+
+				<div class="col-sm-3">
+					<input type="checkbox"  ng-model="formData.iscbchecked" ></input>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2">{{'label.input.isgrtCompleted' | translate}}:</label>
+
+				<div class="col-sm-3">
+					<input type="checkbox"  ng-model="formData.isgrtCompleted" ></input>
 				</div>
 			</div>
             <div class="form-group">

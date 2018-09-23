@@ -544,25 +544,62 @@
 
                     }),
                     rblcenterresource:defineResource(apiVer + "/rbl/rblcenter/:centerId", {centerId:'@centerId'}, {
-                        update: {method: 'PUT', params: {centerId:'@centerId'}},
+                        update: {method: 'PUT', params: {}},
                         get: {method: 'GET', params: {centerId:'@centerId'},isArray : false},
 
                     }),
+
+                    rblcenterresourceforsave:defineResource(apiVer + "/rbl/rblcenter/", {}, {
+                       save: {method: 'POST', params: {}},
+                    }),
                     rblcustomerresource:defineResource(apiVer + "/rbl/rblclients/:customerId", {customerId:'@customerId'}, {
-                        update: {method: 'PUT', params: {customerId:'@centerId'}},
+                        update: {method: 'PUT', params: {customerId:'@customerId'}},
                         get: {method: 'GET', params: {customerId:'@customerId'},isArray : false},
                     }),
+                    rblcustomerresourceforsave:defineResource(apiVer + "/rbl/rblclients", {}, {
+                        save: {method: 'POST', params: {}},
+                    }),
                     rblgroupresource:defineResource(apiVer + "/rbl/rblgroup/:groupId", {groupId:'@groupId'}, {
-                        update: {method: 'PUT', params: {groupId:'@groupId'}},
+                        update: {method: 'PUT', params: {}},
                         get: {method: 'GET', params: {groupId:'@groupId'},isArray : false},
                     }),
-                    rblloanresource:defineResource(apiVer + "/rbl/rblloan/:loanId", {groupId:'@loanId'}, {
+                    rblloangetresource:defineResource(apiVer + "/rbl/rblloan/:loanId", {loanId:'@loanId'}, {
+                        get: {method: 'GET', params: {loanId:'@loanId'},isArray : false},
+                    }),
+                    rblgroupresourceforsave:defineResource(apiVer + "/rbl/rblgroup", {}, {
+                        save: {method: 'POST', params: {}},
+                    }),
+                    rblloanresourceforSave:defineResource(apiVer + "/rbl/rblloan", {}, {
+                        save: {method: 'POST', params: {}},
+                    }),
+                    rblloanresourceforUpdate:defineResource(apiVer + "/rbl/rblloan/:loanId", {loanId:'@loanId'}, {
+                        put: {method: 'PUT', params: {}},
+
+                    }),
+                    rblloanresource:defineResource(apiVer + "/rbl/rblloan/:loanId", {loanId:'@loanId'}, {
                         update: {method: 'PUT', params: {loanId:'@loanId'}},
                         get: {method: 'GET', params: {loanId:'@loanId'},isArray : false},
                     }),
-                    sequenceNumberResource: defineResource(apiVer + "/offices/sequenceNumber/:entityId", {entityId: "@entityId"}, {
-                         update: { method: 'PUT', params: {entityId:'@entityId'}},
+                    sequenceNumberResource: defineResource(apiVer + "/offices/sequenceNumber/:id", {id: "@id"}, {
+                         update: { method: 'PUT', params: {id:'@id'}},
                     }),
+                    rblvalidationresource:defineResource(apiVer + "/rblValidation/", {centerId:'@centerId',clientId:'@clientId',fromDate:'@fromDate',toDate:'@toDate',valufor:'@valufor'}, {
+                        get: {method: 'GET', params: {centerId:'@centerId',clientId:'@clientId',fromDate:'@fromDate',toDate:'@toDate',valufor:'@valufor'},isArray : true},
+                    }),
+                    rblvalidationresourceforValidate:defineResource(apiVer + "/rblValidation/validatefile/", {centerId:'@centerId',fromDate:'@fromDate',toDate:'@toDate',fileType:'@fileType'}, {
+                        get: {method: 'GET', params: {centerId:'@centerId',fromDate:'@fromDate',toDate:'@toDate',fileType:'@fileType'},isArray : true},
+                    }),
+                    rblvalidationFileresource:defineResource(apiVer + "/rblValidation/file", {fromDate:'@fromDate',toDate:'@toDate',fileType:'@fileType',clientcbcheck:'@clientcbcheck'}, {
+                        get: {method: 'GET', params: {fromDate:'@fromDate',toDate:'@toDate',fileType:'@fileType',clientcbcheck:'@clientcbcheck'},isArray : true},
+                    }),
+                    rblvalidationFilegenerateresource:defineResource(apiVer + "/rblValidation/file", {centerId:'@centerId',groupId:'@groupId',clintId:'@clintId',centerDatatobesent:'@centerDatatobesent',groupDatatobesend:'@groupDatatobesend',isImagetobesent:'@isImagetobesent',isreprocess:'@isreprocess',command:'@command'}, {
+                        sava: {method: 'POST', params: {centerId:'@centerId',groupId:'@groupId',clintId:'@clintId',centerDatatobesent:'@centerDatatobesent',groupDatatobesend:'@groupDatatobesend',isImagetobesent:'@isImagetobesent',isreprocess:'@isreprocess',command:'@command'},}
+                    }),
+                    rblvalidationcreditbureauresource:defineResource(apiVer + "/rblValidation/", {clintId:'@clintId',isValidate:'@isValidate'}, {
+                        save: {method: 'POST', params:  {clintId:'@clintId',isValidate:'@isValidate'},}
+                    }),
+
+
                 };
             }];
         }

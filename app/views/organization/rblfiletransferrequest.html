@@ -3,8 +3,7 @@
         <li><a href="#/organization">{{'label.anchor.rblfileTransferRquest' | translate}}</a></li>
         <li class="active">{{'label.anchor.rblfileTransferRquest' | translate}}</li>
     </ul>
-    <form name="createrblfiletransferform" novalidate="" class="form-horizontal well" ng-controller="RblFileTransferController"
-          rc-submit="submit()">
+    <form name="createrblfiletransferform" novalidate="" class="form-horizontal well" ng-controller="RblFileTransferController">
         <api-validate></api-validate>
         <fieldset>
             <legend>{{'label.anchor.rblfileTransferRquest' | translate}}</legend>
@@ -36,6 +35,34 @@
                         <option value=""> {{'label.menu.select' | translate}}</option>
 
                     </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.isReprocess' | translate}}:</label>
+
+                <div class="col-sm-3">
+                    <input type="checkbox"  ng-change="reprocessrequest(formData.isreprocess)"  ng-model="formData.isreprocess" ></input>
+                </div>
+            </div>
+            <div class="form-group" ng-show="reprocessRequest">
+                <label class="control-label col-sm-2">{{'label.input.isCenterDataToSent' | translate}}:</label>
+
+                <div class="col-sm-3">
+                    <input type="checkbox"  ng-model="formData.centerDatatobesent" ></input>
+                </div>
+            </div>
+            <div class="form-group" ng-show="reprocessRequest">
+                <label class="control-label col-sm-2">{{'label.input.isGroupDataToSent' | translate}}:</label>
+
+                <div class="col-sm-3">
+                    <input type="checkbox"  ng-model="formData.groupDatatobesend" ></input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.isImagetobesent' | translate}}:</label>
+
+                <div class="col-sm-3">
+                    <input type="checkbox"  ng-model="formData.isImagetobesent" ></input>
                 </div>
             </div>
             <div class="form-group">
@@ -80,7 +107,6 @@
                             <td>
                                 <input type="checkbox"  ng-model="client.ischecked"/>
                             </td>
-
                             <td>{{client.displayName}}&nbsp;({{client.accountNo}})</td>
                         </tr>
                         </tbody>
@@ -90,8 +116,9 @@
             </div>
 
             <div class="col-md-offset-2 paddedleft">
-                <a id="cancel" href="#/centers" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
-                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CENTER'>{{'label.button.save' | translate}}</button>
+                <a id="cancel" href="#/organasation" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                <button id="validate" ng-click="validate()" type="submit" class="btn btn-primary" has-permission='CREATE_RBLLOAN'>{{'label.button.validate' | translate}}</button>
+                <button id="save" ng-click="submit()" type="submit" class="btn btn-primary" has-permission='CREATE_RBLLOAN'>{{'label.button.save' | translate}}</button>
             </div>
         </fieldset>
     </form>

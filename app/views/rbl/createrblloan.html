@@ -1,17 +1,16 @@
 <div class="col-md-12">
     <ul class="breadcrumb">
-        <li><a href="#/groups">{{'label.anchor.groupextraDetails' | translate}}</a></li>
-        <li class="active">{{'label.anchor.groupextraDetails' | translate}}</li>
+        <li><a href="#/viewloanaccount/{{loanId}}">{{'label.anchor.rblloanExtraDeatails' | translate}}</a></li>
+        <li class="active">{{'label.anchor.rblloanExtraDeatails' | translate}}</li>
     </ul>
     <form name="createrblloanform" novalidate="" class="form-horizontal well" ng-controller="CreateRblLoanController"
           rc-submit="submit()">
         <api-validate></api-validate>
         <fieldset>
-            <legend>{{'label.heading.rblloanExtraDeatails' | translate}}</legend>
+            <legend>{{'label.anchor.rblloanExtraDeatails' | translate}}</legend>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="pslcode">{{'label.input.pslcode' | translate}}<span
-                        class="required">*</span></label>
+                <label class="control-label col-sm-2" for="pslcode">{{'label.input.pslcode' | translate}}</label>
 
                 <div class="col-md-4">
                     <select id="pslcode" name="pslcode" ng-model="formData.pslcode" class="form-control"
@@ -24,8 +23,7 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="topuploanflag">{{'label.input.topuploanflag' | translate}}<span
-                        class="required">*</span></label>
+                <label class="control-label col-sm-2" for="topuploanflag">{{'label.input.topuploanflag' | translate}}</label>
 
                 <div class="col-md-4">
                     <select id="topuploanflag" name="topuploanflag" ng-model="formData.topuploanflag" class="form-control"
@@ -38,38 +36,36 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="hosiptalcash">{{'label.input.hosiptalcash' | translate}}<span
-                        class="required">*</span>
+                <label class="control-label col-sm-2" for="hosiptalcash">{{'label.input.hosiptalcash' | translate}}
                     <i class="icon-question-sign" tooltip="{{'label.tooltip.hosiptalcash' | translate}}" tooltip-append-to-body="true"></i>
-
                 </label>
 
                 <div class="col-sm-3">
-                    <input ng-autofocus="true" type="text" id="hosiptalcash" name="hosiptalcash" maxlength="20" ng-model="formData.hosiptalcash" class="form-control" required
-                           late-Validate/>
-                    <span class="error" ng-show="submitted && createrblgroupform.maxnumber.$error.required">{{'label.error.required'|translate}}</span>
-                    <span class="required"
-                          ng-show="createrblgroupform.hosiptalcash.maxlength">not more than 20 character</span>
-                </div>
+
+                    <select id="hosiptalcash" name="hosiptalcash" ng-model="formData.hosiptalcash" class="form-control"
+                            ng-options="hosiptalcash.id as hosiptalcash.name for hosiptalcash in hosiptalcashOptions" value="{{hosiptalcash.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
+             </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="prpaidcharge">{{'label.input.prpaidcharge' | translate}}<span
-                        class="required">*</span>
+                <label class="control-label col-sm-2" for="prpaidcharge">{{'label.input.prpaidcharge' | translate}}
                     <i class="icon-question-sign" tooltip="{{'label.tooltip.prepaidcharge' | translate}}" tooltip-append-to-body="true"></i>
                 </label>
 
                 <div class="col-sm-3">
-                    <input ng-autofocus="true" type="text" id="prpaidcharge" name="prpaidcharge"  ng-model="formData.prpaidcharge" class="form-control" required
-                           late-Validate/>
-                    <span class="required"
-                          ng-show="createrblgroupform.prpaidcharge.prpaidcharge">not more than 20 character</span>
-
+                    <select id="prpaidcharge" name="prpaidcharge" ng-model="formData.prpaidcharge" class="form-control"
+                            ng-options="prpaidcharge.id as prpaidcharge.name for prpaidcharge in prepaidchargeOptions" value="{{prpaidcharge.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
                 </div>
             </div>
 
             <div class="col-md-offset-2 paddedleft">
-                <a id="cancel" href="#/centers" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                <a id="cancel" href="#/viewloanaccount/{{loanId}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
                 <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_LOAN'>{{'label.button.save' | translate}}</button>
             </div>
         </fieldset>

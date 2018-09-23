@@ -19,6 +19,9 @@
             scope.showaddbutton=true;
             scope.clientId=routeParams.id;
             scope.showextradetails=false;
+            scope.rblcustomerData ={};
+            scope.gurdianTitleOptions =[];
+            scope.gurdianrelationOptions=[];
             scope.routeToLoan = function (id) {
                 location.path('/viewloanaccount/' + id);
             };
@@ -55,14 +58,23 @@
             scope.gurdiangenderOptions=[{"id":0,"name":"Male"},{"id":1,"name":"Female"},{"id":2,"name":"Others"},{"id":3,"name":"Transgender"}];
 
             resourceFactory.rblcustomerresource.get({customerId:routeParams.id}, function (clientData) {
-                alert(clientData.id);
-                scope.formData=clientData;
-                if(angular.isUndefined(clientData.id)){
+                var requestParams = {staffInSelectedOfficeOnly: true};
+                requestParams.officeId = 1;
+
+
+                scope.rblcustomerData=clientData;
+                if(angular.isUndefined(clientData.clientId)){
+                    scope.showextradetails=false;
+                }else{
                     scope.showextradetails=true;
                 }
-                scope.extradetailsId=clientData.id;
-                scope.rblcustomerData=clientData;
-                if(clientData.caedissueflag==0){
+                scope.extradetailsId=clientData.clientId;
+               // scope.rblcustomerData=clientData;
+                resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
+                    scope.gurdianTitleOptions = clientData.salutation;
+                    scope.gurdianrelationOptions = clientData.familyrelationShip;
+
+                    if(clientData.caedissueflag==0){
                     scope.rblcustomerData.caedissueflag="false";
                 }else{
                     scope.rblcustomerData.caedissueflag="true";
@@ -82,14 +94,33 @@
                 for(var i=0;i<scope.gurdiangenderOptions.length;i++){
                     if(clientData.gurdiangender==scope.gurdiangenderOptions[i].id){
                         scope.rblcustomerData.gurdiangender=scope.gurdiangenderOptions[i].name;
+                        break;
                     }
                 }
                 for(var i=0;i<scope.healthOptions.length;i++){
                     if(clientData.health==scope.healthOptions[i].id){
                         scope.rblcustomerData.health=scope.healthOptions[i].name;
+                        break;
                     }
                 }
-                for(var i=0;i<scope.languageOptions.length;i++){
+
+                    for(var i=0;i<scope.gurdianTitleOptions.length;i++){
+
+                        if(scope.rblcustomerData.gurdianTitle ==scope.gurdianTitleOptions[i].codescore){
+                            scope.rblcustomerData.gurdianTitle=scope.gurdianTitleOptions[i].name;
+                            break;
+                        }
+                    }
+                    for(var i=0;i<scope.gurdianrelationOptions.length;i++){
+                        if(clientData.relation ==scope.gurdianrelationOptions[i].codescore){
+                            scope.rblcustomerData.relation=scope.gurdianrelationOptions[i].name;
+                            break;
+                        }
+                    }
+
+                });
+
+               /* for(var i=0;i<scope.languageOptions.length;i++){
                     if(clientData.language==scope.languageOptions[i].id){
                         scope.rblcustomerData.health=scope.languageOptions[i].name;
                     }
@@ -98,7 +129,7 @@
                     if(clientData.mothertoung==scope.mothertoungOptions[i].id){
                         scope.rblcustomerData.mothertoung=scope.mothertoungOptions[i].name;
                     }
-                }
+                }*/
 
             });
 

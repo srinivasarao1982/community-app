@@ -19,6 +19,7 @@
             var requestParams = {};
             requestParams.taskId = routeParams.id;
             requestParams.officeId=routeParams.officeId;
+            requestParams.taskType=1;
 
             scope.routetoviewtask=function(){
                 location.path('/viewtask/' + routeParams.id+"/"+routeParams.centerId+"/"+routeParams.officeId);
@@ -42,6 +43,14 @@
                 scope.staffOptions =data.staffOptions;
             });
 
+            scope.taskTypechange=function(taskTypeId){
+                var Param={}
+                Param.taskType=taskTypeId;
+                Param.officeId=routeParams.officeId;
+                resourceFactory.taskResource.get(Param, function (data) {
+                    scope.staffOptions =data.staffOptions;
+                });
+            }
             resourceFactory.taskResourcesave.get(requestParams,function(data){
                 scope.formData=data;
                 scope.formData.tasktype=data.taskTypeId;

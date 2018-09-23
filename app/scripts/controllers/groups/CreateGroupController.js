@@ -20,10 +20,10 @@
             if (routeParams.centerId) {
                 requestParams.centerId = routeParams.centerId;
             }
-            resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
-                scope.rblOffice=data;
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                scope.rblOffice=data.allowedParents;
             });
-            resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:2},function(data){
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:2},function(data){
                 scope.sequenceNumber=data.sequenceNo;
             });
             resourceFactory.groupTemplateResource.get(requestParams, function (data) {
@@ -121,12 +121,8 @@
                 this.formData.dateFormat = scope.df;
                 this.formData.active = this.formData.active || false;
                 resourceFactory.groupResource.save(this.formData, function (data) {
-                    var request={
-                        "sequenceNumber":scope.sequenceNumber+1
-                    }
-                    resourceFactory.sequenceNumberResource.update({entityId:2},request,function(data){
-                        location.path('/viewgroup/' + data.resourceId);
-                    });
+                    location.path('/viewgroup/' + data.resourceId);
+
                 });
             };
         }
