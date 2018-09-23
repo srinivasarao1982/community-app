@@ -81,13 +81,15 @@
             scope.clientId = routeParams.id;
             scope.cancel = function () {
                 if (scope.clientId) {
-                    location.path('/viewclient/' + scope.clientId);
+                    location.path('#/viewclient/' + scope.clientId);
                 }
             };
-            scope.cancel = '/viewclient/' + scope.clientId;
+            scope.cancel = '#/viewclient/' + scope.clientId;
             scope.showSavingOptions = 'false';
             scope.opensavingsproduct = 'false';
             scope.addressabove = false;
+            scope.isReprocessed = false;
+            scope.IsDisableReprocessedCheckbox = false;
 
             scope.addFamilyDetails = function () {
                 var family = {};
@@ -112,6 +114,10 @@
 
                 /*Nirantara Changes*/
                 var clientData = data.clientDetailedData;
+                scope.isReprocessed = data.isReprocessed;
+                if(data.isReprocessed == true){
+                    scope.IsDisableReprocessedCheckbox = true;
+                };
                 //console.log('clientData : ',JSON.stringify(clientData));
 
                 scope.salutations = clientData.salutation;
@@ -444,6 +450,10 @@
                         }
                     }
                 }
+            };
+            
+            scope.isReprocessedClient = function(){
+                    scope.formData.isReprocessed = scope.isReprocessed;
             };
 
             scope.showNotification = function () {
