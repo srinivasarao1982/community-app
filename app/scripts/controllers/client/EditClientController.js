@@ -90,6 +90,7 @@
             scope.addressabove = false;
             scope.isReprocessed = false;
             scope.IsDisableReprocessedCheckbox = false;
+            scope.isDisableSubmittionDate = false;
 
             scope.addFamilyDetails = function () {
                 var family = {};
@@ -117,6 +118,7 @@
                 scope.isReprocessed = data.isReprocessed;
                 if(data.isReprocessed == true){
                     scope.IsDisableReprocessedCheckbox = true;
+                    scope.isDisableSubmittionDate = true;
                 };
                 //console.log('clientData : ',JSON.stringify(clientData));
 
