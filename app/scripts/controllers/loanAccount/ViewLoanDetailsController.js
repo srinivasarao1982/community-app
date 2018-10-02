@@ -168,6 +168,8 @@
 
             resourceFactory.LoanAccountResource.getLoanAccountDetails({loanId: routeParams.id, associations: 'all',exclude: 'guarantors'}, function (data) {
                 scope.loandetails = data;
+                //Nextru specific used to create a loan document in client directory
+                $rootScope.clientId = scope.loandetails.clientId;
                 scope.recalculateInterest = data.recalculateInterest || true;
                 scope.isWaived = scope.loandetails.repaymentSchedule.totalWaived > 0;
                 scope.date.fromDate = new Date(data.timeline.actualDisbursementDate);
@@ -420,7 +422,8 @@
             };
 
             scope.getLoanDocuments = function () {
-                resourceFactory.LoanDocumentResource.getLoanDocuments({loanId: routeParams.id}, function (data) {
+                // nextru specific change - all documents stored into clients folder so passing clientId value
+                resourceFactory.LoanDocumentResource.getLoanDocuments({loanId: $rootScope.clientId}, function (data) {
                     for (var i in data) {
                         var loandocs = {};
                         loandocs = API_VERSION + '/loans/' + data[i].parentEntityId + '/documents/' + data[i].id + '/attachment?tenantIdentifier=' + $rootScope.tenantIdentifier;
