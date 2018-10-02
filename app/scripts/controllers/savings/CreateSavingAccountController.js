@@ -9,6 +9,7 @@
             scope.groupId = routeParams.groupId;
 			scope.date = {};
 			scope.date.submittedOnDate = new Date();
+            scope.rblOffice=[];
             if (routeParams.centerEntity) {
                 scope.centerEntity = true;
             }
@@ -28,8 +29,16 @@
             ;
 
             scope.inparams.staffInSelectedOfficeOnly = true;
-            
-            resourceFactory.savingsTemplateResource.get(scope.inparams, function (data) {
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                scope.rblOffice=data.allowedParents;
+            });
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:5},function(data){
+                scope.sequenceNumber=data.sequenceNo;
+            });
+            resourceFactory.clientResource.get({clientId: routeParams.clientId}, function (data) {
+                scope.clientofficeId = data.officeId;
+            })
+                resourceFactory.savingsTemplateResource.get(scope.inparams, function (data) {
                 scope.products = data.productOptions;
                 scope.chargeOptions = data.chargeOptions;
                 scope.clientName = data.clientName;
@@ -42,6 +51,15 @@
 
                     scope.data = data;
                     scope.charges = data.charges;
+
+                    for(var i=0;i<scope.rblOffice.length;i++){
+                        alert(scope.rblOffice[i].id);
+                        alert(scope.clientofficeId);
+                        if(scope.rblOffice[i].id==scope.clientofficeId){
+                            scope.formData.externalId=scope.sequenceNumber;
+                            break;
+                        }
+                    }
 
                     for (var i in scope.charges) {
                         if (scope.charges[i].chargeTimeType.value === "Annual Fee" && scope.charges[i].feeOnMonthDay) {
@@ -136,9 +154,15 @@
                     }
                 }
                 resourceFactory.savingsResource.save(this.formData, function (data) {
-                    location.path('/viewsavingaccount/' + data.savingsId);
+                    scope.savingId=data.savingsId;
+                    var seqNumber = {};
+                    seqNumber.sequenceNumber = scope.sequenceNumber+1;
+                    seqNumber.locale = scope.optlang.code;
+                    seqNumber.dateFormat = scope.df;
+                    resourceFactory.sequenceNumberResource.update({id: 5}, seqNumber, function (data) {
+                        location.path('/viewsavingaccount/' + scope.savingId);
                 });
-            };
+            });
 
             scope.cancel = function () {
                 if (scope.clientId) {
@@ -149,6 +173,7 @@
                     location.path('/viewgroup/' + scope.groupId);
                 }
             }
+        }
         }
     });
     mifosX.ng.application.controller('CreateSavingAccountController', ['$scope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter', mifosX.controllers.CreateSavingAccountController]).run(function ($log) {

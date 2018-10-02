@@ -106,13 +106,13 @@
 
                     for(var i=0;i<scope.gurdianTitleOptions.length;i++){
 
-                        if(scope.rblcustomerData.gurdianTitle ==scope.gurdianTitleOptions[i].codescore){
+                        if(scope.rblcustomerData.gurdianTitle ==scope.gurdianTitleOptions[i].id){
                             scope.rblcustomerData.gurdianTitle=scope.gurdianTitleOptions[i].name;
                             break;
                         }
                     }
                     for(var i=0;i<scope.gurdianrelationOptions.length;i++){
-                        if(clientData.relation ==scope.gurdianrelationOptions[i].codescore){
+                        if(clientData.relation ==scope.gurdianrelationOptions[i].id){
                             scope.rblcustomerData.relation=scope.gurdianrelationOptions[i].name;
                             break;
                         }

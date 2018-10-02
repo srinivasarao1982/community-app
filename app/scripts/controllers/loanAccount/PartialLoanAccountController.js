@@ -89,9 +89,10 @@
                             scope.selectedClients.push(client);
                             scope.selectedClients1.push(client);
                             return client;
-                        });
+
                         scope.groups[i].activeClientMembers=scope.selectedClients1;
                         scope.selectedClients1 =[];
+                        });
                     }
 
                 });
@@ -270,7 +271,7 @@
 
                         if (scope.response.failed.length === 0) {
                             var seqNumber = {};
-                            seqNumber.sequenceNumber = scope.sequenceNumber;
+                            seqNumber.sequenceNumber = scope.sequenceNumber+1;
                             seqNumber.locale = scope.optlang.code;
                             seqNumber.dateFormat = scope.df;
                             resourceFactory.sequenceNumberResource.update({id: 4}, seqNumber, function (data) {

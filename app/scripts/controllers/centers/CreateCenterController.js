@@ -25,10 +25,8 @@
             });
 
             scope.changeOffice = function (officeId) {
-                alert(officeId);
+
                 for(var i=0;i<scope.rblOffice.length;i++){
-                    alert(officeId);
-                    alert("rblofficeId"+scope.rblOffice[i].id);
                     if(officeId==scope.rblOffice[i].id){
                         scope.formData.externalId= scope.sequenceNumber;
                         break;

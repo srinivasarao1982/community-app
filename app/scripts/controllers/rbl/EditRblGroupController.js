@@ -13,8 +13,7 @@
                 resourceFactory.centerTemplateResource.get({staffInSelectedOfficeOnly:true},function (data) {
                     scope.meetingTimeOptions = data.time;
                     for(var i=0;i<scope.meetingTimeOptions.length;i++){
-                         alert(scope.formData.meetingTime);
-                         alert("name"+scope.meetingTimeOptions[i].name);
+
                         if(scope.formData.meetingTime==scope.meetingTimeOptions[i].name){
                             scope.formData.meetingTime=scope.meetingTimeOptions[i].id;
                             break;
@@ -35,7 +34,6 @@
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
                 this.formData.groupId=routeParams.groupId;
-                alert(this.formData.groupId);
                 resourceFactory.rblgroupresource.update({groupId:routeParams.groupId},this.formData, function (data) {
                     location.path('/viewgroup/' + routeParams.groupId);
                 });

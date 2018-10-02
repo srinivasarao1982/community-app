@@ -89,7 +89,6 @@
                                 if (scope.acceptedclientsIdOptions.indexOf(client.id) !== -1) {
                                     client.principal = data.product.principal;
                                     client.groupId = scope.groups[i].id;
-                                    alert(scope.sequenceNumberData[0].clientId);
                                     for(var p=0;p<=scope.sequenceNumberData.length;p++){
                                         if(scope.sequenceNumberData[p].clientId==client.id){
                                             client.extId=scope.sequenceNumberData[p].SequenceNumber;

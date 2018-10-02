@@ -83,17 +83,17 @@
                     }
                 }
                 if(angular.isUndefined(scope.formData.iscbchecked)){
-                    alert("test");
+
                     if(scope.formData.iscbchecked||scope.iscbchecked){
                         this.formData.iscbchecked=0;
                     }}else {
-                    alert("this");
+
                     if (scope.formData.iscbchecked ) {
                         this.formData.iscbchecked = 1;
                     } else {
                         this.formData.iscbchecked = 0;
                     }
-                    alert(this.formData.iscbchecked);
+
                 }
                 resourceFactory.centerResource.update({centerId: routeParams.id}, this.formData, function (data) {
                     location.path('/viewcenter/' + routeParams.id);

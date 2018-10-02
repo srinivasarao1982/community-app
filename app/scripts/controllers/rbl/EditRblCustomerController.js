@@ -10,7 +10,7 @@
             scope.restrictDate = new Date();
             scope.first.date = new Date();
             scope.addedGroups = [];
-            scope.healthOptions=[{"id":1,"name":"Normal"},{"id":2,"name":"Partial sa"},{"id":3,"name":"Physically Challenged"},{"id":4,"name":"Mentally Challenged"},{"id":5,"name":"gir"},{"id":6,"name":"Blind"},{"id":7,"name":"One"}];
+            scope.healthOptions=[{"id":"01","name":"Normal"},{"id":"02","name":"Partial sa"},{"id":"03","name":"Physically Challenged"},{"id":"04","name":"Mentally Challenged"},{"id":"05","name":"gir"},{"id":"06","name":"Blind"},{"id":"07","name":"One"}];
             scope.languageOptions=[{"kn-IN" :1,"name": "Kannada"},{"hi-IN" :2,"name": "Hindi" },{"or-IN" :3,"name": "Oriya" },{"en-US" :4,"name": "English"},{"mr-IN" :5,"name": "Marathi"},{"ml-IN":6,"name": "Malayalam"},{"sn-IN" :7,"name": "Sanskrit"},{"ta-IN" :8,"name": "Tamil"},{"sn-IN" :9,"name": "Sanskrit"},
                 {"bn-IN" :10,"name": "Bengali"},{"or-IN" :11,"name": "Oriya"}, {"ud-IN" :12,"name": "Urdu"}, {"gg-IN" :12,"name": "Gujrati"}, {"en-OT" :14,"name": "Others"}];
             scope.languageOptions=[{"kn-IN" :1,"name": "Kannada"},{"hi-IN" :2,"name": "Hindi" },{"or-IN" :3,"name": "Oriya" },{"en-US" :4,"name": "English"},{"mr-IN" :5,"name": "Marathi"},{"ml-IN":6,"name": "Malayalam"},{"sn-IN" :7,"name": "Sanskrit"},{"ta-IN" :8,"name": "Tamil"},{"sn-IN" :9,"name": "Sanskrit"},
@@ -20,12 +20,12 @@
             scope.caedissueflagOptions =[{"id":0,"name":"False"},{"id":1,"name":"True"}];
             scope.cbchckOptions =[{"id":0,"name":"Yes"},{"id":1,"name":"No"}];
             scope.renwalflagOptions=[{"id":0,"name":"No"},{"id":1,"name":"Yes"}];
-            scope.gurdiangenderOptions=[{"id":0,"name":"Male"},{"id":1,"name":"Female"},{"id":2,"name":"Others"},{"id":3,"name":"Transgender"}];
+           // scope.gurdiangenderOptions=[{"id":1,"name":"Male"},{"id":2,"name":"Female"},{"id":3,"name":"Others"},{"id":4,"name":"Transgender"}];
             scope.languageOptions=[{"id":"kn-IN","name": "Kannada"},{"id":"hi-IN","name": "Hindi" },{"id":"or-IN" ,"name": "Oriya" },{"id":"en-US","name": "English"},{"id":"mr-IN" ,"name": "Marathi"},{"id":"ml-IN","name": "Malayalam"},{"id":"sn-IN","name": "Sanskrit"},{"id":"ta-IN","name": "Tamil"},{"id":"sn-IN" ,"name": "Sanskrit"},
                 {"id":"bn-IN","name": "Bengali"},{"id":"or-IN" ,"name": "Oriya"}, {"id":"ud-IN" ,"name": "Urdu"}, {"id":"gg-IN" ,"name": "Gujrati"}, {"id":"en-OT" ,"name": "Others"}];
             scope.mothertoungOptions=[{"id":"kn-IN","name": "Kannada"},{"id":"hi-IN","name": "Hindi" },{"id":"or-IN" ,"name": "Oriya" },{"id":"en-US","name": "English"},{"id":"mr-IN" ,"name": "Marathi"},{"id":"ml-IN","name": "Malayalam"},{"id":"sn-IN","name": "Sanskrit"},{"id":"ta-IN","name": "Tamil"},{"id":"sn-IN" ,"name": "Sanskrit"},
                 {"id":"bn-IN","name": "Bengali"},{"id":"or-IN" ,"name": "Oriya"}, {"id":"ud-IN" ,"name": "Urdu"}, {"id":"gg-IN" ,"name": "Gujrati"}, {"id":"en-OT" ,"name": "Others"}];
-            scope.adharseedingconstantOptions =[{"id":1,"name":"Yes"},{"id":2,"name":"No"}];
+            scope.adharseedingconstantOptions =[{"id":"01","name":"Yes"},{"id":"02","name":"No"}];
 
             var requestParams = {staffInSelectedOfficeOnly: true};
             requestParams.officeId = 1;
@@ -35,6 +35,7 @@
                 scope.stateOptions = clientData.state;
                 scope.gurdianTitleOptions = clientData.salutation;
                 scope.gurdianrelationOptions = clientData.familyrelationShip;
+                scope.gurdiangenderOptions=clientData.clientBasicDetails.genderOptions;
 
 
             });
@@ -59,7 +60,6 @@
                     }
 
                     for (var i = 0; i < scope.gurdianTitleOptions.length; i++) {
-                        alert(scope.gurdianTitleOptions[i].codescore);
                         if (clientData.gurdianTitle == scope.gurdianTitleOptions[i].codescore) {
                             this.formData.gurdianTitle = scope.gurdianTitleOptions[i].id;
                             break;

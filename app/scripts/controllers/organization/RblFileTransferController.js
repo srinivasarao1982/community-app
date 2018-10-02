@@ -80,9 +80,7 @@
                 if(angular.isUndefined(scope.formData.isreprocess)){
                     scope.isreprocess=false;
                 }
-                alert(scope.isreprocess);
-                alert(scope.formData.isreprocess);
-                alert(scope.groupDatatobesend);
+
                 resourceFactory.rblvalidationFilegenerateresource.save({
                     clintId: scope.clientId,
                     groupId: scope.groupId,
