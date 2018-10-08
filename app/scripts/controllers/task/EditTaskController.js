@@ -96,8 +96,8 @@
                     scope.formData.attendencedetails=[];
                     for(var i in scope.intermediateattendence ){
                         var details={};
-                        details.clientId=scope.intermediateattendence[0].clientId;
-                        details.attendanceType=scope.intermediateattendence[0].clientAttendence.id;
+                        details.clientId=scope.intermediateattendence[i].clientId;
+                        details.attendanceType=scope.intermediateattendence[i].clientAttendence.id;
                         this.formData.attendencedetails.push(details);
 
                     }
