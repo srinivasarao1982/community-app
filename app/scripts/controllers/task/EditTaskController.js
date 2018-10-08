@@ -82,9 +82,10 @@
 
             scope.submit = function () {
                // attendencedetails
-                var details={};
+
                 if(!scope.showform) {
                     for (var i in scope.selectedClients) {
+                        var details={};
                         details.clientId = scope.selectedClients[i].id;
                         details.attendanceType = scope.selectedClients[i].attendanceType;
                         this.formData.attendencedetails.push(details);
@@ -94,6 +95,7 @@
                    scope.intermediateattendence= scope.formData.attendencedetails;
                     scope.formData.attendencedetails=[];
                     for(var i in scope.intermediateattendence ){
+                        var details={};
                         details.clientId=scope.intermediateattendence[0].clientId;
                         details.attendanceType=scope.intermediateattendence[0].clientAttendence.id;
                         this.formData.attendencedetails.push(details);
