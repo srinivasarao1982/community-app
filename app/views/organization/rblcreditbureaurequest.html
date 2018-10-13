@@ -3,8 +3,8 @@
         <li><a href="#/organization">{{'label.anchor.rblcreditBureauRequest' | translate}}</a></li>
         <li class="active">{{'label.anchor.rblcreditBureauRequest' | translate}}</li>
     </ul>
-    <form name="createrblcreditRequest" novalidate="" class="form-horizontal well" ng-controller="RblCreditBureauRequestController"
-          rc-submit="submit()">
+    <form name="createrblcreditRequest" novalidate="" class="form-horizontal well" ng-controller="RblCreditBureauRequestController" >
+
         <api-validate></api-validate>
         <fieldset>
             <legend>{{'label.anchor.rblcreditBureauRequest' | translate}}</legend>
@@ -92,7 +92,7 @@
             <div class="col-md-offset-2 paddedleft">
                 <a id="cancel" href="#/centers" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
                 <button id="validate" ng-click="validate()" type="submit" class="btn btn-primary" has-permission='CREATE_RBLLOAN'>{{'label.button.validate' | translate}}</button>
-                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CENTER'>{{'label.button.save' | translate}}</button>
+                <button id="save" type="submit" ng-click="submit()" class="btn btn-primary" has-permission='CREATE_RBLLOAN'>{{'label.button.save' | translate}}</button>
             </div>
         </fieldset>
     </form>

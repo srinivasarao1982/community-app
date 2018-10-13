@@ -31,12 +31,17 @@
 
 
             scope.submit=function() {
+                scope.isfromDate =false;
+                scope.scope.isTodate=false;
+                scope.dateError=false;
                 if (scope.formData.fromDate) {
                     this.formData.fromDate = dateFilter(scope.formData.fromDate, 'yyyy-MM-dd');
+                    scope.isfromDate=true;
                 }
 
                 if (scope.formData.toDate) {
                     this.formData.toDate = dateFilter(scope.formData.toDate,'yyyy-MM-dd');
+                    scope.isTodate=true;
                 }
                 if(scope.formData.valufor=='response'){
                     scope.requestvalue=false;
@@ -44,9 +49,13 @@
                 if(scope.formData.valufor=='Error'){
                     scope.requestvalue=true;
                 }
-                resourceFactory.rblvalidationresource.get( scope.formData,function(data){
-                    scope.creditBureauResults=data;
-                })
+                if( scope.isfromDate && scope.isTodate) {
+                    resourceFactory.rblvalidationresource.get(scope.formData, function (data) {
+                        scope.creditBureauResults = data;
+                    })
+                }else{
+                    scope.dateError=true;
+                }
             }
 
         }

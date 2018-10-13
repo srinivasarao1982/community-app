@@ -763,7 +763,7 @@
             .when('/createtask/:id/:officeId', {
                 templateUrl: 'views/task/createtask.html'
             })
-            .when('/editetask/:id/:centerId/:officeId', {
+            .when('/editetask/:id/:centerId/:officeId/:tasktype', {
                 templateUrl: 'views/task/edittask.html'
             })
             .when('/viewtask/:id', {

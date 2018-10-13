@@ -13,11 +13,13 @@
             scope.formData={};
            scope.formData.taskextradetails = [];
            scope.centerId=routeParams.id;
+            scope.taskStartTimes=[];
+            scope.taskEndTimes=[];
 
 
 
             var requestParams = {staffInSelectedOfficeOnly:true};
-            requestParams.taskType=1;
+         //   requestParams.taskType=1;
             if (routeParams.officeId) {
                 requestParams.officeId = routeParams.officeId;
             }
@@ -28,6 +30,9 @@
                 scope.taskStatus=data.taskstatus;
                 scope.attendenceTypeOption=data.attendenceTypeOptions;
                 scope.staffOptions =data.staffOptions;
+                scope.taskStartTimes=data.tasktimeOptions;
+                scope.taskEndTimes=data.tasktimeOptions;
+
             });
             scope.taskTypechange=function(taskTypeId){
                 var Param={}
@@ -59,9 +64,10 @@
                 this.formData.dateFormat = scope.df;
                 this.formData.centerId=routeParams.id;
                 this.formData.officeId=routeParams.officeId;
-                //this.formData.staffId=1.
-               // this.formData.expectedcompleteddate='12 May 2017';
-             //   this.formData.feeDetails = scope.formData.feeDetails
+                if (scope.formData.plannedDate) {
+                    scope.formData.plannedDate = dateFilter(scope.formData.plannedDate, scope.df);
+                    this.formData.plannedDate = scope.formData.plannedDate;
+                }
                 resourceFactory.taskResourcesave.save(this.formData, function (data) {
                     location.path('/viewcenter/' + routeParams.id);
                 });

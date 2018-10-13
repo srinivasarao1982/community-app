@@ -22,6 +22,56 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-sm-2"><strong>
+                            {{'label.input.taskPlannedDate' | translate}} <span class="required" >*</span>
+                        </strong></label>
+                        <div class="col-md-3">
+                            <input id="plannedDate" type="text" name="plannedDate"
+                                   datepicker-pop="dd MMMM yyyy"
+                                   ng-model="formData.plannedDate" is-open="opened1"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2"><strong>
+                            {{'label.input.completedDate' | translate}} <span class="required" >*</span>
+                        </strong></label>
+                        <div class="col-md-3">
+                            <input id="compltedDate" type="text" name="plannedDate"
+                                   datepicker-pop="dd MMMM yyyy"
+                                   ng-model="formData.completedDate" is-open="opened1"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2"><strong>
+                            {{'label.input.taskStartTime' | translate}} <span class="required" >*</span>
+                        </strong></label>
+                        <div class="col-sm-3">
+                            <div>
+                                <select  id="taskStartTime" ng-model="formData.taskStartTime"  class="form-control" required
+                                        late-Validate
+                                        ng-options="taskStartTime.id as taskStartTime.name for taskStartTime in taskStartTimes" value="{{taskStartTime.id}}"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2"><strong>
+                            {{'label.input.taskCompletedTime' | translate}} <span class="required" >*</span>
+                        </strong></label>
+                        <div class="col-sm-3">
+                            <div>
+                                <select  id="taskEndTime" ng-model="formData.taskEndTime"  class="form-control" required
+                                        late-Validate
+                                        ng-options="taskEndTime.id as taskEndTime.name for taskEndTime in taskEndTimes" value="{{taskEndTime.id}}"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label col-sm-2"><strong>{{'label.input.compltedby' | translate}}<span class="required" >*</span></strong></label>
                         <div class="col-sm-3">
                             <select   id="staffId" ng-model="formData.staffId"  class="form-control"

@@ -33,10 +33,9 @@
             resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
                 scope.districtOptins = clientData.district;
                 scope.stateOptions = clientData.state;
-                scope.gurdianTitleOptions = clientData.salutation;
-                scope.gurdianrelationOptions = clientData.familyrelationShip;
+                scope.gurdianTitleOptions = clientData.gurdianTitle;
+                scope.gurdianrelationOptions = clientData.gurdianRelation;
                 scope.gurdiangenderOptions=clientData.clientBasicDetails.genderOptions;
-
 
             });
 
