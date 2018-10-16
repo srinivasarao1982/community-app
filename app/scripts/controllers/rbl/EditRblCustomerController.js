@@ -45,8 +45,10 @@
                 scope.formData=clientData;
 
                 resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
-                    scope.gurdianTitleOptions = clientData.salutation;
-                    scope.gurdianrelationOptions = clientData.familyrelationShip;
+                    scope.gurdianTitleOptions = clientData.gurdianTitle;
+                    scope.gurdianrelationOptions = clientData.gurdianRelation;
+
+
 
                     if (clientData.gurdiandateofBirth) {
 
@@ -97,8 +99,8 @@
 
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
-                resourceFactory.rblcustomerresource.save(this.formData, function (data) {
-                    location.path('/viewclient/' + data.resourceId);
+                resourceFactory.rblcustomerresource.update({customerId:routeParams.clientId},this.formData, function (data) {
+                    location.path('/viewclient/' + routeParams.clientId);
                 });
             };
         }

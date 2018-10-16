@@ -33,7 +33,7 @@
             resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
                 scope.rblOffice=data.allowedParents;
             });
-            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:3},function(data){
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:4},function(data){
                 scope.sequenceNumber=data.sequenceNo;
             });
             // Fetch loan products for initital product drop-down

@@ -20,6 +20,7 @@
             scope.selectedcenters=[];
             scope.selectedGroups=[];
             scope.reprocessRequest = false;
+            scope.center=[];
             resourceFactory.officeResource.getAllRblOffices({
                 officeId: 35,
                 rbloffice: true,
@@ -45,26 +46,31 @@
             }
             scope.getAllGroupsByCenter = function (centerId) {
                 scope.centerId = centerId;
-                alert("1");
+                resourceFactory.centerResourceRbl.get({centerId: routeParams.id}, function (data) {
+                    scope.center = data;
+                    scope.selectedcenters.push(data);
+                });
                 scope.showDetails = true;
                 resourceFactory.centerClientResource.get({centerId: centerId}, function (data) {
-                    alert("2");
                     scope.groups = data.groupMembers;
-                    alert("3");
-
-                    scope.selectedGroups.push( data.groupMembers);
-                    alert("4");
+                     for(var j=0;j< scope.groups.length;j++){
+                         scope.selectedGroups.push( scope.groups[j]);
+                     }
                 })
-                resourceFactory.centerResource.get({centerId: routeParams.id}, function (data) {
-                    scope.center = data;
-                    alert("5");
-                    scope.selectedcenters.push(data);
-                    alert("6");
-                });
-            }
 
-//===
+            }
+       scope.getClientAfterRemove =function(centerId){
+           resourceFactory.centerClientResource.get({centerId: centerId}, function (data) {
+               scope.groups = data.groupMembers;
+               for(var j=0;j<= scope.groups.length;j++){
+                   scope.selectedGroups.push( scope.groups[j]);
+               }
+           })
+       }
+
+
             scope.addClient = function () {
+                scope.centerIdforFetch=this.formData.id;
                 for (var i in this.formData.id) {
                     for (var j in scope.staffCenterData) {
                         if (scope.staffCenterData[j].id == this.formData.id[i]) {
@@ -78,28 +84,29 @@
 
                     }
                 }
-
                 this.formData.id = this.formData.id - 1;
-                scope.getAllGroupsByCenter(this.formData.id);
+                scope.getAllGroupsByCenter(scope.centerIdforFetch);
             };
 
             scope.removeClient = function () {
 
-                for (var i in this.formData.client) {
-                    for (var j in scope.client) {
-                        if (scope.client[j].id == this.formData.client[i]) {
-
+                for (var i in this.formData.centerids) {
+                    for (var j in scope.centerDatas) {
+                        if (scope.centerDatas[j].id == this.formData.centerids[i]) {
                             var temp = {};
-                            temp.id = this.formData.client[i];
-                            temp.displayName = scope.client[j].displayName;
-                            temp.mobileNo = scope.client[j].mobileNo;
-                            temp.externalId = scope.client[j].externalId;
-                            scope.clients.push(temp);
-                            scope.client.splice(j, 1);
+                            temp.id = this.formData.centerids;
+                            temp.name =scope.centerDatas[j].name;
+                            temp.externalId = scope.centerDatas[j].externalId;
+                            scope.staffCenterData.push(temp);
+                            scope.centerDatas.splice(j, 1);
                         }
                     }
                 }
-                this.formData.client = this.formData.client - 1;
+                this.formData.centerids = this.formData.centerids - 1;
+                scope.selectedGroups=[];
+                for(var i=0;i<scope.centerDatas.length;i++){
+                    scope.getClientAfterRemove(scope.centerDatas[i].id);
+                }
             };
 
             scope.select = function () {
@@ -109,58 +116,24 @@
 
             }
 
-            scope.selectAll = function () {
-                scope.selected = false;
-                //reduce the size of clients by 1;
-                this.formData.clients =this.formData.clients-1;
-                for (var l in scope.clients) {
-
-                    var temp = {};
-                    temp.id = scope.clients[l].id;
-                    temp.displayName = scope.clients[l].displayName;
-                    temp.mobileNo = scope.clients[l].mobileNo;
-                    temp.externalId = scope.clients[l].externalId;
-                    scope.client.push(temp);
-                }
-                //scope.client= scope.mobileNo;
-                scope.clients = [];
-
-            }
-
-            scope.clear = function () {
-                for (var l in scope.client) {
-                    var temp = {};
-                    temp.id = scope.client[l].id;
-                    temp.displayName = scope.client[l].displayName;
-                    temp.mobileNo = scope.client[l].mobileNo;
-                    temp.externalId = scope.client[l].externalId;
-                    scope.clients.push(temp);
-                }
-                scope.client = [];
-                scope.selected = false;
-                scope.formData.mobileNo = " ";
-                scope.formData.id = "";
-                //reduce the size of selected client Array
-                this.formData.client=this.formData.client-1;
-
-                //scope.clients=scope.formData.client;
-            }
             scope.submit = function () {
-                scope.clientId = 0;
-                scope.groupId = 0;
-                for (var i = 0; i < scope.groups.length; i++) {
-                    if (scope.groups[i].ischecked) {
-                        scope.groupId = scope.groupId + "," + scope.groups[i].id;
-                        for (var j = 0; j < scope.groups[i].activeClientMembers.length; j++) {
-                            scope.clientId = scope.clientId + "," + scope.groups[i].activeClientMembers[j].id;
+                scope.clientId ="";
+                scope.groupId ="";
+                scope.centerId1="";
+                for(var i=0;i<scope.centerDatas.length;i++){
+                    scope.centerId1=scope.centerId1+"," +scope.centerDatas[i].id;
+                }
+                for(var k=0;k<scope.selectedGroups.length;k++){
+                    if (scope.selectedGroups[k].ischecked) {
+                        scope.groupId = scope.groupId + "," + scope.selectedGroups[k].id;
+                        for (var j = 0; j < scope.selectedGroups[k].activeClientMembers.length; j++) {
+                            scope.clientId = scope.clientId + "," + scope.selectedGroups[k].activeClientMembers[j].id;
                         }
-
                     }
-
                 }
                 scope.formData.clintId = scope.clientId;
                 scope.formData.groupId = scope.groupId;
-                scope.formData.centerId = scope.centerId;
+                scope.formData.centerId = scope.centerId1;
                 scope.formData.command = 'nonvalidate';
                 if(angular.isUndefined(scope.formData.centerDatatobesent)){
                     scope.centerDatatobesent=false;
@@ -176,9 +149,9 @@
                 }
 
                 resourceFactory.rblvalidationFilegenerateresource.save({
-                    clintId: scope.clientId,
-                    groupId: scope.groupId,
-                    centerId: scope.centerId,
+                    clintId: scope.clientId.substring(1),
+                    groupId: scope.groupId.substring(1),
+                    centerId:scope.centerId1.substring(1),
                     centerDatatobesent:scope.centerDatatobesent,
                     groupDatatobesend:scope.groupDatatobesend,
                     isImagetobesent:scope.isImagetobesent,
@@ -192,26 +165,28 @@
             }
 
             scope.validate = function () {
-                scope.clientId = 0;
-                scope.groupId = 0;
-                for (var i = 0; i < scope.groups.length; i++) {
-                    if (scope.groups[i].ischecked) {
-                        scope.groupId = scope.groupId + "," + scope.groups[i].id;
-                        for (var j = 0; j < scope.groups[i].activeClientMembers.length; j++) {
-                            scope.clientId = scope.clientId + "," + scope.groups[i].activeClientMembers[j].id;
-                        }
-
-                    }
-
+                scope.clientId ="";
+                scope.groupId ="";
+                scope.centerId1="";
+                for(var i=0;i<scope.centerDatas.length;i++){
+                     scope.centerId1=scope.centerId1+"," +scope.centerDatas[i].id;
                 }
-                scope.formData.clintId = scope.clientId;
-                scope.formData.groupId = scope.groupId;
-                scope.formData.centerId = scope.centerId;
+               for(var k=0;k<scope.selectedGroups.length;k++){
+                    if (scope.selectedGroups[k].ischecked) {
+                        scope.groupId = scope.groupId + "," + scope.selectedGroups[k].id;
+                        for (var j = 0; j < scope.selectedGroups[k].activeClientMembers.length; j++) {
+                            scope.clientId = scope.clientId + "," + scope.selectedGroups[k].activeClientMembers[j].id;
+                        }
+                    }
+                }
+                scope.formData.clintId = scope.clientId.substring(1);
+                scope.formData.groupId = scope.groupId.substring(1);
+                scope.formData.centerId = scope.centerId1.substring(1);
                 scope.formData.command = 'validate';
                 resourceFactory.rblvalidationFilegenerateresource.save({
-                    clintId: scope.clientId,
-                    groupId: scope.groupId,
-                    centerId: scope.centerId,
+                    clintId: scope.clientId.substring(1),
+                    groupId: scope.groupId.substring(1),
+                    centerId: scope.centerId1.substring(1),
                     command: 'validate'
                 }, function (data) {
                     location.path('/rblvalidatefilesearch');

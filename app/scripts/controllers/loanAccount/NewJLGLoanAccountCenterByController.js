@@ -40,7 +40,7 @@
                 scope.acceptedclientsIdOptions=data.acceptedclientsId;
             });
 
-            resourceFactory.partialLoanResourceforget.get({parentId:scope.center.id,isSequenceNumber:true}, function (data) {
+            resourceFactory.partialLoanResourceforget.get({parentId:scope.center.id,isSequenceNumber:true,isUpdateStatus:false}, function (data) {
                 scope.sequenceNumberData=data;
             });
 

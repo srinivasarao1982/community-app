@@ -40,7 +40,7 @@
                     scope.center.name = data.center.name;
                 }
             });
-            resourceFactory.partialLoanResourceforget.get({parentId:scope.center.id,isSequenceNumber:true}, function (data) {
+            resourceFactory.partialLoanResourceforget.get({parentId:scope.center.id,isSequenceNumber:true,isUpdateStatus:true}, function (data) {
                 scope.sequenceNumberData=data;
             });
 
@@ -80,10 +80,7 @@
                             client.principal = data.product.principal;
                             client.groupId=scope.groups[i].id;
                             for(var p=0;p<=scope.sequenceNumberData.length;p++){
-                                alert(scope.sequenceNumberData[p].clientId);
-                                alert(client.id);
                                 if(scope.sequenceNumberData[p].clientId==client.id){
-                                    alert("exist");
                                     client.extId=scope.sequenceNumberData[p].SequenceNumber;
                                     break;
                                 }

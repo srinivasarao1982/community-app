@@ -388,6 +388,10 @@
                         getAllMeetingFallCenters: {method: 'GET', params: {}, isArray: true},
                         update: { method: 'PUT'}
                     }),
+                    centerResourceRbl: defineResource(apiVer + "/centers/:centerId/:anotherresource", {centerId: '@centerId', anotherresource: '@anotherresource'}, {
+                        get: {method: 'GET', params: {},isArray: true},
+
+                    }),
                     centerMeetingResource: defineResource(apiVer + "/centers/:centerId/meetings/:templateSource", {centerId: '@centerId', templateSource: '@templateSource'}, {
                         getMeetingInfo: {method: 'GET', params: {}}
                     }),

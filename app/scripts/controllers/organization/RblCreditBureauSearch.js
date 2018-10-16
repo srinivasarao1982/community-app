@@ -32,7 +32,7 @@
 
             scope.submit=function() {
                 scope.isfromDate =false;
-                scope.scope.isTodate=false;
+                scope.isTodate=false;
                 scope.dateError=false;
                 if (scope.formData.fromDate) {
                     this.formData.fromDate = dateFilter(scope.formData.fromDate, 'yyyy-MM-dd');

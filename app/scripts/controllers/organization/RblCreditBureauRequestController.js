@@ -57,7 +57,7 @@
                     clintId: scope.clientId,
                     isValidate:false,
                 }, function (data) {
-                    location.path('/rblfilesearch');
+                    location.path('/creditbureaurequestsearch');
                 });
             }
             scope.validate = function () {

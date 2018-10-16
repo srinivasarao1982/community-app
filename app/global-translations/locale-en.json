@@ -413,6 +413,8 @@
     "error.msg.task.id.invalid":"Task Details Cannot be null for {{params[0].value}} ",
     "error.msg.task.is .Active":"Task is in Active State for this center {{params[0].value}}",
     "error.msg.task.id.invalid":"Task with identifier {{params[0].value}} does not exist",
+    "error.msg.grt.notCompleted":"Grt is not completed for center {{params[0].value}}",
+    "error.msg.cbstatus.notChecked":"Document Verification is Not Completed for Center {{params[0].value}} ",
 
     "#---------": "------------",
     "#Common loan/saving charges": "....",
@@ -441,6 +443,7 @@
     "label.anchor.rblfileReconcilation":" Rbl Los File Reconcilation",
     "label.view.rblfileReconcilation":"Rbl Los File Reconcilation",
     "label.anchor.rblcreditBureauFilereconcilation":"Rbl File Reconcilation",
+    "label.input.isTaskTime":"Is Task Time",
 
     "#Inputs": "..",
     "label.input.paymentdate":"Payment date",
