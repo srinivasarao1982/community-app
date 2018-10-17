@@ -8,9 +8,24 @@
             scope.report = false;
             scope.hidePentahoReport = true;
             scope.centerId=routeParams.id;
-            scope.isnewcenter
+            scope.isnewcenter;
+            scope.showextradetails=false;
             //scope.tasks=[];
-
+            var requestParams = {staffInSelectedOfficeOnly: true};
+            requestParams.officeId = 1;
+            resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
+                scope.districtOptins = clientData.district;
+                scope.stateOptions = clientData.state;
+            });
+            resourceFactory.rblcenterresource.get({centerId:routeParams.id}, function (data) {
+                if(angular.isUndefined(data.meetingTime)){
+                    scope.showextradetails=false;
+                }
+                else{
+                    scope.showextradetails=true
+                }
+                scope.centraextradata=data;
+            });
             resourceFactory.centerResource.get({centerId: routeParams.id, associations: 'groupMembers,collectionMeetingCalendar'}, function (data) {
                 scope.center = data;
                 scope.officeId1=data.officeId;

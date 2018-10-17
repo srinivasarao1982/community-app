@@ -275,6 +275,14 @@
 												<th>{{ 'label.input.iscbcheckRequired' | translate }}</th>
 												<td><span class="padded-td">{{center.iscbCheckRequired}}</span></td>
 											</tr>
+											<tr>
+												<th>{{ 'label.input.iscbChecked' | translate }}</th>
+												<td><span class="padded-td">{{center.iscbchecked}}</span></td>
+											</tr>
+											<tr>
+												<th>{{ 'label.input.isgrtCompleted' | translate }}</th>
+												<td><span class="padded-td">{{center.isgrtCompleted}}</span></td>
+											</tr>
 								        </table>
 							    	</div>
 						    	</div>
@@ -284,6 +292,108 @@
 			        <br/>
 			    </div>
 			</tab>
+            <tab heading="{{ 'label.heading.centerExtraDetails' | translate }}" has-permission='READ_CENTER'>
+                <br/>
+                <div class="pull-right">
+                    <a href="#/createrblcenterextradetails/{{centerId}}" ng-show="!showextradetails" class="btn btn-primary" has-permission='CREATE_RBLCENTER'><i
+                            class="icon-plus icon-white"></i>
+                        {{'label.button.createextradetails' | translate}}</a>
+                    <a href="#/editrblcenterextradetails/{{centerId}}" ng-show="showextradetails" class="btn btn-primary" has-permission='UPDATE_RBLCENTER'><i
+                            class="icon-plus icon-white"></i>
+                        {{'label.button.editextradetails' | translate}}</a>
+
+
+
+                </div>
+                <br><br>
+                <div class="row" style="margin-left:-1px;margin-right: 1px;" ng-show="showextradetails">
+                    <div class="col-sm-4 col-md-4">
+                        <table class="table table-striped table-bordered" >
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.maximumIndividual' | translate}}</strong></th>
+                                <td>{{centraextradata.maximumindividual}}</td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.meetingtime'  | translate}}</strong></th>
+                                <td><span class="padded-td">{{centraextradata.meetingTime}}</span></td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.houseNo'  | translate}}</strong></th>
+                                <td><span class="padded-td">{{centraextradata.houseNo}}</span></td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.streetNo'  | translate}}</strong></th>
+                                <td><span class="padded-td">{{centraextradata.streetNumber}}</span></td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.areaLocality'  | translate}}</strong></th>
+                                <td><span class="padded-td"> {{centraextradata.areaLocality}}</span></td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.landmark'  | translate}}</strong></th>
+                                <td><span class="padded-td"> {{centraextradata.landmark}}</span></td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.village'  | translate}}</strong></th>
+                                <td><span class="padded-td"> {{centraextradata.village}}</span></td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.taluk'  | translate}}</strong></th>
+                                <td><span class="padded-td"> {{centraextradata.taluk}}</span></td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.district'  | translate}}</strong></th>
+                                <td><span class="padded-td"> {{centraextradata.districtName}}</span></td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.pincode'  | translate}}</strong></th>
+                                <td><span class="padded-td"> {{centraextradata.pincode}}</span></td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>{{'label.input.state'  | translate}}</strong></th>
+                                <td><span class="padded-td"> {{centraextradata.stateName}}</span></td>
+                            </tr>
+                            <tr>
+                                <th class="table-bold-loan"><strong>Description</strong></th>
+                                <td><span class="padded-td"> {{centraextradata.dscription}}</span></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+
+                </ul>
+            </tab>
+            <tab heading="{{ 'label.heading.committee' | translate }}">
+                <div class="col-sm-12 col-md-12">
+                    <div class="row primarydiv" data-ng-hide="group.status.value == 'Closed'">
+                        <a href="#/addrole/{{group.id}}" has-permission='ASSIGNROLE_GROUP' class="btn btn-primary pull-right"><i
+                                class="icon-plus-sign-alt icon-white"></i>{{ 'label.button.add' | translate }}</a>
+                    </div>
+                    <table class="table ">
+                        <thead>
+                        <tr>
+                            <th>{{ 'label.heading.role' | translate }}</th>
+                            <th>{{ 'label.heading.name' | translate }}</th>
+                            <th>{{ 'label.heading.clientid' | translate }}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="grouprole in group.groupRoles">
+                            <td>{{grouprole.role.name}}</td>
+                            <td><a href="#viewclient/{{member.id}}">{{grouprole.clientName}}</a></td>
+                            <td>{{grouprole.clientId}}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-ng-hide="group.status.value == 'Closed'" has-permission='UNASSIGNROLE_GROUP'
+                                        data-ng-click="delrole(grouprole.id)">{{ 'label.button.unassign' | translate }}
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </tab>
 			<tab heading="{{ 'label.heading.task' | translate }}" has-permission='READ_TASK'>
 				<br/>
 				<div class="pull-right">

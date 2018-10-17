@@ -25,6 +25,7 @@
                 scope.taskData=data;
                 scope.clientAttendenceData=data.clientAttendenceData;
                 scope.taskdetailsData=data.taskdetailsData;
+                scope.taskTypeId=data.taskTypeId;
             });
 
         }

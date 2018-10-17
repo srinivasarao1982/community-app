@@ -10,14 +10,28 @@
             scope.restrictDate = new Date();
             scope.first.date = new Date();
             scope.addedGroups = [];
+            scope.rblOffice=[];
             resourceFactory.centerTemplateResource.get({staffInSelectedOfficeOnly:true},function (data) {
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
                 scope.groups = data.groupMembersOptions;
                 scope.formData.officeId = data.officeOptions[0].id;
             });
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                scope.rblOffice=data.allowedParents;
+            });
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:3},function(data){
+                scope.sequenceNumber=data.sequenceNo;
+            });
 
-            scope.changeOffice = function () {
+            scope.changeOffice = function (officeId) {
+
+                for(var i=0;i<scope.rblOffice.length;i++){
+                    if(officeId==scope.rblOffice[i].id){
+                        scope.formData.externalId= scope.sequenceNumber;
+                        break;
+                    }
+                }
                 resourceFactory.centerTemplateResource.get({staffInSelectedOfficeOnly:true, officeId: scope.formData.officeId
                 }, function (data) {
                     scope.staffs = data.staffOptions;

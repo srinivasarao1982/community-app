@@ -17,6 +17,11 @@
             scope.savingactive=true;
             scope.clientbankdetails={};
             scope.showaddbutton=true;
+            scope.clientId=routeParams.id;
+            scope.showextradetails=false;
+            scope.rblcustomerData ={};
+            scope.gurdianTitleOptions =[];
+            scope.gurdianrelationOptions=[];
             scope.routeToLoan = function (id) {
                 location.path('/viewloanaccount/' + id);
             };
@@ -40,6 +45,94 @@
                     scope.active=true;
                 }
             }
+           scope.healthOptions=[{"id":1,"name":"Normal"},{"id":2,"name":"Partial sa"},{"id":3,"name":"Physically Challenged"},{"id":4,"name":"Mentally Challenged"},{"id":5,"name":"gir"},{"id":6,"name":"Blind"},{"id":7,"name":"One"}];
+            scope.languageOptions=[{"kn-IN" :1,"name": "Kannada"},{"hi-IN" :2,"name": "Hindi" },{"or-IN" :3,"name": "Oriya" },{"en-US" :4,"name": "English"},{"mr-IN" :5,"name": "Marathi"},{"ml-IN":6,"name": "Malayalam"},{"sn-IN" :7,"name": "Sanskrit"},{"ta-IN" :8,"name": "Tamil"},{"sn-IN" :9,"name": "Sanskrit"},
+                {"bn-IN" :10,"name": "Bengali"},{"or-IN" :11,"name": "Oriya"}, {"ud-IN" :12,"name": "Urdu"}, {"gg-IN" :12,"name": "Gujrati"}, {"en-OT" :14,"name": "Others"}];
+            scope.languageOptions=[{"kn-IN" :1,"name": "Kannada"},{"hi-IN" :2,"name": "Hindi" },{"or-IN" :3,"name": "Oriya" },{"en-US" :4,"name": "English"},{"mr-IN" :5,"name": "Marathi"},{"ml-IN":6,"name": "Malayalam"},{"sn-IN" :7,"name": "Sanskrit"},{"ta-IN" :8,"name": "Tamil"},{"sn-IN" :9,"name": "Sanskrit"},
+                {"bn-IN" :10,"name": "Bengali"},{"or-IN" :11,"name": "Oriya"}, {"ud-IN" :12,"name": "Urdu"}, {"gg-IN" :12,"name": "Gujrati"}, {"en-OT" :14,"name": "Others"}];
+            scope.mothertoungOptions=[{"kn-IN" :1,"name": "Kannada"},{"hi-IN" :2,"name": "Hindi" },{"or-IN" :3,"name": "Oriya" },{"en-US" :4,"name": "English"},{"mr-IN" :5,"name": "Marathi"},{"ml-IN":6,"name": "Malayalam"},{"sn-IN" :7,"name": "Sanskrit"},{"ta-IN" :8,"name": "Tamil"},{"sn-IN" :9,"name": "Sanskrit"},
+                {"bn-IN" :10,"name": "Bengali"},{"or-IN" :11,"name": "Oriya"}, {"ud-IN" :12,"name": "Urdu"}, {"gg-IN" :12,"name": "Gujrati"}, {"en-OT" :14,"name": "Others"}];
+            scope.caedissueflagOptions =[{"id":0,"name":"False"},{"id":1,"name":"True"}];
+            scope.cbchckOptions =[{"id":0,"name":"Yes"},{"id":1,"name":"No"}];
+            scope.renwalflagOptions=[{"id":0,"name":"No"},{"id":1,"name":"Yes"}];
+            scope.gurdiangenderOptions=[{"id":0,"name":"Male"},{"id":1,"name":"Female"},{"id":2,"name":"Others"},{"id":3,"name":"Transgender"}];
+
+            resourceFactory.rblcustomerresource.get({customerId:routeParams.id}, function (clientData) {
+                var requestParams = {staffInSelectedOfficeOnly: true};
+                requestParams.officeId = 1;
+
+
+                scope.rblcustomerData=clientData;
+                if(angular.isUndefined(clientData.clientId)){
+                    scope.showextradetails=false;
+                }else{
+                    scope.showextradetails=true;
+                }
+                scope.extradetailsId=clientData.clientId;
+               // scope.rblcustomerData=clientData;
+                resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
+                    scope.gurdianTitleOptions = clientData.salutation;
+                    scope.gurdianrelationOptions = clientData.familyrelationShip;
+
+                    if(clientData.caedissueflag==0){
+                    scope.rblcustomerData.caedissueflag="false";
+                }else{
+                    scope.rblcustomerData.caedissueflag="true";
+                }
+
+                if(clientData.cbchck==0){
+                    scope.rblcustomerData.cbchck="Yes";
+                }else{
+                    scope.rblcustomerData.cbchck="No";
+                }
+                if(clientData.renwalflag==0){
+                    scope.rblcustomerData.renwalflag="Yes";
+                }else{
+                    scope.rblcustomerData.renwalflag="No";
+                }
+
+                for(var i=0;i<scope.gurdiangenderOptions.length;i++){
+                    if(clientData.gurdiangender==scope.gurdiangenderOptions[i].id){
+                        scope.rblcustomerData.gurdiangender=scope.gurdiangenderOptions[i].name;
+                        break;
+                    }
+                }
+                for(var i=0;i<scope.healthOptions.length;i++){
+                    if(clientData.health==scope.healthOptions[i].id){
+                        scope.rblcustomerData.health=scope.healthOptions[i].name;
+                        break;
+                    }
+                }
+
+                    for(var i=0;i<scope.gurdianTitleOptions.length;i++){
+
+                        if(scope.rblcustomerData.gurdianTitle ==scope.gurdianTitleOptions[i].id){
+                            scope.rblcustomerData.gurdianTitle=scope.gurdianTitleOptions[i].name;
+                            break;
+                        }
+                    }
+                    for(var i=0;i<scope.gurdianrelationOptions.length;i++){
+                        if(clientData.relation ==scope.gurdianrelationOptions[i].id){
+                            scope.rblcustomerData.relation=scope.gurdianrelationOptions[i].name;
+                            break;
+                        }
+                    }
+
+                });
+
+               /* for(var i=0;i<scope.languageOptions.length;i++){
+                    if(clientData.language==scope.languageOptions[i].id){
+                        scope.rblcustomerData.health=scope.languageOptions[i].name;
+                    }
+                }
+                for(var i=0;i<scope.mothertoungOptions.length;i++){
+                    if(clientData.mothertoung==scope.mothertoungOptions[i].id){
+                        scope.rblcustomerData.mothertoung=scope.mothertoungOptions[i].name;
+                    }
+                }*/
+
+            });
+
             scope.activecloseSavings = function(){
                 if(!this.savingsviewactiveclose){
                     scope.savingactive=false;

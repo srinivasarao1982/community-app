@@ -1,0 +1,166 @@
+<div class="col-md-12">
+    <ul class="breadcrumb">
+        <li><a href="#/viewcenter/{{centerId}}">{{'label.anchor.centersextraDetails' | translate}}</a></li>
+        <li class="active">{{'label.anchor.createcenterextraDetails' | translate}}</li>
+    </ul>
+    <form name="editrblcenterform" novalidate="" class="form-horizontal well" ng-controller="EditRblCenterController"
+          rc-submit="submit()">
+        <api-validate></api-validate>
+        <fieldset>
+            <legend>{{'label.heading.centerExtraDeatails' | translate}}</legend>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="maxindividual">{{'label.input.maximumindividual' | translate}}<span
+                        class="required">*</span>
+                    <i class="icon-question-sign" tooltip="{{'label.tooltip.maximum.value' | translate}}" tooltip-append-to-body="true"></i>
+                </label>
+
+                <div class="col-sm-3">
+                    <input ng-autofocus="true" type="text"   ng-pattern="/^\d+$/" id="maxindividual" name="maxindividual" ng-model="formData.maximumindividual" class="form-control" required
+                           late-Validate/>
+                    <span class="required" ng-show="editrblcenterform.maxindividual.$error.pattern">Only Numbers</span>
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="meetingTime">{{'label.input.meetingtime' | translate}}<span
+                        class="required">*</span>
+                    <i class="icon-question-sign" tooltip="{{'label.tooltip.meetingtime.formate' | translate}}" tooltip-append-to-body="true"></i>
+
+                </label>
+                <div class="col-sm-3">
+                    <select id="meetingTime" name="meetingTime" ng-model="formData.meetingTime" class="form-control"
+                            ng-options="meetingTime.id as meetingTime.name for meetingTime in meetingTimeOptions" value="{{meetingTime.id}}"
+                            ng-required="isStateRequired">
+                        <option value="">{{'label.menu.select' | translate}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dscription">{{'label.input.description' | translate}}<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input ng-autofocus="true" maxlength="30" type="text" id="dscription" name="dscription" ng-model="formData.dscription" class="form-control" />
+                </div>
+
+            </div>
+            <div class="row">
+                <legend>Center Address Details</legend>
+            </div>
+            <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label">House
+                        Number</label><span  class="required">*</span></div>
+                    <div class="col-md-4">
+                        <input placeholder="HOUSE NUMBER" type="text" id="houseNumber"
+                               name="houseNumber" ng-model="formData.houseNo"
+                               class="form-control" maxlength="256" ng-required="isHouseNumberRequired"/>
+                        <span class="error" ng-show="submitted && editrblcenterform.houseNumber.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+
+                    <label class="control-label col-md-2">Street Number<span  class="required">*</span>
+                    </label>
+                    <div class="col-md-4">
+                        <input placeholder="STREET NUMBER" type="text" id="streetNumber"
+                               name="streetNumber" ng-model="formData.streetNumber"
+                               class="form-control" maxlength="256" ng-required="isStreetNumberRequired"/>
+                        <span class="error" ng-show="submitted && editrblcenterform.streetNumber.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label"></span>Area
+                        Locality </label><span  class="required">*</span></div>
+                    <div class="col-md-10">
+                        <input placeholder=""
+                               type="text" id="areaLocality" name="areaLocality"
+                               ng-model="formData.areaLocality" class="form-control"
+                               ng-required="isAreaLocalityRequired"/>
+                        <span class="error" ng-show="submitted && editrblcenterform.areaLocality.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label">Landmark
+                    </label></div>
+                    <div class="col-md-4">
+                        <input placeholder="Landmark" type="text" id="landmark" name="landmark"
+                               ng-model="formData.landmark" class="form-control"
+                               ng-required="isLandMarkRequired"/>
+                        <span class="error" ng-show="submitted && editrblcenterform.landmark.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+
+                    <label class="control-label col-md-2"><span  class="required">*</span> Village/Town<span  class="required">*</span>
+                    </label>
+                    <div class="col-md-4">
+                        <input placeholder="Village/Town" type="text" id="village" name="village"
+                               ng-model="formData.village" class="form-control"
+                               ng-required="isVillageTownRequired"/>
+                        <span class="error" ng-show="submitted && editrblcenterform.village.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label"><span
+                            class="required" >*</span>Taluka</label></div>
+                    <div class="col-md-4">
+                        <input placeholder="Taluka"
+                               type="text"
+                               id="taluk"
+                               name="taluk"
+                               ng-model="formData.taluk" class="form-control"
+                               ng-required="isTalukaRequired"/>
+                        <span class="error" ng-show="submitted && editrblcenterform.taluk.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+
+                    <label class="control-label col-md-2"><span  class="required">*</span>
+                        District</label>
+                    <div class="col-md-4">
+                        <select name="district" ng-model="formData.district" class="form-control"
+                                ng-options="district.id as district.name for district in districtOptins"
+                                value="{{district.id}}">
+                            <option value="">{{'label.menu.select' | translate}}</option>
+                        </select>
+                        <span class="error" ng-show="submitted && editrblcenterform.district.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                <div class="row">
+                    <div class="col-md-2"><label class="control-label"><span class="required">*</span>State</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="state" ng-model="formData.state" class="form-control"
+                                ng-options="state.id as state.name for state in stateOptions" value="{{state.id}}"
+                                ng-required="isStateRequired">
+                            <option value="">{{'label.menu.select' | translate}}</option>
+                        </select>
+                        <span class="error" ng-show="submitted && editrblcenterform.state.$error.required">{{'label.error.required'|translate}}</span>
+                    </div>
+
+                    <label class="control-label col-md-2" for="pincode"><span  class="required">*</span> PIN Code </label>
+                    <div class="col-md-4">
+                        <input placeholder="" type="text" id="pincode" name="pincode"
+                               ng-model="formData.pincode" class="form-control"
+                               maxlength="6" ng-pattern="/^\d+$/"/>
+                        <span class="required" ng-show="editrblcenterform.pincode.$error.pattern">Only Numbers</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-offset-2 paddedleft">
+                <a id="cancel" href="#/viewcenter/{{centerId}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                <button id="save" type="submit" ng-click="submit()"class="btn btn-primary" has-permission='CREATE_CENTER'>{{'label.button.save' | translate}}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

@@ -27,6 +27,7 @@
             scope.loanstatus=false;
             scope.remarkstatus=false;
             scope.cbreceivedate=false;
+            scope.sequenceNumberData=[]
             if (scope.center.id) {
                 scope.inparams.centerId = scope.center.id;
             }
@@ -39,9 +40,11 @@
                     scope.center.name = data.center.name;
                 }
             });
+            resourceFactory.partialLoanResourceforget.get({parentId:scope.center.id,isSequenceNumber:true,isUpdateStatus:true}, function (data) {
+                scope.sequenceNumberData=data;
+            });
 
-
-            resourceFactory.partialLoanResourceforgettemplate.get({parentId:scope.center.id,isActive:1}, function (data) {
+            resourceFactory.partialLoanResourceforgettemplate.get({parentId:scope.center.id,isActive:1,isDisburse:0}, function (data) {
                 scope.statusOptions = data.status;
                 scope.acceptedclientsIdOptions=data.acceptedclientsId;
 
@@ -76,6 +79,12 @@
                         scope.clients[i] = scope.groups[i].activeClientMembers.map(function (client) {
                             client.principal = data.product.principal;
                             client.groupId=scope.groups[i].id;
+                            for(var p=0;p<=scope.sequenceNumberData.length;p++){
+                                if(scope.sequenceNumberData[p].clientId==client.id){
+                                    client.extId=scope.sequenceNumberData[p].SequenceNumber;
+                                    break;
+                                }
+                            }
                             client.charges = data.product.charges.map(function (charge) {
                                 charge.isDeleted = false;
                                 return _.clone(charge);

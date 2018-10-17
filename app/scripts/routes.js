@@ -763,7 +763,7 @@
             .when('/createtask/:id/:officeId', {
                 templateUrl: 'views/task/createtask.html'
             })
-            .when('/editetask/:id/:centerId/:officeId', {
+            .when('/editetask/:id/:centerId/:officeId/:tasktype', {
                 templateUrl: 'views/task/edittask.html'
             })
             .when('/viewtask/:id', {
@@ -793,7 +793,47 @@
             .when('/tellers/:tellerId/editcashier/:id', {
                 templateUrl: 'views/organization/cashmgmt/editcashier.html'
             })
-            ;
+            .when('/createclientextraDetails/:clientId', {
+                templateUrl: 'views/rbl/createrblcustomer.html'
+            })
+            .when('/editclientextraDetails/:clientId', {
+                templateUrl: 'views/rbl/editrblcustomer.html'
+            })
+            .when('/createrblcenterextradetails/:centerId', {
+                templateUrl: 'views/rbl/createrblcenter.html'
+            })
+            .when('/editrblcenterextradetails/:centerId', {
+                templateUrl: 'views/rbl/editrblcenter.html'
+            })
+            .when('/creategroupextradetails/:groupId', {
+                templateUrl: 'views/rbl/createrblgroup.html'
+            })
+            .when('/editgroupextradetails/:groupId', {
+                templateUrl: 'views/rbl/editrblgroup.html'
+            })
+            .when('/createloanextradeatils/:loanId', {
+                templateUrl: 'views/rbl/createrblloan.html'
+            })
+            .when('/editloanextradeatils/:loanId', {
+                templateUrl: 'views/rbl/editrblloan.html'
+            })
+            .when('/rblcreditbureaurequest', {
+                templateUrl: 'views/organization/rblcreditbureaurequest.html'
+            }).when('/rblfiletransferrequest', {
+               templateUrl: 'views/organization/rblfiletransferrequest.html'
+              }).when('/rblfilesearch', {
+                 templateUrl: 'views/organization/rblfilesearch.html'
+              }).when('/creditbureaurequestsearch', {
+                 templateUrl: 'views/organization/rblcreditbureausearch.html'
+              }).when('/clientcbreport/:id', {
+                 templateUrl: 'views/clients/cbstatuscheck.html'
+              }).when('/rblvalidatefilesearch', {
+               templateUrl: 'views/organization/rblvalidationSearch.html'
+                 })
+
+
+
+        ;
         $locationProvider.html5Mode(false);
     };
     mifosX.ng.application.config(defineRoutes).run(function ($log) {

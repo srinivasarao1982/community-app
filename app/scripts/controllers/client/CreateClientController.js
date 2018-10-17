@@ -90,13 +90,20 @@
             scope.sourceOfLoans = [{}, {}];
             scope.restrictDate = new Date();
             scope.cashflowmishmatch = false;
+            scope.rblOffice=[];
             //  scope.dobStartFrom = new Date("1980-01-01");
 
             // scope.dobStartFrom = new Date("1980-01-01");
 
             //scope.formData.dateOfBirth = scope.dobStartFrom;
 
-
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                scope.rblOffice=data.allowedParents;
+            });
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:1},function(data){
+                scope.sequenceNumber=data.sequenceNo;
+              //  this.formData.externalId=scope.sequenceNumber;
+            });
             var requestParams = {staffInSelectedOfficeOnly: true};
             if (routeParams.groupId) {
                 requestParams.groupId = routeParams.groupId;
@@ -236,6 +243,23 @@
                 }
 
                 if (routeParams.officeId) {
+                    scope.rblOffice=[];
+
+                    resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                        scope.rblOffice=data.allowedParents;
+
+                        resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:1},function(data){
+                            scope.sequenceNumber=data.sequenceNo;
+                            for(var i=0;i<scope.rblOffice.length;i++){
+
+                                if(routeParams.officeId==scope.rblOffice[i].id){
+                                    scope.formData.externalId= scope.sequenceNumber;
+                                    break;
+                                }
+                            }
+                        });
+                    });
+
                     scope.formData.officeId = routeParams.officeId;
                     for (var i in data.officeOptions) {
                         if (data.officeOptions[i].id == routeParams.officeId) {
@@ -667,6 +691,13 @@
             };
 
             scope.changeOffice = function (officeId) {
+                for(var i=0;i<scope.rblOffice.length;i++){
+
+                    if(officeId==scope.rblOffice[i].id){
+                        scope.formData.externalId= scope.sequenceNumber;
+                            break;
+                    }
+                }
                 resourceFactory.clientTemplateResource.get({
                     staffInSelectedOfficeOnly: true, officeId: officeId
                 }, function (data) {
@@ -878,6 +909,7 @@
 
                 //console.log(JSON.stringify(this.formData));
 
+
                 scope.addressproffError =false;
                 scope.identificationProfferror=false;
                 if ( angular.isUndefined(scope.formData.clientIdentifierData[0].documentTypeId)) {
@@ -886,6 +918,7 @@
                 if ( angular.isUndefined(scope.formData.clientIdentifierData[0].documentKey)) {
                     scope.identificationProfferror = true;
                 }
+
 
                 if (angular.isUndefined(scope.formData.clientIdentifierData[1].documentTypeId)) {
                     scope.addressproffError = true;

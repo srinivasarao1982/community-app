@@ -7,7 +7,7 @@
                 <form name="viewtaskForm" novalidate="" rc-submit="submit()">
                     <api-validate></api-validate>
                     <div class="pull-right">
-                        <a href="#/editetask/{{taskId}}/{{centerId}}/{{officeId}}" class="btn btn-primary" has-permission='UPDATE_TASK'><i
+                        <a href="#/editetask/{{taskId}}/{{centerId}}/{{officeId}}/{{taskTypeId}}" class="btn btn-primary" has-permission='UPDATE_TASK'><i
                                 class="icon-edit icon-white"></i>
                             {{'label.button.edit' | translate}}</a>
                     </div>
@@ -32,12 +32,20 @@
                                         <td><span class="padded-td">{{taskData.taskcreatedDate|DateFormat}}</span></td>
                                     </tr>
                                     <tr>
-                                        <th class="table-bold-loan"><strong>{{'label.input.expectedCompletedData'  | translate}}</strong></th>
+                                        <th class="table-bold-loan"><strong>{{'label.input.taskPlannedDate'  | translate}}</strong></th>
                                         <td><span class="padded-td">{{taskData.expectedCompletedDate|DateFormat}}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="table-bold-loan"><strong>{{'label.input.completedDate'  | translate}}</strong></th>
                                         <td><span class="padded-td">{{taskData.completedDate|DateFormat}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-bold-loan"><strong>{{'label.input.taskStartTime'  | translate}}</strong></th>
+                                        <td><span class="padded-td">{{taskData.taskStartTime}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-bold-loan"><strong>{{'label.input.taskCompletedTime'  | translate}}</strong></th>
+                                        <td><span class="padded-td">{{taskData.taskEndTime}}</span></td>
                                     </tr>
                                     <tr>
                                         <th class="table-bold-loan"><strong>{{'label.input.completedBy'  | translate}}</strong></th>
