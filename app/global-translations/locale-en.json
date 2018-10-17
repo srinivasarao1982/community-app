@@ -415,6 +415,8 @@
     "error.msg.task.id.invalid":"Task with identifier {{params[0].value}} does not exist",
     "error.msg.grt.notCompleted":"Grt is not completed for center {{params[0].value}}",
     "error.msg.cbstatus.notChecked":"Document Verification is Not Completed for Center {{params[0].value}} ",
+    "error.msg.mandatory.key.field":"{{params[0].value}} is  Mandatory",
+
 
     "#---------": "------------",
     "#Common loan/saving charges": "....",
@@ -3020,6 +3022,8 @@
     "chargepaymentmode.accounttransfer": "Account Transfer Mode",
     "validation.msg.charge.name.cannot.be.blank": "Name cannot be blank.",
     "validation.msg.charge.name.exceeds.max.length": "Name cannot be over {{params[0].value}} characters long.",
+    "error.msg.clintIdentifier.id.invalid":"{{params[0].value}} value  must be numeric",
+    "error.msg.mobileNO.length":"Invalid Mobile Number it must be  10 digit length is {{params[0].value}} digit",
     "validation.msg.charge.amount.cannot.be.blank": "Amount cannot be blank.",
     "validation.msg.charge.amount.not.greater.than.zero": "Charge amount must be greater than zero. ",
     "validation.msg.charge.currencyCode.cannot.be.blank": "Currency code cannot be blank.",

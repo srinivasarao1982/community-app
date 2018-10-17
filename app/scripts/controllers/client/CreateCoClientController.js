@@ -360,11 +360,27 @@
 
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
+                scope.addressproffError =false;
+                scope.identificationProfferror=false;
+                if (angular.isUndefined(scope.formData.clientIdentifierData[0].documentTypeId)) {
+                    scope.identificationProfferror = true;
+                }
+                if (angular.isUndefined(scope.formData.clientIdentifierData[0].documentKey)) {
+                    scope.identificationProfferror = true;
+                }
 
-                resourceFactory.coClientResource.save(this.formData, function (data) {
-                    scope.issave = false;
-                    location.path('/viewclient/' + scope.formData.clientId);
-                });
+                if ( angular.isUndefined(scope.formData.clientIdentifierData[1].documentTypeId)) {
+                    scope.addressproffError = true;
+                }
+                if (angular.isUndefined(scope.formData.clientIdentifierData[1].documentKey)) {
+                    scope.addressproffError = true;
+                }
+                if (!scope.addressproffError &&  !scope.identificationProfferror) {
+                    resourceFactory.coClientResource.save(this.formData, function (data) {
+                        scope.issave = false;
+                        location.path('/viewclient/' + scope.formData.clientId);
+                    });
+                }
             };
         }
     });

@@ -22,6 +22,12 @@
         </div>
     </div>
     <form name="createcoclientform" novalidate="" class="form-horizontal well" ng-submit="submitAndAccept()">
+        <div ng-show="identificationProfferror">
+            <p style="color:red"> Co Applicant Identity Proff is Mandatory</p>
+        </div>
+        <div ng-show="addressproffError">
+            <p style="color:red"> Co Applicant Address Proff is Mandatory</p>
+        </div>
         <api-validate></api-validate>
         <fieldset>
             <div class="form-group">

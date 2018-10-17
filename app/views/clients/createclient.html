@@ -31,6 +31,12 @@
 
     <form name="createclientform" novalidate="" class="form-horizontal well" ng-submit="submitAndAccept()">
         <api-validate></api-validate>
+        <div ng-show="identificationProfferror">
+            <p style="color:red"> Clients Identity Proff is Mandatory</p>
+        </div>
+        <div ng-show="addressproffError">
+            <p style="color:red"> Clients Address Proff is Mandatory</p>
+        </div>
         <fieldset>
             <div class="form-group">
                 <div class="row">
@@ -85,7 +91,7 @@
                         <span class="error" ng-show="submitted && createclientform.title.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
                     <div class="col-sm-3"></div>
-                    <label class="control-label col-md-2"> External Id2</label>
+                    <label class="control-label col-md-2"><span class="required">*</span>External Id2</label>
 
                     <div class="col-md-3">
                         <input placeholder="EXTERNAL ID2" type="text" id="externalId2" name="externalId2"
@@ -282,7 +288,7 @@
                     <div class="col-md-2">
                         <input placeholder="A D H A A R N U M B E R" type="text" id="aadhaar_no" name="aadhaar_no"
                                ng-model="formData.clientExt.aadhaarNo"
-                               class="form-control" maxlength="100" ng-required="isAadhaarNoRequired"/>
+                               class="form-control" maxlength="12" ng-required="isAadhaarNoRequired"/>
                         <span class="error" ng-show="submitted && createclientform.aadhaar_no.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
@@ -493,7 +499,7 @@
 
                     </div>
 
-                    <label class="control-label col-md-2">Mobile number </label>
+                    <label class="control-label col-md-2"><span class="required">*</span>Mobile number </label>
                     <div class="col-md-4">
                         <input placeholder="Mobile Number"
                                type="text" id="mobileNumber" name="mobileNumber0"
@@ -663,9 +669,7 @@
 
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label"><span class="required"
-                                                                             ng-show="isIdentityProofRequired">*
-                    </span>Identity Proof </label></div>
+                    <div class="col-md-2"><label class="control-label"><span class="required">*</span>Identity Proof </label></div>
                     <div class="col-md-4">
                         <select name="identityProofTypeId0"
                                 ng-model="formData.clientIdentifierData[0].documentTypeId"
@@ -678,14 +682,12 @@
                               ng-show="submitted && createclientform.identityProofTypeId0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
-                    <label class="control-label col-md-2"><span class="required"
-                                                                ng-show="isIdentityProofNumberRequired">*
-                    </span>ID proof number </label>
+                    <label class="control-label col-md-2"><span class="required">*</span>ID proof number </label>
                     <div class="col-md-4">
                         <input placeholder="ID proof number"
                                type="text" name="identityProofNumber0"
                                ng-model="formData.clientIdentifierData[0].documentKey"
-                               class="form-control" ng-required="isIdentityProofNumberRequired"/>
+                               class="form-control" ng-required="isIdentityProofNumberRequired" maxlength="12"/>
                         <span class="error"
                               ng-show="submitted && createclientform.identityProofNumber0.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
@@ -694,9 +696,8 @@
 
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label"><span class="required"
-                                                                             ng-show="isAddressProofRequired">*
-                    </span>Address Proof </label></div>
+                    <div class="col-md-2"><label class="control-label"><span class="required">*</span>
+                    Address Proof </label></div>
                     <div class="col-md-4">
                         <select name="identityProofTypeId1"
                                 ng-model="formData.clientIdentifierData[1].documentTypeId"
@@ -709,13 +710,13 @@
                               ng-show="submitted && createclientform.identityProofTypeId1.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
 
-                    <label class="control-label col-md-2"><span class="required" ng-show="isAddressProofNumberRequired">*</span>Address
+                    <label class="control-label col-md-2"><span class="required">*</span>Address
                         proof number </label>
                     <div class="col-md-4">
                         <input placeholder="Address Proof Number"
                                type="text" name="identityProofNumber1"
                                ng-model="formData.clientIdentifierData[1].documentKey"
-                               class="form-control" ng-required="isAddressProofNumberRequired"/>
+                               class="form-control" ng-required="isAddressProofNumberRequired" maxlength="12"/>
                         <span class="error"
                               ng-show="submitted && createclientform.identityProofNumber1.$error.required">{{'label.error.required'|translate}}</span>
                     </div>
