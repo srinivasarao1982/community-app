@@ -53,8 +53,6 @@
                     scope.charges = data.charges;
 
                     for(var i=0;i<scope.rblOffice.length;i++){
-                        alert(scope.rblOffice[i].id);
-                        alert(scope.clientofficeId);
                         if(scope.rblOffice[i].id==scope.clientofficeId){
                             scope.formData.externalId=scope.sequenceNumber;
                             break;

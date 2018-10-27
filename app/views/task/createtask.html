@@ -16,7 +16,9 @@
                                 <div>
                                     <select chosen="taskTypes" id="taskTypeId" ng-model="formData.tasktype" ng-change="taskTypechange(formData.tasktype)" class="form-control" required
                                             late-Validate
-                                            ng-options="tasktype.id as tasktype.name for tasktype in taskTypes" value="{{tasktype.id}}"></select>
+                                            ng-options="tasktype.id as tasktype.name for tasktype in taskTypes" value="{{tasktype.id}}">
+                                        <option value=""> {{'label.input.tasktype' | translate}}</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

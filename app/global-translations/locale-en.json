@@ -3024,6 +3024,7 @@
     "validation.msg.charge.name.exceeds.max.length": "Name cannot be over {{params[0].value}} characters long.",
     "error.msg.clintIdentifier.id.invalid":"{{params[0].value}} value  must be numeric",
     "error.msg.mobileNO.length":"Invalid Mobile Number it must be  10 digit length is {{params[0].value}} digit",
+    "error.msg.adharNumber.length":"Invalid Adhar Number it must be  12 digit length is {{params[0].value}} digit",
     "validation.msg.charge.amount.cannot.be.blank": "Amount cannot be blank.",
     "validation.msg.charge.amount.not.greater.than.zero": "Charge amount must be greater than zero. ",
     "validation.msg.charge.currencyCode.cannot.be.blank": "Currency code cannot be blank.",
