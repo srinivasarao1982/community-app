@@ -36,7 +36,7 @@
                     class="required">*</span></label>
                 <div class="col-sm-3">
                     <select chosen="documentData" name="documentData" id="id" ng-model="formData.documentType"
-                            ng-options="document.name as document.name for document in documentData" value="{{document.id}}"
+                            ng-options="document.description as document.name for document in documentData" value="{{document.id}}"
                             class="form-control" required>
                         <option value="">Select Document</option>
                     </select>
