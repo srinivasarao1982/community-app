@@ -41,6 +41,14 @@
                 }
                 group.ischecked = true;
             }
+            scope.checkIndividual = function (client,group) {
+                for (var i = 0; i < group.activeClientMembers.length; i++) {
+                    if(group.activeClientMembers[i].id==client.id) {
+                        group.activeClientMembers[i].ischecked = true;
+                    }
+                }
+                group.ischecked = true;
+            }
             scope.reprocessrequest = function () {
                 scope.reprocessRequest = true;
             }
@@ -127,7 +135,10 @@
                     if (scope.selectedGroups[k].ischecked) {
                         scope.groupId = scope.groupId + "," + scope.selectedGroups[k].id;
                         for (var j = 0; j < scope.selectedGroups[k].activeClientMembers.length; j++) {
-                            scope.clientId = scope.clientId + "," + scope.selectedGroups[k].activeClientMembers[j].id;
+                            if (scope.selectedGroups[k].activeClientMembers[j].ischecked) {
+
+                                scope.clientId = scope.clientId + "," + scope.selectedGroups[k].activeClientMembers[j].id;
+                            }
                         }
                     }
                 }
@@ -175,7 +186,10 @@
                     if (scope.selectedGroups[k].ischecked) {
                         scope.groupId = scope.groupId + "," + scope.selectedGroups[k].id;
                         for (var j = 0; j < scope.selectedGroups[k].activeClientMembers.length; j++) {
-                            scope.clientId = scope.clientId + "," + scope.selectedGroups[k].activeClientMembers[j].id;
+                            if (scope.selectedGroups[k].activeClientMembers[j].ischecked) {
+
+                                scope.clientId = scope.clientId + "," + scope.selectedGroups[k].activeClientMembers[j].id;
+                            }
                         }
                     }
                 }

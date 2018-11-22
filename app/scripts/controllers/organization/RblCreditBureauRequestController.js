@@ -31,6 +31,14 @@
                 group.ischecked = true;
 
             }
+            scope.checkIndividual = function (client,group) {
+                for (var i = 0; i < group.activeClientMembers.length; i++) {
+                    if(group.activeClientMembers[i].id==client.id) {
+                        group.activeClientMembers[i].ischecked = true;
+                    }
+                }
+                group.ischecked = true;
+            }
 
 
 
@@ -46,7 +54,9 @@
                     if (scope.groups[i].ischecked) {
                         scope.groupId = scope.groupId + "," + scope.groups[i].id;
                         for (var j = 0; j < scope.groups[i].activeClientMembers.length; j++) {
-                            scope.clientId = scope.clientId + "," + scope.groups[i].activeClientMembers[j].id;
+                            if(scope.groups[i].activeClientMembers[j].ischecked) {
+                                scope.clientId = scope.clientId + "," + scope.groups[i].activeClientMembers[j].id;
+                            }
                         }
 
                     }
@@ -54,7 +64,7 @@
                 }
                 scope.formData.clintId = scope.clientId;
                 resourceFactory.rblvalidationcreditbureauresource.save({
-                    clintId: scope.clientId,
+                    clintId: scope.clientId.substring(1),
                     isValidate:false,
                 }, function (data) {
                     location.path('/creditbureaurequestsearch');
@@ -67,7 +77,9 @@
                     if (scope.groups[i].ischecked) {
                         scope.groupId = scope.groupId + "," + scope.groups[i].id;
                         for (var j = 0; j < scope.groups[i].activeClientMembers.length; j++) {
-                            scope.clientId = scope.clientId + "," + scope.groups[i].activeClientMembers[j].id;
+                            if(scope.groups[i].activeClientMembers[j].ischecked) {
+                                scope.clientId = scope.clientId + "," + scope.groups[i].activeClientMembers[j].id;
+                            }
                         }
 
                     }
@@ -75,7 +87,7 @@
                 }
                 scope.formData.clintId = scope.clientId;
                 resourceFactory.rblvalidationcreditbureauresource.save({
-                    clintId: scope.clientId,
+                    clintId: scope.clientId.substring(1),
                     isValidate:true,
                 }, function (data) {
                     location.path('/rblvalidatefilesearch');

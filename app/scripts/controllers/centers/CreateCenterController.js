@@ -91,6 +91,18 @@
                     this.formData.iscbcheckRequired=0;
 
                 }
+                if(scope.formData.iscbchecked){
+                    this.formData.iscbchecked=1;
+                }else{
+                    this.formData.iscbchecked=0;
+
+                }
+                if(scope.formData.isgrtCompleted){
+                    this.formData.isgrtCompleted=1;
+                }else{
+                    this.formData.isgrtCompleted=0;
+
+                }
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
                 this.formData.active = this.formData.active || false;

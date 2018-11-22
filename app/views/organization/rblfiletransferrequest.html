@@ -145,7 +145,7 @@
                         <tr ng-repeat ="client in group.activeClientMembers" class="col-sm-8"  >
                             <td style="width: 353px;"></td>
                             <td>
-                                <input type="checkbox"  ng-model="client.ischecked"/>
+                                <input type="checkbox"  ng-model="client.ischecked" ng-click="checkIndividual(client,group)"/>
                             </td>
                             <td>{{client.displayName}}&nbsp;({{client.accountNo}})</td>
                         </tr>
