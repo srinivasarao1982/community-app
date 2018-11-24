@@ -38,6 +38,23 @@
                             break;
                         }
                     }
+                    scope.rblOffice=[];
+
+                    resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                        scope.rblOffice=data.allowedParents;
+
+                        resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:2},function(data){
+                            scope.sequenceNumber=data.sequenceNo;
+                            for(var i=0;i<scope.rblOffice.length;i++){
+
+                                if(routeParams.officeId==scope.rblOffice[i].id){
+                                    scope.formData.externalId= scope.sequenceNumber;
+                                    break;
+                                }
+                            }
+                        });
+                    });
+
                 }
                 if(routeParams.groupId) {
                     if(typeof data.staffId !== "undefined") {
