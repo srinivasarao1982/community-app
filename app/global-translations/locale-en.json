@@ -239,6 +239,7 @@
     "label.input.distancefrombranch":"Distance From Branch",
     "label.input.meetingtime":"Meeting Time",
     "label.heading.clientExtraDetails":"Client Extra Details",
+    "label.heading.rblCode": "Rbl Code Value",
     "label.input.pensionCard":"Pension Card No",
     "label.input.health":"Health",
     "label.input.cardissueFl":"Card Issue Flag",

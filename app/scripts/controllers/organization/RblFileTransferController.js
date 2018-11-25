@@ -21,6 +21,7 @@
             scope.selectedGroups=[];
             scope.reprocessRequest = false;
             scope.center=[];
+            scope.filterValue="";
             resourceFactory.officeResource.getAllRblOffices({
                 officeId: 35,
                 rbloffice: true,
