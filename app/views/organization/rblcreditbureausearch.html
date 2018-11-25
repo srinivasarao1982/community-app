@@ -21,14 +21,14 @@
             <input type="radio" name="Request" value="Error" ng-click="valueFor('Error')">Error<br>
         </div>
            <div class="form-group">
-            <select id="rblOffice" ng-model="formData.officeId" name="officeId"
+            <select chosen="rblOffice" id="rblOffice" ng-model="formData.officeId" name="officeId"
                     ng-options="office.id as office.name for office in rblOffice"
                     ng-change="changeOffice(formData.officeId)" value="{{office.id}}" class="form-control">
                 <option value="">{{'label.menu.select' | translate}}</option>
             </select>
         </div>
         <div class="form-group">
-            <select id="staffCenterData" ng-model="formData.centerId" name="centerId"
+            <select chosen="staffCenterData" id="staffCenterData" ng-model="formData.centerId" name="centerId"
                     ng-options="center.id as center.name for center in staffCenterData"
                     value="{{center.id}}" class="form-control">
                 <option value="">{{'label.input.center' | translate}}</option>

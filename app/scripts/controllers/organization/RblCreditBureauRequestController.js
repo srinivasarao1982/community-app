@@ -48,8 +48,8 @@
 
 
             scope.submit = function () {
-                scope.clientId = 0;
-                scope.groupId = 0;
+                scope.clientId = "";
+                scope.groupId ="";
                 for (var i = 0; i < scope.groups.length; i++) {
                     if (scope.groups[i].ischecked) {
                         scope.groupId = scope.groupId + "," + scope.groups[i].id;
@@ -71,8 +71,8 @@
                 });
             }
             scope.validate = function () {
-                scope.clientId = 0;
-                scope.groupId = 0;
+                scope.clientId = "";
+                scope.groupId = "";
                 for (var i = 0; i < scope.groups.length; i++) {
                     if (scope.groups[i].ischecked) {
                         scope.groupId = scope.groupId + "," + scope.groups[i].id;
