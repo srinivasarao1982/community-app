@@ -509,6 +509,10 @@
                         get: {method: 'GET' , params: {paymentTypeId: '@paymentTypeId'}},
                         update: {method: 'PUT', params: {paymentTypeId: '@paymentTypeId'}}
                     }),
+                    rbiBankDetailsResource : defineResource(apiVer + "/rbibankdetails/:ifsccode",{ifsccode: '@ifsccode'},{
+                        get: {method: 'GET', params: {}},
+                        getAll: {method: 'GET', params: {ifsccode: '@ifsccode'}},
+                    }),
                     clientbankDetailsResource: defineResource(apiVer + "/bankdetails/:bankdetailsId/:ifsccode", {bankdetails: '@bankdetails', ifsccode: '@ifsccode'}, {
                     get: {method: 'GET', params: {}},
                     getAll: {method: 'GET', params: {ifsccode: '@ifsccode'}},

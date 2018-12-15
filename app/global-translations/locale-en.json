@@ -417,6 +417,7 @@
     "error.msg.grt.notCompleted":"Grt is not completed for center {{params[0].value}}",
     "error.msg.cbstatus.notChecked":"Document Verification is Not Completed for Center {{params[0].value}} ",
     "error.msg.mandatory.key.field":"{{params[0].value}} is  Mandatory",
+    "error.msg.bank.details.not.found":"Bank Details Not Found For IFSC Code",
 
 
     "#---------": "------------",
@@ -447,6 +448,7 @@
     "label.view.rblfileReconcilation":"Rbl Los File Reconcilation",
     "label.anchor.rblcreditBureauFilereconcilation":"Rbl File Reconcilation",
     "label.input.isTaskTime":"Is Task Time",
+    "label.anchor.uploadrbibankdetails":"Upload RBI Bank Details",
 
     "#Inputs": "..",
     "label.input.paymentdate":"Payment date",
@@ -529,6 +531,7 @@
     "label.anchor.loginpage": "Login Page",
     "label.anchor.manageusers": "Manage Users",
     "label.anchor.manageroles": "Manage Roles",
+    "label.anchor.managefunds": "Manage Funds",
     "label.anchor.logout": "Sign Out",
     "label.anchor.home": "Home",
     "label.anchor.all": "All",
@@ -564,6 +567,7 @@
     "label.anchor.taskconfiguration":"Task Configuration",
     "label.anchor.creditBureauSearch" : "Rbl Credit Burau Search",
     "label.view.creditbureaurequest":"Rbl Credit Breau Request Search",
+    "label.view.uploadrbibankdetails":"Upload RBI Bank Details",
 
     "#Inputs": "..",
     "label.input.searchbyuser": "Search by user",
@@ -638,6 +642,8 @@
     "label.heading.documents": "Documents",
     "label.heading.editclient": "Edit Client",
     "label.heading.uploadclientdocument": "Upload Client Document",
+    "label.heading.uploadrbibankdetails": "Upload RBI Bank Details",
+    "label.heading.bankdetailsuploaded": "Bank Details Uploaded Successfully .. !",
     "label.heading.addclientidentifier": "Add Client Identifier",
     "label.heading.groupclosed": "Group Closed",
     "label.heading.clientid": "Client ID",
@@ -3247,6 +3253,8 @@
     "validation.msg.savingsaccount.posting.period.type.is.less.than.compound.period.type":"Saving Account Posting period cannot be less than compounding period",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type":"Fixed Deposit Posting period cannot be less than compounding period",
     "validation.msg.recurringdepositaccount.posting.period.type.is.less.than.compound.period.type":"Recurring Deposit Posting period cannot be less than compounding period",
+    "error.msg.invalid.file.format": "Error in File Upload. Invalid File Format",
+    "error.msg.error.in.bank.details.upload": "Error in File Upload",
 
 
 

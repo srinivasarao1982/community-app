@@ -829,7 +829,9 @@
                  templateUrl: 'views/clients/cbstatuscheck.html'
               }).when('/rblvalidatefilesearch', {
                templateUrl: 'views/organization/rblvalidationSearch.html'
-                 })
+             }).when('/uploadrbibankdetails',{
+                templateUrl: 'views/organization/uploadRbiBankDetails.html'
+             })
 
 
 
