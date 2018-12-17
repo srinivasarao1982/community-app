@@ -1,0 +1,29 @@
+<form name="uploadbankdetailsform" novalidate="" class="row form-horizontal" ng-controller="UploadRbiBankDetailsController"
+      rc-submit="submit()">
+    <div>
+        <ul class="breadcrumb">
+            <li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li>
+        </ul>
+    </div>
+    <api-validate></api-validate>
+    <fieldset>
+        <legend>{{'label.heading.uploadrbibankdetails' | translate}}</legend>
+        <div class="form-group" ng-if="isBankDetailsUploded==true">
+            <legend>{{'label.heading.bankdetailsuploaded' | translate}}</legend>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="file">{{'label.input.selectfile' | translate}}<span
+                    class="required">*</span></label>
+            <div class="col-sm-3">
+                <input type="file" id="file" ng-file-select="onFileSelect($files)">
+            </div>
+        </div>
+        <div class="col-md-offset-3">
+            <a id="cancel" href="#/organization">
+                <button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+            </a>
+            <button id="save" type="submit" has-permission='CREATE_DOCUMENT' class="btn btn-primary">{{'label.button.save' | translate}}</button>
+        </div>
+
+    </fieldset>
+</form>

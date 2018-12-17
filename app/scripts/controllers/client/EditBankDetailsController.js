@@ -56,13 +56,13 @@
                 scope.udocumentUpdated=true;
             };
             scope.getbankdetails =function(){
-                resourceFactory.clientbankDetailsResource.getAll({ifsccode: scope.formData.ifsccode},function(data){
-                    if(!angular.isUndefined(data.Bank)) {
+                resourceFactory.rbiBankDetailsResource.getAll({ifsccode: scope.formData.ifsccode},function(data){
+                    if(!angular.isUndefined(data.bankname)) {
                         scope.bankdetails=data;
-                    scope.formData.branchname=data.Branch;
-                    scope.formData.branchaddress=data.Address+ ","+"city:"+data.City+","+"District:-"+data.District+"State:"+data.State
-                    scope.formData.bankname=data.Bank;
-                    scope.formData.micrcode=data.MICR;
+                    scope.formData.branchname=data.branchname;
+                    scope.formData.branchaddress=data.branchaddress+ ","+"city:"+data.bankcity+","+"District:-"+data.bankdisctrict+"State:"+data.bankstate
+                    scope.formData.bankname=data.bankname;
+                    scope.formData.micrcode=data.micrcode;
                     scope.ifscoceinvalid=false;
                     }
                     else{
