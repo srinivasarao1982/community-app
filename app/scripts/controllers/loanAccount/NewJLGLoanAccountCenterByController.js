@@ -92,6 +92,7 @@
                                     for(var p=0;p<=scope.sequenceNumberData.length;p++){
                                         if(scope.sequenceNumberData[p].clientId==client.id){
                                             client.extId=scope.sequenceNumberData[p].SequenceNumber;
+                                            client.loanPurposeId=scope.sequenceNumberData[p].loanPurposeId;
                                             break;
                                         }
                                     }

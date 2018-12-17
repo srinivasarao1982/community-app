@@ -788,6 +788,7 @@
     "error.msg.nooftaskexceed":"no of task is increasing than configure value",
     "error.msg.task.order.invalid":"Order of Task is MissMatch create confingure no of taskType {{params[0].value}}",
     "error.msg.file.exception":"exceptionOcuur while generation file for {{params[0].value}} with id {{params[1].value}}",
+    "error.msg.duplicateexternalId.key.field": "duplicate externalId2 {{params[0].value}} ",
 
 
     "#--------": "------------",

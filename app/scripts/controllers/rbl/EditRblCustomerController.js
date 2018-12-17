@@ -88,7 +88,9 @@
                 });
             });
 
-
+            scope.cancel =function(){
+                location.path('/viewclient/' + routeParams.clientId);
+            }
             scope.submit = function () {
                 if (scope.formData.gurdiandateofBirth) {
                     this.formData.gurdiandateofBirth = dateFilter(scope.formData.gurdiandateofBirth, scope.df);;

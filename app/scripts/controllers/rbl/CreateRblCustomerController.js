@@ -34,7 +34,9 @@
 
             });
 
-
+            scope.cancel =function(){
+                location.path('/viewclient/' + routeParams.clientId);
+            }
             scope.submit = function () {
 
                 if (scope.formData.gurdiandateofBirth) {

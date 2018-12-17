@@ -1,6 +1,6 @@
 <div class="col-md-12">
     <ul class="breadcrumb">
-        <li><a href="#/centers">{{'label.anchor.customersextraDetails' | translate}}</a></li>
+        <li><a ng-click="cancel()">{{'label.anchor.customersextraDetails' | translate}}</a></li>
         <li class="active">{{'label.anchor.customercenterextraDetails' | translate}}</li>
     </ul>
     <form name="createrblcustomerform" novalidate="" class="form-horizontal well" ng-controller="CreateRblCustomerController">
@@ -54,7 +54,7 @@
 
                 <div class="col-sm-3">
                     <input id="spousedateofbIrt" type="text" datepicker-pop="dd MMMM yyyy" ng-model="formData.spousedateofbIrt"
-                           is-open="opened" min="'2000-01-01'" max="restrictDate" class="form-control"/>
+                           is-open="opened"  max="restrictDate" class="form-control"/>
                 </div>
             </div>
 
@@ -201,7 +201,7 @@
 
 
             <div class="col-md-offset-2 paddedleft">
-                <a id="cancel" href="#/centers" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                <a id="cancel" ng-click="cancel()" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
                 <button  ng-click="submit()" id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CLIENT'>{{'label.button.save' | translate}}</button>
             </div>
         </fieldset>
