@@ -233,6 +233,7 @@
                 scope.formData.nomineeDetails = [{}, {}, {}];
 
                 scope.formData.clientExt = clientData.clientDataExt;
+                scope.formData.clientExt.customerMotherName=scope.formData.clientExt.customerMaidenName;
 
                 if (clientData.addressExtData && clientData.addressExtData.length > 0) {
                     for (var i in clientData.addressExtData) {

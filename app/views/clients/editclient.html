@@ -175,6 +175,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                    <div class="row">
+                        <div class="col-md-2"><label class="control-label" for="maidenName"><span class="required">*</span>Maiden Name</label></div>
+                        <div class="col-md-4">
+                            <input placeholder="MAIDEN NAME" type="text" id="maidenName"
+                                   name="maidenName" ng-model="formData.clientExt.maidenName" class="form-control"
+                            />
+                        </div>
+                            <div class="col-md-2"><label class="control-label" for="CustomerMotherName"><span class="required">*</span>Customer Mother Name</label></div>
+                        <div class="col-md-3">
+                            <input placeholder="MOTHER NAME" type="text" id="CustomerMotherName" name="CustomerMotherName"
+                                   ng-model="formData.clientExt.customerMotherName" class="form-control"
+                                   ng-required="isSPLastnameRequired"/>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                     <div class="row">
