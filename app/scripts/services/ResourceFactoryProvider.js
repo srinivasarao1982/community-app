@@ -516,11 +516,20 @@
                     clientbankDetailsResource: defineResource(apiVer + "/bankdetails/:bankdetailsId/:ifsccode", {bankdetails: '@bankdetails', ifsccode: '@ifsccode'}, {
                     get: {method: 'GET', params: {}},
                     getAll: {method: 'GET', params: {ifsccode: '@ifsccode'}},
+                    clientbankDetailsResourceByClientId: defineResource(apiVer + "/bankdetails/getbankdetailsbyclient",{clientId: '@clientId'},{
+                        get: {method: 'GET', params: {clientId: '@clientId'}, isArray: true}
+                    }),
+                    clientbankDetailsResource: defineResource(apiVer + "/bankdetails", {bankdetailId: '@bankdetailId'}, {
+                    get: {method: 'GET', params: {bankdetailId : '@bankdetailId'}},
+                    getAll: {method: 'GET', params: {bankId: '@ifsccode'}},
                      }),
                     clientbankDetailsResourceforsave: defineResource(apiVer + "/bankdetails/:bankdetailsId", {bankdetails: '@bankdetails'}, {
                         update: { method: 'PUT',params: {bankdetailsId: '@bankdetailsId'}},
                         deletebankdetails: { method:'DELETE',params:{bankdetailsId: '@bankdetailsId'}}
 
+                    }),
+                    clientBankDetailsTemplateResource: defineResource(apiVer + "/bankdetails/template", {}, {
+                        get: {method: 'GET', params: {}},
                     }),
                     partialLoanResourceforgettemplate: defineResource(apiVer + "/partialloan/template/:parentId/:isActive", {parentId:'@parentId',isActive:'@isActive'}, {
                         get: {method: 'GET', params: {parentId:'@parentId',isActive:'@isActive'}}

@@ -14,7 +14,12 @@
             scope.benificarynamecheck=false;
             scope.accountnocheckcheck=false;
             scope.ifscoceinvalid=false;
-
+            var requestParams = {};
+                
+            // to load template details
+            resourceFactory.clientBankDetailsTemplateResource.get(requestParams,function(data){
+               scope.accountTypesList = data.accountTypesList;
+            });
 
             scope.beneficarynamecheck=function(){
                 if(scope.formData.accountnumber!=scope.formData.accountnumber1){

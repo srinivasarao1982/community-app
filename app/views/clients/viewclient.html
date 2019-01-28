@@ -992,9 +992,40 @@
 
 			</ul>
 		</tab>
-
-
+		 
 		<tab heading="{{'label.heading.clientsbankdetails' | translate}}" select="getClientDocuments()" has-permission='READ_BANKDETAILS' >
+			<div class="pull-right">
+				<a href="#/addclientbankdetails/{{client.id}}" class="btn btn-primary" has-permission='CREATE_BANKDETAILS'><i
+						class="icon-plus icon-white"></i>
+					{{'label.button.add' | translate}}</a>
+			</div>
+			<br>
+			<table class="table" ng-show="clientdocuments.length > 0">
+		        <thead>
+		        <tr class="graybg">
+		            <th>{{'label.heading.client.name' | translate}}</th>
+		            <th>{{'label.heading.client.accountnumber' | translate}}</th>
+					<th>{{'label.heading.client.bank.name' | translate}}</th>
+					<th>{{'label.heading.accounttype' | translate}}</th>
+					<th>{{'label.heading.client.isprimaryaccount' | translate}}</th>
+					
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr class="pointer-main" ng-repeat="clientbankdetail in clientbankdetails">
+					<td class="pointer" data-ng-click="routeToViewBankDetail(clientbankdetail.id)">{{clientbankdetail.beneficiaryname}}</td>
+		            <td class="pointer" data-ng-click="routeToViewBankDetail(clientbankdetail.id)">{{clientbankdetail.accountnumber}}</td>
+		            <td class="pointer" data-ng-click="routeToViewBankDetail(clientbankdetail.id)">{{clientbankdetail.bankname}}</td>
+					<td class="pointer" data-ng-click="routeToViewBankDetail(clientbankdetail.id)">{{clientbankdetail.accountType.name}}</td>
+					<td class="pointer" data-ng-click="routeToViewBankDetail(clientbankdetail.id)" ng-if="clientbankdetail.isPrimaryAccount == true">YES</td>
+					<td class="pointer" data-ng-click="routeToViewBankDetail(clientbankdetail.id)" ng-if="clientbankdetail.isPrimaryAccount == false">NO</td>
+			        
+				</tr>
+		        </tbody>
+		    </table>
+		</tab>
+
+		<!-- <tab heading="{{'label.heading.clientsbankdetails' | translate}}" select="getClientDocuments()" has-permission='READ_BANKDETAILS' >
 			<div class="pull-right">
 				<a ng-hide="!showaddbutton" href="#/addclientbankdetails/{{client.id}}" class="btn btn-primary" has-permission='CREATE_BANKDETAILS'><i
 						class="icon-plus icon-white"></i>
@@ -1061,7 +1092,7 @@
 				</div>
 			</div>
 			</tab>
-
+		-->
 		<tab heading="{{clientdatatable.registeredTableName}}" ng-repeat="clientdatatable in clientdatatables"
 		     select="dataTableChange(clientdatatable)" has-permission='READ_{{clientdatatable.registeredTableName}}'>
 		    <div>
