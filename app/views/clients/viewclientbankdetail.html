@@ -1,0 +1,93 @@
+<div class="col-md-12" ng-controller="ViewClientBankDetailController">
+        <div>
+                <ul class="breadcrumb">
+                  <li><a href="#/clients">{{'label.anchor.clients' | translate}}</a></li>
+                  <li><a href="#/viewclient/{{clientId}}">{{'label.anchor.viewclient' | translate}}</a></li>  
+                  <li class="active">{{'label.anchor.client.bankdetails' | translate}}</li>
+                </ul>
+        </div>
+        <legend>{{'label.anchor.client.bankdetails' | translate}}</legend>
+        <div class="pull-right">
+            <button id="edit" type="button" ng-click="routeToEditClientBankDetails()",has-permission='READ_CLIENT' class="btn btn-primary">
+            <i class="icon-edit icon-white"></i> {{'label.button.edit' | translate}}</button>
+
+            <button ng-hide="showaddbutton" id="delete" type="button" ng-click="deleteBankDetails()",has-permission='DELETE_BANKDETAILS' class="btn btn-primary">
+                    <i class="icon-remove icon-white"></i>    {{'label.button.delete' | translate}}
+            </button>
+        </div>
+        
+        <script type="text/ng-template" id="deleteBankDetail.html">
+            <div class="modal-header silver">
+                <h3 class="bolder">{{'label.heading.deleteclientbankdetail' | translate}}</h3>
+            </div>
+            <div class="modal-body">
+                <api-validate></api-validate>
+                <br>
+                <button class="btn btn-warning" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
+                <button class="btn btn-primary" ng-click="delete()">{{'label.button.confirm' | translate}}</button>
+            </div>
+        </script>
+
+
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th class="table-bold-loan">{{'label.input.beneficiaryname' | translate}}</th>
+                <td><span class="padded-td">{{clientbankdetails.beneficiaryname}}</span></span>
+                </td>
+            </tr>
+            <tr>
+                <th class="table-bold-loan">{{'label.input.accountno' | translate}}</th>
+                <td><span class="padded-td">{{clientbankdetails.accountnumber}}</span></td>
+            </tr>
+
+            <tr>
+                <th class="table-bold-loan">Account Type</th>
+                <td><span class="padded-td">{{clientbankdetails.accountType.name}}</span></td>
+            </tr>
+
+            <tr>
+                <th class="table-bold-loan">Is Primary Account ? </th>
+                <td><span class="padded-td">{{isPrimaryAccount}}</span></td>
+            </tr>
+
+            <tr>
+                <th class="table-bold-loan">{{'label.input.ifsccode' | translate}}</th>
+                <td><span class="padded-td">{{clientbankdetails.ifsccode}}</span></td>
+
+
+            </tr>
+            <tr>
+                <th class="table-bold-loan">{{'label.input.micrcode' | translate}}</th>
+                <td><span class="padded-td">{{clientbankdetails.micrcode}}</span></td>
+
+
+            </tr>
+            <tr>
+                <th class="table-bold-loan">{{'label.input.bankname' | translate}}</th>
+                <td><span class="padded-td">{{clientbankdetails.bankname}}</span></td>
+
+
+            </tr>
+            <tr>
+                <th class="table-bold-loan">{{'label.input.branchname' | translate}}</th>
+                <td><span class="padded-td"></span>{{clientbankdetails.branchname}}</td>
+            </tr>
+            <tr>
+                <th class="table-bold-loan">{{'label.input.branchaddress' | translate}}</th>
+                <td><span class="padded-td">{{clientbankdetails.branchaddress}}</span></td>
+            </tr>
+            <tr>
+                <th class="table-bold-loan">{{'label.input.lasttransactiondate' | translate}}</th>
+                <td><span class="padded-td"></span>{{clientbankdetails.lasttransactiondate| DateFormat}}</td>
+            </tr>
+            <tr>
+                <th class="table-bold-loan">{{'label.input.lasttransactionamount' | translate}}</th>
+                <td><span class="padded-td">{{clientbankdetails.lasttransactionamount}}</span></td>
+            </tr>
+            <tr ng-repeat="clientdocument in clientdocuments" ng-if="clientdocument.name=='Scan copy of passbook'">
+                <td>{{clientdocument.name}}</td>
+                <td>{{clientdocument.fileName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a target="_blank" href="{{hostUrl}}{{clientdocument.docUrl}}"><i class="icon-cloud-download"></i></a></td>&nbsp;
+                                    </tr>
+        </table>
+</div>        

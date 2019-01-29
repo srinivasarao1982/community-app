@@ -15,13 +15,17 @@
             scope.active=true;
             scope.correspondenceAddress1=[];
             scope.savingactive=true;
-            scope.clientbankdetails={};
+            scope.clientbankdetails=[];
             scope.showaddbutton=true;
             scope.clientId=routeParams.id;
             scope.showextradetails=false;
             scope.rblcustomerData ={};
             scope.gurdianTitleOptions =[];
             scope.gurdianrelationOptions=[];
+            //nextru specific change (client bank details)
+            scope.routeToViewBankDetail = function (id){
+                location.path('/viewclientbankdetail/' + id);
+            };
             scope.routeToLoan = function (id) {
                 location.path('/viewloanaccount/' + id);
             };
@@ -564,7 +568,7 @@
             resourceFactory.DataTablesResource.getAllDataTables({apptable: 'm_client'}, function (data) {
                 scope.clientdatatables = data;
             });
-            resourceFactory.clientbankDetailsResource.get({clientId:routeParams.id},function(data){
+            resourceFactory.clientbankDetailsResourceByClientId.get({clientId:routeParams.id},function(data){
                 scope.clientbankdetails=data;
                 if(data.id>0){
                     scope.showaddbutton=false;

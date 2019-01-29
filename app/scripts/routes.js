@@ -106,6 +106,9 @@
             .when('/editclientbankdetails/:id/:clientId', {
                 templateUrl: 'views/clients/editclientbankdetails.html'
             })
+            .when('/viewclientbankdetail/:id',{
+                templateUrl: 'views/clients/viewclientbankdetail.html'
+            })
             .when('/clientclosedloanaccount/:clientId', {
                 templateUrl: 'views/clients/clientclosedloanaccount.html'
             })

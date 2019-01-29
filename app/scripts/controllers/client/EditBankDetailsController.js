@@ -17,16 +17,26 @@
             scope.accountnocheckcheck=false;
             scope.isDocument=false;
 
+            var requestParams = {};
+
+            // to load template details
+            resourceFactory.clientBankDetailsTemplateResource.get(requestParams,function(data){
+                scope.accountTypesList = data.accountTypesList;
+             });
+
             scope.accountnocheck=function(){
                 if(scope.formData.accountnumber!=scope.formData.accountnumber1){
                     scope.accountnocheckcheck=true;
                 }
             }
 
-            resourceFactory.clientbankDetailsResource.get({bankId:routeParams.id},function(data){
+            resourceFactory.clientbankDetailsResource.get({bankdetailId:routeParams.id,template: 'true'},function(data){
+                scope.accountTypesList = data.accountTypesList;
                 scope.formData=data;
                 scope.formData.beneficiaryname1=data.beneficiaryname;
                 scope.formData.accountnumber1=data.accountnumber;
+                scope.formData.accountType = data.accountType.id;
+                scope.formData.isPrimaryAccount = data.isPrimaryAccount;
             });
            // scope.getClientDocuments = function () {
                 resourceFactory.clientDocumentsResource.getAllClientDocuments({clientId: routeParams.clientId}, function (data) {
@@ -102,6 +112,7 @@
                     this.formData.lasttransactiondate = dateFilter(scope.date1, scope.df);
                     this.formData.locale = scope.optlang.code;
                     this.formData.dateFormat = scope.df;
+                    delete this.formData.accountTypesList;
                     resourceFactory.clientbankDetailsResourceforsave.update({bankdetailsId: routeParams.id}, this.formData, function (data) {
                         location.path('/viewclient/' + scope.clientId);
                     });

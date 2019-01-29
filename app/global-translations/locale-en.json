@@ -111,6 +111,11 @@
     "label.input.taskStartTime":"Start Time",
     "label.input.taskCompletedTime":"Completed Time",
     "label.input.selectedCenter":"Selected Center",
+    "label.heading.client.name": "Beneficiary Name",
+    "label.heading.client.accountnumber": "Bank Account Number",
+    "label.heading.client.bank.name":"Bank Name",
+    "label.heading.client.isprimaryaccount": "Is Primary Account ?",
+
 
     "#Menu Links": "..",
     "label.menu.selectloanofficer": "Select Staff",
@@ -654,6 +659,7 @@
     "label.heading.selectclientimage":"Select Client Image",
     "label.heading.captureclientimage":"Capture Client Image",
     "label.heading.deleteclientimage":"Delete Client Image",
+    "label.heading.deleteclientbankdetail":"Delete Bank Details",
     "label.heading.selectclientsignature":"Select Client Signature",
     "label.heading.clientsignature":"Client Signature",
     "label.heading.clientscreenreport":"Client Screen Report",
@@ -2348,6 +2354,7 @@
     "label.anchor.editrole":"Edit Role",
     "label.anchor.standinginstruction.history":"Standing Instructions History",
     "label.anchor.fund.mapping":"Fund Mapping",
+    "label.anchor.client.bankdetails": "Client Bank Details",
   
 
 
