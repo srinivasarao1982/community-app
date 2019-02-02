@@ -516,6 +516,7 @@
                     clientbankDetailsResource: defineResource(apiVer + "/bankdetails/:bankdetailsId/:ifsccode", {bankdetails: '@bankdetails', ifsccode: '@ifsccode'}, {
                     get: {method: 'GET', params: {}},
                     getAll: {method: 'GET', params: {ifsccode: '@ifsccode'}},
+                    }),
                     clientbankDetailsResourceByClientId: defineResource(apiVer + "/bankdetails/getbankdetailsbyclient",{clientId: '@clientId'},{
                         get: {method: 'GET', params: {clientId: '@clientId'}, isArray: true}
                     }),
