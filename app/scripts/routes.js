@@ -835,6 +835,12 @@
              }).when('/uploadrbibankdetails',{
                 templateUrl: 'views/organization/uploadRbiBankDetails.html'
              })
+             .when('/equifaxcreditbureau',{
+                templateUrl: 'views/organization/equifaxcreditbureaurequest.html'
+             })
+             .when('/equifaxcreditbureausearch',{
+                templateUrl: 'views/organization/equifaxcreditbureausearch.html'
+             })
 
 
 

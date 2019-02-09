@@ -850,6 +850,10 @@
     "label.add.taskdescription":"Task Description",
     "label.add.descriptionvalue":"Description Value",
     "label.menu.descriptionName":"Description Name",
+    "label.anchor.creditBureauRequest": "Credit Bureau Request",
+    "label.anchor.equifaxcreditBureauSearch": "Credit Bureau Search",
+    "label.anchor.searchequifaxcreditbureaurequest" : "Equifax Credit Bureau Search",
+    "label.anchor.equifaxcreditbureaurequest": "Equifax Credit Bureau Request",
 
     "#Inputs": "..",
     "label.input.role": "Role",
@@ -866,6 +870,11 @@
     "label.input.searchformember": "Search for a Member",
     "label.input.existingmeetingdates":"Existing Meeting Dates",
     "label.input.revisedmeetingdates":"Revised Meeting Date",
+    "label.search.scope.all": "All",
+    "label.search.scope.clients.and.clientIdentifiers": "Clients",
+    "label.search.scope.groups.and.centers": "Groups & Centers",
+    "label.input.adhoc.search.loans": "Loans",
+    "label.search.scope.savings": "Savings",
 
     "#Buttons": "..",
     "label.button.creategroup": "Create Group",

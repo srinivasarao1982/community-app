@@ -268,6 +268,8 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'organization/RblFileRequestSearch',
             'organization/RblFileTransferController',
             'organization/RblValidationSearchController',
+            'organization/CreditBureauSearchController',
+            'organization/CreditBureauRequestController',
 
         ],
         filters: [

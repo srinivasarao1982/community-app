@@ -12,6 +12,7 @@
             scope.domReady = true;
             scope.activity = {};
             scope.activityQueue = [];
+            scope.searchScopes=[];
             if (localStorageService.getFromLocalStorage('Location')) {
                 scope.activityQueue = localStorageService.getFromLocalStorage('Location');
             }
@@ -117,9 +118,61 @@
                 ;
             });
 
+            scope.searchScopes=[
+                {
+                    "id":0,
+                    "name":"All",
+                    "value":"All"
+
+                },
+                {
+                    "id":1,
+                    "name":"Clients",
+                    "value":"clients,clientIdentifiers"
+
+                },
+                {
+                    "id":2,
+                    "name":"Groups",
+                    "value":"groups"
+                },
+                {
+                    "id":3,
+                    "name":"Loans",
+                    "value":"loans"
+                },
+                {
+                    "id":4,
+                    "name":"Savings",
+                    "value":"savings"
+                }
+            ]
+
+
+
+            scope.currentScope = 'clients,clientIdentifiers,groups,savings,shares,loans';
+            scope.changeScope = function (searchScope) {
+                scope.currentScope = scope.searchScopes[searchScope].value;
+            }
             scope.search = function () {
-                location.path('/search/' + scope.search.query);
+                var resource;
+                var searchString=scope.search.query;
+                var exactMatch=false;
+                if(searchString != null){
+                    searchString = searchString.replace(/(^"|"$)/g, '');
+                    var n = searchString.localeCompare(scope.search.query);
+                    if(n!=0)
+                    {
+                        exactMatch=true;
+                    }
+                }
+                location.path('/search/' + searchString).search({exactMatch: exactMatch, resource: scope.currentScope});
+
             };
+
+            /*scope.search = function () {
+                location.path('/search/' + scope.search.query);
+            };*/
             scope.text = '<span>Mifos X is designed by the <a href="http://www.openmf.org/">Mifos Initiative</a>.' +
             '<a href="http://mifos.org/resources/community/"> A global community </a> thats aims to speed the elimination of poverty by enabling Organizations to more effectively and efficiently deliver responsible financial services to the world’s poor and unbanked </span><br/>' +
             '<span>Sounds interesting?<a href="http://mifos.org/take-action/volunteer/"> Get involved!</a></span>';

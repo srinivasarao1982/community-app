@@ -622,6 +622,12 @@
                     rblvalidationcreditbureauresource:defineResource(apiVer + "/rblValidation/", {clintId:'@clintId',isValidate:'@isValidate'}, {
                         save: {method: 'POST', params:  {clintId:'@clintId',isValidate:'@isValidate'},}
                     }),
+                    equifaxcreditbureauresource:defineResource(apiVer + "/equifaxintregation/", {clientId:'@clientId',centerId:'@centerId'}, {
+                        save: {method: 'POST', params:  {clientId:'@clientId',centerId:'@centerId'},}
+                    }),
+                    equifaxcreditbureausearchresource:defineResource(apiVer + "/equifaxintregation/", {centerId:'@centerId',clientId:'@clientId',fromDate:'@fromDate',toDate:'@toDate',valufor:'@valufor'}, {
+                        get: {method: 'GET', params: {centerId:'@centerId',clientId:'@clientId',fromDate:'@fromDate',toDate:'@toDate',valufor:'@valufor'},isArray : true},
+                    }),
 
 
                 };

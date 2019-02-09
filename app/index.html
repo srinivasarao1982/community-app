@@ -357,8 +357,30 @@
                             </ul>
                         </li>
                     </ul>
+
+                    <!--<form ng-submit="search()" class="navbar-form navbar-right ng-pristine ng-valid">
+                        <div class="input-group pull-left" >
+                            <input id="search" type="text" class="form-control input-sm unstyled" style="width:250px;" data-ng-model="search.query"
+                                   placeholder="{{'label.searchorpress'|translate}}">
+                            <div class="input-group-btn search-panel" uib-dropdown="">
+                                <button type="button" class="btn btn-default btn-sm " uib-dropdown-toggle data-toggle="uib-dropdown">
+                                    {{currentScope.name | translate}} &nbsp;<span class="caret"></span>
+                                </button>
+                                <ul class="" uib-dropdown-menu>
+                                    <li  uib-dropdown ng-repeat=" searchScope in searchScopes" ng-click="changeScope(searchScope)">
+                                        <a href="">{{ searchScope.name |translate}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>-->
+
                     <form ng-submit="search()" class="navbar-form navbar-right ng-pristine ng-valid">
-                        <input id="search" data-ng-model="search.query" type="text" placeholder="{{ 'label.searchorpress' | translate }}" class="form-control search-query col-md-4" />
+                        <select  id="sear" ng-model="searchScope.value"
+                                ng-options="searchScope.id as searchScope.name for searchScope in searchScopes" value="{{searchScope.name}}"
+                                ng-change="changeScope(searchScope.value)" class="form-control">
+                        </select>
+                        <input id="search" data-ng-model="search.query" type="text" placeholder="{{ 'label.searchorpress' | translate }}" class="form-control input-md col-md-4" />
                     </form>
                 </div>
             </div>
