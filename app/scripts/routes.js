@@ -265,7 +265,7 @@
             .when('/currconfig', {
                 templateUrl: 'views/organization/currencyconfig.html'
             })
-            .when('/search/:query', {
+            .when('/search/:query/:resource', {
                 templateUrl: 'views/search/glresults.html'
             })
             .when('/viewloanproduct/:id', {

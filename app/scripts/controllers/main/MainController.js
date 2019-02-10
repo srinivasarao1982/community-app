@@ -147,7 +147,7 @@
                     "value":"savings"
                 }
             ]
-
+            scope.searchScope=0;
 
 
             scope.currentScope = 'clients,clientIdentifiers,groups,savings,shares,loans';
@@ -166,7 +166,7 @@
                         exactMatch=true;
                     }
                 }
-                location.path('/search/' + searchString).search({exactMatch: exactMatch, resource: scope.currentScope});
+                location.path('/search/' + searchString+'/'+scope.currentScope).search({exactMatch: exactMatch, resource: scope.currentScope});
 
             };
 
