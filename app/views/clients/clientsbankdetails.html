@@ -16,32 +16,7 @@
         </div>
         <fieldset>
             <legend>{{'label.heading.addclientbankdetails' | translate}}</legend>
-            <div class="form-group">
-                <label class="control-label col-sm-2">{{'label.input.beneficiaryname' | translate}}<span
-                        class="required">*</span></label>
-                <div class="col-sm-3">
-                    <input id="beneficiarynameId" type="test" name="beneficiaryname" ng-model="formData.beneficiaryname"
-                           required="required" class="form-control" required late-Validate/>
-                </div>
-            </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-2">{{'label.input.accountno' | translate}}<span
-                        class="required">*</span></label>
-                <div class="col-sm-3">
-                    <input id="accountnoId" type="password" name="accountno" ng-model="formData.accountnumber"
-                           required="required" class="form-control" required late-Validate/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2">{{'label.input.accountno1' | translate}}<span
-                        class="required">*</span></label>
-                <div class="col-sm-3">
-                    <input id="accountnoId1" type="text" name="accountno1" ng-model="formData.accountnumber1"
-                           required="required" class="form-control" required late-Validate/>
-                </div>
-            </div>
-            
             <div class="form-group">
                 <label class="control-label col-sm-2">Account Type<span class="required">*</span></label>
                 <div class="col-sm-3">
@@ -61,6 +36,33 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.beneficiaryname' | translate}}<span
+                        class="required">*</span></label>
+                <div class="col-sm-3">
+                    <input id="beneficiarynameId" type="test" name="beneficiaryname" ng-model="formData.beneficiaryname"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.accountno' | translate}}<span
+                        class="required">*</span></label>
+                <div class="col-sm-3">
+                    <input id="accountnoId" ng-paste="$event.preventDefault();" type="password" name="accountno" ng-model="formData.accountnumber"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.accountno1' | translate}}<span
+                        class="required">*</span></label>
+                <div class="col-sm-3">
+                    <input id="accountnoId1" ng-paste="$event.preventDefault();" type="text" name="accountno1" ng-model="formData.accountnumber1"
+                           required="required" class="form-control" required late-Validate/>
+                </div>
+            </div>
+            
+           
             <div class="form-group">
                 <label class="control-label col-sm-2">{{'label.input.ifsccode' | translate}}<span
                         class="required">*</span></label>
