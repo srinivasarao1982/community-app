@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        CreateRblCustomerController: function (scope,routeParams, resourceFactory, location, dateFilter) {
+        CreateRblClientsController: function (scope,routeParams, resourceFactory, location, dateFilter) {
             scope.offices = [];
             scope.staffs = [];
             scope.data = {};
@@ -22,7 +22,7 @@
             scope.adharseedingconstantOptions =[{"id":"01","name":"Yes"},{"id":"02","name":"No"}];
             //scope.gurdiangenderOptions=[{"id":1,"name":"Male"},{"id":2,"name":"Female"},{"id":3,"name":"Others"},{"id":4,"name":"Transgender"}];
             var requestParams = {staffInSelectedOfficeOnly: true};
-                requestParams.officeId = 1;
+            requestParams.officeId = 1;
             //scope.genderOptions = data.genderOptions;
 
             resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
@@ -48,14 +48,14 @@
                 this.formData.clientId=routeParams.clientId;
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
-                resourceFactory.rblcustomerresourceforsave.save(this.formData, function (data) {
-                    location.path('/viewclient/' + data.clientId);
-                   // scope.cancel();
-                });
+                 resourceFactory.rblcustomerresource.save(this.formData, function (data) {
+                     location.path('/viewclient/' + routeParams.clientId);
+
+                 });
             };
         }
     });
-    mifosX.ng.application.controller('CreateRblCustomerController', ['$scope', '$routeParams','ResourceFactory', '$location', 'dateFilter', mifosX.controllers.CreateRblCustomerController]).run(function ($log) {
-        $log.info("CreateRblCustomerController initialized");
+    mifosX.ng.application.controller('CreateRblClientsController', ['$scope', '$routeParams','ResourceFactory', '$location', 'dateFilter', mifosX.controllers.CreateRblClientsController]).run(function ($log) {
+        $log.info("CreateRblClientsController initialized");
     });
 }(mifosX.controllers || {}));

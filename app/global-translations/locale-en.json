@@ -921,7 +921,7 @@
     "validation.msg.calendar.cannot.be.before.groups.activation.date":"Meeting date cannot be before group activation date",
     "error.msg.Group.close.active.clients.exist":"Cannot close. Group has active clients",
     "error.msg.group.members.count.must.be.in.permissible.range":"This action caused a group Validation Error: Number of Clients must be between `{{params[1].value}}` and `{{params[2].value}}` ",
-
+    "error.msg.saving.account.exist":"clients have alreay  open Saving Account",
     "#-----------": "------------",
 
     "#Centers": "....",
@@ -936,6 +936,7 @@
     "label.heading.managegroups":"Manage Groups",
     "label.heading.associatenewgroups": "Associate New Groups",
     "label.heading.centermembers": "Center Members (Groups)",
+    "label.heading.inquiryPurpose": "Inquiry Purpose",
 
     "#Anchors": "..",
     "label.anchor.centers": "Centers",

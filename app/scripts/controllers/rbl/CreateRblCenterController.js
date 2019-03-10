@@ -33,7 +33,7 @@
                 this.formData.dateFormat = scope.df;
                 this.formData.centerId =routeParams.centerId;
                 resourceFactory.rblcenterresourceforsave.save(this.formData, function (data) {
-                    location.path('/viewcenter/' + data.resourceId);
+                    location.path('/viewcenter/' +routeParams.centerId);
                 });
             };
         }

@@ -29,6 +29,7 @@
 
             var requestParams = {staffInSelectedOfficeOnly: true};
             requestParams.officeId = 1;
+            scope.clientId=routeParams.clientId;
 
             resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
                 scope.districtOptins = clientData.district;
@@ -41,8 +42,17 @@
 
             resourceFactory.rblcustomerresource.get({customerId:routeParams.clientId}, function (clientData) {
 
-
                 scope.formData=clientData;
+                if (scope.formData.gurdiandateofBirth) {
+
+                    var dobDate = dateFilter(scope.formData.gurdiandateofBirth, scope.df);
+                    scope.formData.gurdiandateofBirth = new Date(dobDate);
+                }
+                if (scope.formData.spousedateofbIrt) {
+                    var dobDate = dateFilter(scope.formData.spousedateofbIrt, scope.df);
+                    scope.formData.spousedateofbIrt = new Date(dobDate);
+
+                }
 
                 resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
                     scope.gurdianTitleOptions = clientData.gurdianTitle;
@@ -50,15 +60,7 @@
 
 
 
-                    if (clientData.gurdiandateofBirth) {
 
-                        var dobDate = dateFilter(clientData.gurdiandateofBirth, scope.df);
-                        this.formData.gurdiandateofBirth = new Date(dobDate);
-                    }
-                    if (clientData.spousedateofbIrt) {
-                        var dobDate = dateFilter(clientData.spousedateofbIrt, scope.df);
-                        this.formData.spousedateofbIrt = new Date(dobDate);
-                    }
 
                     for (var i = 0; i < scope.gurdianTitleOptions.length; i++) {
                         if (clientData.gurdianTitle == scope.gurdianTitleOptions[i].codescore) {

@@ -42,7 +42,7 @@
             <input class="form-control width155px" type="text" datepicker-pop="dd MMMM yyyy" ng-model="formData.toDate" is-open="opened1" min="minDate" max="'2020-06-22'" placeholder="{{ 'label.input.todate' | translate }}"/>
         </div>
         <div class="form-group clear">
-            <a ng-click="submit()" class="btn btn-primary control" has-permission='READ_STANDINGINSTRUCTION '><i class="icon-search icon-white"></i></a></center>
+            <a ng-click="submit()" class="btn btn-primary control" ><i class="icon-search icon-white"></i></a></center>
         </div>
     </div>
     <div class="pull-right" ng-show="!isCollapsed">
@@ -56,28 +56,45 @@
             <thead>
             <tr class="graybg">
                 <th>{{'label.heading.customerName' | translate}}</th>
-                <th>{{'label.heading.externalId' | translate}}</th>
-                <th>{{'label.heading.barcodeNo' | translate}}</th>
+                <th>{{'label.heading.clientId' | translate}}</th>
+                <th>{{'label.heading.inquiryPurpose' | translate}}</th>
                 <th>{{'label.heading.loanAmount' | translate}}</th>
-                <th>{{'label.heading.branchCode' | translate}}</th>
-                <th>{{'label.heading.branchName' | translate}}</th>
             </tr>
             </thead>
             <tbody>
             <tr class="pointer-main" ng-repeat="creditBureauResult in creditBureauResults">
-                <td>{{creditBureauResult.customerName}}</td>
-                <td>{{creditBureauResult.externalId}}</td>
-                <td>{{creditBureauResult.barcodeNo}}</td>
-                <td>{{creditBureauResult.loanAmount}}</td>
-                <td>{{creditBureauResult.branchCode}}</td>
-                <td>{{creditBureauResult.branchName}}</td>
+                <td>{{creditBureauResult.firstName}}</td>
+                <td>{{creditBureauResult.clientId}}</td>
+                <td>{{creditBureauResult.inquiryPurpose}}</td>
+                <td>{{creditBureauResult.transactionAmount}}</td>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
+        <div ng-show="errorvalue">
+            <br>
+            <table class="table">
+                <thead>
+                <tr class="graybg">
+                    <th>{{'label.heading.customerName' | translate}}</th>
+                    <th>{{'label.heading.loanAmount' | translate}}</th>
+                    <th>{{'label.heading.error' | translate}}</th>
 
-    <div ng-show="!requestvalue">
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="pointer-main" ng-repeat="creditBureauResult in creditBureauResults">
+                    <td>{{creditBureauResult.customerName}}</td>
+                    <td>{{creditBureauResult.transactionAmount}}</td>
+                    <td>{{creditBureauResult.error}}</td>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    <div ng-show="responsevalue">
         <br>
         <table class="table">
             <thead>

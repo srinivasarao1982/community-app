@@ -478,6 +478,7 @@
 			        </table>
 			    </div>
 			</tab>
+			<!--
 			<tab heading="{{ 'label.heading.groupExtraDeatails' | translate }}" has-permission='READ_GROUP'>
 				<br/>
 				<div class="pull-right">
@@ -524,7 +525,7 @@
 
 				</ul>
 			</tab>
-
+-->
 			<tab heading="{{groupdatatable.registeredTableName}}" ng-repeat="groupdatatable in groupdatatables" has-permission='READ_{{groupdatatable.registeredTableName}}'
 		     select="dataTableChange(groupdatatable)">
 		    <div>

@@ -5,11 +5,13 @@
             params.locale = scope.optlang.code;
             params.dateFormat = scope.df;
             scope.formData={};
-            scope.requestvalue=true;
             var param={};
             scope.formData.valufor='request';
             scope.requestvalue=true;
             scope.creditBureauResults=[];
+            scope.errorvalue=false;
+            scope.responsevalue=false;
+
 
             scope.valueFor=function(val){
                 this.formData.valufor=val;
@@ -44,9 +46,22 @@
                 }
                 if(scope.formData.valufor=='response'){
                     scope.requestvalue=false;
+                    scope.errorvalue=false;
+                    scope.responsevalue=true;
+
                 }
                 if(scope.formData.valufor=='Error'){
+                    scope.errorvalue=true;
+                    scope.responsevalue=false;
+                    scope.requestvalue=false;
+                    alert(scope.errorvalue);
+
+                }
+                if(scope.formData.valufor=='request'){
+                    scope.errorvalue=false;
+                    scope.responsevalue=false;
                     scope.requestvalue=true;
+
                 }
                 if( scope.isfromDate && scope.isTodate) {
                     resourceFactory.equifaxcreditbureausearchresource.get(scope.formData, function (data) {

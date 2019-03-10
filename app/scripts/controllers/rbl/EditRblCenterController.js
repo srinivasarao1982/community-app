@@ -53,7 +53,7 @@
                 this.formData.dateFormat = scope.df;
                 this.formData.active = this.formData.active || false;
                 resourceFactory.rblcenterresource.update({centerId:routeParams.centerId},this.formData, function (data) {
-                    location.path('/viewcenter/' + routeParams.id);
+                    location.path('/viewcenter/' + routeParams.centerId);
                 });
             };
         }

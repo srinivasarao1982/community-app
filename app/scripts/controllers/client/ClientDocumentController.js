@@ -13,6 +13,7 @@
             resourceFactory.clientDocumentTypesCodeValue.getAllClientDocumentTypes({},function (data) {
                  scope.documentData = data;
             })
+
            
             scope.submit = function () {
                 $upload.upload({

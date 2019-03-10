@@ -263,6 +263,7 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'rbl/EditRblCustomerController',
             'rbl/EditRblGroupController',
             'rbl/EditRblLoanController',
+            'rbl/CreateRblClientsController',
             'organization/RblCreditBureauRequestController',
             'organization/RblCreditBureauSearch',
             'organization/RblFileRequestSearch',
