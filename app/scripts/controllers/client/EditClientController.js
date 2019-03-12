@@ -363,19 +363,25 @@
                 }
 
                 scope.formData.coClientData = [{}];
+                //coapplicantData
+                if (clientData.coapplicantDetailsData.coapplicantData == '' || clientData.coapplicantDetailsData.coapplicantData == null) {
+                    scope.formData.coClientData = [{}];
+                }
+                else {
+                    if (clientData.coapplicantDetailsData.coapplicantData) {
+                        scope.formData.coClientData = clientData.coapplicantDetailsData.coapplicantData;
 
-                if (clientData.coapplicantDetailsData.coapplicantData) {
-                    scope.formData.coClientData = clientData.coapplicantDetailsData.coapplicantData;
-                    if (scope.formData.coClientData.length > 0) {
-                        for (var i in scope.formData.coClientData) {
-                            if (scope.formData.coClientData[i].dateOfBirth) {
-                                var dateOfBirth = dateFilter(scope.formData.coClientData[i].dateOfBirth, scope.df);
-                                scope.formData.coClientData[i].dateOfBirth = new Date(dateOfBirth);
+                        if (scope.formData.coClientData.length > 0) {
+
+                            for (var i in scope.formData.coClientData) {
+                                if (scope.formData.coClientData[i].dateOfBirth) {
+                                    var dateOfBirth = dateFilter(scope.formData.coClientData[i].dateOfBirth, scope.df);
+                                    scope.formData.coClientData[i].dateOfBirth = new Date(dateOfBirth);
+                                }
                             }
+                        } else {
+                            scope.formData.coClientData.push({})
                         }
-                    }
-                    else {
-                        scope.formData.coClientData.push({})
                     }
                 }
             });
