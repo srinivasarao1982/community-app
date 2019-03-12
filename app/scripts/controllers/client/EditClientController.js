@@ -233,7 +233,11 @@
                 scope.formData.nomineeDetails = [{}, {}, {}];
 
                 scope.formData.clientExt = clientData.clientDataExt;
-                scope.formData.clientExt.customerMotherName=scope.formData.clientExt.customerMaidenName;
+                if(!angular.isUndefined(scope.formData.clientExt)) {
+                    if (!angular.isUndefined(scope.formData.clientExt.customerMaidenName)) {
+                        scope.formData.clientExt.customerMotherName = scope.formData.clientExt.customerMaidenName;
+                    }
+                }
 
                 if (clientData.addressExtData && clientData.addressExtData.length > 0) {
                     for (var i in clientData.addressExtData) {
@@ -364,6 +368,7 @@
 
                 scope.formData.coClientData = [{}];
                 //coapplicantData
+
                 if (clientData.coapplicantDetailsData.coapplicantData == '' || clientData.coapplicantDetailsData.coapplicantData == null) {
                     scope.formData.coClientData = [{}];
                 }
