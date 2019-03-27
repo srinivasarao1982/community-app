@@ -20,6 +20,7 @@
             requestParams.taskId = routeParams.id;
             requestParams.officeId=routeParams.officeId;
             requestParams.taskType=routeParams.tasktype;
+            scope.mindate=new Date();
 
             scope.routetoviewtask=function(){
                 location.path('/viewtask/' + routeParams.id+"/"+routeParams.centerId+"/"+routeParams.officeId);

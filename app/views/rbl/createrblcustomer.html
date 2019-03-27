@@ -1,9 +1,9 @@
-<div class="col-md-12">
+<div class="col-md-12" ng-controller="CreateRblClientsController">
     <ul class="breadcrumb">
-        <li><a ng-click="cancel()">{{'label.anchor.customersextraDetails' | translate}}</a></li>
-        <li class="active">{{'label.anchor.customercenterextraDetails' | translate}}</li>
+        <li><a href="#/viewclient/{{clintId}}">{{'label.anchor.customersextraDetails' | translate}}</a></li>
+        <li class="active">{{'label.anchor.customersextraDetails' | translate}}</li>
     </ul>
-    <form name="createrblcustomerform" novalidate="" class="form-horizontal well" ng-controller="CreateRblClientsController">
+    <form name="createrblcustomerform" novalidate="" class="form-horizontal well" >
 
         <api-validate></api-validate>
         <fieldset>

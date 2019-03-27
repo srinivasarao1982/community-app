@@ -109,20 +109,8 @@
                             scope.response.success.push(data[i]);
                         else
                             scope.response.failed.push(data[i]);
-            alert("test");
                     }
-
-                    if(scope.response.failed.length === 0 ){
-                        alert("test");
-                        var seqNumber = {};
-                        seqNumber.sequenceNumber = scope.sequenceNumber+1;
-                        seqNumber.locale = scope.optlang.code;
-                        seqNumber.dateFormat = scope.df;
-                        resourceFactory.sequenceNumberResource.update({id: 5}, seqNumber, function (data) {
-                            location.path('/viewcenter/' + scope.centerId);
-
-                        });
-                    }
+                    location.path('/viewcenter/' + scope.centerId);
 
                 });
 

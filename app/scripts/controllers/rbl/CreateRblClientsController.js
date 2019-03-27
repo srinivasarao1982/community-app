@@ -23,8 +23,10 @@
             //scope.gurdiangenderOptions=[{"id":1,"name":"Male"},{"id":2,"name":"Female"},{"id":3,"name":"Others"},{"id":4,"name":"Transgender"}];
             var requestParams = {staffInSelectedOfficeOnly: true};
             requestParams.officeId = 1;
-            //scope.genderOptions = data.genderOptions;
 
+            if (routeParams.clientId) {
+                scope.clintId=routeParams.clientId;
+            }
             resourceFactory.clientTemplateResource.get(requestParams, function (clientData) {
                 scope.districtOptins = clientData.district;
                 scope.stateOptions = clientData.state;

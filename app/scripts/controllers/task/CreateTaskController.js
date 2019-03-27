@@ -15,6 +15,7 @@
            scope.centerId=routeParams.id;
             scope.taskStartTimes=[];
             scope.taskEndTimes=[];
+            scope.mindate=new Date();
 
 
 

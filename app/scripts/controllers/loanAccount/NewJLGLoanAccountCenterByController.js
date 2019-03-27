@@ -63,7 +63,7 @@
                     scope.termPeriodFrequencyType = data.termPeriodFrequencyType;
                     scope.emi=null;
                     scope.rblOffice=[];
-                    scope.clientId=scope.groups[0].activeClientMembers[0].id;
+                    //scope.clientId=scope.groups[0].activeClientMembers[0].id;
 
                     for(var i in data.product.charges){
                         scope.chargeName=scope.chargeName+data.product.charges[i].name;
