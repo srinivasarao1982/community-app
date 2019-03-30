@@ -270,14 +270,14 @@
                         }
 
                         if (scope.response.failed.length === 0) {
-                            var seqNumber = {};
+                          /*  var seqNumber = {};
                             seqNumber.sequenceNumber = scope.sequenceNumber+1;
                             seqNumber.locale = scope.optlang.code;
                             seqNumber.dateFormat = scope.df;
-                            resourceFactory.sequenceNumberResource.update({id: 4}, seqNumber, function (data) {
+*/                          //  resourceFactory.sequenceNumberResource.update({id: 4}, seqNumber, function (data) {
                                 location.path('/viewjlgpartialloan/' + scope.center.id);
 
-                            });
+                          //  });
                         }
                     });
 

@@ -122,7 +122,7 @@
                         var details={};
                         details.clientId=scope.intermediateattendence[i].clientId;
                         details.attendanceType=scope.intermediateattendence[i].clientAttendence.id;
-                        details.isApproved=0;
+                        details.isApproved=1;
                         this.formData.attendencedetails.push(details);
 
                     }
