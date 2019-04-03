@@ -1,6 +1,7 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
         JlgSavingsAccountController: function (scope, resourceFactory, location, routeParams, dateFilter, $rootScope) {
+            scope.response = {success:[],failed:[]};
             scope.centerId = routeParams.centerId;
             scope.officeId = $rootScope.officeId;
             scope.officeName = $rootScope.officeName;
@@ -16,6 +17,8 @@
                 scope.inparams.centerId = scope.centerId
 
             }
+
+
             ;
             resourceFactory.centerClientResource.get({centerId: scope.centerId}, function (data) {
                 scope.groups=data.groupMembers;
