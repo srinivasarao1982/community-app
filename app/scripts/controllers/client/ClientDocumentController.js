@@ -9,6 +9,8 @@
                 scope.previewImage = true;
             };
             scope.forceOffice = null;
+            //isDisabled used to submit button disabled
+            scope.isDisabled = false;
             
             resourceFactory.clientDocumentTypesCodeValue.getAllClientDocumentTypes({},function (data) {
                  scope.documentData = data;
@@ -16,6 +18,7 @@
 
            
             scope.submit = function () {
+                scope.isDisabled = true;
                 $upload.upload({
                     url: $rootScope.hostUrl + API_VERSION + '/clients/' + scope.clientId + '/documents',
                     data: scope.formData,
@@ -26,6 +29,9 @@
                             scope.$apply();
                         }
                         location.path('/viewclient/' + scope.clientId);
+                        
+                    }).error(function (data){
+                        scope.isDisabled = false;
                     });
             };
         }
