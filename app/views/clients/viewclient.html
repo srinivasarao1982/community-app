@@ -192,6 +192,9 @@
 						        <li class="{{button.icon}}" data-ng-show="client.status.value=='Active'">
 						            <a href="#/newclientrecurringdepositaccount/{{client.id}}">{{'label.newrecurringdepositaccount' | translate}}</a>
 						        </li>
+								 <li class="{{button.icon}}" data-ng-show="client.status.value=='Active'">
+						            <a href="#/clientcbreport/{{client.id}}">{{'label.cbreport' | translate}}</a>
+						        </li>
 						    </ul>
 						</span>
 				    </div>
@@ -231,6 +234,14 @@
 								</div>
 								<div class="row">
 									<div class="col-md-4 col-sm-4">
+										<strong class="pull-right">Applicant Maiden Name:</strong>
+									</div>
+									<div class="col-md-8 col-sm-8">
+										{{clientData.clientDataExt.maidenName}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 col-sm-4">
 										<strong class="pull-right">Applicant ExternalId2:</strong>
 									</div>
 									<div class="col-md-8 col-sm-8">
@@ -258,6 +269,14 @@
 									</div>
 								</div>
 								<div class="row">
+									<div class="col-md-4 col-sm-4">
+										<strong class="pull-right">Applicant Mother Name:</strong>
+									</div>
+									<div class="col-md-8 col-sm-8">
+										{{clientData.clientDataExt.customerMaidenName}}
+									</div>
+								</div>
+								<div class="row">
 									<div class="col-md-4 col-sm-4 ">
 										<strong  class="pull-right">Gender:</strong>
 									</div>	
@@ -281,6 +300,14 @@
 									</div>	
 									<div class="col-md-8 col-sm-8">
 										{{client.dateOfBirth | DateFormat}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 col-sm-4">
+										<strong   class="pull-right">Mobile No:</strong>
+									</div>
+									<div class="col-md-8 col-sm-8">
+										{{client.mobileNo}}
 									</div>
 								</div>
 
@@ -882,6 +909,190 @@
 		        </tbody>
 		    </table>
 		</tab>
+		<tab heading="{{ 'label.heading.clientExtraDetails' | translate }}" has-permission='READ_CLIENT'>
+			<br/>
+			<div class="pull-right">
+				<a href="#/createclientextraDetails/{{clientId}}" ng-show="!showextradetails" class="btn btn-primary" has-permission='CREATE_RBLCUSTOMER'><i
+						class="icon-plus icon-white"></i>
+					{{'label.button.createextradetails' | translate}}</a>
+				<a href="#/editclientextraDetails/{{clientId}}" ng-show="showextradetails"class="btn btn-primary" has-permission='UPDATE_RBLCUSTOMER'><i
+						class="icon-plus icon-white"></i>
+					{{'label.button.editextradetails' | translate}}</a>
+
+			</div>
+			<br><br>
+			<div class="row" style="margin-left:-1px;margin-right: 1px;" ng-show="showextradetails">
+				<div class="col-sm-8 col-md-8">
+					<table class="table table-striped table-bordered" >
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.pensionCard' | translate}}</strong></th>
+							<td><span class="padded-td">{{rblcustomerData.pensioncard}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.health'  | translate}}</strong></th>
+							<td><span class="padded-td">{{rblcustomerData.health}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.language'  | translate}}</strong></th>
+							<td><span class="padded-td">{{rblcustomerData.language}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.cardissueFl'  | translate}}</strong></th>
+							<td><span class="padded-td">{{rblcustomerData.caedissueflag}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.cbcheck'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{rblcustomerData.cbchck}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.renewalflag'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{rblcustomerData.renwalflag}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.mothertounge'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{rblcustomerData.mothertoung}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.gurdianName'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{rblcustomerData.gurdainName}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.gurdianDateofBirth'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{rblcustomerData.gurdiandateofBirth|DateFormat}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.gurdianGender'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{ rblcustomerData.gurdiangender}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.spouseName'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{rblcustomerData.spouseName}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.spouseDateofBirth'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{rblcustomerData.spousedateofbIrt|DateFormat}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.gurdianrelation'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{rblcustomerData.relation}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.gurdiantitle'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{rblcustomerData.gurdianTitle}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan"><strong>{{'label.input.gurdianMobileNo'  | translate}}</strong></th>
+							<td><span class="padded-td"> {{rblcustomerData.gurdianMobileNo}}</span></td>
+						</tr>
+
+
+					</table>
+				</div>
+			</div>
+
+			</ul>
+		</tab>
+		 
+		<tab heading="{{'label.heading.clientsbankdetails' | translate}}" select="getClientDocuments()" has-permission='READ_BANKDETAILS' >
+			<div class="pull-right">
+				<a href="#/addclientbankdetails/{{client.id}}" class="btn btn-primary" has-permission='CREATE_BANKDETAILS'><i
+						class="icon-plus icon-white"></i>
+					{{'label.button.add' | translate}}</a>
+			</div>
+			<br>
+			<table class="table" ng-show="clientdocuments.length > 0">
+		        <thead>
+		        <tr class="graybg">
+		            <th>{{'label.heading.client.name' | translate}}</th>
+		            <th>{{'label.heading.client.accountnumber' | translate}}</th>
+					<th>{{'label.heading.client.bank.name' | translate}}</th>
+					<th>{{'label.heading.accounttype' | translate}}</th>
+					<th>{{'label.heading.client.isprimaryaccount' | translate}}</th>
+					
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr class="pointer-main" ng-repeat="clientbankdetail in clientbankdetails">
+					<td class="pointer" data-ng-click="routeToViewBankDetail(clientbankdetail.id)">{{clientbankdetail.beneficiaryname}}</td>
+		            <td class="pointer" data-ng-click="routeToViewBankDetail(clientbankdetail.id)">{{clientbankdetail.accountnumber}}</td>
+		            <td class="pointer" data-ng-click="routeToViewBankDetail(clientbankdetail.id)">{{clientbankdetail.bankname}}</td>
+					<td class="pointer" data-ng-click="routeToViewBankDetail(clientbankdetail.id)">{{clientbankdetail.accountType.name}}</td>
+					<td class="pointer" data-ng-click="routeToViewBankDetail(clientbankdetail.id)" ng-if="clientbankdetail.isPrimaryAccount == true">YES</td>
+					<td class="pointer" data-ng-click="routeToViewBankDetail(clientbankdetail.id)" ng-if="clientbankdetail.isPrimaryAccount == false">NO</td>
+			        
+				</tr>
+		        </tbody>
+		    </table>
+		</tab>
+
+		<!-- <tab heading="{{'label.heading.clientsbankdetails' | translate}}" select="getClientDocuments()" has-permission='READ_BANKDETAILS' >
+			<div class="pull-right">
+				<a ng-hide="!showaddbutton" href="#/addclientbankdetails/{{client.id}}" class="btn btn-primary" has-permission='CREATE_BANKDETAILS'><i
+						class="icon-plus icon-white"></i>
+					{{'label.button.add' | translate}}</a>
+				<a ng-hide="showaddbutton" href="#/editclientbankdetails/{{clientbankdetails.id}}/{{client.id}}" class="btn btn-primary" has-permission='UPDATE_BANKDETAILS'><i
+						class="icon-plus icon-white"></i>
+					{{'label.button.edit' | translate}}</a>
+				<button ng-hide="showaddbutton" id="delete" type="button" ng-click="delebankDetails1(clientbankdetails.id)",has-permission='DELETE_BANKDETAILS' class="btn btn-primary">{{'label.button.delete' | translate}}</button>
+
+			</div>
+			<br><br>
+			<div class="row span" style="margin-left:-1px;margin-top: -20px" ng-show="!showaddbutton">
+				<div class="col-sm-12 col-md-12">
+					<table class="table table-striped table-bordered">
+						<tr>
+							<th class="table-bold-loan">{{'label.input.beneficiaryname' | translate}}</th>
+							<td><span class="padded-td">{{clientbankdetails.beneficiaryname}}</span></span>
+							</td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.accountno' | translate}}</th>
+							<td><span class="padded-td">{{clientbankdetails.accountnumber}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.ifsccode' | translate}}</th>
+							<td><span class="padded-td">{{clientbankdetails.ifsccode}}</span></td>
+
+
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.micrcode' | translate}}</th>
+							<td><span class="padded-td">{{clientbankdetails.micrcode}}</span></td>
+
+
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.bankname' | translate}}</th>
+							<td><span class="padded-td">{{clientbankdetails.bankname}}</span></td>
+
+
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.branchname' | translate}}</th>
+							<td><span class="padded-td"></span>{{clientbankdetails.branchname}}</td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.branchaddress' | translate}}</th>
+							<td><span class="padded-td">{{clientbankdetails.branchaddress}}</span></td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.lasttransactiondate' | translate}}</th>
+							<td><span class="padded-td"></span>{{clientbankdetails.lasttransactiondate| DateFormat}}</td>
+						</tr>
+						<tr>
+							<th class="table-bold-loan">{{'label.input.lasttransactionamount' | translate}}</th>
+							<td><span class="padded-td">{{clientbankdetails.lasttransactionamount}}</span></td>
+						</tr>
+						<tr ng-repeat="clientdocument in clientdocuments" ng-if="clientdocument.name=='Scan copy of passbook'">
+							<td>{{clientdocument.name}}</td>
+							<td>{{clientdocument.fileName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<a target="_blank" href="{{hostUrl}}{{clientdocument.docUrl}}"><i class="icon-cloud-download"></i></a></td>&nbsp;
+												</tr>
+					</table>
+				</div>
+			</div>
+			</tab>
+		-->
 		<tab heading="{{clientdatatable.registeredTableName}}" ng-repeat="clientdatatable in clientdatatables"
 		     select="dataTableChange(clientdatatable)" has-permission='READ_{{clientdatatable.registeredTableName}}'>
 		    <div>

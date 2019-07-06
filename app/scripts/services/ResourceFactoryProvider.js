@@ -38,7 +38,8 @@
                     officeResource: defineResource(apiVer + "/offices/:officeId", {officeId: "@officeId"}, {
                         getAllOffices: {method: 'GET', params: {}, isArray: true},
                         getAllOfficesInAlphabeticalOrder: {method: 'GET', params: {orderBy: 'name', sortOrder: 'ASC'}, isArray: true},
-                        update: { method: 'PUT'}
+                        update: { method: 'PUT'},
+                        getAllRblOffices: {method: 'GET', params: {}, isArray: false}
                     }),
                     coClientResource: defineResource(apiVer + "/coapplicant/:coapplicantId", {coapplicantId: '@coapplicantId'}, {
                         update: { method: 'PUT'}
@@ -260,6 +261,12 @@
                         getAllCodes: {method: 'GET', params: {}, isArray: true},
                         update: { method: 'PUT', params: {} }
                     }),
+                    
+                    //Nextru Specific - to get all client documents type from code value 
+                    clientDocumentTypesCodeValue : defineResource(apiVer + "/codes/clientDocumentTypes",{},{
+                        getAllClientDocumentTypes : {method: 'GET', params: {}, isArray: true}
+                    }),
+
                     codeValueResource: defineResource(apiVer + "/codes/:codeId/codevalues/:codevalueId", {codeId: '@codeId', codevalueId: '@codevalueId'}, {
                         getAllCodeValues: {method: 'GET', params: {}, isArray: true},
                         update: { method: 'PUT', params: {} }
@@ -381,6 +388,10 @@
                         getAllMeetingFallCenters: {method: 'GET', params: {}, isArray: true},
                         update: { method: 'PUT'}
                     }),
+                    centerResourceRbl: defineResource(apiVer + "/centers/:centerId/:anotherresource", {centerId: '@centerId', anotherresource: '@anotherresource'}, {
+                        get: {method: 'GET', params: {},isArray: true},
+
+                    }),
                     centerMeetingResource: defineResource(apiVer + "/centers/:centerId/meetings/:templateSource", {centerId: '@centerId', templateSource: '@templateSource'}, {
                         getMeetingInfo: {method: 'GET', params: {}}
                     }),
@@ -497,7 +508,128 @@
                         getAll: {method: 'GET', params: {}, isArray: true},
                         get: {method: 'GET' , params: {paymentTypeId: '@paymentTypeId'}},
                         update: {method: 'PUT', params: {paymentTypeId: '@paymentTypeId'}}
-                    })
+                    }),
+                    rbiBankDetailsResource : defineResource(apiVer + "/rbibankdetails/:ifsccode",{ifsccode: '@ifsccode'},{
+                        get: {method: 'GET', params: {}},
+                        getAll: {method: 'GET', params: {ifsccode: '@ifsccode'}},
+                    }),
+                    clientbankDetailsResource: defineResource(apiVer + "/bankdetails/:bankdetailsId/:ifsccode", {bankdetails: '@bankdetails', ifsccode: '@ifsccode'}, {
+                    get: {method: 'GET', params: {}},
+                    getAll: {method: 'GET', params: {ifsccode: '@ifsccode'}},
+                    }),
+                    clientbankDetailsResourceByClientId: defineResource(apiVer + "/bankdetails/getbankdetailsbyclient",{clientId: '@clientId'},{
+                        get: {method: 'GET', params: {clientId: '@clientId'}, isArray: true}
+                    }),
+                    clientbankDetailsResource: defineResource(apiVer + "/bankdetails", {bankdetailId: '@bankdetailId'}, {
+                    get: {method: 'GET', params: {bankdetailId : '@bankdetailId'}},
+                    getAll: {method: 'GET', params: {bankId: '@ifsccode'}},
+                     }),
+                    clientbankDetailsResourceforsave: defineResource(apiVer + "/bankdetails/:bankdetailsId", {bankdetails: '@bankdetails'}, {
+                        update: { method: 'PUT',params: {bankdetailsId: '@bankdetailsId'}},
+                        deletebankdetails: { method:'DELETE',params:{bankdetailsId: '@bankdetailsId'}}
+
+                    }),
+                    clientBankDetailsTemplateResource: defineResource(apiVer + "/bankdetails/template", {}, {
+                        get: {method: 'GET', params: {}},
+                    }),
+                    partialLoanResourceforgettemplate: defineResource(apiVer + "/partialloan/template/:parentId/:isActive", {parentId:'@parentId',isActive:'@isActive'}, {
+                        get: {method: 'GET', params: {parentId:'@parentId',isActive:'@isActive'}}
+                    }),
+                    partialLoanResourceforget: defineResource(apiVer + "/partialloan/:parentId", {parentId:'@parentId'}, {
+                        get: {method: 'GET', params: {parentId:'@parentId'},isArray : true},
+                    }),
+                    partialLoanResourceforupdate: defineResource(apiVer + "/partialloan/:clientId/:groupId", {clientId: '@clientId', groupId: '@groupId'}, {
+                        update: { method: 'PUT',params: {clientId: '@clientId' ,groupId:'@groupId'}},
+                    }),
+                    taskResource: defineResource(apiVer + "/task/template", {}, {
+                        get: {method: 'GET', params: {}},
+                    }),
+                    taskResourcesave: defineResource(apiVer + "/task/", {}, {
+                        get: {method: 'GET', params: {taskId:'@taskId'}},
+                        update: { method: 'PUT',params: {taskId:'@taskId'}},
+                    }),
+                    taskResourceforupdate: defineResource(apiVer + "/task/:taskId", {taskId:'@taskId'}, {
+                        update: { method: 'PUT',params: {taskId:'@taskId'}},
+                    }),
+                    taskResourceforGet: defineResource(apiVer + "/task/retriveall/", {}, {
+                        get: {method: 'GET', params: {},isArray : true},
+                    }),
+                    taskConfigurationResource: defineResource(apiVer + "/task/template/taskconfiguration", {}, {
+                        get: {method: 'GET', params: {}},
+                    }),
+                    taskConfigurationResourceforSave: defineResource(apiVer + "/task/taskconfiguration", {}, {
+                        get: {method: 'GET', params: {taskconfigurationId:'@taskconfigurationId'}},
+                    }),
+                    taskConfigurationResourceforretriveall:defineResource(apiVer + "/task/alltaskconfiguration", {}, {
+                        get: {method: 'GET', params: {},isArray : true},
+                    }),
+                    taskConfigurationResourceforUpdate:defineResource(apiVer + "/task/taskconfiguration/:taskconfigurationId", {taskconfigurationId:'@taskconfigurationId'}, {
+                        update: {method: 'PUT', params: {taskconfigurationId:'@taskconfigurationId'}},
+
+                    }),
+                    rblcenterresource:defineResource(apiVer + "/rbl/rblcenter/:centerId", {centerId:'@centerId'}, {
+                        update: {method: 'PUT', params: {}},
+                        get: {method: 'GET', params: {centerId:'@centerId'},isArray : false},
+
+                    }),
+
+                    rblcenterresourceforsave:defineResource(apiVer + "/rbl/rblcenter/", {}, {
+                       save: {method: 'POST', params: {}},
+                    }),
+                    rblcustomerresource:defineResource(apiVer + "/rbl/rblclients/:customerId", {customerId:'@customerId'}, {
+                        update: {method: 'PUT', params: {customerId:'@customerId'}},
+                        get: {method: 'GET', params: {customerId:'@customerId'},isArray : false},
+                    }),
+                    rblcustomerresourceforsave:defineResource(apiVer + "/rbl/rblclients", {}, {
+                        save: {method: 'POST', params: {}},
+                    }),
+                    rblgroupresource:defineResource(apiVer + "/rbl/rblgroup/:groupId", {groupId:'@groupId'}, {
+                        update: {method: 'PUT', params: {}},
+                        get: {method: 'GET', params: {groupId:'@groupId'},isArray : false},
+                    }),
+                    rblloangetresource:defineResource(apiVer + "/rbl/rblloan/:loanId", {loanId:'@loanId'}, {
+                        get: {method: 'GET', params: {loanId:'@loanId'},isArray : false},
+                    }),
+                    rblgroupresourceforsave:defineResource(apiVer + "/rbl/rblgroup", {}, {
+                        save: {method: 'POST', params: {}},
+                    }),
+                    rblloanresourceforSave:defineResource(apiVer + "/rbl/rblloan", {}, {
+                        save: {method: 'POST', params: {}},
+                    }),
+                    rblloanresourceforUpdate:defineResource(apiVer + "/rbl/rblloan/:loanId", {loanId:'@loanId'}, {
+                        put: {method: 'PUT', params: {}},
+
+                    }),
+                    rblloanresource:defineResource(apiVer + "/rbl/rblloan/:loanId", {loanId:'@loanId'}, {
+                        update: {method: 'PUT', params: {loanId:'@loanId'}},
+                        get: {method: 'GET', params: {loanId:'@loanId'},isArray : false},
+                    }),
+                    sequenceNumberResource: defineResource(apiVer + "/offices/sequenceNumber/:id", {id: "@id"}, {
+                         update: { method: 'PUT', params: {id:'@id'}},
+                    }),
+                    rblvalidationresource:defineResource(apiVer + "/rblValidation/", {centerId:'@centerId',clientId:'@clientId',fromDate:'@fromDate',toDate:'@toDate',valufor:'@valufor'}, {
+                        get: {method: 'GET', params: {centerId:'@centerId',clientId:'@clientId',fromDate:'@fromDate',toDate:'@toDate',valufor:'@valufor'},isArray : true},
+                    }),
+                    rblvalidationresourceforValidate:defineResource(apiVer + "/rblValidation/validatefile/", {centerId:'@centerId',fromDate:'@fromDate',toDate:'@toDate',fileType:'@fileType'}, {
+                        get: {method: 'GET', params: {centerId:'@centerId',fromDate:'@fromDate',toDate:'@toDate',fileType:'@fileType'},isArray : true},
+                    }),
+                    rblvalidationFileresource:defineResource(apiVer + "/rblValidation/file", {fromDate:'@fromDate',toDate:'@toDate',fileType:'@fileType',clientcbcheck:'@clientcbcheck'}, {
+                        get: {method: 'GET', params: {fromDate:'@fromDate',toDate:'@toDate',fileType:'@fileType',clientcbcheck:'@clientcbcheck'},isArray : true},
+                    }),
+                    rblvalidationFilegenerateresource:defineResource(apiVer + "/rblValidation/file", {centerId:'@centerId',groupId:'@groupId',clintId:'@clintId',centerDatatobesent:'@centerDatatobesent',groupDatatobesend:'@groupDatatobesend',isImagetobesent:'@isImagetobesent',isreprocess:'@isreprocess',command:'@command'}, {
+                        sava: {method: 'POST', params: {centerId:'@centerId',groupId:'@groupId',clintId:'@clintId',centerDatatobesent:'@centerDatatobesent',groupDatatobesend:'@groupDatatobesend',isImagetobesent:'@isImagetobesent',isreprocess:'@isreprocess',command:'@command'},}
+                    }),
+                    rblvalidationcreditbureauresource:defineResource(apiVer + "/rblValidation/", {clintId:'@clintId',isValidate:'@isValidate'}, {
+                        save: {method: 'POST', params:  {clintId:'@clintId',isValidate:'@isValidate'},}
+                    }),
+                    equifaxcreditbureauresource:defineResource(apiVer + "/equifaxintregation/", {clientId:'@clientId',centerId:'@centerId'}, {
+                        save: {method: 'POST', params:  {clientId:'@clientId',centerId:'@centerId'},}
+                    }),
+                    equifaxcreditbureausearchresource:defineResource(apiVer + "/equifaxintregation/", {centerId:'@centerId',clientId:'@clientId',fromDate:'@fromDate',toDate:'@toDate',valufor:'@valufor'}, {
+                        get: {method: 'GET', params: {centerId:'@centerId',clientId:'@clientId',fromDate:'@fromDate',toDate:'@toDate',valufor:'@valufor'},isArray : true},
+                    }),
+
+
                 };
             }];
         }

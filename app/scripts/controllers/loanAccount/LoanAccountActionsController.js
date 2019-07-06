@@ -18,7 +18,7 @@
             scope.showTrancheAmountTotal = 0;
             scope.processDate = false;
             scope.showErrors=false;
-
+            scope.showErrors1=false;
             switch (scope.action) {
                 case "approve":
                     resourceFactory.loanTemplateResource.get({loanId: scope.accountId, templateType: 'approval'}, function (data) {
@@ -389,6 +389,7 @@
             scope.submit = function () {
                 scope.processDate = false;
                 scope.showErrors=false;
+                scope.showErrors1=false;
                 var params = {command: scope.action};
                 if(scope.action == "recoverguarantee"){
                     params.command = "recoverGuarantees";
@@ -428,7 +429,6 @@
                         {
                             scope.showErrors = true;
                             scope.showPaymentDetails = true;
-
                         }
                     }
                     if(!scope.showErrors){

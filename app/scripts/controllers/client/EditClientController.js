@@ -65,7 +65,12 @@
             scope.isNomineeDOBRequired = false;
             scope.isNomineeGuardianAddressRequired = false;
 
-
+            scope.staffError=false;
+            scope.firstNameError=false;
+            scope.genderError=false;
+            scope.dateOfBirthError=false;
+            scope.clientclificationError=false;
+            scope.erroroccur =true;
             /********************************/
 
             scope.formData = {};
@@ -76,13 +81,16 @@
             scope.clientId = routeParams.id;
             scope.cancel = function () {
                 if (scope.clientId) {
-                    location.path('/viewclient/' + scope.clientId);
+                    location.path('#/viewclient/' + scope.clientId);
                 }
             };
-            scope.cancel = '/viewclient/' + scope.clientId;
+            scope.cancel = '#/viewclient/' + scope.clientId;
             scope.showSavingOptions = 'false';
             scope.opensavingsproduct = 'false';
             scope.addressabove = false;
+            scope.isReprocessed = false;
+            scope.IsDisableReprocessedCheckbox = false;
+            scope.isDisableSubmittionDate = false;
 
             scope.addFamilyDetails = function () {
                 var family = {};
@@ -107,6 +115,11 @@
 
                 /*Nirantara Changes*/
                 var clientData = data.clientDetailedData;
+                scope.isReprocessed = data.isReprocessed;
+                if(data.isReprocessed == true){
+                    scope.IsDisableReprocessedCheckbox = true;
+                    scope.isDisableSubmittionDate = true;
+                };
                 //console.log('clientData : ',JSON.stringify(clientData));
 
                 scope.salutations = clientData.salutation;
@@ -220,6 +233,11 @@
                 scope.formData.nomineeDetails = [{}, {}, {}];
 
                 scope.formData.clientExt = clientData.clientDataExt;
+                if(!angular.isUndefined(scope.formData.clientExt)) {
+                    if (!angular.isUndefined(scope.formData.clientExt.customerMaidenName)) {
+                        scope.formData.clientExt.customerMotherName = scope.formData.clientExt.customerMaidenName;
+                    }
+                }
 
                 if (clientData.addressExtData && clientData.addressExtData.length > 0) {
                     for (var i in clientData.addressExtData) {
@@ -349,19 +367,26 @@
                 }
 
                 scope.formData.coClientData = [{}];
+                //coapplicantData
 
-                if (clientData.coapplicantDetailsData.coapplicantData) {
-                    scope.formData.coClientData = clientData.coapplicantDetailsData.coapplicantData;
-                    if (scope.formData.coClientData.length > 0) {
-                        for (var i in scope.formData.coClientData) {
-                            if (scope.formData.coClientData[i].dateOfBirth) {
-                                var dateOfBirth = dateFilter(scope.formData.coClientData[i].dateOfBirth, scope.df);
-                                scope.formData.coClientData[i].dateOfBirth = new Date(dateOfBirth);
+                if (clientData.coapplicantDetailsData.coapplicantData == '' || clientData.coapplicantDetailsData.coapplicantData == null) {
+                    scope.formData.coClientData = [{}];
+                }
+                else {
+                    if (clientData.coapplicantDetailsData.coapplicantData) {
+                        scope.formData.coClientData = clientData.coapplicantDetailsData.coapplicantData;
+
+                        if (scope.formData.coClientData.length > 0) {
+
+                            for (var i in scope.formData.coClientData) {
+                                if (scope.formData.coClientData[i].dateOfBirth) {
+                                    var dateOfBirth = dateFilter(scope.formData.coClientData[i].dateOfBirth, scope.df);
+                                    scope.formData.coClientData[i].dateOfBirth = new Date(dateOfBirth);
+                                }
                             }
+                        } else {
+                            scope.formData.coClientData.push({})
                         }
-                    }
-                    else {
-                        scope.formData.coClientData.push({})
                     }
                 }
             });
@@ -439,6 +464,10 @@
                         }
                     }
                 }
+            };
+            
+            scope.isReprocessedClient = function(){
+                    scope.formData.isReprocessed = scope.isReprocessed;
             };
 
             scope.showNotification = function () {
@@ -573,10 +602,35 @@
             scope.familyAutoCalcAge();
 
             scope.submitAndAccept = function () {
+                scope.staffError=false;
+                scope.firstNameError=false;
+                scope.genderError=false;
+                scope.dateOfBirthError=false;
+                scope.clientclificationError=false;
+                scope.erroroccur =true;
                 scope.addressaboveSetting();
                     this.formData.locale = scope.optlang.code;
                     this.formData.dateFormat = scope.df;
-                    if (scope.opensavingsproduct == 'false') {
+                this.formData.mobileNo=scope.formData.naddress[1].mobileNo;
+                this.formData.mobileNo=scope.formData.naddress[0].mobileNo;
+
+                if(angular.isUndefined(this.formData.staffId)){
+                    scope.staffError=true;
+                }
+
+                if(angular.isUndefined(this.formData.firstname)){
+                    scope.firstNameError=true;
+                }
+                if(angular.isUndefined(this.formData.genderId)){
+                    scope.genderError=true;
+                }
+                if(angular.isUndefined(this.formData.dateOfBirth)){
+                    scope.dateOfBirthError=true;
+                }
+                if(angular.isUndefined(this.formData.clientClassificationId)){
+                    scope.clientclificationError=true;
+                }
+                if (scope.opensavingsproduct == 'false') {
                         this.formData.savingsProductId = null;
                     }
                     if (scope.choice === 1) {
@@ -592,6 +646,10 @@
                     if (scope.formData.submittedOnDate) {
                         this.formData.submittedOnDate = dateFilter(scope.formData.submittedOnDate, scope.df);
                     }
+
+                if (scope.formData.activationDate) {
+                    this.formData.activationDate = dateFilter(scope.formData.activationDate, scope.df);
+                }
 
                     if (this.formData.familyDetails) {
                         for (var i = 0; i < this.formData.familyDetails.length; i++) {
@@ -669,13 +727,15 @@
                             this.formData.naddress.splice(i, 1);
                         }
                     }
-
+                  if(scope.staffError||scope.firstNameError||scope.genderError||scope.dateOfBirthError||scope.clientclificationError) {
+                    scope.erroroccur =false;
+                }
                     scope.familyAutoCalcAge();
-
-                    resourceFactory.clientResource.update({'clientId': routeParams.id}, this.formData, function (data) {
-                        location.path('/viewclient/' + routeParams.id);
-                    });
-
+                       if(scope.erroroccur){
+                        resourceFactory.clientResource.update({'clientId': routeParams.id}, this.formData, function (data) {
+                            location.path('/viewclient/' + routeParams.id);
+                        });
+                    }
 
             }
 

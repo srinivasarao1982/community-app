@@ -27,7 +27,7 @@
 	            <div class="col-sm-3">
 	                <select chosen="offices" id="officeId" ng-model="formData.officeId"
 	                        ng-options="office.id as office.name for office in offices" value="{{office.id}}"
-	                        ng-change="changeOffice()" class="form-control">
+	                        ng-change="changeOffice(formData.officeId)" class="form-control">
 	                </select>
 	            </div>
 	        </div>
@@ -73,6 +73,34 @@
 	                       ng-model="first.submitondate" is-open="opened" min="'2000-01-01'" max="restrictDate" class="form-control"/>
 	            </div>
 	        </div>
+			<!--<div class="form-group">
+				<label class="control-label col-sm-2">{{'label.input.centerType' | translate}}:</label>
+
+				<div class="col-sm-3">
+					<input type="checkbox"  ng-model="formData.isnewCenter" ></input>
+				</div>
+			</div>-->
+			<div class="form-group">
+				<label class="control-label col-sm-2">{{'label.input.iscbcheckRequired' | translate}}:</label>
+
+				<div class="col-sm-3">
+					<input type="checkbox"  ng-model="formData.iscbcheckRequired" ></input>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2">{{'label.input.iscbChecked' | translate}}:</label>
+
+				<div class="col-sm-3">
+					<input type="checkbox"  ng-model="formData.iscbchecked" ></input>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2">{{'label.input.isgrtCompleted' | translate}}:</label>
+
+				<div class="col-sm-3">
+					<input type="checkbox"  ng-model="formData.isgrtCompleted" ></input>
+				</div>
+			</div>
             <div class="form-group">
                 <label class="control-label col-sm-2">{{'label.input.select.groups' | translate}}:</label>
 

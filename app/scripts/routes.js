@@ -100,6 +100,15 @@
             .when('/addclientdocument/:clientId', {
                 templateUrl: 'views/clients/addclientdocument.html'
             })
+            .when('/addclientbankdetails/:clientId', {
+                templateUrl: 'views/clients/clientsbankdetails.html'
+            })
+            .when('/editclientbankdetails/:id/:clientId', {
+                templateUrl: 'views/clients/editclientbankdetails.html'
+            })
+            .when('/viewclientbankdetail/:id',{
+                templateUrl: 'views/clients/viewclientbankdetail.html'
+            })
             .when('/clientclosedloanaccount/:clientId', {
                 templateUrl: 'views/clients/clientclosedloanaccount.html'
             })
@@ -175,6 +184,18 @@
             .when('/organization', {
                 templateUrl: 'views/administration/organization.html'
             })
+            .when('/taskconfiguration', {
+                templateUrl: 'views/task/taskconfiguration.html'
+            })
+            .when('/viewtaskconfiguration/:id', {
+                templateUrl: 'views/task/viewtskconfiguration.html'
+            })
+            .when('/createtaskconfiguration', {
+                templateUrl: 'views/task/createtaskconfiguration.html'
+            })
+            .when('/edittaskconfiguration/:id', {
+                templateUrl: 'views/task/edittaskconfiguration.html'
+            })
             .when('/system', {
                 templateUrl: 'views/administration/system.html'
             })
@@ -244,7 +265,7 @@
             .when('/currconfig', {
                 templateUrl: 'views/organization/currencyconfig.html'
             })
-            .when('/search/:query', {
+            .when('/search/:query/:resource', {
                 templateUrl: 'views/search/glresults.html'
             })
             .when('/viewloanproduct/:id', {
@@ -592,11 +613,23 @@
             .when('/viewcenter/:id', {
                 templateUrl: 'views/centers/viewcenter.html'
             })
+             .when('/viewtask/:id/:centerId/:officeId', {
+              templateUrl: 'views/task/viewtask.html'
+             })
             .when('/bulkundotransactions/:centerId', {
                 templateUrl: 'views/centers/bulkundotransactions.html'
             })
             .when('/jlgloanAccountcenterby/:centerId', {
                 templateUrl: 'views/loans/jlgloanAccountcenterby.html'
+            })
+            .when('/jlgpartialloancenterby/:centerId', {
+                templateUrl: 'views/loans/partialloanapplication.html'
+            })
+            .when('/editjlgpartialloancenterby/:centerId', {
+                templateUrl: 'views/loans/editpartialLoan.html'
+            })
+            .when('/viewjlgpartialloan/:centerId', {
+                templateUrl: 'views/loans/viewpartialloan.html'
             })
             .when('/jlgsavingAccountcenterby/:centerId', {
                 templateUrl: 'views/savings/jlgsavingAccountcenterby.html'
@@ -730,6 +763,15 @@
             .when('/viewtellers/:id', {
                 templateUrl: 'views/organization/cashmgmt/viewTeller.html'
             })
+            .when('/createtask/:id/:officeId', {
+                templateUrl: 'views/task/createtask.html'
+            })
+            .when('/editetask/:id/:centerId/:officeId/:tasktype', {
+                templateUrl: 'views/task/edittask.html'
+            })
+            .when('/viewtask/:id', {
+                templateUrl: 'views/task/viewtask.html'
+            })
             .when('/tellers/:tellerId/cashiers', {
                 templateUrl: 'views/organization/cashmgmt/cashiersForTeller.html'
             })
@@ -754,7 +796,55 @@
             .when('/tellers/:tellerId/editcashier/:id', {
                 templateUrl: 'views/organization/cashmgmt/editcashier.html'
             })
-            ;
+            .when('/createclientextraDetails/:clientId', {
+                templateUrl: 'views/rbl/createrblcustomer.html'
+            })
+            .when('/editclientextraDetails/:clientId', {
+                templateUrl: 'views/rbl/editrblcustomer.html'
+            })
+            .when('/createrblcenterextradetails/:centerId', {
+                templateUrl: 'views/rbl/createrblcenter.html'
+            })
+            .when('/editrblcenterextradetails/:centerId', {
+                templateUrl: 'views/rbl/editrblcenter.html'
+            })
+            .when('/creategroupextradetails/:groupId', {
+                templateUrl: 'views/rbl/createrblgroup.html'
+            })
+            .when('/editgroupextradetails/:groupId', {
+                templateUrl: 'views/rbl/editrblgroup.html'
+            })
+            .when('/createloanextradeatils/:loanId', {
+                templateUrl: 'views/rbl/createrblloan.html'
+            })
+            .when('/editloanextradeatils/:loanId', {
+                templateUrl: 'views/rbl/editrblloan.html'
+            })
+            .when('/rblcreditbureaurequest', {
+                templateUrl: 'views/organization/rblcreditbureaurequest.html'
+            }).when('/rblfiletransferrequest', {
+               templateUrl: 'views/organization/rblfiletransferrequest.html'
+              }).when('/rblfilesearch', {
+                 templateUrl: 'views/organization/rblfilesearch.html'
+              }).when('/creditbureaurequestsearch', {
+                 templateUrl: 'views/organization/rblcreditbureausearch.html'
+              }).when('/clientcbreport/:id', {
+                 templateUrl: 'views/clients/cbstatuscheck.html'
+              }).when('/rblvalidatefilesearch', {
+               templateUrl: 'views/organization/rblvalidationSearch.html'
+             }).when('/uploadrbibankdetails',{
+                templateUrl: 'views/organization/uploadRbiBankDetails.html'
+             })
+             .when('/equifaxcreditbureau',{
+                templateUrl: 'views/organization/equifaxcreditbureaurequest.html'
+             })
+             .when('/equifaxcreditbureausearch',{
+                templateUrl: 'views/organization/equifaxcreditbureausearch.html'
+             })
+
+
+
+        ;
         $locationProvider.html5Mode(false);
     };
     mifosX.ng.application.config(defineRoutes).run(function ($log) {

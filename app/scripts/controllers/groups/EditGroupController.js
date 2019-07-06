@@ -4,6 +4,7 @@
             scope.first = {};
             scope.managecode = routeParams.managecode;
             scope.restrictDate = new Date();
+            //scope.isDateTime=0;
             resourceFactory.groupResource.get({groupId: routeParams.id, associations: 'clientMembers', template: 'true',staffInSelectedOfficeOnly:true}, function (data) {
                 scope.editGroup = data;
                 scope.formData = {
@@ -17,6 +18,15 @@
                 }
 
             });
+            scope.setChoice = function () {
+                alert(scope.isDateTime);
+                if (scope.isDateTime) {
+                    scope.isDateTime = 1;
+                }
+                else if (!scope.isDateTime) {
+                    scope.isDateTime = 0;
+                }
+            };
 
             resourceFactory.groupResource.get({groupId: routeParams.id}, function (data) {
                 if (data.timeline.submittedOnDate) {
@@ -35,11 +45,13 @@
             };
 
             scope.activate = function () {
+                alert(scope.isDateTime);
                 var reqDate = dateFilter(scope.first.date, scope.df);
                 var newActivation = new Object();
                 newActivation.activationDate = reqDate;
                 newActivation.locale = scope.optlang.code;
                 newActivation.dateFormat = scope.df;
+                newActivation.isTaskTime= scope.isDateTime;
                 resourceFactory.groupResource.save({groupId: routeParams.id, command: 'activate'}, newActivation, function (data) {
                     location.path('/viewgroup/' + routeParams.id);
                 });

@@ -22,6 +22,7 @@
             scope.chargeName='';
             scope.groups=[];
             scope.approveData={};
+            scope.sequenceNumberData=[];
             scope.principalChange=false;
             if (scope.center.id) {
                 scope.inparams.centerId = scope.center.id;
@@ -33,6 +34,14 @@
                 if (data.center) {
                     scope.center.name = data.center.name;
                 }
+            });
+            resourceFactory.partialLoanResourceforgettemplate.get({parentId:scope.center.id,isActive:0,isDisburse:0}, function (data) {
+                scope.statusOptions = data.status;
+                scope.acceptedclientsIdOptions=data.acceptedclientsId;
+            });
+
+            resourceFactory.partialLoanResourceforget.get({parentId:scope.center.id,isSequenceNumber:true,isUpdateStatus:false}, function (data) {
+                scope.sequenceNumberData=data;
             });
 
            scope.changePrincipal=function(){
@@ -53,23 +62,61 @@
                     scope.termFrequency = data.termFrequency;
                     scope.termPeriodFrequencyType = data.termPeriodFrequencyType;
                     scope.emi=null;
-                    scope.clientId=scope.groups[0].activeClientMembers[0].id;
+                    scope.rblOffice=[];
+                    //scope.clientId=scope.groups[0].activeClientMembers[0].id;
+
                     for(var i in data.product.charges){
                         scope.chargeName=scope.chargeName+data.product.charges[i].name;
+                    }
+
+                    resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                        scope.rblOffice=data;
+                    });
+                    resourceFactory.officeResource.getAllOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:4},function(data){
+                        scope.sequenceNumber=data.sequenceNo;
+                    });
+
+                    for(var i=0;i<scope.rblOffice.length;i++){
+                        if(officeId== scope.groups[i].officeId){
+                            scope.isrbl=1;
+                            break;
+                        }
                     }
                   //  scope.previewRepayments(null,data.principal,scope.clientId,data.product.charges,null,null);
                     for( var i in scope.groups ) {
                         scope.clients[i] = scope.groups[i].activeClientMembers.map(function (client) {
-                            client.principal = data.product.principal;
-                            client.groupId=scope.groups[i].id;
-                            client.charges = data.product.charges.map(function (charge) {
-                                charge.isDeleted = false;
-                                return _.clone(charge);
-                            });
-                            scope.selectedClients.push(client);
-                            scope.selectedClients1.push(client);
-                            return client;
+                            if(data.center.iscbCheckRequired=='Yes'){
+                                if (scope.acceptedclientsIdOptions.indexOf(client.id) !== -1) {
+                                    client.principal = data.product.principal;
+                                    client.groupId = scope.groups[i].id;
+                                    for(var p=0;p<=scope.sequenceNumberData.length;p++){
+                                        if(scope.sequenceNumberData[p].clientId==client.id){
+                                            client.extId=scope.sequenceNumberData[p].SequenceNumber;
+                                            client.loanPurposeId=scope.sequenceNumberData[p].loanPurposeId;
+                                            break;
+                                        }
+                                    }
+                                    client.charges = data.product.charges.map(function (charge) {
+                                        charge.isDeleted = false;
+                                        return _.clone(charge);
+                                    });
+                                    scope.selectedClients.push(client);
+                                    scope.selectedClients1.push(client);
+                                    return client;
+                                }
+                            }else{
+                                client.principal = data.product.principal;
+                                client.groupId = scope.groups[i].id;
+                                client.charges = data.product.charges.map(function (charge) {
+                                    charge.isDeleted = false;
+                                    return _.clone(charge);
+                                });
+                                scope.selectedClients.push(client);
+                                scope.selectedClients1.push(client);
+                                return client;
+                            }
                         });
+
                         scope.groups[i].activeClientMembers=scope.selectedClients1;
                         scope.selectedClients1 =[];
                     }
@@ -257,19 +304,27 @@
                 resourceFactory.batchResource.post(this.batchRequests, function (data) {
 
                     for (var i = 0; i < data.length; i++) {
-                        if(data[i].statusCode == 200 )
+                        if (data[i].statusCode == 200) {
                             scope.response.success.push(data[i]);
+                        }
                         else
-                            scope.response.failed.push(data[i]);
-
+                        {
+                            scope.response.failed.push(data[i]);                        }
                     }
 
                     if(scope.response.failed.length === 0 ){
-                        location.path('/viewcenter/' + scope.center.id);
+                        var params = {};
+                        params.isgrtCompleted =0;
+                        params.iscbchecked=0;
+                        params.locale = scope.optlang.code;
+                        params.dateFormat = scope.df;
+                        resourceFactory.centerResource.update({centerId: scope.center.id}, params, function (data) {
+                             location.path('/viewcenter/' + scope.center.id);
+                        });
+                      //  location.path('/viewcenter/' + scope.center.id);
                     }
 
                 });
-
 
             };
 

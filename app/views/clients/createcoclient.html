@@ -22,6 +22,12 @@
         </div>
     </div>
     <form name="createcoclientform" novalidate="" class="form-horizontal well" ng-submit="submitAndAccept()">
+        <div ng-show="identificationProfferror">
+            <p style="color:red"> Co Applicant Identity Proff is Mandatory</p>
+        </div>
+        <div ng-show="addressproffError">
+            <p style="color:red"> Co Applicant Address Proff is Mandatory</p>
+        </div>
         <api-validate></api-validate>
         <fieldset>
             <div class="form-group">
@@ -205,12 +211,12 @@
                 <hr/>
                 <legend>Correspondence Address</legend>
                 <div class="row" ng-class="{'datafilled':isDatafilled}">
-                    <div class="col-md-2"><label class="control-label" for="houseNumber">House Number</label>
+                    <div class="col-md-2"><label class="control-label" for="houseNumber"><span class="required">*</span>House Number</label>
                     </div>
                     <div class="col-md-4"><input placeholder="HOUSE NUMBER" type="text" id="houseNumber"
                                                  name="houseNumber" ng-model="formData.naddress[0].houseNo"
                                                  class="form-control" maxlength="20"/></div>
-                    <label class="control-label col-md-2" for="streetNumber">Street Number </label>
+                    <label class="control-label col-md-2" for="streetNumber"><span class="required">*</span>Street Number </label>
 
                     <div class="col-md-4"><input placeholder="STREET NUMBER" type="text" id="streetNumber"
                                                  name="streetNumber" ng-model="formData.naddress[0].streetNo"
@@ -220,7 +226,7 @@
 
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label" for="areaLocality"> Area Locality </label></div>
+                    <div class="col-md-2"><label class="control-label" for="areaLocality"><span class="required">*</span> Area Locality </label></div>
                     <div class="col-md-10">
                         <input placeholder=""
                                type="text" id="areaLocality" name="areaLocality"
@@ -234,7 +240,7 @@
                     <div class="col-md-2"><label class="control-label" for="landmark"> Landmark </label></div>
                     <div class="col-md-4"><input placeholder="" type="text" id="landmark" name="landmark"
                                                  ng-model="formData.naddress[0].landmark" class="form-control"/></div>
-                    <label class="control-label col-md-2" for="villageTown">Village/Town </label>
+                    <label class="control-label col-md-2" for="villageTown"><span class="required">*</span>Village/Town </label>
 
                     <div class="col-md-4"><input placeholder="" type="text" id="villageTown" name="villageTown"
                                                  ng-model="formData.naddress[0].villageTown" class="form-control"/>
@@ -244,7 +250,7 @@
 
             <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label" for="taluka">Taluka</label></div>
+                    <div class="col-md-2"><label class="control-label" for="taluka"><span class="required">*</span>Taluka</label></div>
                     <div class="col-md-4">
                         <input placeholder="Taluka"
                                type="text"
@@ -254,7 +260,7 @@
                         />
                     </div>
 
-                    <label class="control-label col-md-2" for="districtId">District </label>
+                    <label class="control-label col-md-2" for="districtId"><span class="required">*</span>District </label>
                     <div class="col-md-4">
                         <select name="districtId" ng-model="formData.naddress[0].district" class="form-control"
                                 ng-options="district.id as district.name for district in districtOptins"
@@ -296,7 +302,7 @@
                     <div class="col-md-4"><input placeholder="" type="text" id="landlineNumber"
                                                  name="landlineNumber" ng-model="formData.naddress[0].landlineNo"
                                                  class="form-control" maxlength="20"/></div>
-                    <label class="control-label col-md-2" for="mobileNumber">Mobile number </label>
+                    <label class="control-label col-md-2" for="mobileNumber"><span class="required">*</span>Mobile number </label>
 
                     <div class="col-md-4">
                         <input placeholder="Mobile Number"
@@ -309,7 +315,7 @@
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-2"><label class="control-label" for="firstname">Mother's Maiden Name</label>
+                    <div class="col-md-2"><label class="control-label" for="firstname"><span class="required">*</span>Mother's Maiden Name</label>
                     </div>
                     <div class="col-md-4">
                         <input placeholder="Mother's Maiden Name" type="text" id="mothersMaidenName"

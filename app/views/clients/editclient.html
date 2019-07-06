@@ -12,8 +12,23 @@
         <div ng-show="cashflowmishmatch==true">
             <p style="color:red">Cash Flow Mismatch Notification ||Annual Income Between : {{revenue}} ||Annual Revenue
                 is : {{totalRevenue}} </p>
-
         </div>
+        <div ng-show="genderError==true">
+            <p style="color:red">Gender is Mandatory </p>
+        </div>
+        <div ng-show="dateOfBirthError==true">
+            <p style="color:red">Date of Birth is Mandatory </p>
+        </div>
+        <div ng-show="staffError==true">
+            <p style="color:red">Staff Is Mandatory </p>
+        </div>
+        <div ng-show="clientclificationError==true">
+            <p style="color:red">Religion Is Mandatory </p>
+        </div>
+        <div ng-show="firstNameError==true">
+            <p style="color:red">Applicant First Name Is Mandatory </p>
+        </div>
+
         <fieldset>
             <legend>{{'label.heading.editclient' | translate}}</legend>
             <div>
@@ -58,8 +73,8 @@
 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-2"><label class="control-label">&nbsp;&nbsp;Title<span
-                                class="required">*</span></label>
+                        <div class="col-md-2"><label class="control-label">&nbsp;&nbsp;<span
+                                class="required">*</span>Title</label>
                         </div>
                         <div class="col-md-2">
                             <select id="title" name="title" ng-model="formData.clientExt.salutation"
@@ -70,7 +85,8 @@
                             </select>
                         </div>
                         <div class="col-sm-3"></div>
-                        <label class="control-label col-md-2"> External Id2</label>
+                        <label class="control-label col-md-2"> <span
+                                class="required">*</span>External Id2</label>
 
                         <div class="col-md-3">
                             <input placeholder="EXTERNAL ID2" type="text" id="externalId2" name="externalId2"
@@ -159,6 +175,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group" ng-class="{'datafilled':isDatafilled}">
+                    <div class="row">
+                        <div class="col-md-2"><label class="control-label" for="maidenName"><span class="required">*</span>Maiden Name</label></div>
+                        <div class="col-md-4">
+                            <input placeholder="MAIDEN NAME" type="text" id="maidenName"
+                                   name="maidenName" ng-model="formData.clientExt.maidenName" class="form-control"
+                            />
+                        </div>
+                            <div class="col-md-2"><label class="control-label" for="CustomerMotherName"><span class="required">*</span>Customer Mother Name</label></div>
+                        <div class="col-md-3">
+                            <input placeholder="MOTHER NAME" type="text" id="CustomerMotherName" name="CustomerMotherName"
+                                   ng-model="formData.clientExt.customerMotherName" class="form-control"
+                                   ng-required="isSPLastnameRequired"/>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                     <div class="row">
@@ -197,7 +230,7 @@
                                    ng-required="isDateOfBirthApplicantRequired" age-limit minAge="18" maxAge="75"/>
                             <span class="error" ng-show="submitted && createclientform.dateofbirth.$error.required">{{'label.error.required'|translate}}</span>
                         <span class="text-red error" ng-if="createclientform.dateofbirth.$error.ageLimit">The age
-                            must be between 18 and 75 years</span>
+                            must be between 18 and 60 years</span>
                         </div>
                     </div>
                 </div>
@@ -290,8 +323,11 @@
                         <div class="col-md-2">
                             <input placeholder="A D H A A R N U M B E R" type="text" id="aadhaar_no" name="aadhaar_no"
                                    ng-model="formData.clientExt.aadhaarNo"
-                                   class="form-control" maxlength="100" ng-required="isAadhaarNoRequired"/>
+                                   class="form-control" maxlength="12" ng-required="isAadhaarNoRequired" ng-pattern="/^\d+$/"/>
                             <span class="error" ng-show="submitted && createclientform.aadhaar_no.$error.required">{{'label.error.required'|translate}}</span>
+                            <span class="required"
+                                  ng-show="createclientform.aadhaar_no.$error.pattern">Only Numbers</span>
+
                         </div>
 
                         <label class="control-label col-md-2"><span class="required" ng-show="isPanNoRequired">*</span>PAN</label>
@@ -346,7 +382,8 @@
                             <span class="error" ng-show="submitted && createclientform.clienttypeId.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
 
-                        <label class="control-label col-md-2"><span class="required" ng-show="isClientReligionRequired">*</span>Religion</label>
+                        <label class="control-label col-md-2"><span
+                                class="required">*</span>Religion</label>
                         <div class="col-md-2">
                             <select id="clientClassificationId" name="clientClassificationId"
                                     ng-model="formData.clientClassificationId"
@@ -358,7 +395,25 @@
                             <span class="error"
                                   ng-show="submitted && createclientform.clientClassificationId.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
+                        <!--<label class="control-label col-md-2"><span class="required" >*</span>Mobile No</label>
 
+                        <div class="col-md-2">
+                            <input placeholder="Mobile No" type="text" id="mobileNo" name="mobileNo"
+                                   ng-model="formData.mobileNo" class="form-control"
+                                   />
+                        </div>-->
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="control-label">Is Reprocessed Client? </label>
+                        </div>
+                        <div class="col-md-10">
+                                <input type="checkbox" ng-model="isReprocessed" ng-disabled="IsDisableReprocessedCheckbox" ng-change="isReprocessedClient()"/>
+                        </div>
                     </div>
                 </div>
 
@@ -370,8 +425,7 @@
                 <div class="form-group" ng-class="{'datafilled':isDatafilled}">
 
                     <div class="row">
-                        <div class="col-md-2"><label class="control-label"><span class="required"
-                                                                                 ng-show="isHouseNumberRequired">*</span>House
+                        <div class="col-md-2"><label class="control-label"><span class="required" >*</span>House
                             Number</label></div>
                         <div class="col-md-4">
                             <input placeholder="HOUSE NUMBER" type="text" id="houseNumber"
@@ -380,8 +434,7 @@
                             <span class="error" ng-show="submitted && createclientform.houseNumber0.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
 
-                        <label class="control-label col-md-2"><span class="required"
-                                                                    ng-show="isStreetNumberRequired">*</span>Street
+                        <label class="control-label col-md-2"><span class="required" >*</span>Street
                             Number </label>
                         <div class="col-md-4">
                             <input placeholder="STREET NUMBER" type="text" id="streetNumber"
@@ -394,8 +447,7 @@
 
                 <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                     <div class="row">
-                        <div class="col-md-2"><label class="control-label"><span class="required"
-                                                                                 ng-show="isAreaLocalityRequired">*</span>Area
+                        <div class="col-md-2"><label class="control-label"><span class="required" >*</span>Area
                             Locality </label></div>
                         <div class="col-md-10">
                             <input placeholder=""
@@ -419,8 +471,8 @@
                             <span class="error" ng-show="submitted && createclientform.landmark0.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
 
-                        <label class="control-label col-md-2"><span class="required"
-                                                                    ng-show="isVillageTownRequired">*</span>Village/Town
+                        <label class="control-label col-md-2"><span
+                                class="required">*</span>Village/Town
                         </label>
                         <div class="col-md-4">
                             <input placeholder="Village/Town" type="text" id="villageTown" name="villageTown0"
@@ -433,7 +485,8 @@
 
                 <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                     <div class="row">
-                        <div class="col-md-2"><label class="control-label">Taluka</label></div>
+                        <div class="col-md-2"><label class="control-label"><span
+                                class="required">*</span>Taluka</label></div>
                         <div class="col-md-4">
                             <input placeholder="Taluka"
                                    type="text"
@@ -443,7 +496,8 @@
                             />
                         </div>
 
-                        <label class="control-label col-md-2">
+                        <label class="control-label col-md-2"><span
+                                class="required">*</span>
                             District</label>
                         <div class="col-md-4">
                             <select name="districtId0" ng-model="formData.naddress[0].district" class="form-control"
@@ -457,8 +511,8 @@
 
                 <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                     <div class="row">
-                        <div class="col-md-2"><label class="control-label"><span class="required"
-                                                                                 ng-show="isStateRequired">*</span>State</label>
+                        <div class="col-md-2"><label class="control-label"><span
+                                class="required">*</span>State</label>
                         </div>
                         <div class="col-md-4">
                             <select name="stateId0" ng-model="formData.naddress[0].state" class="form-control"
@@ -469,7 +523,8 @@
                             <span class="error" ng-show="submitted && createclientform.stateId0.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
 
-                        <label class="control-label col-md-2" for="pincode">PIN Code </label>
+                        <label class="control-label col-md-2" for="pincode"><span
+                                class="required">*</span>PIN Code </label>
                         <div class="col-md-4">
                             <input placeholder="" type="text" id="pincode" name="pincode0"
                                    ng-model="formData.naddress[0].pinCode" class="form-control"
@@ -493,7 +548,8 @@
                             <span class="required" ng-show="createclientform.landlineNumber0.$error.pattern">Only Numbers</span>
                         </div>
 
-                        <label class="control-label col-md-2">Mobile number </label>
+                        <label class="control-label col-md-2"><span
+                                class="required">*</span>Mobile number </label>
                         <div class="col-md-4">
                             <input placeholder="Mobile Number"
                                    type="text" id="mobileNumber" name="mobileNumber0"
@@ -518,8 +574,7 @@
                     <div class="form-group" ng-class="{'datafilled':isDatafilled}">
 
                         <div class="row">
-                            <div class="col-md-2"><label class="control-label"><span class="required"
-                                                                                     ng-show="isHouseNumberRequired">*</span>House
+                            <div class="col-md-2"><label class="control-label"><span class="required" >*</span>House
                                 Number</label></div>
                             <div class="col-md-4">
                                 <input placeholder="HOUSE NUMBER" type="text" id="houseNumber1"
@@ -529,8 +584,7 @@
                                       ng-show="submitted && createclientform.houseNumber1.$error.required">{{'label.error.required'|translate}}</span>
                             </div>
 
-                            <label class="control-label col-md-2"><span class="required"
-                                                                        ng-show="isStreetNumberRequired">*</span>Street
+                            <label class="control-label col-md-2"><span class="required" >*</span>Street
                                 Number </label>
                             <div class="col-md-4">
                                 <input placeholder="STREET NUMBER" type="text" id="streetNumber1"
@@ -544,8 +598,7 @@
 
                     <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                         <div class="row">
-                            <div class="col-md-2"><label class="control-label"><span class="required"
-                                                                                     ng-show="isAreaLocalityRequired">*</span>Area
+                            <div class="col-md-2"><label class="control-label"><span class="required" >*</span>Area
                                 Locality </label></div>
                             <div class="col-md-10">
                                 <input placeholder=""
@@ -570,8 +623,7 @@
                                 <span class="error" ng-show="submitted && createclientform.landmark1.$error.required">{{'label.error.required'|translate}}</span>
                             </div>
 
-                            <label class="control-label col-md-2"><span class="required"
-                                                                        ng-show="isVillageTownRequired">*</span>Village/Town
+                            <label class="control-label col-md-2"><span class="required" >*</span>Village/Town
                             </label>
                             <div class="col-md-4">
                                 <input placeholder="Village/Town" type="text" id="villageTown1" name="villageTown1"
@@ -585,8 +637,7 @@
 
                     <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                         <div class="row">
-                            <div class="col-md-2"><label class="control-label"><span class="required"
-                                                                                     ng-show="isTalukaRequired">*</span>Taluka</label>
+                            <div class="col-md-2"><label class="control-label"><span class="required" >*</span>Taluka</label>
                             </div>
                             <div class="col-md-4">
                                 <input placeholder="Taluka"
@@ -597,7 +648,7 @@
 
                             </div>
 
-                            <label class="control-label col-md-2">District</label>
+                            <label class="control-label col-md-2"><span class="required" >*</span>District</label>
                             <div class="col-md-4">
                                 <select name="districtId1" ng-model="formData.naddress[1].district" class="form-control"
                                         ng-options="district.id as district.name for district in districtOptins"
@@ -622,7 +673,7 @@
                                 <span class="error" ng-show="submitted && createclientform.stateId1.$error.required">{{'label.error.required'|translate}}</span>
                             </div>
 
-                            <label class="control-label col-md-2" for="pincode">PIN Code </label>
+                            <label class="control-label col-md-2" for="pincode"><span class="required" >*</span>PIN Code </label>
                             <div class="col-md-4">
                                 <input placeholder="" type="text" id="pincode1" name="pincode1"
                                        ng-model="formData.naddress[1].pinCode" class="form-control"
@@ -645,7 +696,7 @@
                                 <span class="required" ng-show="createclientform.landlineNumber1.$error.pattern">Only Numbers</span>
                             </div>
 
-                            <label class="control-label col-md-2"> Mobile number </label>
+                            <label class="control-label col-md-2"><span class="required" >*</span> Mobile number </label>
                             <div class="col-md-4">
                                 <input placeholder="Mobile Number"
                                        type="text" id="mobileNumber1" name="mobileNumber1"
@@ -667,29 +718,27 @@
 
                 <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                     <div class="row">
-                        <div class="col-md-2"><label class="control-label"><span class="required"
-                                                                                 ng-show="isIdentityProofRequired">*
-                    </span>Identity Proof </label></div>
+                        <div class="col-md-2"><label class="control-label"><span
+                                class="required">*</span>Identity Proof </label></div>
                         <div class="col-md-4">
                             <select name="identityProofTypeId0"
                                     ng-model="formData.clientIdentifierData[0].documentTypeId"
                                     class="form-control"
                                     ng-options="identityProof.id as identityProof.name for identityProof in identityProofOptions"
-                                    value="{{identityProof.id}}" ng-required="isIdentityProofRequired">
+                                    value="{{identityProof.id}}" ng-required="isIdentityProofRequired" >
                                 <option value="">{{'label.menu.select' | translate}}</option>
                             </select>
                             <span class="error"
                                   ng-show="submitted && createclientform.identityProofTypeId0.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
 
-                        <label class="control-label col-md-2"><span class="required"
-                                                                    ng-show="isIdentityProofNumberRequired">*
-                    </span>ID proof number </label>
+                        <label class="control-label col-md-2"><span
+                                class="required">*</span>ID proof number </label>
                         <div class="col-md-4">
                             <input placeholder="ID proof number"
                                    type="text" name="identityProofNumber0"
                                    ng-model="formData.clientIdentifierData[0].documentKey"
-                                   class="form-control" ng-required="isIdentityProofNumberRequired"/>
+                                   class="form-control" ng-required="isIdentityProofNumberRequired" maxlength="12"/>
                             <span class="error"
                                   ng-show="submitted && createclientform.identityProofNumber0.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
@@ -698,9 +747,8 @@
 
                 <div class="form-group" ng-class="{'datafilled':isDatafilled}">
                     <div class="row">
-                        <div class="col-md-2"><label class="control-label"><span class="required"
-                                                                                 ng-show="isAddressProofRequired">*
-                    </span>Address Proof </label></div>
+                        <div class="col-md-2"><label class="control-label"><span
+                                class="required">*</span>Address Proof </label></div>
                         <div class="col-md-4">
                             <select name="identityProofTypeId1"
                                     ng-model="formData.clientIdentifierData[1].documentTypeId"
@@ -713,14 +761,14 @@
                                   ng-show="submitted && createclientform.identityProofTypeId1.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
 
-                        <label class="control-label col-md-2"><span class="required"
-                                                                    ng-show="isAddressProofNumberRequired">*</span>Address
+                        <label class="control-label col-md-2"><span
+                                class="required">*</span>Address
                             proof number </label>
                         <div class="col-md-4">
                             <input placeholder="Address Proof Number"
                                    type="text" name="identityProofNumber1"
                                    ng-model="formData.clientIdentifierData[1].documentKey"
-                                   class="form-control" ng-required="isAddressProofNumberRequired"/>
+                                   class="form-control" ng-required="isAddressProofNumberRequired" maxlength="12"/>
                             <span class="error"
                                   ng-show="submitted && createclientform.identityProofNumber1.$error.required">{{'label.error.required'|translate}}</span>
                         </div>
@@ -1442,12 +1490,12 @@
                 <legend>Correspondence Address</legend>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-2"><label class="control-label" for="houseNumber">House Number</label>
+                        <div class="col-md-2"><label class="control-label" for="houseNumber"><span class="required" >*</span>House Number</label>
                         </div>
                         <div class="col-md-4"><input placeholder="HOUSE NUMBER" type="text" id="houseNumberCo"
                                                      name="houseNumberCo" ng-model="formData.naddress[2].houseNo"
                                                      class="form-control" maxlength="20"/></div>
-                        <label class="control-label col-md-2" for="streetNumber">Street Number </label>
+                        <label class="control-label col-md-2" for="streetNumber"><span class="required" >*</span>Street Number </label>
 
                         <div class="col-md-4"><input placeholder="STREET NUMBER" type="text" id="streetNumberCo"
                                                      name="streetNumberCo" ng-model="formData.naddress[2].streetNo"
@@ -1457,7 +1505,7 @@
 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-2"><label class="control-label" for="areaLocality"> Area Locality </label>
+                        <div class="col-md-2"><label class="control-label" for="areaLocality"><span class="required" >*</span> Area Locality </label>
                         </div>
                         <div class="col-md-10">
                             <input placeholder=""
@@ -1473,7 +1521,7 @@
                         <div class="col-md-4"><input placeholder="" type="text" id="landmarkCo" name="landmarkCo"
                                                      ng-model="formData.naddress[2].landmark" class="form-control"/>
                         </div>
-                        <label class="control-label col-md-2" for="villageTown">Village/Town </label>
+                        <label class="control-label col-md-2" for="villageTown"><span class="required" >*</span>Village/Town </label>
 
                         <div class="col-md-4"><input placeholder="" type="text" id="villageTownCo" name="villageTownCo"
                                                      ng-model="formData.naddress[2].villageTown" class="form-control"/>
@@ -1483,7 +1531,7 @@
 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-2"><label class="control-label" for="taluka">Taluka</label></div>
+                        <div class="col-md-2"><label class="control-label" for="taluka"><span class="required" >*</span>Taluka</label></div>
                         <div class="col-md-4">
                             <input placeholder="Taluka"
                                    type="text"
@@ -1491,7 +1539,7 @@
                                    name="talukaco"
                                    ng-model="formData.naddress[2].taluka" class="form-control"/>
                         </div>
-                        <label class="control-label col-md-2">District </label>
+                        <label class="control-label col-md-2"><span class="required" >*</span>District </label>
                         <div class="col-md-4">
                             <select name="districtIdco" ng-model="formData.naddress[2].district" class="form-control"
                                     ng-options="district.id as district.name for district in districtOptins"
@@ -1538,7 +1586,7 @@
 
                         </div>
 
-                        <label class="control-label col-md-2" for="mobileNumber">Mobile number </label>
+                        <label class="control-label col-md-2" for="mobileNumber"><span class="required" >*</span>Mobile number </label>
 
                         <div class="col-md-4">
                             <input placeholder="Mobile Number"
@@ -1554,7 +1602,7 @@
 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-2"><label class="control-label">Mother's Maiden Name</label></div>
+                        <div class="col-md-2"><label class="control-label"><span class="required" >*</span>Mother's Maiden Name</label></div>
                         <div class="col-md-4">
                             <input placeholder="Mother's Maiden Name" type="text" id="mothersMaidenName"
                                    name="mothersMaidenName" ng-model="formData.coClientData[0].mothersMaidenName"
@@ -1586,6 +1634,7 @@
                     <div class="col-sm-3">
                         <input id="submittedon" type="text" name="submittedon" datepicker-pop="dd MMMM yyyy"
                                ng-model="formData.submittedOnDate" min="'2000-01-01'" max="restrictDate"
+                               ng-disabled="isDisableSubmittionDate"
                                class="form-control"/>
                     </div>
                 </div>

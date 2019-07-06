@@ -9,6 +9,9 @@
     <div ng-show="showErrors==true">
         <p style="color: #ff0000" >{{'validation.msg.receipt.number.mandatory'|translate}}</p>
     </div>
+
+
+
 <form class="form-horizontal well" name="loanactionform" novalidate="" ng-submit="submit()">
 
 
@@ -219,7 +222,7 @@
                             class="required">*</span></label>
 
                 <div class="col-sm-3">
-                    <input id="receiptNumber" class="form-control" type="text" ng-model="formData.receiptNumber">
+                    <input id="receiptNumber" class="form-control" type="text" ng-model="formData.receiptNumber"  >
                 </div>
             </div>
             <div class="form-group">

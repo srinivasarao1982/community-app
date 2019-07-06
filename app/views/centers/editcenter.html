@@ -13,7 +13,8 @@
                 <legend>{{'label.heading.editcenter' | translate}}</legend>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="name">{{'label.input.name' | translate}}<span
-                            class="required">*</span></label>
+                            class="required">*</span>
+                    </label>
 
                     <div class="col-sm-3">
                         <input ng-autofocus="true" type="text" id="name" name="name" placeholder="{{edit.name}}"
@@ -48,6 +49,34 @@
                     <div class="col-sm-3">
                         <input id="activationDate" type="text" datepicker-pop="dd MMMM yyyy" ng-model="first.date"
                                is-open="opened" min="'2000-01-01'" max="restrictDate" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">{{'label.input.centerType' | translate}}:</label>
+
+                    <div class="col-sm-3">
+                        <input type="checkbox"  ng-model="formData.isnewCenter"  ng-checked="isnewcentes"></input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">{{'label.input.iscbcheckRequired' | translate}}:</label>
+
+                    <div class="col-sm-3">
+                        <input type="checkbox"  ng-model="formData.iscbcheckRequired" ng-checked="iscbcheckrequireds"></input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">{{'label.input.iscbChecked' | translate}}:</label>
+
+                    <div class="col-sm-3">
+                        <input type="checkbox"  ng-model="formData.iscbchecked" ng-checked="iscbchecks" ></input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">{{'label.input.isgrtCompleted' | translate}}:</label>
+
+                    <div class="col-sm-3">
+                        <input type="checkbox"  ng-model="formData.isgrtCompleted" ng-checked="grtchecked"></input>
                     </div>
                 </div>
                 <div class="col-md-offset-2 paddedleft120">

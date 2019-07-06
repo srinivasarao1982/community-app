@@ -90,13 +90,20 @@
             scope.sourceOfLoans = [{}, {}];
             scope.restrictDate = new Date();
             scope.cashflowmishmatch = false;
+            scope.rblOffice=[];
             //  scope.dobStartFrom = new Date("1980-01-01");
 
             // scope.dobStartFrom = new Date("1980-01-01");
 
             //scope.formData.dateOfBirth = scope.dobStartFrom;
 
-
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                scope.rblOffice=data.allowedParents;
+            });
+            resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:1},function(data){
+                scope.sequenceNumber=data.sequenceNo;
+              //  this.formData.externalId=scope.sequenceNumber;
+            });
             var requestParams = {staffInSelectedOfficeOnly: true};
             if (routeParams.groupId) {
                 requestParams.groupId = routeParams.groupId;
@@ -188,8 +195,9 @@
                 //console.log(JSON.stringify(clientData));
                 data = clientData.clientBasicDetails;
                 scope.salutations = clientData.salutation;
-                scope.formData.clientExt.salutation = scope.salutations[0].id;
+                scope.formData.clientExt.salutation = scope.salutations[2].id;
                 scope.martialStatusOptions = clientData.maritalStatus;
+                scope.formData.clientExt.maritalStatus=clientData.maritalStatus[0].id;
                 scope.ProfessionOptions = clientData.profession;
                 scope.eductionalQualificationOptions = clientData.educationQualification;
                 scope.annualIncomeOptions = clientData.annualIncome;
@@ -201,10 +209,10 @@
                 scope.formData.officeId = scope.offices[0].id;
                 scope.savingproducts = data.savingProductOptions;
                 scope.genderOptions = data.genderOptions;
-                scope.formData.genderId = scope.genderOptions[0].id;
+               // scope.formData.genderId = scope.genderOptions[0].id;
                 scope.clienttypeOptions = data.clientTypeOptions;
                 scope.clientClassificationOptions = data.clientClassificationOptions;
-                scope.formData.clientClassificationId = scope.clientClassificationOptions[0].id;
+               // scope.formData.clientClassificationId = scope.clientClassificationOptions[0].id;
                 scope.districtOptins = clientData.district;
                 scope.stateOptions = clientData.state;
 
@@ -235,6 +243,23 @@
                 }
 
                 if (routeParams.officeId) {
+                    scope.rblOffice=[];
+
+                    resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:true,isSequenceNumber:false},function(data){
+                        scope.rblOffice=data.allowedParents;
+
+                        resourceFactory.officeResource.getAllRblOffices({officeId:35,rbloffice:false,isSequenceNumber:true,entityId:1},function(data){
+                            scope.sequenceNumber=data.sequenceNo;
+                            for(var i=0;i<scope.rblOffice.length;i++){
+
+                                if(routeParams.officeId==scope.rblOffice[i].id){
+                                    scope.formData.externalId= scope.sequenceNumber;
+                                    break;
+                                }
+                            }
+                        });
+                    });
+
                     scope.formData.officeId = routeParams.officeId;
                     for (var i in data.officeOptions) {
                         if (data.officeOptions[i].id == routeParams.officeId) {
@@ -666,6 +691,13 @@
             };
 
             scope.changeOffice = function (officeId) {
+                for(var i=0;i<scope.rblOffice.length;i++){
+
+                    if(officeId==scope.rblOffice[i].id){
+                        scope.formData.externalId= scope.sequenceNumber;
+                            break;
+                    }
+                }
                 resourceFactory.clientTemplateResource.get({
                     staffInSelectedOfficeOnly: true, officeId: officeId
                 }, function (data) {
@@ -776,109 +808,134 @@
 
             scope.submitAndAccept = function () {
                 scope.addressaboveSetting();
-                   var reqDate = dateFilter(scope.first.date, scope.df);
+                //this.formData.mobileNo = scope.formData.naddress[1].mobileNo;
+                this.formData.mobileNo = scope.formData.naddress[0].mobileNo;
 
-                    this.formData.locale = scope.optlang.code;
-                    this.formData.active = this.formData.active || false;
-                    this.formData.dateFormat = scope.df;
-                    this.formData.activationDate = reqDate;
+                var reqDate = dateFilter(scope.first.date, scope.df);
 
-                    if (routeParams.groupId) {
-                        this.formData.groupId = routeParams.groupId;
+                this.formData.locale = scope.optlang.code;
+                this.formData.active = this.formData.active || false;
+                this.formData.dateFormat = scope.df;
+                this.formData.activationDate = reqDate;
+
+                if (routeParams.groupId) {
+                    this.formData.groupId = routeParams.groupId;
+                }
+
+                if (routeParams.officeId) {
+                    this.formData.officeId = routeParams.officeId;
+                }
+
+                if (scope.first.submitondate) {
+                    reqDate = dateFilter(scope.first.submitondate, scope.df);
+                    this.formData.submittedOnDate = reqDate;
+                }
+
+                if (scope.formData.dateOfBirth) {
+                    this.formData.dateOfBirth = dateFilter(scope.formData.dateOfBirth, scope.df);
+                }
+
+
+                if (!scope.opensavingsproduct) {
+                    this.formData.savingsProductId = null;
+                }
+
+
+                for (var i in this.formData.familyDetails) {
+                    if (this.formData.familyDetails[i].dateOfBirth) {
+                        this.formData.familyDetails[i].dateOfBirth = dateFilter(scope.formData.familyDetails[i].dateOfBirth, scope.df);
                     }
+                }
 
-                    if (routeParams.officeId) {
-                        this.formData.officeId = routeParams.officeId;
-                    }
+                if (this.formData.naddress) {
+                    for (var i = 0; i < this.formData.naddress.length; i++) {
+                        if (i == 0) {
+                            for (var j = 0; j < scope.addressTypes.length; j++) {
+                                if (scope.addressTypes[j].name == 'Comuniation Address') {
+                                    this.formData.naddress[i].addressType = scope.addressTypes[j].id;
 
-                    if (scope.first.submitondate) {
-                        reqDate = dateFilter(scope.first.submitondate, scope.df);
-                        this.formData.submittedOnDate = reqDate;
-                    }
-
-                    if (scope.formData.dateOfBirth) {
-                        this.formData.dateOfBirth = dateFilter(scope.formData.dateOfBirth, scope.df);
-                    }
-
-                    if (!scope.opensavingsproduct) {
-                        this.formData.savingsProductId = null;
-                    }
-
-
-                    for (var i in this.formData.familyDetails) {
-                        if (this.formData.familyDetails[i].dateOfBirth) {
-                            this.formData.familyDetails[i].dateOfBirth = dateFilter(scope.formData.familyDetails[i].dateOfBirth, scope.df);
-                        }
-                    }
-
-                    if (this.formData.naddress) {
-                        for (var i = 0; i < this.formData.naddress.length; i++) {
-                            if (i == 0) {
-                                for (var j = 0; j < scope.addressTypes.length; j++) {
-                                    if (scope.addressTypes[j].name == 'Comuniation Address') {
-                                        this.formData.naddress[i].addressType = scope.addressTypes[j].id;
-                                    }
-                                }
-                            } else if (i == 1) {
-                                for (var j = 0; j < scope.addressTypes.length; j++) {
-                                    if (scope.addressTypes[j].name == 'KYC address') {
-                                        this.formData.naddress[i].addressType = scope.addressTypes[j].id;
-                                    }
                                 }
                             }
-                            this.formData.naddress[i].locale = scope.optlang.code;
-                            this.formData.naddress[i].dateFormat = scope.df;
+                        } else if (i == 1) {
+                            for (var j = 0; j < scope.addressTypes.length; j++) {
+                                if (scope.addressTypes[j].name == 'KYC address') {
+                                    this.formData.naddress[i].addressType = scope.addressTypes[j].id;
+                                    //this.formData.mobileNo=scope.formData.naddress[0].mobileNo;
+                                }
+                            }
                         }
+                        this.formData.naddress[i].locale = scope.optlang.code;
+                        this.formData.naddress[i].dateFormat = scope.df;
                     }
+                }
 
-                    if (this.formData.familyDetails) {
-                        for (var i = 0; i < this.formData.familyDetails.length; i++) {
-                            this.formData.familyDetails[i].locale = scope.optlang.code;
-                            this.formData.familyDetails[i].dateFormat = scope.df;
-                        }
+                if (this.formData.familyDetails) {
+                    for (var i = 0; i < this.formData.familyDetails.length; i++) {
+                        this.formData.familyDetails[i].locale = scope.optlang.code;
+                        this.formData.familyDetails[i].dateFormat = scope.df;
                     }
+                }
 
-                    if (scope.cfaOccupations) {
-                        this.formData.cfaOccupations = scope.cfaOccupations;
-                        for (var i = 0; i < this.formData.cfaOccupations.length; i++) {
-                            this.formData.cfaOccupations[i].locale = scope.optlang.code;
-                        }
+                if (scope.cfaOccupations) {
+                    this.formData.cfaOccupations = scope.cfaOccupations;
+                    for (var i = 0; i < this.formData.cfaOccupations.length; i++) {
+                        this.formData.cfaOccupations[i].locale = scope.optlang.code;
                     }
+                }
 
-                    if (this.formData.nomineeDetails) {
-                        for (var i = 0; i < this.formData.nomineeDetails.length; i++) {
-                            this.formData.nomineeDetails[i].locale = scope.optlang.code;
-                            this.formData.nomineeDetails[i].dateFormat = scope.df;
-                        }
+                if (this.formData.nomineeDetails) {
+                    for (var i = 0; i < this.formData.nomineeDetails.length; i++) {
+                        this.formData.nomineeDetails[i].locale = scope.optlang.code;
+                        this.formData.nomineeDetails[i].dateFormat = scope.df;
                     }
+                }
 
-                    for (var i in this.formData.nomineeDetails) {
-                        if (this.formData.nomineeDetails[i].dateOfBirth) {
-                            this.formData.nomineeDetails[i].dateOfBirth = dateFilter(scope.formData.nomineeDetails[i].dateOfBirth, scope.df);
-                        }
-                        if (this.formData.nomineeDetails[i].guardianDateOfBirth) {
-                            this.formData.nomineeDetails[i].guardianDateOfBirth = dateFilter(scope.formData.nomineeDetails[i].guardianDateOfBirth, scope.df);
-                        }
+                for (var i in this.formData.nomineeDetails) {
+                    if (this.formData.nomineeDetails[i].dateOfBirth) {
+                        this.formData.nomineeDetails[i].dateOfBirth = dateFilter(scope.formData.nomineeDetails[i].dateOfBirth, scope.df);
                     }
-
-                    for (var i = 0; i < this.formData.naddress.length; i++) {
-                        if (!this.formData.naddress[i].state || this.formData.naddress[i].state == 0 || isNaN(this.formData.naddress[i].state)) {
-                            this.formData.naddress.splice(i, 1);
-                        }
+                    if (this.formData.nomineeDetails[i].guardianDateOfBirth) {
+                        this.formData.nomineeDetails[i].guardianDateOfBirth = dateFilter(scope.formData.nomineeDetails[i].guardianDateOfBirth, scope.df);
                     }
+                }
 
-                    scope.familyAutoCalcAge();
+                for (var i = 0; i < this.formData.naddress.length; i++) {
+                    if (!this.formData.naddress[i].state || this.formData.naddress[i].state == 0 || isNaN(this.formData.naddress[i].state)) {
+                        this.formData.naddress.splice(i, 1);
+                    }
+                }
 
-                    //console.log(JSON.stringify(this.formData));
+                scope.familyAutoCalcAge();
 
-                    resourceFactory.clientResource.save(this.formData, function (data) {
-                        location.path('/createcoclient/' + data.clientId);
-                    });
+                //console.log(JSON.stringify(this.formData));
 
 
+                scope.addressproffError =false;
+                scope.identificationProfferror=false;
+                if ( angular.isUndefined(scope.formData.clientIdentifierData[0].documentTypeId)) {
+                    scope.identificationProfferror = true;
+                }
+                if ( angular.isUndefined(scope.formData.clientIdentifierData[0].documentKey)) {
+                    scope.identificationProfferror = true;
+                }
+
+
+                if (angular.isUndefined(scope.formData.clientIdentifierData[1].documentTypeId)) {
+                    scope.addressproffError = true;
+                }
+                if (angular.isUndefined(scope.formData.clientIdentifierData[1].documentKey)) {
+                    scope.addressproffError = true;
+                }
+
+                if (!scope.addressproffError &&  !scope.identificationProfferror) {
+                resourceFactory.clientResource.save(this.formData, function (data) {
+                    location.path('/createcoclient/' + data.clientId);
+                });
+                }
+            }
 
             }
-        }
+
     });
     mifosX.ng.application.controller('CreateClientController', ['$scope', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', '$upload', '$rootScope', '$routeParams', '$parse', '$q', '$modal','$scope','$timeout', mifosX.controllers.CreateClientController]).run(function ($log) {
         $log.info("CreateClientController initialized");

@@ -6,9 +6,30 @@
             scope.first.date = new Date();
             scope.centerId = routeParams.id;
             scope.restrictDate = new Date();
+            scope.editcentertypes=false;
+            scope.iscbcheckrequireds=false;
+            scope.iscbchecks=false;
+            scope.grtchecked=false;
+
+
             resourceFactory.centerResource.get({centerId: routeParams.id, template: 'true',staffInSelectedOfficeOnly:true}, function (data) {
                 scope.edit = data;
                 scope.staffs = data.staffOptions;
+                if(data.isnewCenter=='New'){
+                    scope.isnewcentes=true;
+                    scope.editcentertypes=true;
+                }
+                if(data.iscbCheckRequired=='Yes'){
+                    scope.iscbcheckrequireds=true;
+                    scope.iscbcheckrequireds=true;
+                }
+               if(data.iscbchecked=='Yes'){
+                   scope.iscbchecks=true;
+               }
+                if(data.isgrtCompleted=='Yes'){
+                    scope.grtchecked=true;
+                }
+
                 scope.formData = {
                     name: data.name,
                     externalId: data.externalId,
@@ -30,6 +51,50 @@
                 this.formData.activationDate = reqDate;
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
+                if(angular.isUndefined(scope.formData.isnewCenter)){
+                if(scope.formData.isnewCenter||scope.isnewcentes) {
+                    this.formData.isnewCenter = 1;
+                } }else {
+                    if (scope.formData.isnewCenter) {
+                        this.formData.isnewCenter = 1;
+
+                    } else {
+                        this.formData.isnewCenter = 0;
+                    }
+                }
+                if(angular.isUndefined(scope.formData.iscbcheckRequired)){
+                    if(scope.formData.iscbcheckRequired||scope.iscbcheckrequireds){
+                        this.formData.iscbcheckRequired=1;
+                }}else {
+                    if (scope.formData.iscbcheckRequired ) {
+                        this.formData.iscbcheckRequired = 1;
+                    } else {
+                        this.formData.iscbcheckRequired = 0;
+                    }
+                }
+                if(angular.isUndefined(scope.formData.isgrtCompleted)){
+                    if(scope.formData.isgrtCompleted||scope.isgrtCompleted){
+                        this.formData.iscbcheckRequired=0;
+                    }}else {
+                    if (scope.formData.isgrtCompleted ) {
+                        this.formData.isgrtCompleted = 1;
+                    } else {
+                        this.formData.isgrtCompleted = 0;
+                    }
+                }
+                if(angular.isUndefined(scope.formData.iscbchecked)){
+
+                    if(scope.formData.iscbchecked||scope.iscbchecked){
+                        this.formData.iscbchecked=0;
+                    }}else {
+
+                    if (scope.formData.iscbchecked ) {
+                        this.formData.iscbchecked = 1;
+                    } else {
+                        this.formData.iscbchecked = 0;
+                    }
+
+                }
                 resourceFactory.centerResource.update({centerId: routeParams.id}, this.formData, function (data) {
                     location.path('/viewcenter/' + routeParams.id);
                 });

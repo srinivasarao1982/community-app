@@ -10,6 +10,8 @@
             scope.hideAccrualTransactions = false;
             scope.isHideAccrualsCheckboxChecked = true;
             scope.loandetails = [];
+            scope.loanId= routeParams.id;
+            scope.showextradetails=false;
             scope.updateCheckBoxStatus = function (){
                 scope.isHideAccrualsCheckboxChecked = !scope.isHideAccrualsCheckboxChecked;
             };
@@ -117,7 +119,29 @@
                         break;
                 }
             };
+            scope.pslcodeOptions =[{"id":1,"name":103},{"id":2,"name":104},{"id":3,"name":107},{"id":4,"name":108},{"id":5,"name":114},{"id":6,"name":125}];
+            scope.topuploanflagOptions=[{"id":1,"name":"Normal Loan"},{"id":2,"name":"Top UpLoan"}];
 
+            resourceFactory.rblloangetresource.get({loanId:routeParams.id},function (data) {
+                scope.loanextraData=data;
+                if(angular.isUndefined(data.pslcode)){
+                    scope.showextradetails=false;
+                }else{
+                    scope.showextradetails=true;
+                }
+
+                for(var i=0;i<=scope.pslcodeOptions.length;i++){
+                   if(data.pslcode==scope.pslcodeOptions[i].id){
+                       scope.loanextraData.pslcode=scope.pslcodeOptions[i].name;
+                   }
+                }
+              if(data.topuploanflag==1){
+                  scope.loanextraData.topuploanflag="Normal Loan";
+              }
+              else{
+                  scope.loanextraData.topuploanflag="Top UpLoan";
+              }
+            });
             scope.delCharge = function (id) {
                 $modal.open({
                     templateUrl: 'delcharge.html',
@@ -144,6 +168,8 @@
 
             resourceFactory.LoanAccountResource.getLoanAccountDetails({loanId: routeParams.id, associations: 'all',exclude: 'guarantors'}, function (data) {
                 scope.loandetails = data;
+                //Nextru specific used to create a loan document in client directory
+                $rootScope.clientId = scope.loandetails.clientId;
                 scope.recalculateInterest = data.recalculateInterest || true;
                 scope.isWaived = scope.loandetails.repaymentSchedule.totalWaived > 0;
                 scope.date.fromDate = new Date(data.timeline.actualDisbursementDate);
@@ -396,7 +422,8 @@
             };
 
             scope.getLoanDocuments = function () {
-                resourceFactory.LoanDocumentResource.getLoanDocuments({loanId: routeParams.id}, function (data) {
+                // nextru specific change - all documents stored into clients folder so passing clientId value
+                resourceFactory.LoanDocumentResource.getLoanDocuments({loanId: $rootScope.clientId}, function (data) {
                     for (var i in data) {
                         var loandocs = {};
                         loandocs = API_VERSION + '/loans/' + data[i].parentEntityId + '/documents/' + data[i].id + '/attachment?tenantIdentifier=' + $rootScope.tenantIdentifier;

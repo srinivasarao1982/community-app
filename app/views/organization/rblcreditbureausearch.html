@@ -1,0 +1,120 @@
+<div class="col-md-12" ng-controller="RblCreditBureauSearch">
+    <div>
+        <ul class="breadcrumb">
+            <li><a href="#/organization">{{'label.anchor.creditBureauSearch' | translate}}</a></li>
+            <li class="active">{{'label.anchor.creditBureauSearch' | translate}}</li>
+        </ul>
+    </div>
+    <api-validate></api-validate>
+    <div ng-show="dateError">
+        <p style="color:red"> From Date and To Date are Mandatory</p>
+    </div>
+
+    <div class="form-inline paddedtop paddedbottom10" ng-show="isCollapsed">
+        <div class="form-group">
+            <input type="radio" name="Request" value="Request" ng-click="valueFor('request')" checked> Request<br>
+        </div>
+        <div class="form-group">
+            <input type="radio" name="Request" value="Response" ng-click="valueFor('response')"> Response<br>
+        </div>
+        <div class="form-group">
+            <input type="radio" name="Request" value="Error" ng-click="valueFor('Error')">Error<br>
+        </div>
+           <div class="form-group">
+            <select chosen="rblOffice" id="rblOffice" ng-model="formData.officeId" name="officeId"
+                    ng-options="office.id as office.name for office in rblOffice"
+                    ng-change="changeOffice(formData.officeId)" value="{{office.id}}" class="form-control">
+                <option value="">{{'label.menu.select' | translate}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select chosen="staffCenterData" id="staffCenterData" ng-model="formData.centerId" name="centerId"
+                    ng-options="center.id as center.name for center in staffCenterData"
+                    value="{{center.id}}" class="form-control">
+                <option value="">{{'label.input.center' | translate}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input class="form-control width155px" type="text" datepicker-pop="dd MMMM yyyy" ng-model="formData.fromDate" is-open="opened" min="minDate" max="'2020-06-22'" placeholder="{{ 'label.input.fromdate' | translate }}"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control width155px" type="text" datepicker-pop="dd MMMM yyyy" ng-model="formData.toDate" is-open="opened1" min="minDate" max="'2020-06-22'" placeholder="{{ 'label.input.todate' | translate }}"/>
+        </div>
+        <div class="form-group clear">
+            <a ng-click="submit()" class="btn btn-primary control" has-permission='READ_STANDINGINSTRUCTION '><i class="icon-search icon-white"></i></a></center>
+        </div>
+    </div>
+    <div class="pull-right" ng-show="!isCollapsed">
+        <button ng-click="isCollapsed = !isCollapsed" class="btn btn-primary control"><i class="icon-chevron-down icon-white"></i>{{
+            'label.button.parameters' | translate }}
+        </button>
+    </div>
+    <div ng-show="requestvalue">
+        <br>
+        <table class="table">
+            <thead>
+            <tr class="graybg">
+                <th>{{'label.heading.customerName' | translate}}</th>
+                <th>{{'label.heading.externalId' | translate}}</th>
+                <th>{{'label.heading.barcodeNo' | translate}}</th>
+                <th>{{'label.heading.loanAmount' | translate}}</th>
+                <th>{{'label.heading.branchCode' | translate}}</th>
+                <th>{{'label.heading.branchName' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="pointer-main" ng-repeat="creditBureauResult in creditBureauResults">
+                <td>{{creditBureauResult.customerName}}</td>
+                <td>{{creditBureauResult.externalId}}</td>
+                <td>{{creditBureauResult.barcodeNo}}</td>
+                <td>{{creditBureauResult.loanAmount}}</td>
+                <td>{{creditBureauResult.branchCode}}</td>
+                <td>{{creditBureauResult.branchName}}</td>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-show="!requestvalue">
+        <br>
+        <table class="table">
+            <thead>
+            <tr class="graybg">
+                <th>{{'label.heading.clientId' | translate}}</th>
+                <th>{{'label.heading.requestUid' | translate}}</th>
+                <th>{{'label.heading.serviceName' | translate}}</th>
+                <th>{{'label.heading.chanelId' | translate}}</th>
+                <th>{{'label.heading.creditApprove' | translate}}</th>
+                <th>{{'label.heading.region' | translate}}</th>
+                <th>{{'label.heading.eligibleAmount' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="pointer-main"  ng-repeat="creditBureauResult in creditBureauResults">
+               <td>{{creditBureauResult.clientId}}</td>
+               <td>{{creditBureauResult.requestUid}}</td>
+               <td>{{creditBureauResult.serviceName}}</td>
+               <td>{{creditBureauResult.chhanelId}}</td>
+               <td>{{creditBureauResult.credit_Approved}}</td>
+               <td>{{creditBureauResult.reason}}</td>
+               <td>{{creditBureauResult.eligible_Amount}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <script type="text/ng-template" id="errorlog.html">
+        <div class="modal-header silver">
+            <h3 class="bolder">{{'label.heading.errorlog' | translate}}</h3>
+        </div>
+        <div class="modal-body">
+            <p>{{error}}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">{{'label.button.close' | translate}}</button>
+        </div>
+    </script>
+</div>

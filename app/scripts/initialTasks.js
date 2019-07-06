@@ -5,6 +5,7 @@
         var baseApiUrl = "https://nirantara.confluxcloud.com";
         var host = "";
         var portNumber = "";
+        var tenantName = "nirantara";
         //accessing from openmf server
         if (mainLink.hostname.indexOf('confluxcloud.com') >= 0) {
             var hostname = window.location.hostname;
@@ -13,8 +14,8 @@
             console.log('domains---' + domains);
             // For multi tenant hosting
             if (domains[0] == "demo") {
-                $httpProvider.defaults.headers.common['X-Mifos-Platform-TenantId'] = 'default';
-                ResourceFactoryProvider.setTenantIdenetifier('default');
+                $httpProvider.defaults.headers.common['X-Mifos-Platform-TenantId'] = tenantName;
+                ResourceFactoryProvider.setTenantIdenetifier(tenantName);
                 console.log("demo server", domains[0]);
             } else {
                 $httpProvider.defaults.headers.common['X-Mifos-Platform-TenantId'] = domains[0];
@@ -37,8 +38,8 @@
             host = "https://" + queryLink.hostname + (queryLink.port ? ':' + queryLink.port : '');
             portNumber = queryLink.port;
 
-            $httpProvider.defaults.headers.common['X-Mifos-Platform-TenantId'] = 'default';
-            ResourceFactoryProvider.setTenantIdenetifier('default');
+            $httpProvider.defaults.headers.common['X-Mifos-Platform-TenantId'] = tenantName;
+            ResourceFactoryProvider.setTenantIdenetifier(tenantName);
             if (QueryParameters["tenantIdentifier"]) {
                 $httpProvider.defaults.headers.common['X-Mifos-Platform-TenantId'] = QueryParameters["tenantIdentifier"];
                 ResourceFactoryProvider.setTenantIdenetifier(QueryParameters["tenantIdentifier"]);
